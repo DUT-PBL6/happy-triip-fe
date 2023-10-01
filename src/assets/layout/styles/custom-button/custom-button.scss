@@ -1,0 +1,24 @@
+.full-height-button {
+  button {
+    height: 100%;
+  }
+}
+
+.full-width-button {
+  button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.half-width-button {
+  button {
+    width: 50%;
+    max-width: 576px;
+    text-align: center;
+
+    @media (max-width: 576px) {
+      width: 100%;
+    }
+  }
+}
