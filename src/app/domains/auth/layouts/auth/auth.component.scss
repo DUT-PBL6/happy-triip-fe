@@ -1,0 +1,16 @@
+.auth-container {
+  background: #f7f8fa;
+
+  .login-card {
+    transform: translateY(10%);
+    max-width: 600px;
+    border-radius: 56px;
+    padding: 0.3rem;
+    background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);
+
+    .login-content {
+      border-radius: 53px;
+      border: 1px solid var(--surface-border);
+    }
+  }
+}

@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
 $gutter: 1rem; //for primeflex grid system
+body {
+  height: 100%;
+  overflow-y: hidden;
+}
+
 @import "assets/layout/styles/layout/layout.scss";
 
 /* PrimeNG */
@@ -12,4 +17,5 @@ $gutter: 1rem; //for primeflex grid system
 @import "../node_modules/primeflex/primeflex.css";
 
 // Custom styles
-@import "assets/layout/styles/custom-menubar/custom-menubar.scss";
+@import "assets/layout/styles/custom-button/custom-button.scss";
+@import "assets/layout/styles/custom-input-password/custom-input-password.scss";
