@@ -1,0 +1,28 @@
+.no-toggle-button {
+  button.p-tree-toggler {
+    display: none;
+  }
+}
+
+.p-tree li {
+  .p-treenode-label {
+    span {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.p-tree .p-tree-container .p-treenode .p-treenode-content {
+  padding: 1rem 1.5rem;
+  border-radius: 0;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &.p-highlight,
+  &.p-treenode-selectable:not(.p-highlight):hover {
+    background: #eefae0;
+  }
+}
