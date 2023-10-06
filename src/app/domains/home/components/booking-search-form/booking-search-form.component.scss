@@ -1,0 +1,35 @@
+.card {
+  position: relative;
+  background: #ffffff;
+  margin: 0 calc((100vw - 1312px) / 2);
+  padding: 2.5em;
+  border: 1px solid #e1e1e1;
+  border-radius: 0.5em;
+
+  .select-button {
+    position: absolute;
+    left: 2rem;
+    top: -1.125rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0.25em;
+    gap: 0.5em;
+    background: #f7f8fa;
+    border: 1px solid #e1e1e1;
+    border-radius: 0.25rem;
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: 1.2fr 0.9fr 0.9fr;
+    gap: 1em;
+
+    .passengers-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1em;
+    }
+  }
+}

@@ -19,8 +19,9 @@ export class HomepagePageComponent extends BaseDestroyable implements OnInit {
 
   ngOnInit(): void {
     if (!localStorage.getItem("token")) {
-      this.router.navigate([`/auth`]);
+      this.router.navigate([`/home`]);
       return;
     }
+    this.router.navigate([`/management`]);
   }
 }

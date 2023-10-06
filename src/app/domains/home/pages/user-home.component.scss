@@ -1,0 +1,19 @@
+.container {
+  position: absolute;
+  width: 100%;
+
+  img {
+    position: relative;
+    top: 0;
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    height: 21.5rem;
+    z-index: 0;
+  }
+
+  app-booking-search-form {
+    position: relative;
+    top: -90px;
+  }
+}
