@@ -1,0 +1,13 @@
+p-dropdown.ng-touched.ng-invalid {
+  .p-dropdown {
+    border-color: #e24c4c;
+  }
+}
+
+.full-width-dropdown {
+  width: 100%;
+
+  .p-dropdown {
+    width: 100%;
+  }
+}

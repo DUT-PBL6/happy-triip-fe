@@ -1,0 +1,50 @@
+p-menubar {
+  .p-menubar {
+    background-color: transparent;
+    border: transparent;
+
+    .p-menuitem-link {
+      &:not(.p-disabled):hover {
+        background: transparent;
+
+        .p-menuitem-text,
+        .p-submenu-icon {
+          color: #fff;
+        }
+      }
+    }
+
+    ul.p-menubar-root-list {
+      gap: 1.5em;
+
+      .p-menuitem-text,
+      .p-submenu-icon {
+        color: #fff;
+      }
+
+      li.p-menuitem-separator {
+        height: 25px;
+        width: 1px;
+        background: #fff;
+      }
+    }
+
+    ul.p-submenu-list {
+      .p-menuitem-text,
+      .p-submenu-icon {
+        color: #000;
+      }
+
+      .p-menuitem-link {
+        &:not(.p-disabled):hover {
+          background: #e9ecef;
+
+          .p-menuitem-text,
+          .p-submenu-icon {
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+}

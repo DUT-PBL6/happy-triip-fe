@@ -89,6 +89,11 @@ export class HeaderComponent implements OnInit {
       {
         label: "Manage Booking",
       },
+      { separator: true },
+      {
+        label: "Login",
+        routerLink: "/auth",
+      },
     ];
   }
 }
