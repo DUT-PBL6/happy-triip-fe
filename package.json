@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
     "@ngxs/store": "^3.8.1",
+    "ngx-drag-scroll": "^16.0.0",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
     "primeng": "^16.3.1",

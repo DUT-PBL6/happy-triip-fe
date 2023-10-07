@@ -1,0 +1,51 @@
+.popular-routes-container {
+  height: 200px;
+  margin: 2rem calc((100vw - 1312px) / 2);
+
+  drag-scroll {
+    width: 100%;
+    height: fit-content;
+    pointer-events: auto;
+
+    .route-item {
+      position: relative;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      margin: 0 0.75rem;
+
+      &::before {
+        content: "";
+        display: block;
+        inset: 0;
+        mix-blend-mode: multiply;
+        position: absolute;
+        z-index: 1;
+        border-radius: 0.5rem;
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 60%, rgb(0, 0, 0));
+      }
+
+      img {
+        width: 21.5rem;
+        height: 10.75rem;
+        object-fit: cover;
+        border-radius: 0.5rem;
+      }
+
+      .content {
+        position: absolute;
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: column;
+        padding: 1rem;
+        bottom: 0;
+        z-index: 2;
+        color: #fff;
+
+        h6 {
+          color: #fff;
+          margin: 0;
+        }
+      }
+    }
+  }
+}

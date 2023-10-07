@@ -1,111 +1,116 @@
-<div class="card">
-  <div class="select-button">
-    <p-selectButton
-      [options]="bookingOptions"
-      [(ngModel)]="selectedBookingOption"
-      optionLabel="name"
-      optionValue="value"
-    ></p-selectButton>
+<div class="booking-search-form-container">
+  <img src="/assets/images/booking.jpg" alt="Cover" />
+  <div class="card">
+    <div class="select-button">
+      <p-selectButton
+        [options]="bookingOptions"
+        [(ngModel)]="selectedBookingOption"
+        optionLabel="name"
+        optionValue="value"
+      ></p-selectButton>
+    </div>
+    <form [formGroup]="bookingSearchForm">
+      <div class="location flex">
+        <div class="from flex flex-column flex-1">
+          <p class="font-medium my-3">From</p>
+          <p-dropdown
+            [options]="locations$ | async"
+            formControlName="from"
+            optionLabel="name"
+            optionValue="codename"
+            [showClear]="true"
+            placeholder="From"
+            [filter]="true"
+            [filterBy]="'name'"
+            class="full-width-dropdown"
+          >
+            <ng-template let-location pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-map-marker"></i>
+                <div>{{ location.name }}</div>
+              </div>
+            </ng-template>
+
+            <ng-template let-location pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-map-marker"></i>
+                <div>{{ location.name }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="to flex flex-column flex-1">
+          <p class="font-medium my-3">To</p>
+          <p-dropdown
+            [options]="locations$ | async"
+            formControlName="to"
+            optionLabel="name"
+            optionValue="codename"
+            [showClear]="true"
+            placeholder="To"
+            [filter]="true"
+            [filterBy]="'name'"
+            class="full-width-dropdown"
+          >
+            <ng-template let-location pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-map-marker"></i>
+                <div>{{ location.name }}</div>
+              </div>
+            </ng-template>
+
+            <ng-template let-location pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-map-marker"></i>
+                <div>{{ location.name }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+      <div class="dates flex">
+        <div class="depart-date flex flex-column flex-1">
+          <p class="font-medium my-3">Depart Date</p>
+          <p-calendar
+            formControlName="departDate"
+            class="w-full sm:w-auto"
+            styleClass="w-full"
+            [showIcon]="true"
+            [showButtonBar]="true"
+            [dateFormat]="datePickerFormat"
+            class="full-width-calendar"
+            [minDate]="departDate.value"
+            [maxDate]="returnDate.value"
+          ></p-calendar>
+        </div>
+        <div class="return-date flex flex-column flex-1" *ngIf="selectedBookingOption === 'ROUND_TRIP'">
+          <p class="font-medium my-3">Return Date</p>
+          <p-calendar
+            formControlName="returnDate"
+            class="w-full sm:w-auto"
+            styleClass="w-full"
+            [showIcon]="true"
+            [showButtonBar]="true"
+            [dateFormat]="datePickerFormat"
+            class="full-width-calendar"
+            [minDate]="departDate.value"
+          ></p-calendar>
+        </div>
+      </div>
+      <div class="passengers-container flex">
+        <div class="passengers flex flex-column flex-1">
+          <p class="font-medium my-3">Passenger(s)</p>
+          <p-inputNumber formControlName="passengers" mode="decimal" [showButtons]="true" [min]="0"></p-inputNumber>
+        </div>
+        <div class="action flex-1 align-self-end">
+          <p-button
+            label="Search Ticket"
+            styleClass="p-button-secondary"
+            class="full-width-button w-full sm:w-auto"
+            (click)="searchTicket()"
+          ></p-button>
+        </div>
+      </div>
+    </form>
   </div>
-  <form [formGroup]="bookingSearchForm">
-    <div class="location flex">
-      <div class="from flex flex-column flex-1">
-        <p class="font-medium my-3">From</p>
-        <p-dropdown
-          [options]="locations$ | async"
-          formControlName="from"
-          optionLabel="name"
-          optionValue="codename"
-          [showClear]="true"
-          placeholder="From"
-          [filter]="true"
-          [filterBy]="'name'"
-          class="full-width-dropdown"
-        >
-          <ng-template let-location pTemplate="selectedItem">
-            <div class="flex align-items-center gap-2">
-              <i class="pi pi-map-marker"></i>
-              <div>{{ location.name }}</div>
-            </div>
-          </ng-template>
-
-          <ng-template let-location pTemplate="item">
-            <div class="flex align-items-center gap-2">
-              <i class="pi pi-map-marker"></i>
-              <div>{{ location.name }}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
-      </div>
-      <div class="to flex flex-column flex-1">
-        <p class="font-medium my-3">To</p>
-        <p-dropdown
-          [options]="locations$ | async"
-          formControlName="to"
-          optionLabel="name"
-          optionValue="codename"
-          [showClear]="true"
-          placeholder="To"
-          [filter]="true"
-          [filterBy]="'name'"
-          class="full-width-dropdown"
-        >
-          <ng-template let-location pTemplate="selectedItem">
-            <div class="flex align-items-center gap-2">
-              <i class="pi pi-map-marker"></i>
-              <div>{{ location.name }}</div>
-            </div>
-          </ng-template>
-
-          <ng-template let-location pTemplate="item">
-            <div class="flex align-items-center gap-2">
-              <i class="pi pi-map-marker"></i>
-              <div>{{ location.name }}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
-      </div>
-    </div>
-    <div class="dates flex">
-      <div class="depart-date flex flex-column flex-1">
-        <p class="font-medium my-3">Depart Date</p>
-        <p-calendar
-          formControlName="departDate"
-          class="w-full sm:w-auto"
-          styleClass="w-full"
-          [showIcon]="true"
-          [showButtonBar]="true"
-          [dateFormat]="datePickerFormat"
-          class="full-width-calendar"
-          [minDate]="departDate.value"
-          [maxDate]="returnDate.value"
-        ></p-calendar>
-      </div>
-      <div class="return-date flex flex-column flex-1" *ngIf="selectedBookingOption === 'ROUND_TRIP'">
-        <p class="font-medium my-3">Return Date</p>
-        <p-calendar
-          formControlName="returnDate"
-          class="w-full sm:w-auto"
-          styleClass="w-full"
-          [showIcon]="true"
-          [showButtonBar]="true"
-          [dateFormat]="datePickerFormat"
-          class="full-width-calendar"
-          [minDate]="departDate.value"
-        ></p-calendar>
-      </div>
-    </div>
-    <div class="passengers-container flex">
-      <div class="passengers flex flex-column">
-        <p class="font-medium my-3">Passenger(s)</p>
-        <p-inputNumber formControlName="passengers" mode="decimal" [showButtons]="true" [min]="0"></p-inputNumber>
-      </div>
-      <p-button
-        label="Search Ticket"
-        styleClass="p-button-secondary"
-        class="align-self-end w-full sm:w-auto"
-        (click)="searchTicket()"
-      ></p-button>
-    </div>
-  </form>
 </div>
