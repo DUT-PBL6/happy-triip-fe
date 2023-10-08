@@ -12,6 +12,12 @@ p-menubar {
           color: #fff;
         }
       }
+
+      &:focus {
+        outline-offset: 0px;
+        box-shadow: none;
+        outline: none;
+      }
     }
 
     ul.p-menubar-root-list {

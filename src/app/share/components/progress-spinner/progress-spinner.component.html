@@ -1,6 +1,7 @@
 <div class="overlay" *ngIf="isShowProgressSpinner$ | async">
   <p-progressSpinner
-    class="progress-spinner"
-    class="flex justify-content-center align-items-center h-screen"
+    class="progress-spinner flex justify-content-center align-items-center h-screen"
+    styleClass="custom-spinner"
+    animationDuration=".5s"
   ></p-progressSpinner>
 </div>

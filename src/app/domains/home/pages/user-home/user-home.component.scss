@@ -1,0 +1,78 @@
+.user-home-container {
+  app-booking-search-form {
+    position: relative;
+    display: grid;
+  }
+
+  .company-information {
+    display: grid;
+    gap: 3.125rem;
+    padding: 5.75rem 8rem;
+
+    &.large {
+      padding-left: calc((100vw - 1312px) / 2);
+      padding-right: calc((100vw - 1312px) / 2);
+    }
+
+    .about-us {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2em;
+
+      iframe {
+        width: 100%;
+        height: 22.5rem;
+        border-radius: 0.3125rem;
+      }
+
+      .description {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.5em;
+      }
+    }
+  }
+
+  .trips-and-customers {
+    display: grid;
+    gap: 2.5rem;
+    grid-gap: 2.5rem;
+    padding: 2.5rem 3.5rem 1rem;
+    background: #fafff4;
+  }
+
+  .partners,
+  .latest-news {
+    display: grid;
+    gap: 3.125rem;
+    padding: 5.75rem 8rem;
+  }
+
+  .latest-news {
+    .news-item {
+      margin: 0 0.75rem;
+      background: #f7f8fa;
+      border-radius: 0 0 0.5rem 0.5rem;
+      height: 100%;
+
+      img {
+        width: 100%;
+        height: 17rem;
+        object-fit: cover;
+        border-radius: 0.75rem 0.75rem 0 0;
+      }
+
+      .news-item__content {
+        display: flex;
+        padding: 1.75rem;
+        flex-direction: column;
+        gap: 0.5em;
+
+        h5 {
+          margin: 0;
+        }
+      }
+    }
+  }
+}

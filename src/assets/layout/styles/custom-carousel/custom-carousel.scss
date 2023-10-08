@@ -1,0 +1,36 @@
+.p-carousel-container {
+  button {
+    display: none;
+  }
+}
+
+.default-carousel {
+  .p-carousel-items-container {
+    .p-carousel-item {
+      flex: 0 0 20%;
+      width: 20%;
+
+      img {
+        width: 100%;
+        height: 4rem;
+        padding: 0 0.25rem;
+      }
+    }
+  }
+}
+
+.carousel-3 {
+  .p-carousel-items-container {
+    .p-carousel-item {
+      flex: 0 0 25%;
+      width: 25%;
+
+      img {
+        width: 100%;
+        height: 15rem;
+        object-fit: cover;
+        padding: 0 0.25rem;
+      }
+    }
+  }
+}
