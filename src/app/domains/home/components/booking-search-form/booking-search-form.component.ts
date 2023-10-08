@@ -38,7 +38,7 @@ export class BookingSearchFormComponent implements OnInit {
       to: [""],
       departDate: [new Date()],
       returnDate: [""],
-      passengers: [""],
+      passengers: ["1"],
     });
   }
 
