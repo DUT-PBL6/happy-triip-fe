@@ -1,0 +1,11 @@
+<app-booking-search-form></app-booking-search-form>
+<div class="results flex flex-column mt-4 gap-4">
+  <ng-container *ngIf="routes$ | async as routes">
+    <ng-container *ngFor="let route of routes">
+      <app-result-card [route]="route"></app-result-card>
+    </ng-container>
+  </ng-container>
+</div>
+<app-popular-routes></app-popular-routes>
+<app-footer></app-footer>
+<app-copyright></app-copyright>

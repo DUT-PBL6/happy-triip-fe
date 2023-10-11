@@ -1,0 +1,102 @@
+.card {
+  .content {
+    padding: 1em 0 1.5em;
+
+    .route-detail {
+      .stations {
+        .departure,
+        .arrive {
+          gap: 0.75em;
+          line-height: 1.25rem;
+          font-weight: 600;
+          text-transform: capitalize;
+          min-height: 1.875rem;
+
+          i {
+            color: var(--secondary-color);
+          }
+
+          .dot {
+            width: 0.25rem;
+            height: 0.25rem;
+            background: #767676;
+            border-radius: 50%;
+          }
+
+          .departure__link,
+          .arrive__link {
+            a {
+              letter-spacing: 0.03125rem;
+              color: #e6a027;
+              cursor: pointer;
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .time-estimate {
+          .dashed {
+            min-height: 2.5rem;
+            border-left: 1px dashed #767676;
+            margin-left: 0.45rem;
+          }
+
+          span {
+            font-size: 0.9rem;
+            line-height: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.03125rem;
+            color: var(--text-color-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    .price-container {
+      display: grid;
+      gap: 0.5em;
+      margin-top: auto;
+
+      .price {
+        text-align: end;
+      }
+
+      .actions {
+        gap: 0.5em;
+      }
+    }
+  }
+
+  .locations {
+    margin: 0 -2rem;
+    border-top: 0.0625rem solid #e1e1e1;
+    padding: 1rem 1.5rem 0;
+
+    .tab-content {
+      .address {
+        gap: 0.75em;
+        line-height: 1.25rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        min-height: 1.875rem;
+
+        i {
+          color: var(--secondary-color);
+        }
+      }
+
+      .images {
+        margin-top: 1.5rem;
+
+        iframe {
+          width: 25rem;
+          height: 9rem;
+          border-radius: 0.25rem;
+        }
+      }
+    }
+  }
+}

@@ -15,7 +15,7 @@
           <p class="font-medium my-3">From</p>
           <p-dropdown
             [options]="locations$ | async"
-            formControlName="from"
+            formControlName="fromAt"
             optionLabel="name"
             optionValue="codename"
             [showClear]="true"
@@ -43,7 +43,7 @@
           <p class="font-medium my-3">To</p>
           <p-dropdown
             [options]="locations$ | async"
-            formControlName="to"
+            formControlName="toAt"
             optionLabel="name"
             optionValue="codename"
             [showClear]="true"
@@ -72,28 +72,28 @@
         <div class="depart-date flex flex-column flex-1">
           <p class="font-medium my-3">Depart Date</p>
           <p-calendar
-            formControlName="departDate"
+            formControlName="departAt"
             class="w-full sm:w-auto"
             styleClass="w-full"
             [showIcon]="true"
             [showButtonBar]="true"
             [dateFormat]="datePickerFormat"
             class="full-width-calendar"
-            [minDate]="departDate.value"
-            [maxDate]="returnDate.value"
+            [minDate]="departAt.value"
+            [maxDate]="arriveAt.value"
           ></p-calendar>
         </div>
         <div class="return-date flex flex-column flex-1" *ngIf="selectedBookingOption === 'ROUND_TRIP'">
           <p class="font-medium my-3">Return Date</p>
           <p-calendar
-            formControlName="returnDate"
+            formControlName="arriveAt"
             class="w-full sm:w-auto"
             styleClass="w-full"
             [showIcon]="true"
             [showButtonBar]="true"
             [dateFormat]="datePickerFormat"
             class="full-width-calendar"
-            [minDate]="departDate.value"
+            [minDate]="departAt.value"
           ></p-calendar>
         </div>
       </div>

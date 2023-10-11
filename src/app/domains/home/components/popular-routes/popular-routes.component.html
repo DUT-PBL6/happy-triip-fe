@@ -1,5 +1,5 @@
-<div class="popular-routes-container">
-  <h4 class="font-medium">Popular Routes</h4>
+<div class="popular-routes-container flex flex-column gap-4">
+  <h4 class="font-medium">{{ popularRoutesTitle }}</h4>
   <drag-scroll [scrollbar-hidden]="true" [scroll-x-wheel-enabled]="true">
     <ng-container *ngIf="popularRoutes$ | async as popularRoutes">
       <ng-container *ngFor="let route of popularRoutes">

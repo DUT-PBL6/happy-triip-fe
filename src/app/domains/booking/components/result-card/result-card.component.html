@@ -1,0 +1,93 @@
+<div class="card flex flex-column w-full">
+  <div class="content flex justify-content-between gap-4">
+    <div class="route-detail">
+      <div class="stations flex flex-column">
+        <div class="departure flex align-items-center">
+          <i class="pi pi-map-marker"></i>
+          <div class="departure__time">
+            {{ getTime(route.departAt) }}
+          </div>
+          <div class="dot"></div>
+          <div class="departure__name">
+            {{ route.fromAt["name"] }}
+          </div>
+          <div class="departure__link">
+            <a href="{{ route.fromAt['gmapLink'] }}" target="_blank">View on map</a>
+          </div>
+        </div>
+        <div class="time-estimate flex gap-3 align-items-center">
+          <div class="dashed"></div>
+          <span>{{ getHoursDifference(route.departAt, route.arriveAt) }} hour(s) ride</span>
+        </div>
+        <div class="arrive flex align-items-center">
+          <i class="pi pi-map-marker"></i>
+          <div class="arrive__time">
+            {{ getTime(route.arriveAt) }}
+          </div>
+          <div class="dot"></div>
+          <div class="arrive__name">
+            {{ route.toAt["name"] }}
+          </div>
+          <div class="arrive__link">
+            <a href="{{ route.toAt['gmapLink'] }}" target="_blank">View on map</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="price-container flex flex-column">
+      <div class="price text-5xl font-semibold">USD {{ route.price }}</div>
+      <div class="actions flex">
+        <p-button
+          label="{{ !isViewDetails ? 'View Details' : 'Hide Details' }}"
+          styleClass="p-button-outlined p-button-secondary"
+          icon="{{ !isViewDetails ? 'pi pi-angle-down' : 'pi pi-angle-up' }}"
+          iconPos="right"
+          (onClick)="isViewDetails = !isViewDetails"
+        ></p-button>
+        <p-button label="Book Now" icon="pi pi-angle-right" iconPos="right"></p-button>
+      </div>
+    </div>
+  </div>
+  <div class="locations" *ngIf="isViewDetails && sanitizedFromAtEmbedMapLink && sanitizedToAtEmbedMapLink">
+    <p-tabView>
+      <p-tabPanel header="Departure">
+        <div class="tab-content">
+          <div class="address flex align-items-center">
+            <i class="pi pi-map-marker"></i>
+            <span>{{ route.fromAt["name"] }}</span>
+          </div>
+          <div class="images flex justify-content-between">
+            <div class="list flex gap-2">
+              <ng-template let-image ngFor [ngForOf]="route.fromAt['images']" pTemplate="item">
+                <p-image src="{{ image }}" alt="Image" width="120" [preview]="true"></p-image>
+              </ng-template>
+            </div>
+            <iframe
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              style="border: 0"
+              [src]="sanitizedFromAtEmbedMapLink"
+            ></iframe>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Arrival">
+        <div class="tab-content">
+          <div class="address flex align-items-center">
+            <i class="pi pi-map-marker"></i>
+            <span>{{ route.toAt["name"] }}</span>
+          </div>
+          <div class="images flex justify-content-between">
+            <div class="list flex gap-2">
+              <ng-template let-image ngFor [ngForOf]="route.toAt['images']" pTemplate="item">
+                <p-image src="{{ image }}" alt="Image" width="120" [preview]="true"></p-image>
+              </ng-template>
+            </div>
+            <iframe allowfullscreen="" loading="lazy" style="border: 0" [src]="sanitizedToAtEmbedMapLink"></iframe>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
