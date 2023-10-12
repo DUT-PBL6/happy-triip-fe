@@ -1,0 +1,42 @@
+{
+  "share": {
+    "utilities": {
+      "AirConditioner": "Air Conditioner",
+      "AlmostFull": "Almost Full",
+      "BedSeat": "Bed Seat",
+      "Blanket": "Blanket",
+      "Cancellation": "Cancellation",
+      "EnglishSupported": "English Supported",
+      "ETicket": "E-Ticket",
+      "InstantConfirmation": "Instant Confirmation",
+      "FreeLuggage": "1 Free Luggage",
+      "Pillow": "Pillow",
+      "RestStop": "Rest Stop",
+      "Wifi": "WiFi",
+      "Water": "Water",
+      "Support247": "24/7 Support",
+      "Outlets": "Outlets",
+      "OnboardEntertainment": "Onboard Entertainment",
+      "MassageSeat": "Massage Seat",
+      "SightSeeing": "Sightseeing",
+      "TourGuide": "Tour Guide",
+      "SightSeeingTicket": "Sightseeing Ticket",
+      "RecliningSeat": "Reclining Seat",
+      "Towel": "Towel",
+      "Snacks": "Snacks",
+      "RestRoomOnBus": "Restroom on Bus",
+      "Tv": "Television"
+    },
+    "transportType": {
+      "Bus": "Bus",
+      "Minivan": "Minivan",
+      "Car": "Car",
+      "Train": "Train",
+      "AirPlane": "Air plane"
+    },
+    "bookingOptions": {
+      "OneWay": "One Way",
+      "RoundTrip": "Round Trip"
+    }
+  }
+}

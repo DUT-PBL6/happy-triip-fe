@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Store } from "@ngxs/store";
-import { User } from "src/app/core/models/user.model";
 import { BaseApiService } from "../base-api/base-api.service";
 import { LoadingService } from "../loading/loading.service";
 import { ToastService } from "../toast/toast.service";

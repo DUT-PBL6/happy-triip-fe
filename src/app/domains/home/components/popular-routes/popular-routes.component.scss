@@ -1,6 +1,9 @@
 .popular-routes-container {
-  height: 200px;
-  margin: 2rem calc((100vw - 1312px) / 2);
+  padding: 2rem calc((100vw - 1312px) / 2);
+  background: white;
+  display: grid;
+  gap: 1rem;
+  grid-gap: 1rem;
 
   drag-scroll {
     width: 100%;
