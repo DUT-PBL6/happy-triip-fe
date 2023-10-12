@@ -4,13 +4,19 @@ import { NgxsModule } from "@ngxs/store";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { MessageService } from "primeng/api";
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from "@angular/common/http";
 import { LoadingState } from "./core/service/loading/loading.state";
 import { HeaderModule } from "./share/components/header/header.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToastModule } from "primeng/toast";
 import { ProgressSpinnerComponentModule } from "./share/components/progress-spinner/progress-spinner.module";
 import { AuthInterceptorService } from "./core/interceptors/auth.interceptor";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +29,13 @@ import { AuthInterceptorService } from "./core/interceptors/auth.interceptor";
     HttpClientModule,
     ToastModule,
     NgxsModule.forRoot([LoadingState]),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     {

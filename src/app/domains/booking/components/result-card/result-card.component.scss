@@ -1,47 +1,55 @@
 .card {
-  .content {
-    padding: 1em 0 1.5em;
+  .header {
+    .vehicle {
+      width: fit-content !important;
+      gap: 0.375rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1000px;
+      background: #eefae0;
 
-    .route-detail {
-      .stations {
-        .departure,
-        .arrive {
-          gap: 0.75em;
-          line-height: 1.25rem;
-          font-weight: 600;
-          text-transform: capitalize;
-          min-height: 1.875rem;
+      img {
+        width: 1.375rem;
+      }
+    }
+  }
 
-          i {
-            color: var(--secondary-color);
-          }
+  .route-item {
+    .content {
+      padding: 1em 0 1.5em;
 
-          .dot {
-            width: 0.25rem;
-            height: 0.25rem;
-            background: #767676;
-            border-radius: 50%;
-          }
+      .route-detail {
+        .stations {
+          .departure,
+          .arrive {
+            gap: 0.75em;
+            line-height: 1.25rem;
+            font-weight: 600;
+            text-transform: capitalize;
+            min-height: 1.875rem;
 
-          .departure__link,
-          .arrive__link {
-            a {
-              letter-spacing: 0.03125rem;
-              color: #e6a027;
-              cursor: pointer;
-              text-decoration: underline;
+            i {
+              color: var(--secondary-color);
+            }
+
+            .dot {
+              width: 0.25rem;
+              height: 0.25rem;
+              background: #767676;
+              border-radius: 50%;
+            }
+
+            .departure__link,
+            .arrive__link {
+              a {
+                letter-spacing: 0.03125rem;
+                color: #e6a027;
+                cursor: pointer;
+                text-decoration: underline;
+              }
             }
           }
-        }
 
-        .time-estimate {
-          .dashed {
-            min-height: 2.5rem;
-            border-left: 1px dashed #767676;
-            margin-left: 0.45rem;
-          }
-
-          span {
+          .time-estimate {
             font-size: 0.9rem;
             line-height: 1rem;
             font-weight: 400;
@@ -50,30 +58,48 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+
+            .dashed {
+              min-height: 2.5rem;
+              border-left: 1px dashed #767676;
+              margin-left: 0.45rem;
+            }
+
+            .dot {
+              width: 0.25rem;
+              height: 0.25rem;
+              background: #767676;
+              border-radius: 50%;
+            }
           }
         }
       }
-    }
 
-    .price-container {
-      display: grid;
-      gap: 0.5em;
-      margin-top: auto;
-
-      .price {
-        text-align: end;
-      }
-
-      .actions {
+      .price-container {
+        display: grid;
         gap: 0.5em;
+        margin-top: auto;
+
+        .price {
+          text-align: end;
+        }
+
+        .actions {
+          gap: 0.5em;
+        }
       }
     }
   }
 
-  .locations {
-    margin: 0 -2rem;
+  .utilities {
     border-top: 0.0625rem solid #e1e1e1;
+    border-bottom: 0.0625rem solid #e1e1e1;
+  }
+
+  .utilities,
+  .locations {
     padding: 1rem 1.5rem 0;
+    margin: 0 -2rem;
 
     .tab-content {
       .address {
@@ -98,5 +124,16 @@
         }
       }
     }
+  }
+}
+
+.utilities-list {
+  gap: 1em;
+
+  .item {
+    gap: 0.5em;
+    line-height: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.03125rem;
   }
 }

@@ -1,3 +1,4 @@
+import { TranslateModule } from "@ngx-translate/core";
 import { NgModule } from "@angular/core";
 import { BookingSearchFormComponent } from "./booking-search-form.component";
 import { CommonModule } from "@angular/common";
@@ -19,6 +20,7 @@ import { InputNumberModule } from "primeng/inputnumber";
     CalendarModule,
     SelectButtonModule,
     InputNumberModule,
+    TranslateModule,
   ],
   exports: [BookingSearchFormComponent],
 })

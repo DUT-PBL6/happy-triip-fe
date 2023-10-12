@@ -27,6 +27,6 @@ export class RouteService extends BaseApiService {
 
   public getRoutesByInfo$(routeInfo: RouteInfo): Observable<Route[]> {
     // TODO: Replace by calling real API
-    return this.http.get<Route[]>("https://mocki.io/v1/3b196553-323b-48dc-b458-53b03284cb68");
+    return this.http.get<Route[]>("https://mocki.io/v1/171e83d4-66b1-4d73-b4eb-35eea3fd263d");
   }
 }

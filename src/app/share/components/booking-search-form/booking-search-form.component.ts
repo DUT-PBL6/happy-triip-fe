@@ -1,3 +1,4 @@
+import { TranslateService } from "@ngx-translate/core";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Option } from "src/app/core/interfaces/option.interface";
@@ -6,6 +7,7 @@ import { Observable } from "rxjs";
 import { ProvinceService } from "src/app/core/service/province/province.service";
 import { DATE_PICKER_FORMAT } from "src/app/share/constants";
 import { ActivatedRoute, Router } from "@angular/router";
+import { BookingOption } from "src/app/core/enums/booking-option.enum";
 
 @Component({
   selector: "app-booking-search-form",
@@ -15,7 +17,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class BookingSearchFormComponent implements OnInit {
   public bookingSearchForm: FormGroup;
   public bookingOptions: Option<String>[];
-  public selectedBookingOption = "ONE_WAY";
+  public selectedBookingOption = BookingOption.OneWay;
   public locations$: Observable<Province[]>;
   public readonly datePickerFormat = DATE_PICKER_FORMAT;
 
@@ -23,30 +25,57 @@ export class BookingSearchFormComponent implements OnInit {
     private provinceService: ProvinceService,
     private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.initBookingSearchForm();
-    this.bookingOptions = [
-      { name: "One Way", value: "ONE_WAY" },
-      { name: "Round Trip", value: "ROUND_TRIP" },
-    ];
+    this.initBookingOptions();
     this.locations$ = this.provinceService.getProvinces$();
+
+    this.route.queryParamMap.subscribe((params) => {
+      if (params.get("arriveAt") !== null) {
+        this.selectedBookingOption = BookingOption.RoundTrip;
+        this.onBookingOptionChange();
+      }
+
+      this.bookingSearchForm.patchValue({
+        fromAt: params.get("fromAt") || this.fromAt.value,
+        toAt: params.get("toAt") || this.toAt.value,
+        departAt: params.get("departAt") ? new Date(decodeURIComponent(params.get("departAt"))) : this.departAt.value,
+        arriveAt: params.get("arriveAt") ? new Date(decodeURIComponent(params.get("arriveAt"))) : this.arriveAt?.value,
+        passengers: params.get("passengers") || this.passengers.value,
+      });
+    });
   }
 
   private initBookingSearchForm(): void {
     const currentDate = new Date();
-    const tomorrowDate = new Date(currentDate);
-    tomorrowDate.setDate(currentDate.getDate() + 1);
 
     this.bookingSearchForm = this.fb.group({
       fromAt: ["", Validators.required],
       toAt: ["", Validators.required],
       departAt: [currentDate, Validators.required],
-      arriveAt: [tomorrowDate],
       passengers: ["1", Validators.required],
     });
+  }
+
+  private initBookingOptions(): void {
+    this.bookingOptions = Object.entries(BookingOption).map(([key, value]) => ({
+      name: this.translate.instant(`share.bookingOptions.${key}`),
+      value,
+    }));
+  }
+
+  public onBookingOptionChange(): void {
+    if (this.selectedBookingOption !== "ROUND_TRIP") {
+      this.bookingSearchForm.removeControl("arriveAt");
+      return;
+    }
+    const tomorrowDate = new Date();
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+    this.bookingSearchForm.addControl("arriveAt", new FormControl(tomorrowDate, Validators.required));
   }
 
   public get fromAt(): FormControl {
@@ -75,9 +104,16 @@ export class BookingSearchFormComponent implements OnInit {
       return;
     }
 
-    this.router.navigate(["../booking/search"], {
+    const queryParams = {
+      ...this.bookingSearchForm.value,
+      arriveAt: this.bookingSearchForm.contains("arriveAt") ? this.bookingSearchForm.value.arriveAt : null,
+    };
+
+    console.log(queryParams);
+
+    this.router.navigate(["/booking/search"], {
       relativeTo: this.route,
-      queryParams: this.bookingSearchForm.value,
+      queryParams,
       queryParamsHandling: "merge",
     });
   }
