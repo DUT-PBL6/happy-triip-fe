@@ -54,29 +54,89 @@ export interface Station {
   description: string;
 }
 
-export interface Transport {
-  id: number;
-  name: string;
-  capacity: number;
-  type: number;
-  seatType: object;
-  additionalService: object;
-  image: string;
-  utility: string;
+export enum TypeVehical {
+  BUS = 'BUS',
+  MINIVAN = 'MINIVAN',
+  LIMOUSINE = 'LIMOUSINE',
+  CAR = 'CAR',
+  TRAIN = 'TRAIN',
+  AIRPLANE = 'AIRPLANE',
 }
 
-export interface Partner {
+export interface SeatType {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  transport: Transport;
+}
+
+export enum Utility {
+  AIR_CONDITIONER = 'AIR_CONDITIONER',
+  ALMOST_FULL = 'ALMOST_FULL',
+  BED_SEAT = 'BED_SEAT',
+  BLANKET = 'BLANKET',
+  CANCELLATION = 'CANCELLATION',
+  ENGLISH_SUPPORTED = 'ENGLISH_SUPPORTED',
+  E_TICKET = 'E_TICKET',
+  INSTANT_CONFIRMATION = 'INSTANT_CONFIRMATION',
+  MASSAGE_SEAT = 'MASSAGE_SEAT',
+  ONBOARD_ENTERTAINMENT = 'ONBOARD_ENTERTAINMENT',
+  ONE_FREE_LUGGAGE = 'ONE_FREE_LUGGAGE',
+  OUTLETS = 'OUTLETS',
+  PILLOW = 'PILLOW',
+  RECLINING_SEAT = 'RECLINING_SEAT',
+  REST_ROOM_ON_BUS = 'REST_ROOM_ON_BUS',
+  REST_STOP = 'REST_STOP',
+  SIGHT_SEEING = 'SIGHT_SEEING',
+  SIGHT_SEEING_TICKET = 'SIGHT_SEEING_TICKET',
+  SNACK = 'SNACK',
+  SUPPORT24X7 = 'SUPPORT_24x7',
+  TOUR_GUIDE = 'TOUR_GUIDE',
+  TOWEL = 'TOWEL',
+  TELEVISION = 'TELEVISION',
+  WATER = 'WATER',
+  WIFI = 'WIFI',
+}
+
+export interface Passenger {
   id: number;
   name: string;
   email: string;
   username: string;
   password: string;
   phoneNumber: string;
-  userRole: string;
-  description: string;
-  title: string;
-  medialLink: string;
-  routes: string[];
+  bonusPoint: number;
+  bookings: Booking[];
+}
+
+export interface Booking {
+  id: number;
+  name: string;
+  bookingCode: string;
+  /** @format date-time */
+  soldOn: string;
+  bookingDetail: BookingDetail[];
+  passenger: Passenger;
+  status: string;
+}
+
+export interface BookingDetail {
+  id: number;
+  booking: Booking;
+  route: Route;
+  seats: Seat[];
+  /** @format date-time */
+  departAt: string;
+}
+
+export interface Seat {
+  id: number;
+  seatCode: string;
+  route: Route;
+  /** @format date-time */
+  date: string;
+  bookingDetail: BookingDetail;
 }
 
 export interface Route {
@@ -93,7 +153,32 @@ export interface Route {
   status: string;
   transport: Transport;
   partner: Partner;
-  seats: string[];
+  seats: Seat[];
+}
+
+export interface Partner {
+  id: number;
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  description: string;
+  title: string;
+  medialLink: string;
+  routes: Route[];
+  transports: Transport[];
+}
+
+export interface Transport {
+  id: number;
+  name: string;
+  type: TypeVehical;
+  mapSeat: number[][][];
+  seatTypes: SeatType[];
+  images: string[];
+  utility?: Utility[];
+  partner: Partner;
 }
 
 export interface RouteDto {
@@ -104,7 +189,33 @@ export interface RouteDto {
 
 export type StationDto = object;
 
-export type TransportDto = object;
+export interface TransportDto {
+  name: string;
+  type: TypeVehical;
+  mapSeat: string[];
+  seatTypes: SeatType[];
+  images: string[];
+  utility?: Utility[];
+}
+
+export interface AuthCredentialsDto {
+  username: string;
+  password: string;
+  userRole: string;
+}
+
+export interface TokenResponse {
+  accessToken: string;
+}
+
+export interface UserDto {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  userRole: string;
+}
 
 import axios, { AxiosInstance, AxiosRequestConfig, HeadersDefaults, ResponseType } from 'axios';
 
@@ -539,13 +650,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Transport
-     * @name TransportControllerGetAll
-     * @request GET:/api/transport
+     * @name TransportControllerCreate
+     * @summary Create transport
+     * @request POST:/api/transport
      */
-    transportGetAll: (params: RequestParams = {}) =>
+    transportCreate: (data: TransportDto, params: RequestParams = {}) =>
       this.request<Transport[], any>({
         path: `/api/transport`,
-        method: 'GET',
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
         format: 'json',
         ...params,
       }),
@@ -554,15 +668,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Transport
-     * @name TransportControllerCreate
-     * @request POST:/api/transport
+     * @name TransportControllerGetAll
+     * @request GET:/api/transport
      */
-    transportCreate: (data: TransportDto, params: RequestParams = {}) =>
-      this.request<Transport, any>({
+    transportGetAll: (params: RequestParams = {}) =>
+      this.request<Transport[], any>({
         path: `/api/transport`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
+        method: 'GET',
         format: 'json',
         ...params,
       }),
@@ -593,6 +705,40 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<Transport, any>({
         path: `/api/transport/${id}`,
         method: 'PUT',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerLogin
+     * @request POST:/api/auth/login
+     */
+    authLogin: (data: AuthCredentialsDto, params: RequestParams = {}) =>
+      this.request<TokenResponse, any>({
+        path: `/api/auth/login`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerSignUp
+     * @request POST:/api/auth/signup
+     */
+    authSignUp: (data: UserDto, params: RequestParams = {}) =>
+      this.request<TokenResponse, any>({
+        path: `/api/auth/signup`,
+        method: 'POST',
         body: data,
         type: ContentType.Json,
         format: 'json',
