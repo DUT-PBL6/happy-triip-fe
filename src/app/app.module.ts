@@ -13,6 +13,7 @@ import { ProgressSpinnerComponentModule } from "./share/components/progress-spin
 import { AuthInterceptorService } from "./core/interceptors/auth.interceptor";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { clientService } from "src/lib";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);

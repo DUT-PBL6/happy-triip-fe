@@ -7,7 +7,7 @@ import { LoadingService } from "../loading/loading.service";
 import { ToastService } from "../toast/toast.service";
 import { PopularRoute } from "src/app/domains/home/types/popular-route.type";
 import { RouteInfo } from "src/app/domains/booking/types/route-info.type";
-import { Route } from "../../models/route.type";
+import { Route } from "_api";
 
 @Injectable({ providedIn: "root" })
 export class RouteService extends BaseApiService {

@@ -23,7 +23,7 @@ export const isSameDate = (dateInput: string, dateMark: Date): boolean => {
   return dayjs(dateInput).startOf("day").isSame(dayjs(dateMark), "day");
 };
 
-export const getTime = (dateInput: Date): string => {
+export const getTime = (dateInput: string): string => {
   const date = new Date(dateInput);
   const hours = date.getUTCHours();
   const minutes = date.getUTCMinutes();
@@ -31,7 +31,7 @@ export const getTime = (dateInput: Date): string => {
   return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
 };
 
-export const getHoursDifference = (departAt: Date, arriveAt: Date) => {
+export const getHoursDifference = (departAt: string, arriveAt: string) => {
   const departTime = dayjs(departAt);
   const arriveTime = dayjs(arriveAt);
 

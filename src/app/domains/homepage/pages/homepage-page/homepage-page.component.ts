@@ -3,6 +3,7 @@ import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
+import cacheService from "src/lib/cache-service";
 
 @Component({
   selector: "app-homepage-page",
@@ -18,7 +19,7 @@ export class HomepagePageComponent extends BaseDestroyable implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!localStorage.getItem("token")) {
+    if (!cacheService.getValue("accessToken")) {
       this.router.navigate([`/home`]);
       return;
     }

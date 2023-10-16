@@ -2,9 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Select } from "@ngxs/store";
+import { TokenResponse } from "_api";
 import { Observable, takeUntil, tap } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
-import { AuthService, LoginResponseData } from "src/app/core/service/auth/auth.service";
+import { AuthService } from "src/app/core/service/auth/auth.service";
 import { LoadingState } from "src/app/core/service/loading/loading.state";
 
 @Component({
@@ -28,7 +29,7 @@ export class LoginComponent extends BaseDestroyable implements OnInit {
 
   private initLoginForm(): void {
     this.loginForm = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
+      email: ["", [Validators.required]],
       password: ["", Validators.required],
     });
   }
@@ -47,19 +48,19 @@ export class LoginComponent extends BaseDestroyable implements OnInit {
       return;
     }
 
-    this.authService
-      .login$(this.email.value, this.password.value)
-      .pipe(
-        tap((response: LoginResponseData) => {
-          localStorage.setItem("token", response.accessToken);
-        }),
-        takeUntil(this.destroy$)
-      )
-      .subscribe({
-        next: () => {
-          this.router.navigate(["/homepage"]);
-        },
-      });
+    this.authService.login$(this.email.value, this.password.value);
+
+    // .pipe(
+    //   tap((response: TokenResponse) => {
+    //     localStorage.setItem("token", response.accessToken);
+    //   }),
+    //   takeUntil(this.destroy$)
+    // )
+    // .subscribe({
+    //   next: () => {
+    //     this.router.navigate(["/homepage"]);
+    //   },
+    // });
   }
 
   public validate(fieldControl: FormControl): boolean {

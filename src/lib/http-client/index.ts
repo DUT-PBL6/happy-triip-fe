@@ -5,6 +5,7 @@ import cacheService from "../cache-service";
 import CodeMessage from "./code-message";
 import { environment } from "src/environments/environment";
 
+const messageService = new MessageService();
 const clientService = new Api({ baseURL: environment.apiUrl ?? "" });
 clientService.instance.interceptors.request.use(
   (configOriginal) => {
@@ -18,7 +19,7 @@ clientService.instance.interceptors.request.use(
     return config;
   },
   (error) => {
-    new MessageService().add({ severity: "error", summary: "Error message", detail: error });
+    messageService.add({ severity: "error", summary: "Error message", detail: error.message });
     Promise.reject(error);
   }
 );
@@ -29,7 +30,7 @@ clientService.instance.interceptors.response.use(
       cacheService.setValue({
         accessToken: undefined,
       });
-      window.location.href = "/login";
+      //window.location.href = "auth/login";
     }
     let msg = error?.response.data?.message ?? CodeMessage[error?.response?.status] ?? "Something went wrong";
     if (error?.response.status === 422) {
@@ -40,7 +41,7 @@ clientService.instance.interceptors.response.use(
       }, []);
       msg = errorsMsg;
     }
-    new MessageService().add({ severity: "error", summary: "Error message", detail: error });
+    console.log(messageService.add({ severity: "error", summary: "Error message", detail: msg }));
   }
 );
 export default clientService;

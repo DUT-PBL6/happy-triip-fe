@@ -42,10 +42,77 @@ export interface Audit {
   createdDate: string;
 }
 
+export enum City {
+  ANGIANG = 'ANGIANG',
+  BARIAVUNGTAU = 'BARIAVUNGTAU',
+  BACLIEU = 'BACLIEU',
+  BACKAN = 'BACKAN',
+  BACGIANG = 'BACGIANG',
+  BACNINH = 'BACNINH',
+  BENTRE = 'BENTRE',
+  BINHDUONG = 'BINHDUONG',
+  BINHDINH = 'BINHDINH',
+  BINHPHUOC = 'BINHPHUOC',
+  BINHTHUAN = 'BINHTHUAN',
+  CAMAU = 'CAMAU',
+  CAOBANG = 'CAOBANG',
+  CANTHO = 'CANTHO',
+  DANANG = 'DANANG',
+  DAKLAK = 'DAKLAK',
+  DAKNONG = 'DAKNONG',
+  DIENBIEN = 'DIENBIEN',
+  DONGNAI = 'DONGNAI',
+  DONGTHAP = 'DONGTHAP',
+  GIALAI = 'GIALAI',
+  HAGIANG = 'HAGIANG',
+  HANAM = 'HANAM',
+  HANOI = 'HANOI',
+  HATAY = 'HATAY',
+  HATINH = 'HATINH',
+  HAIDUONG = 'HAIDUONG',
+  HAIPHONG = 'HAIPHONG',
+  HOABINH = 'HOABINH',
+  HOCHIMINH = 'HOCHIMINH',
+  HAUGIANG = 'HAUGIANG',
+  HUNGYEN = 'HUNGYEN',
+  KHANHHOA = 'KHANHHOA',
+  KIENGIANG = 'KIENGIANG',
+  KONTUM = 'KONTUM',
+  LACHAU = 'LACHAU',
+  LAOCAI = 'LAOCAI',
+  LANGSON = 'LANGSON',
+  LAMDONG = 'LAMDONG',
+  LONGAN = 'LONGAN',
+  NAMDINH = 'NAMDINH',
+  NGHEAN = 'NGHEAN',
+  NINHBINH = 'NINHBINH',
+  NINHTHUAN = 'NINHTHUAN',
+  PHUTHO = 'PHUTHO',
+  PHUYEN = 'PHUYEN',
+  QUANGBINH = 'QUANGBINH',
+  QUANGNAM = 'QUANGNAM',
+  QUANGNGAI = 'QUANGNGAI',
+  QUANGNINH = 'QUANGNINH',
+  QUANGTRI = 'QUANGTRI',
+  SOCTRANG = 'SOCTRANG',
+  SONLA = 'SONLA',
+  TAYNINH = 'TAYNINH',
+  THAIBINH = 'THAIBINH',
+  THAINGUYEN = 'THAINGUYEN',
+  THANHHOA = 'THANHHOA',
+  THUATHIENHUE = 'THUATHIENHUE',
+  TIENGIANG = 'TIENGIANG',
+  TRAVINH = 'TRAVINH',
+  TIENQUANG = 'TIENQUANG',
+  VINHLONG = 'VINHLONG',
+  VINHPHUC = 'VINHPHUC',
+  YENBAI = 'YENBAI',
+}
+
 export interface Station {
   id: number;
   name: string;
-  city: string;
+  city: City;
   district: string;
   ward: string;
   address: string;
@@ -215,6 +282,16 @@ export interface UserDto {
   password: string;
   phoneNumber: string;
   userRole: string;
+}
+
+export interface Employee {
+  id: number;
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  role: string;
 }
 
 import axios, { AxiosInstance, AxiosRequestConfig, HeadersDefaults, ResponseType } from 'axios';
@@ -586,6 +663,24 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Station
+     * @name StationControllerCreate
+     * @summary Create station
+     * @request POST:/api/station
+     */
+    stationCreate: (data: StationDto, params: RequestParams = {}) =>
+      this.request<Station, any>({
+        path: `/api/station`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Station
      * @name StationControllerGetAll
      * @request GET:/api/station
      */
@@ -601,15 +696,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Station
-     * @name StationControllerCreate
-     * @request POST:/api/station
+     * @name StationControllerUpdate
+     * @summary Update station
+     * @request PUT:/api/station/{id}
      */
-    stationCreate: (data: StationDto, params: RequestParams = {}) =>
+    stationUpdate: (id: string, params: RequestParams = {}) =>
       this.request<Station, any>({
-        path: `/api/station`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
+        path: `/api/station/${id}`,
+        method: 'PUT',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Station
+     * @name StationControllerDelete
+     * @summary Delete station
+     * @request DELETE:/api/station/{id}
+     */
+    stationDelete: (id: string, params: RequestParams = {}) =>
+      this.request<Station, any>({
+        path: `/api/station/${id}`,
+        method: 'DELETE',
         format: 'json',
         ...params,
       }),
@@ -632,30 +742,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags Station
-     * @name StationControllerUpdate
-     * @request PUT:/api/station/{id}
-     */
-    stationUpdate: (id: string, data: StationDto, params: RequestParams = {}) =>
-      this.request<Station, any>({
-        path: `/api/station/${id}`,
-        method: 'PUT',
-        body: data,
-        type: ContentType.Json,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
      * @tags Transport
      * @name TransportControllerCreate
      * @summary Create transport
      * @request POST:/api/transport
      */
     transportCreate: (data: TransportDto, params: RequestParams = {}) =>
-      this.request<Transport[], any>({
+      this.request<Transport, any>({
         path: `/api/transport`,
         method: 'POST',
         body: data,
@@ -738,6 +831,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     authSignUp: (data: UserDto, params: RequestParams = {}) =>
       this.request<TokenResponse, any>({
         path: `/api/auth/signup`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerCreateEmployee
+     * @request POST:/api/auth/employee
+     */
+    authCreateEmployee: (data: UserDto, params: RequestParams = {}) =>
+      this.request<Employee, any>({
+        path: `/api/auth/employee`,
         method: 'POST',
         body: data,
         type: ContentType.Json,

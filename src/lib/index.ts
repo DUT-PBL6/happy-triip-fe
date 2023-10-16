@@ -1,3 +1,3 @@
-import clientService from './http-client';
+import clientService from "./http-client";
 
-export { clientService};
+export { clientService };
