@@ -1,11 +1,14 @@
+import { LocationStrategy } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Select } from "@ngxs/store";
+import { AuthCredentialsDto, TokenResponse } from "_api";
 import { Observable, takeUntil, tap } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
-import { AuthService, LoginResponseData } from "src/app/core/service/auth/auth.service";
+import { AuthService } from "src/app/core/service/auth/auth.service";
 import { LoadingState } from "src/app/core/service/loading/loading.state";
+import cacheService from "src/lib/cache-service";
 
 @Component({
   selector: "app-login",
@@ -14,27 +17,34 @@ import { LoadingState } from "src/app/core/service/loading/loading.state";
 })
 export class LoginComponent extends BaseDestroyable implements OnInit {
   public loginForm: FormGroup;
+  public userRole: string;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private url: LocationStrategy
   ) {
     super();
   }
   ngOnInit(): void {
     this.initLoginForm();
+    this.userRole = this.url.path().includes("passenger")
+      ? "Passenger"
+      : this.url.path().includes("partner")
+      ? "Partner"
+      : "Admin";
   }
 
   private initLoginForm(): void {
     this.loginForm = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
+      username: ["", Validators.required],
       password: ["", Validators.required],
     });
   }
 
-  public get email(): FormControl {
-    return this.loginForm.get("email") as FormControl;
+  public get username(): FormControl {
+    return this.loginForm.get("username") as FormControl;
   }
 
   public get password(): FormControl {
@@ -47,11 +57,19 @@ export class LoginComponent extends BaseDestroyable implements OnInit {
       return;
     }
 
+    const authCredentialsDto: AuthCredentialsDto = {
+      username: this.username.value,
+      password: this.password.value,
+      userRole: this.userRole.toUpperCase(),
+    };
+
     this.authService
-      .login$(this.email.value, this.password.value)
+      .login$(authCredentialsDto)
       .pipe(
-        tap((response: LoginResponseData) => {
-          localStorage.setItem("token", response.accessToken);
+        tap((response: TokenResponse) => {
+          cacheService.setValue({
+            accessToken: response.accessToken,
+          });
         }),
         takeUntil(this.destroy$)
       )

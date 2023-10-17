@@ -1,4 +1,4 @@
-import * as Rx from 'rxjs';
+import * as Rx from "rxjs";
 
 export type Caches = {
   accessToken?: string;
@@ -10,7 +10,9 @@ export type Caches = {
 //   roles: string[];
 // };
 
-const cacheSubjects = new Rx.BehaviorSubject(typeof window !== 'undefined' && JSON.parse(localStorage.getItem('info') ?? '{}'));
+const cacheSubjects = new Rx.BehaviorSubject(
+  typeof window !== "undefined" && JSON.parse(localStorage.getItem("info") ?? "{}")
+);
 
 async function setValue(values: Caches) {
   const final = {
@@ -18,15 +20,15 @@ async function setValue(values: Caches) {
     ...values,
   };
   cacheSubjects.next(final);
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('info', JSON.stringify(final));
+  if (typeof window !== "undefined") {
+    localStorage.setItem("info", JSON.stringify(final));
   }
 }
 
 const resetValue = () => {
   cacheSubjects.next({});
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('info');
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("info");
   }
 };
 
@@ -42,7 +44,7 @@ const resetValue = () => {
 const cacheService = {
   cache: cacheSubjects.asObservable(),
   getValue(key: string) {
-    return cacheSubjects?.value?.[key] ?? '';
+    return cacheSubjects?.value?.[key] ?? "";
   },
   setValue,
   resetValue,

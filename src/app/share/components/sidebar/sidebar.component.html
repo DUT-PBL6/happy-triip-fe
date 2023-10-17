@@ -3,6 +3,7 @@
   [styleClass]="'no-toggle-button h-screen p-0'"
   selectionMode="single"
   [(selection)]="selectedRoute"
+  (onNodeSelect)="nodeSelect($event)"
 >
   <ng-template let-node pTemplate="default">
     <ng-container class="route flex justify-content-between align-items-center">

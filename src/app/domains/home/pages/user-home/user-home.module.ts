@@ -7,6 +7,7 @@ import { ButtonModule } from "primeng/button";
 import { CarouselModule } from "primeng/carousel";
 import { FooterModule } from "src/app/share/components/footer/footer.module";
 import { CopyrightModule } from "src/app/share/components/copyright/copyright.module";
+import { EmptyLayoutModule } from "src/app/share/layouts/empty-layout/empty-layout.module";
 
 @NgModule({
   declarations: [UserHomeComponent],
@@ -18,6 +19,7 @@ import { CopyrightModule } from "src/app/share/components/copyright/copyright.mo
     CarouselModule,
     FooterModule,
     CopyrightModule,
+    EmptyLayoutModule,
   ],
   exports: [UserHomeComponent],
 })

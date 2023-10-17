@@ -1,11 +1,9 @@
-import { TransportType } from "./../../../../core/enums/transport.enum";
-import { Utility } from "./../../../../core/enums/utility.enum";
 import { Component, Input, OnInit } from "@angular/core";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
-import { Route } from "src/app/core/models/route.type";
 import { getHoursDifference, getTime } from "src/app/share/helpers/date.helper";
 import { TranslateService } from "@ngx-translate/core";
 import { getKeyFromEnumValue } from "src/app/share/helpers/enum.helper";
+import { Route, TypeVehical, Utility } from "_api";
 
 @Component({
   selector: "app-result-card",
@@ -17,7 +15,7 @@ export class ResultCardComponent implements OnInit {
   public isViewDetails: boolean = false;
   public sanitizedFromAtEmbedMapLink: SafeResourceUrl;
   public sanitizedToAtEmbedMapLink: SafeResourceUrl;
-  public readonly TransportType = TransportType;
+  public readonly TransportType = TypeVehical;
   public readonly Utility = Utility;
 
   constructor(
@@ -30,11 +28,11 @@ export class ResultCardComponent implements OnInit {
     this.sanitizedToAtEmbedMapLink = this.sanitizer.bypassSecurityTrustResourceUrl(this.route.toAt["embedMapLink"]);
   }
 
-  public getTime(date: Date): string {
+  public getTime(date: string): string {
     return getTime(date);
   }
 
-  public getHoursDifference(departAt: Date, arriveAt: Date): number {
+  public getHoursDifference(departAt: string, arriveAt: string): number {
     return getHoursDifference(departAt, arriveAt);
   }
 

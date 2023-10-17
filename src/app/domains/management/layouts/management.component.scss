@@ -1,5 +1,8 @@
 .container {
+  display: grid;
+  grid-template-columns: max-content min-content auto;
   background: #f7f8fa;
+  flex: 1;
 
   app-sidebar {
     display: block;

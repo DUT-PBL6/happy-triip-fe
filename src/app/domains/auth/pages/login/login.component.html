@@ -1,22 +1,16 @@
 <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm)">
   <div class="content flex flex-column gap-6">
-    <h2 class="title mx-auto mb-0 text-primary">{{ "viet nam travel bus" | uppercase }}</h2>
+    <h2 class="title mx-auto mb-0 text-primary">{{ userRole + " Login" | uppercase }}</h2>
     <div class="field mb-0">
-      <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
+      <label for="username" class="block text-900 text-xl font-medium mb-2">Username</label>
       <div class="input-container">
         <input
-          id="email"
+          id="username"
           type="text"
-          placeholder="Enter your email"
+          placeholder="Enter your username"
           class="email-input p-inputtext p-component p-element w-full"
-          formControlName="email"
+          formControlName="username"
         />
-        <small class="p-error" *ngIf="validate(email)">
-          <strong>Email is required</strong>
-        </small>
-        <small class="p-error" *ngIf="email.touched && email.hasError('email')">
-          <strong>Email must be a valid email</strong>
-        </small>
       </div>
     </div>
 
