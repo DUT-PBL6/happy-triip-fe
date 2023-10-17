@@ -13,8 +13,7 @@ import { ProgressSpinnerComponentModule } from "./share/components/progress-spin
 import { AuthInterceptorService } from "./core/interceptors/auth.interceptor";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
-import { Api } from "_api";
-import { environment } from "src/environments/environment";
+import { ApiService } from "./core/service/base-api/api.service";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -46,10 +45,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       multi: true,
     },
     MessageService,
-    {
-      provide: "API",
-      useFactory: () => new Api({ baseURL: environment.apiUrl ?? "" }),
-    },
+    ApiService,
   ],
   bootstrap: [AppComponent],
 })

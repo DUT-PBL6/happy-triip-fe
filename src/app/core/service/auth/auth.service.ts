@@ -1,13 +1,12 @@
 import { Injectable } from "@angular/core";
-import { Observable, from } from "rxjs";
+import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Store } from "@ngxs/store";
 import { BaseApiService } from "../base-api/base-api.service";
 import { LoadingService } from "../loading/loading.service";
 import { ToastService } from "../toast/toast.service";
-import { AuthCredentialsDto, TokenResponse } from "_api";
-import { clientService } from "src/lib";
-import { Router } from "@angular/router";
+import { ApiService } from "../base-api/api.service";
+import { AuthCredentialsDto } from "_api";
 
 @Injectable({ providedIn: "root" })
 export class AuthService extends BaseApiService {
@@ -16,12 +15,12 @@ export class AuthService extends BaseApiService {
     protected store: Store,
     protected loadingService: LoadingService,
     protected toastService: ToastService,
-    protected router: Router
+    private apiService: ApiService
   ) {
-    super(store, http, loadingService, toastService, "auths");
+    super(store, http, loadingService, toastService, "auth");
   }
 
   public login$(authCredentialsDto: AuthCredentialsDto): Observable<any> {
-    return from(clientService.api.authLogin(authCredentialsDto));
+    return this.apiService.api.authLogin(authCredentialsDto);
   }
 }
