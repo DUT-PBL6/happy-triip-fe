@@ -5,6 +5,7 @@ import { Store } from "@ngxs/store";
 import { BaseApiService } from "../base-api/base-api.service";
 import { LoadingService } from "../loading/loading.service";
 import { ToastService } from "../toast/toast.service";
+import { ApiService } from "../base-api/api.service";
 
 export interface LoginResponseData {
   accessToken: string;
@@ -17,7 +18,8 @@ export class AuthService extends BaseApiService {
     protected http: HttpClient,
     protected store: Store,
     protected loadingService: LoadingService,
-    protected toastService: ToastService
+    protected toastService: ToastService,
+    private apiService: ApiService
   ) {
     super(store, http, loadingService, toastService, "auths");
   }
