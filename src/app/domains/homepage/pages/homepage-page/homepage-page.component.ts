@@ -1,8 +1,6 @@
 import { OnInit } from "@angular/core";
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { Store } from "@ngxs/store";
-import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
 import cacheService from "src/lib/cache-service";
 
 @Component({
@@ -10,13 +8,8 @@ import cacheService from "src/lib/cache-service";
   templateUrl: "./homepage-page.component.html",
   styleUrls: ["./homepage-page.component.scss"],
 })
-export class HomepagePageComponent extends BaseDestroyable implements OnInit {
-  constructor(
-    private router: Router,
-    private store: Store
-  ) {
-    super();
-  }
+export class HomepagePageComponent implements OnInit {
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     if (!cacheService.getValue("accessToken")) {

@@ -1,6 +1,6 @@
 import { LocationStrategy } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { MenuItem } from "primeng/api";
 import cacheService from "src/lib/cache-service";
 

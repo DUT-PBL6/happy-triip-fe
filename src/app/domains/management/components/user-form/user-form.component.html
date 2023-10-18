@@ -1,8 +1,153 @@
-<div class="card">
-  <div class="header flex justify-content-between">
-    <h4>User Details</h4>
-    <div class="actions">
-      <p-button label="Save" icon="pi pi-trash" iconPos="right"></p-button>
-    </div>
+<div class="card w-full h-full flex flex-column gap-4">
+  <h4>{{ updateMode ? "User Details" : "Add New User" }}</h4>
+  <div class="form">
+    <form [formGroup]="userForm" (ngSubmit)="submit()" class="grid">
+      <div class="name col-6 flex flex-column">
+        <label for="name" class="block text-900 text-lg font-medium mb-2">Name</label>
+        <div class="input-container">
+          <input
+            pInputText
+            id="name"
+            type="text"
+            placeholder="Enter your name"
+            class="w-full"
+            formControlName="name"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(name)
+            }"
+          />
+          <small class="p-error" *ngIf="validate(name)">
+            <strong>Name is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="email col-6 flex flex-column">
+        <label for="email" class="block text-900 text-lg font-medium mb-2">Email</label>
+        <div class="input-container">
+          <input
+            pInputText
+            id="email"
+            type="text"
+            placeholder="Enter your email"
+            class="w-full"
+            formControlName="email"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(email)
+            }"
+          />
+          <small class="p-error" *ngIf="validate(email)">
+            <strong>Email is required</strong>
+          </small>
+
+          <small class="p-error" *ngIf="email.touched && email.hasError('email')">
+            <strong>Email must be a valid email</strong>
+          </small>
+        </div>
+      </div>
+      <div class="username col-6 flex flex-column">
+        <label for="username" class="block text-900 text-lg font-medium mb-2">Username</label>
+        <div class="input-container">
+          <input
+            pInputText
+            id="username"
+            type="text"
+            placeholder="Enter your username"
+            class="w-full"
+            formControlName="username"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(username)
+            }"
+          />
+          <small class="p-error" *ngIf="validate(username)">
+            <strong>Username is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="password col-6 flex flex-column">
+        <label for="password" class="block text-900 text-lg font-medium mb-2">Password</label>
+        <div class="input-container">
+          <p-password
+            id="password"
+            placeholder="Enter your password"
+            [toggleMask]="true"
+            [feedback]="false"
+            formControlName="password"
+            styleClass="w-full"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(password)
+            }"
+          ></p-password>
+          <small class="p-error" *ngIf="validate(password)">
+            <strong>Password is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="phone-number col-6 flex flex-column">
+        <label for="phoneNumber" class="block text-900 text-lg font-medium mb-2">Phone number</label>
+        <div class="input-container">
+          <input
+            pInputText
+            id="phoneNumber"
+            type="text"
+            placeholder="Enter your phone number"
+            class="w-full"
+            formControlName="phoneNumber"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(phoneNumber)
+            }"
+          />
+          <small class="p-error" *ngIf="validate(phoneNumber)">
+            <strong>Phone number is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="user-role col-6 flex flex-column">
+        <label for="userRole" class="block text-900 text-lg font-medium mb-2">User role</label>
+        <div class="input-container">
+          <p-dropdown
+            id="userRole"
+            formControlName="userRole"
+            class="full-width-dropdown"
+            [showClear]="true"
+            [options]="userRoles"
+            placeholder="Choose your user role"
+            optionLabel="name"
+            optionValue="value"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(userRole)
+            }"
+          ></p-dropdown>
+          <small class="p-error" *ngIf="validate(userRole)">
+            <strong>User role is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="actions col-offset-6 col-6 flex gap-2">
+        <p-button
+          label="Remove"
+          styleClass="p-button-danger p-button-outlined"
+          class="w-full sm:w-auto full-width-button flex-1"
+          icon="pi pi-trash"
+          iconPos="right"
+          *ngIf="updateMode"
+        ></p-button>
+        <p-button
+          label="Cancel"
+          styleClass="p-button-danger p-button-outlined"
+          class="w-full sm:w-auto full-width-button flex-1"
+          icon="pi pi-times"
+          iconPos="right"
+          *ngIf="!updateMode"
+          (onClick)="cancelUserForm.emit(true)"
+        ></p-button>
+        <p-button
+          type="submit"
+          class="full-width-button flex-1"
+          label="Save"
+          icon="pi pi-save"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </form>
   </div>
 </div>

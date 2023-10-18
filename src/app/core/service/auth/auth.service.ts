@@ -6,7 +6,7 @@ import { BaseApiService } from "../base-api/base-api.service";
 import { LoadingService } from "../loading/loading.service";
 import { ToastService } from "../toast/toast.service";
 import { ApiService } from "../base-api/api.service";
-import { AuthCredentialsDto } from "_api";
+import { AuthCredentialsDto, TokenResponse } from "_api";
 
 @Injectable({ providedIn: "root" })
 export class AuthService extends BaseApiService {
@@ -20,7 +20,7 @@ export class AuthService extends BaseApiService {
     super(store, http, loadingService, toastService, "auth");
   }
 
-  public login$(authCredentialsDto: AuthCredentialsDto): Observable<any> {
+  public login$(authCredentialsDto: AuthCredentialsDto): Observable<TokenResponse> {
     return this.apiService.api.authLogin(authCredentialsDto);
   }
 }

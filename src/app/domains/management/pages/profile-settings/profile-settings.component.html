@@ -1,19 +1,14 @@
 <div class="profile-settings">
-  <div class="card flex flex-column justify-content-center align-items-center gap-4 p-3">
-    <p-listbox
-      [options]="employees$ | async"
-      [(ngModel)]="selectedEmployee"
-      optionLabel="name"
-      optionValue="id"
-      [filter]="true"
-      class="w-full"
-    ></p-listbox>
-    <p-button
-      label="Add User"
-      icon="pi pi-plus"
-      class="full-width-button w-full text-xl"
-      onclick="isUserFormVisible = !isUserFormVisible"
-    ></p-button>
-  </div>
-  <app-user-form *ngIf="isUserFormVisible"></app-user-form>
+  <app-user-listbox
+    (selectedEmployee)="onSelectedEmployeeChange($event)"
+    (isUpdateMode)="onUpdateModeChange($event)"
+    (isUserFormVisible)="onFormVisibleChange($event)"
+  ></app-user-listbox>
+  <app-user-form
+    *ngIf="isUserFormVisible"
+    class="w-full"
+    [selectedEmployee]="currentEmployee"
+    [updateMode]="isUpdateMode"
+    (cancelUserForm)="cancelUserForm($event)"
+  ></app-user-form>
 </div>

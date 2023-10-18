@@ -1,6 +1,7 @@
 .profile-settings {
   display: grid;
-  grid-template-columns: 25rem auto;
+  grid-template-columns: 28rem auto;
   gap: 1.5rem;
   height: 100%;
+  overflow-x: auto;
 }
