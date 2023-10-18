@@ -25,9 +25,11 @@ export class HeaderComponent implements OnInit {
     this.tieredItems = [
       {
         label: "Home",
+        routerLink: "/home",
       },
       {
         label: "About Us",
+        routerLink: "/about-us",
       },
       {
         label: "Our Services",
@@ -37,44 +39,56 @@ export class HeaderComponent implements OnInit {
             items: [
               {
                 label: "Danang Airport Pick & Drop",
+                routerLink: "/services/private-services/airport-pick-up",
               },
               {
                 label: "Travel Car For Rent",
+                routerLink: "/services/private-services/rent-car",
               },
               {
                 label: "Professional Guide Hiring Service",
+                routerLink: "/services/private-services/guide",
               },
               {
                 label: "Door To Door Bus",
+                routerLink: "/services/private-services/door-to-door-bus",
               },
               {
                 label: "Sight-seeing Tickets",
+                routerLink: "/services/private-services/ticket",
               },
             ],
           },
           {
             label: "Service Quality",
+            routerLink: "/services/service-quality",
           },
           {
             label: "How To Book",
+            routerLink: "/services/how-to-book",
           },
           {
             label: "Policy",
             items: [
               {
                 label: "Booking Policy",
+                routerLink: "/services/policy/booking-policy",
               },
               {
                 label: "Customer's Rights",
+                routerLink: "/services/policy/customer-rights",
               },
               {
                 label: "Privacy Policy",
+                routerLink: "/services/policy/privacy-policy",
               },
               {
                 label: "Baggage Regulations",
+                routerLink: "/services/policy/baggage-regulations",
               },
               {
                 label: "Frequency Asked Questions",
+                routerLink: "/services/policy/questions",
               },
             ],
           },
@@ -85,21 +99,26 @@ export class HeaderComponent implements OnInit {
         items: [
           {
             label: "Contact Information",
+            routerLink: "/contact/information",
           },
           {
             label: "Reseller Partner Program",
+            routerLink: "/contact/reseller-program",
           },
           {
             label: "Transport Operators",
+            routerLink: "/contact/transport-operators",
           },
         ],
       },
       {
         label: "Career",
+        routerLink: "/career",
       },
       { separator: true },
       {
         label: "Manage Booking",
+        routerLink: "/booking/manage",
       },
       { separator: true },
       {
