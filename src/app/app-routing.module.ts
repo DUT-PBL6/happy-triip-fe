@@ -11,6 +11,14 @@ const routes: Routes = [
     path: "management",
     loadChildren: () => import("./domains/management/management.module").then((m) => m.ManagementModule),
   },
+  {
+    path: "about-us",
+    loadChildren: () => import("./domains/about-us/about-us.module").then((m) => m.AboutUsModule),
+  },
+  {
+    path: "contact",
+    loadChildren: () => import("./domains/contact/contact.module").then((m) => m.ContactModule),
+  },
 ];
 
 @NgModule({

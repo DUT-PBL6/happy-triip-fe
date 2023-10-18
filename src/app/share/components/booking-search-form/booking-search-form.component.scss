@@ -14,7 +14,8 @@
 
   .card {
     position: relative;
-    margin: -6rem calc((100vw - 1312px) / 2) 0;
+    margin: -6rem auto 0;
+    max-width: 1300px;
     background: #ffffff;
     padding: 2.5em;
     border: 1px solid #e1e1e1;
