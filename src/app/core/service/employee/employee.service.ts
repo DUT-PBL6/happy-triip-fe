@@ -5,22 +5,20 @@ import { Store } from "@ngxs/store";
 import { BaseApiService } from "../base-api/base-api.service";
 import { LoadingService } from "../loading/loading.service";
 import { ToastService } from "../toast/toast.service";
-import { ApiService } from "../base-api/api.service";
-import { AuthCredentialsDto, TokenResponse } from "_api";
+import { Employee } from "_api";
 
 @Injectable({ providedIn: "root" })
-export class AuthService extends BaseApiService {
+export class EmployeeService extends BaseApiService {
   constructor(
     protected http: HttpClient,
     protected store: Store,
     protected loadingService: LoadingService,
-    protected toastService: ToastService,
-    private apiService: ApiService
+    protected toastService: ToastService
   ) {
-    super(store, http, loadingService, toastService, "auth");
+    super(store, http, loadingService, toastService, "employee");
   }
 
-  public login$(authCredentialsDto: AuthCredentialsDto): Observable<TokenResponse> {
-    return this.apiService.api.authLogin(authCredentialsDto);
+  public getEmployees$(): Observable<Employee[]> {
+    return this.http.get<Employee[]>("https://mocki.io/v1/971fc379-1c61-4589-96d5-5baf7446c50a"); //TODO: Replace URL & save in state
   }
 }

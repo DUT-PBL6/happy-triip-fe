@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Observable, takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
-import { Route } from "src/app/core/models/route.type";
 import { RouteService } from "src/app/core/service/route/route.service";
 import { RouteInfo } from "../../types/route-info.type";
+import { Route } from "_api";
 
 @Component({
   selector: "app-search-route",

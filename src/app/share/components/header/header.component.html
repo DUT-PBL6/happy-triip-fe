@@ -5,7 +5,17 @@
       <h3>TRAVELBUS</h3>
     </a>
   </div>
-  <div class="left">
+  <div class="left" *ngIf="!isLoggedIn && !isInAuthPage">
     <p-menubar [model]="tieredItems" styleClass="text-lg"></p-menubar>
+  </div>
+  <div class="left logged-in" *ngIf="isLoggedIn && !isInAuthPage">
+    <p-button
+      icon="pi pi-user"
+      label="[username]"
+      (click)="profileMenu.toggle($event)"
+      styleClass="p-button-rounded"
+      class="custom-user-button"
+    ></p-button>
+    <p-menu #profileMenu [model]="itemsProfileMenu" [popup]="true"></p-menu>
   </div>
 </div>

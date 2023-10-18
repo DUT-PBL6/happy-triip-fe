@@ -29,7 +29,7 @@ clientService.instance.interceptors.response.use(
       cacheService.setValue({
         accessToken: undefined,
       });
-      window.location.href = "/login";
+      window.location.href = "/auth/login";
     }
     let msg = error?.response.data?.message ?? CodeMessage[error?.response?.status] ?? "Something went wrong";
     if (error?.response.status === 422) {

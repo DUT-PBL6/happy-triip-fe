@@ -1,5 +1,8 @@
+import { LocationStrategy } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { MenuItem } from "primeng/api";
+import cacheService from "src/lib/cache-service";
 
 @Component({
   selector: "app-header",
@@ -7,9 +10,18 @@ import { MenuItem } from "primeng/api";
   styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements OnInit {
+  public itemsProfileMenu: MenuItem[] = [];
   public tieredItems: MenuItem[] = [];
+  public isLoggedIn = false;
+  public isInAuthPage = false;
+
+  constructor(
+    private router: Router,
+    private url: LocationStrategy
+  ) {}
 
   ngOnInit(): void {
+    this.initProfileMenu();
     this.tieredItems = [
       {
         label: "Home",
@@ -92,7 +104,33 @@ export class HeaderComponent implements OnInit {
       { separator: true },
       {
         label: "Login",
-        routerLink: "/auth",
+        items: [
+          {
+            label: "Login as Passenger",
+            routerLink: "/auth/login",
+            queryParams: { userRole: "passenger" },
+          },
+          {
+            label: "Login as Partner",
+            routerLink: "/auth/login",
+            queryParams: { userRole: "partner" },
+          },
+        ],
+      },
+    ];
+
+    this.isLoggedIn = !!cacheService.getValue("accessToken");
+    this.isInAuthPage = !!this.url.path().includes("auth");
+  }
+
+  private initProfileMenu(): void {
+    this.itemsProfileMenu = [
+      {
+        label: "Log out",
+        command: () => {
+          cacheService.resetValue();
+          this.router.navigate(["/auth"]);
+        },
       },
     ];
   }

@@ -3,7 +3,7 @@ p-button {
     text-align: center;
 
     .p-button-icon {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
     }
   }
 }
@@ -22,5 +22,14 @@ p-button {
     @media (max-width: 576px) {
       width: 100%;
     }
+  }
+}
+
+.custom-user-button {
+  button,
+  button:enabled:hover {
+    background-color: #fff;
+    color: #68bb02;
+    border: 1px solid;
   }
 }

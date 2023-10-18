@@ -1,46 +1,65 @@
-<form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm)">
-  <div class="content flex flex-column gap-6">
-    <h2 class="title mx-auto mb-0 text-primary">{{ "viet nam travel bus" | uppercase }}</h2>
-    <div class="field mb-0">
-      <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
-      <div class="input-container">
-        <input
-          id="email"
-          type="text"
-          placeholder="Enter your email"
-          class="email-input p-inputtext p-component p-element w-full"
-          formControlName="email"
-        />
-        <small class="p-error" *ngIf="validate(email)">
-          <strong>Email is required</strong>
-        </small>
-        <small class="p-error" *ngIf="email.touched && email.hasError('email')">
-          <strong>Email must be a valid email</strong>
-        </small>
+<app-empty-layout>
+  <div
+    class="auth-container col-12 flex align-items-center justify-content-center p-0 absolute top-0 bottom-0 left-0 right-0"
+  >
+    <div class="image-container relative">
+      <img src="/assets/images/golden-bridge.jpg" alt="Cover" class="absolute top-0 left-0" />
+      <div class="introduction">
+        <h2 class="text-primary">WE ARE VIETNAM TRAVEL BUS</h2>
+        <p class="text-xl">A big company of high-quality vehicles that can take you everywhere in Vietnam!</p>
       </div>
     </div>
 
-    <div class="field mb-0">
-      <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
-      <div class="input-container">
-        <p-password
-          id="password"
-          placeholder="Enter your password"
-          [toggleMask]="true"
-          [feedback]="false"
-          formControlName="password"
-          styleClass="w-full"
-          [ngClass]="{
-            'ng-invalid ng-dirty': validate(password)
-          }"
-        ></p-password>
-        <small class="p-error" *ngIf="validate(password)">
-          <strong>Password is required</strong>
-        </small>
+    <div class="login-card col-12 lg:col-6">
+      <div class="login-content w-full p-4">
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm)">
+          <div class="content flex flex-column gap-3">
+            <h2 class="title mx-auto mb-0 text-primary text-3xl font-bold">{{ userRole + " Login" | uppercase }}</h2>
+            <div class="field mb-4">
+              <label for="username" class="block text-900 text-lg font-medium mb-2">Username</label>
+              <div class="input-container">
+                <input
+                  pInputText
+                  id="username"
+                  type="text"
+                  placeholder="Enter your username"
+                  class="w-full"
+                  formControlName="username"
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': validate(username)
+                  }"
+                />
+                <small class="p-error" *ngIf="validate(username)">
+                  <strong>Username is required</strong>
+                </small>
+              </div>
+            </div>
+
+            <div class="field mb-4">
+              <label for="password" class="block text-900 text-lg font-medium mb-2">Password</label>
+              <div class="input-container">
+                <p-password
+                  id="password"
+                  placeholder="Enter your password"
+                  [toggleMask]="true"
+                  [feedback]="false"
+                  formControlName="password"
+                  styleClass="w-full rounded-lg border-gray-300 focus:ring focus:ring-primary"
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': validate(password)
+                  }"
+                ></p-password>
+                <small class="p-error" *ngIf="validate(password)">
+                  <strong>Password is required</strong>
+                </small>
+              </div>
+            </div>
+
+            <p-button label="Login" class="full-width-button text-xl" type="submit"></p-button>
+          </div>
+          <p-toast position="top-right" key="tr"></p-toast>
+        </form>
       </div>
     </div>
-
-    <p-button label="Login" class="full-width-button w-full text-xl" type="submit"></p-button>
   </div>
-  <p-toast position="top-right" key="tr"></p-toast>
-</form>
+</app-empty-layout>

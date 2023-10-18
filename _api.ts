@@ -291,10 +291,10 @@ export interface Employee {
   username: string;
   password: string;
   phoneNumber: string;
-  role: string;
+  userRole: string;
 }
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, HeadersDefaults, ResponseType } from "axios";
 import { Observable, from } from "rxjs";
 
 export type QueryParamsType = Record<string | number, any>;
@@ -338,7 +338,7 @@ export class HttpClient<SecurityDataType = unknown> {
   private secure?: boolean;
   private format?: ResponseType;
 
-  constructor({ securityWorker, secure, format, ...axiosConfig}: ApiConfig<SecurityDataType> = {}) {
+  constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
     this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "" });
     this.secure = secure;
     this.format = format;
@@ -394,7 +394,7 @@ export class HttpClient<SecurityDataType = unknown> {
     format,
     body,
     ...params
-  }: FullRequestParams): Observable<AxiosResponse<T>> => {
+  }: FullRequestParams): Observable<T> => {
     return from(
       this.sendRequest({
         secure,

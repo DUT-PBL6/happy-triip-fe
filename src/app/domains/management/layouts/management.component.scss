@@ -1,9 +1,10 @@
 .container {
+  position: absolute;
+  top: 5rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
   background: #f7f8fa;
-
-  app-sidebar {
-    display: block;
-    width: 300px;
-    height: 100%;
-  }
 }

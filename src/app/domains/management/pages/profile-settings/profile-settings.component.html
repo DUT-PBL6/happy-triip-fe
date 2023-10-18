@@ -1,0 +1,14 @@
+<div class="profile-settings">
+  <app-user-listbox
+    (selectedEmployee)="onSelectedEmployeeChange($event)"
+    (isUpdateMode)="onUpdateModeChange($event)"
+    (isUserFormVisible)="onFormVisibleChange($event)"
+  ></app-user-listbox>
+  <app-user-form
+    *ngIf="isUserFormVisible"
+    class="w-full"
+    [selectedEmployee]="currentEmployee"
+    [updateMode]="isUpdateMode"
+    (cancelUserForm)="cancelUserForm($event)"
+  ></app-user-form>
+</div>

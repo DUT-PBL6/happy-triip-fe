@@ -1,91 +1,94 @@
-<div class="user-home-container">
-  <app-booking-search-form></app-booking-search-form>
-  <app-popular-routes></app-popular-routes>
-  <!-- COMPANY INFORMATION -->
-  <div class="company-information">
-    <div class="main">
-      <h2 class="text-center my-0 text-primary">WE ARE VIETNAM TRAVEL BUS</h2>
-      <h4 class="text-center my-0 text-color-secondary">
-        A big company of high-quality vehicles that can take you everywhere in Vietnam!
-      </h4>
-    </div>
-    <div class="about-us">
-      <iframe
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;"
-        allowfullscreen=""
-        src="https://www.youtube.com/embed/lTZwsmTNlM4?controls=0"
-      ></iframe>
-      <div class="description">
-        <p>
-          Do you want to plan a self-sufficient trip throughout Vietnam? Do you want to travel along the Vietnam
-          Heritage Route? Or do you want to go on a vacation with your family or friends? No problem! We will take you
-          all around Vietnam. Vietnam Travel Bus operates daily and continuously, bringing you a trip whenever you want!
-        </p>
-        <p>
-          Vietnam Travel Bus provides a variety of transportation services with modern vehicles including Limousines,
-          different types of buses, sleeper buses, trains, and airplanes. We always ensure genuine quality at reasonable
-          prices per person per trip.
-        </p>
-        <div class="button-containerr">
-          <p-button
-            label="More about us"
-            styleClass="p-button-secondary p-button-outlined"
-            class="w-full sm:w-auto"
-            icon="pi pi-angle-right"
-            iconPos="right"
-          ></p-button>
+<app-empty-layout>
+  <div class="user-home-container">
+    <app-booking-search-form></app-booking-search-form>
+    <app-popular-routes></app-popular-routes>
+    <!-- COMPANY INFORMATION -->
+    <div class="company-information">
+      <div class="main">
+        <h2 class="text-center my-0 text-primary">WE ARE VIETNAM TRAVEL BUS</h2>
+        <h4 class="text-center my-0 text-color-secondary">
+          A big company of high-quality vehicles that can take you everywhere in Vietnam!
+        </h4>
+      </div>
+      <div class="about-us">
+        <iframe
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;"
+          allowfullscreen=""
+          src="https://www.youtube.com/embed/lTZwsmTNlM4?controls=0"
+        ></iframe>
+        <div class="description">
+          <p>
+            Do you want to plan a self-sufficient trip throughout Vietnam? Do you want to travel along the Vietnam
+            Heritage Route? Or do you want to go on a vacation with your family or friends? No problem! We will take you
+            all around Vietnam. Vietnam Travel Bus operates daily and continuously, bringing you a trip whenever you
+            want!
+          </p>
+          <p>
+            Vietnam Travel Bus provides a variety of transportation services with modern vehicles including Limousines,
+            different types of buses, sleeper buses, trains, and airplanes. We always ensure genuine quality at
+            reasonable prices per person per trip.
+          </p>
+          <div class="button-containerr">
+            <p-button
+              label="More about us"
+              styleClass="p-button-secondary p-button-outlined"
+              class="w-full sm:w-auto"
+              icon="pi pi-angle-right"
+              iconPos="right"
+            ></p-button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- TRIPS AND CUSTOMERS -->
-  <div class="trips-and-customers">
-    <h2 class="text-center my-0 text-primary">HAPPY TRIPS, HAPPY CUSTOMERS</h2>
-    <p-carousel
-      [value]="getNumberRange(1, 14)"
-      [numVisible]="4"
-      [numScroll]="4"
-      [circular]="true"
-      [autoplayInterval]="3000"
-      styleClass="carousel-3"
-    >
-      <ng-template let-imageIndex ngFor [ngForOf]="getNumberRange(1, 14)" pTemplate="item">
-        <img src="/assets/images/home/home-{{ imageIndex }}.jpg" [alt]="'home-' + imageIndex" />
-      </ng-template>
-    </p-carousel>
-  </div>
-  <!-- PARTNERS -->
-  <div class="partners">
-    <div class="main">
-      <h2 class="text-center my-0 text-primary">PARTNERS</h2>
-      <h4 class="text-center my-0 text-color-secondary">It's pleasure to work with</h4>
+    <!-- TRIPS AND CUSTOMERS -->
+    <div class="trips-and-customers">
+      <h2 class="text-center my-0 text-primary">HAPPY TRIPS, HAPPY CUSTOMERS</h2>
+      <p-carousel
+        [value]="getNumberRange(1, 14)"
+        [numVisible]="4"
+        [numScroll]="4"
+        [circular]="true"
+        [autoplayInterval]="3000"
+        styleClass="carousel-3"
+      >
+        <ng-template let-imageIndex ngFor [ngForOf]="getNumberRange(1, 14)" pTemplate="item">
+          <img src="/assets/images/home/home-{{ imageIndex }}.jpg" [alt]="'home-' + imageIndex" />
+        </ng-template>
+      </p-carousel>
     </div>
-    <p-carousel [value]="getNumberRange(1, 5)" [numVisible]="5" styleClass="default-carousel">
-      <ng-template let-imageIndex ngFor [ngForOf]="getNumberRange(1, 5)" pTemplate="item">
-        <img src="/assets/images/partner/partner-{{ imageIndex }}.svg" [alt]="'partner-' + imageIndex" />
-      </ng-template>
-    </p-carousel>
-  </div>
-  <!-- LATEST NEWS -->
-  <div class="latest-news">
-    <div class="main">
-      <h2 class="text-center my-0 text-primary">LATEST NEWS</h2>
-      <h4 class="text-center my-0 text-color-secondary">Get updated with Vietnam Travel Bus news & promotions</h4>
+    <!-- PARTNERS -->
+    <div class="partners">
+      <div class="main">
+        <h2 class="text-center my-0 text-primary">PARTNERS</h2>
+        <h4 class="text-center my-0 text-color-secondary">It's pleasure to work with</h4>
+      </div>
+      <p-carousel [value]="getNumberRange(1, 5)" [numVisible]="5" styleClass="default-carousel">
+        <ng-template let-imageIndex ngFor [ngForOf]="getNumberRange(1, 5)" pTemplate="item">
+          <img src="/assets/images/partner/partner-{{ imageIndex }}.svg" [alt]="'partner-' + imageIndex" />
+        </ng-template>
+      </p-carousel>
     </div>
-    <p-carousel [value]="latestNews" [numVisible]="3" styleClass="default-carousel">
-      <ng-template let-news pTemplate="item">
-        <div class="news-item">
-          <img src="/assets/images/news/news-{{ news.id }}.jpg" [alt]="'news-' + news.id" />
-          <div class="news-item__content flex flex-column">
-            <h5>{{ news.title }}</h5>
-            <p>{{ news.date }}</p>
+    <!-- LATEST NEWS -->
+    <div class="latest-news">
+      <div class="main">
+        <h2 class="text-center my-0 text-primary">LATEST NEWS</h2>
+        <h4 class="text-center my-0 text-color-secondary">Get updated with Vietnam Travel Bus news & promotions</h4>
+      </div>
+      <p-carousel [value]="latestNews" [numVisible]="3" styleClass="default-carousel">
+        <ng-template let-news pTemplate="item">
+          <div class="news-item">
+            <img src="/assets/images/news/news-{{ news.id }}.jpg" [alt]="'news-' + news.id" />
+            <div class="news-item__content flex flex-column">
+              <h5>{{ news.title }}</h5>
+              <p>{{ news.date }}</p>
+            </div>
           </div>
-        </div>
-      </ng-template>
-    </p-carousel>
+        </ng-template>
+      </p-carousel>
+    </div>
   </div>
-</div>
-<app-footer></app-footer>
-<app-copyright></app-copyright>
+  <app-footer></app-footer>
+  <app-copyright></app-copyright>
+</app-empty-layout>

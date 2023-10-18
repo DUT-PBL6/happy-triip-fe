@@ -21,7 +21,7 @@ p-menubar {
     }
 
     ul.p-menubar-root-list {
-      gap: 1.5em;
+      gap: 0.5em;
 
       .p-menuitem-text,
       .p-submenu-icon {
@@ -36,6 +36,8 @@ p-menubar {
     }
 
     ul.p-submenu-list {
+      right: -4.75rem;
+
       .p-menuitem-text,
       .p-submenu-icon {
         color: #000;
