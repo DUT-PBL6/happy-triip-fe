@@ -102,31 +102,31 @@
         </div>
       </div>
       <div class="user-role col-6 flex flex-column">
-        <label for="userRole" class="block text-900 text-lg font-medium mb-2">User role</label>
+        <label for="role" class="block text-900 text-lg font-medium mb-2">Employee role</label>
         <div class="input-container">
           <p-dropdown
-            id="userRole"
-            formControlName="userRole"
+            id="role"
+            formControlName="role"
             class="full-width-dropdown"
             [showClear]="true"
-            [options]="userRoles"
+            [options]="employeeRoles"
             placeholder="Choose your user role"
             optionLabel="name"
             optionValue="value"
             [ngClass]="{
-              'ng-invalid ng-dirty': validate(userRole)
+              'ng-invalid ng-dirty': validate(role)
             }"
           ></p-dropdown>
-          <small class="p-error" *ngIf="validate(userRole)">
-            <strong>User role is required</strong>
+          <small class="p-error" *ngIf="validate(role)">
+            <strong>Employee role is required</strong>
           </small>
         </div>
       </div>
-      <div class="actions col-offset-6 col-6 flex gap-2">
+      <div class="actions col-12 flex justify-content-end gap-2">
         <p-button
           label="Remove"
           styleClass="p-button-danger p-button-outlined"
-          class="w-full sm:w-auto full-width-button flex-1"
+          class="col-6 md:col-3 pr-0 full-width-button"
           icon="pi pi-trash"
           iconPos="right"
           *ngIf="updateMode"
@@ -134,7 +134,7 @@
         <p-button
           label="Cancel"
           styleClass="p-button-danger p-button-outlined"
-          class="w-full sm:w-auto full-width-button flex-1"
+          class="col-6 md:col-3 pr-0 full-width-button"
           icon="pi pi-times"
           iconPos="right"
           *ngIf="!updateMode"
@@ -142,7 +142,7 @@
         ></p-button>
         <p-button
           type="submit"
-          class="full-width-button flex-1"
+          class="col-6 md:col-3 pr-0 full-width-button"
           label="Save"
           icon="pi pi-save"
           iconPos="right"

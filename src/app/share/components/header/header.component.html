@@ -11,7 +11,7 @@
   <div class="left logged-in" *ngIf="isLoggedIn && !isInAuthPage">
     <p-button
       icon="pi pi-user"
-      label="[username]"
+      label="{{ username }}"
       (click)="profileMenu.toggle($event)"
       styleClass="p-button-rounded"
       class="custom-user-button"

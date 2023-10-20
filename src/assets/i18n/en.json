@@ -38,11 +38,10 @@
       "OneWay": "One Way",
       "RoundTrip": "Round Trip"
     },
-    "userRole": {
-      "Admin": "Admin",
-      "Passenger": "Passenger",
-      "Partner": "Partner",
-      "Employee": "Employee"
+    "employeeRole": {
+      "ADMIN": "Admin",
+      "VIEWER": "Viewer",
+      "EDITOR": "Editor"
     }
   }
 }

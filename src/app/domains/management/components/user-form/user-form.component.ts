@@ -1,7 +1,7 @@
 import { TranslateService } from "@ngx-translate/core";
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { Employee } from "_api";
+import { Employee, EmployeeDto, EmployeeRoles, UserDto } from "_api";
 import { UserRole } from "src/app/core/enums/user-role.enum";
 import { Option } from "src/app/core/interfaces/option.interface";
 
@@ -14,8 +14,9 @@ export class UserFormComponent implements OnInit, OnChanges {
   @Input() selectedEmployee: Employee;
   @Input() updateMode: boolean;
   @Output() cancelUserForm = new EventEmitter<boolean>();
+  @Output() form = new EventEmitter<EmployeeDto>();
   public userForm: FormGroup;
-  public userRoles: Option<UserRole>[] = [];
+  public employeeRoles: Option<EmployeeRoles>[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -44,13 +45,14 @@ export class UserFormComponent implements OnInit, OnChanges {
       username: ["", Validators.required],
       password: ["", Validators.required],
       phoneNumber: ["", Validators.required],
-      userRole: ["", Validators.required],
+      role: ["", Validators.required],
     });
+    if (this.selectedEmployee) this.userForm?.patchValue({ ...this.selectedEmployee });
   }
 
   private initUserRoles(): void {
-    this.userRoles = Object.entries(UserRole).map(([key, value]) => ({
-      name: this.translate.instant(`share.userRole.${key}`),
+    this.employeeRoles = Object.entries(EmployeeRoles).map(([key, value]) => ({
+      name: this.translate.instant(`share.employeeRole.${key}`),
       value,
     }));
   }
@@ -72,17 +74,17 @@ export class UserFormComponent implements OnInit, OnChanges {
     return this.userForm.get("phoneNumber") as FormControl;
   }
 
-  public get userRole(): FormControl {
-    return this.userForm.get("userRole") as FormControl;
+  public get role(): FormControl {
+    return this.userForm.get("role") as FormControl;
   }
 
   public submit(): void {
-    console.log(this.userForm);
-
     if (!this.userForm.valid) {
       this.userForm.markAllAsTouched();
       return;
     }
+    this.form.emit(this.userForm.value);
+    this.userForm.reset();
   }
 
   public validate(fieldControl: FormControl): boolean {

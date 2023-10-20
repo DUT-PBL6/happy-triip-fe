@@ -1,8 +1,38 @@
+export enum Status {
+  PENDING = 'PENDING',
+  VERIFIED = 'VERIFIED',
+}
+
+export enum UserRoles {
+  PASSENGER = 'PASSENGER',
+  PARTNER = 'PARTNER',
+  EMPLOYEE = 'EMPLOYEE',
+}
+
+export interface BankCard {
+  id: number;
+  accountNumber: string;
+  accountName: string;
+  bankName: string;
+  status: Status;
+  isDefaultCard: boolean;
+  idUser: number;
+  userRoles: UserRoles;
+}
+
+export interface BankCardDto {
+  accountNumber: string;
+  accountName: string;
+  bankName: string;
+  status: Status;
+  isDefaultCard: boolean;
+}
+
 export enum SystemConfigType {
-  String = "string",
-  Number = "number",
-  Boolean = "boolean",
-  Select = "select",
+  String = 'string',
+  Number = 'number',
+  Boolean = 'boolean',
+  Select = 'select',
 }
 
 export interface SystemConfig {
@@ -26,13 +56,13 @@ export interface SystemConfigDto {
 }
 
 export enum EventGroup {
-  ConfigGroup = "ConfigGroup",
-  Configs = "Configs",
-  Segment = "Segment",
-  AbTest = "AbTest",
-  SchemaGroup = "SchemaGroup",
-  Schema = "Schema",
-  SegmentField = "SegmentField",
+  ConfigGroup = 'ConfigGroup',
+  Configs = 'Configs',
+  Segment = 'Segment',
+  AbTest = 'AbTest',
+  SchemaGroup = 'SchemaGroup',
+  Schema = 'Schema',
+  SegmentField = 'SegmentField',
 }
 
 export interface Audit {
@@ -43,70 +73,70 @@ export interface Audit {
 }
 
 export enum City {
-  ANGIANG = "ANGIANG",
-  BARIAVUNGTAU = "BARIAVUNGTAU",
-  BACLIEU = "BACLIEU",
-  BACKAN = "BACKAN",
-  BACGIANG = "BACGIANG",
-  BACNINH = "BACNINH",
-  BENTRE = "BENTRE",
-  BINHDUONG = "BINHDUONG",
-  BINHDINH = "BINHDINH",
-  BINHPHUOC = "BINHPHUOC",
-  BINHTHUAN = "BINHTHUAN",
-  CAMAU = "CAMAU",
-  CAOBANG = "CAOBANG",
-  CANTHO = "CANTHO",
-  DANANG = "DANANG",
-  DAKLAK = "DAKLAK",
-  DAKNONG = "DAKNONG",
-  DIENBIEN = "DIENBIEN",
-  DONGNAI = "DONGNAI",
-  DONGTHAP = "DONGTHAP",
-  GIALAI = "GIALAI",
-  HAGIANG = "HAGIANG",
-  HANAM = "HANAM",
-  HANOI = "HANOI",
-  HATAY = "HATAY",
-  HATINH = "HATINH",
-  HAIDUONG = "HAIDUONG",
-  HAIPHONG = "HAIPHONG",
-  HOABINH = "HOABINH",
-  HOCHIMINH = "HOCHIMINH",
-  HAUGIANG = "HAUGIANG",
-  HUNGYEN = "HUNGYEN",
-  KHANHHOA = "KHANHHOA",
-  KIENGIANG = "KIENGIANG",
-  KONTUM = "KONTUM",
-  LACHAU = "LACHAU",
-  LAOCAI = "LAOCAI",
-  LANGSON = "LANGSON",
-  LAMDONG = "LAMDONG",
-  LONGAN = "LONGAN",
-  NAMDINH = "NAMDINH",
-  NGHEAN = "NGHEAN",
-  NINHBINH = "NINHBINH",
-  NINHTHUAN = "NINHTHUAN",
-  PHUTHO = "PHUTHO",
-  PHUYEN = "PHUYEN",
-  QUANGBINH = "QUANGBINH",
-  QUANGNAM = "QUANGNAM",
-  QUANGNGAI = "QUANGNGAI",
-  QUANGNINH = "QUANGNINH",
-  QUANGTRI = "QUANGTRI",
-  SOCTRANG = "SOCTRANG",
-  SONLA = "SONLA",
-  TAYNINH = "TAYNINH",
-  THAIBINH = "THAIBINH",
-  THAINGUYEN = "THAINGUYEN",
-  THANHHOA = "THANHHOA",
-  THUATHIENHUE = "THUATHIENHUE",
-  TIENGIANG = "TIENGIANG",
-  TRAVINH = "TRAVINH",
-  TIENQUANG = "TIENQUANG",
-  VINHLONG = "VINHLONG",
-  VINHPHUC = "VINHPHUC",
-  YENBAI = "YENBAI",
+  ANGIANG = 'ANGIANG',
+  BARIAVUNGTAU = 'BARIAVUNGTAU',
+  BACLIEU = 'BACLIEU',
+  BACKAN = 'BACKAN',
+  BACGIANG = 'BACGIANG',
+  BACNINH = 'BACNINH',
+  BENTRE = 'BENTRE',
+  BINHDUONG = 'BINHDUONG',
+  BINHDINH = 'BINHDINH',
+  BINHPHUOC = 'BINHPHUOC',
+  BINHTHUAN = 'BINHTHUAN',
+  CAMAU = 'CAMAU',
+  CAOBANG = 'CAOBANG',
+  CANTHO = 'CANTHO',
+  DANANG = 'DANANG',
+  DAKLAK = 'DAKLAK',
+  DAKNONG = 'DAKNONG',
+  DIENBIEN = 'DIENBIEN',
+  DONGNAI = 'DONGNAI',
+  DONGTHAP = 'DONGTHAP',
+  GIALAI = 'GIALAI',
+  HAGIANG = 'HAGIANG',
+  HANAM = 'HANAM',
+  HANOI = 'HANOI',
+  HATAY = 'HATAY',
+  HATINH = 'HATINH',
+  HAIDUONG = 'HAIDUONG',
+  HAIPHONG = 'HAIPHONG',
+  HOABINH = 'HOABINH',
+  HOCHIMINH = 'HOCHIMINH',
+  HAUGIANG = 'HAUGIANG',
+  HUNGYEN = 'HUNGYEN',
+  KHANHHOA = 'KHANHHOA',
+  KIENGIANG = 'KIENGIANG',
+  KONTUM = 'KONTUM',
+  LACHAU = 'LACHAU',
+  LAOCAI = 'LAOCAI',
+  LANGSON = 'LANGSON',
+  LAMDONG = 'LAMDONG',
+  LONGAN = 'LONGAN',
+  NAMDINH = 'NAMDINH',
+  NGHEAN = 'NGHEAN',
+  NINHBINH = 'NINHBINH',
+  NINHTHUAN = 'NINHTHUAN',
+  PHUTHO = 'PHUTHO',
+  PHUYEN = 'PHUYEN',
+  QUANGBINH = 'QUANGBINH',
+  QUANGNAM = 'QUANGNAM',
+  QUANGNGAI = 'QUANGNGAI',
+  QUANGNINH = 'QUANGNINH',
+  QUANGTRI = 'QUANGTRI',
+  SOCTRANG = 'SOCTRANG',
+  SONLA = 'SONLA',
+  TAYNINH = 'TAYNINH',
+  THAIBINH = 'THAIBINH',
+  THAINGUYEN = 'THAINGUYEN',
+  THANHHOA = 'THANHHOA',
+  THUATHIENHUE = 'THUATHIENHUE',
+  TIENGIANG = 'TIENGIANG',
+  TRAVINH = 'TRAVINH',
+  TIENQUANG = 'TIENQUANG',
+  VINHLONG = 'VINHLONG',
+  VINHPHUC = 'VINHPHUC',
+  YENBAI = 'YENBAI',
 }
 
 export interface Station {
@@ -122,12 +152,12 @@ export interface Station {
 }
 
 export enum TypeVehical {
-  BUS = "BUS",
-  MINIVAN = "MINIVAN",
-  LIMOUSINE = "LIMOUSINE",
-  CAR = "CAR",
-  TRAIN = "TRAIN",
-  AIRPLANE = "AIRPLANE",
+  BUS = 'BUS',
+  MINIVAN = 'MINIVAN',
+  LIMOUSINE = 'LIMOUSINE',
+  CAR = 'CAR',
+  TRAIN = 'TRAIN',
+  AIRPLANE = 'AIRPLANE',
 }
 
 export interface SeatType {
@@ -139,31 +169,31 @@ export interface SeatType {
 }
 
 export enum Utility {
-  AIR_CONDITIONER = "AIR_CONDITIONER",
-  ALMOST_FULL = "ALMOST_FULL",
-  BED_SEAT = "BED_SEAT",
-  BLANKET = "BLANKET",
-  CANCELLATION = "CANCELLATION",
-  ENGLISH_SUPPORTED = "ENGLISH_SUPPORTED",
-  E_TICKET = "E_TICKET",
-  INSTANT_CONFIRMATION = "INSTANT_CONFIRMATION",
-  MASSAGE_SEAT = "MASSAGE_SEAT",
-  ONBOARD_ENTERTAINMENT = "ONBOARD_ENTERTAINMENT",
-  ONE_FREE_LUGGAGE = "ONE_FREE_LUGGAGE",
-  OUTLETS = "OUTLETS",
-  PILLOW = "PILLOW",
-  RECLINING_SEAT = "RECLINING_SEAT",
-  REST_ROOM_ON_BUS = "REST_ROOM_ON_BUS",
-  REST_STOP = "REST_STOP",
-  SIGHT_SEEING = "SIGHT_SEEING",
-  SIGHT_SEEING_TICKET = "SIGHT_SEEING_TICKET",
-  SNACK = "SNACK",
-  SUPPORT24X7 = "SUPPORT_24x7",
-  TOUR_GUIDE = "TOUR_GUIDE",
-  TOWEL = "TOWEL",
-  TELEVISION = "TELEVISION",
-  WATER = "WATER",
-  WIFI = "WIFI",
+  AIR_CONDITIONER = 'AIR_CONDITIONER',
+  ALMOST_FULL = 'ALMOST_FULL',
+  BED_SEAT = 'BED_SEAT',
+  BLANKET = 'BLANKET',
+  CANCELLATION = 'CANCELLATION',
+  ENGLISH_SUPPORTED = 'ENGLISH_SUPPORTED',
+  E_TICKET = 'E_TICKET',
+  INSTANT_CONFIRMATION = 'INSTANT_CONFIRMATION',
+  MASSAGE_SEAT = 'MASSAGE_SEAT',
+  ONBOARD_ENTERTAINMENT = 'ONBOARD_ENTERTAINMENT',
+  ONE_FREE_LUGGAGE = 'ONE_FREE_LUGGAGE',
+  OUTLETS = 'OUTLETS',
+  PILLOW = 'PILLOW',
+  RECLINING_SEAT = 'RECLINING_SEAT',
+  REST_ROOM_ON_BUS = 'REST_ROOM_ON_BUS',
+  REST_STOP = 'REST_STOP',
+  SIGHT_SEEING = 'SIGHT_SEEING',
+  SIGHT_SEEING_TICKET = 'SIGHT_SEEING_TICKET',
+  SNACK = 'SNACK',
+  SUPPORT24X7 = 'SUPPORT_24x7',
+  TOUR_GUIDE = 'TOUR_GUIDE',
+  TOWEL = 'TOWEL',
+  TELEVISION = 'TELEVISION',
+  WATER = 'WATER',
+  WIFI = 'WIFI',
 }
 
 export interface Passenger {
@@ -235,6 +265,7 @@ export interface Partner {
   medialLink: string;
   routes: Route[];
   transports: Transport[];
+  status: string;
 }
 
 export interface Transport {
@@ -281,7 +312,32 @@ export interface UserDto {
   username: string;
   password: string;
   phoneNumber: string;
-  userRole: string;
+}
+
+export interface PartnerDto {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  description: string;
+  title: string;
+  medialLink: string;
+}
+
+export enum EmployeeRoles {
+  ADMIN = 'ADMIN',
+  EDITOR = 'EDITOR',
+  VIEWER = 'VIEWER',
+}
+
+export interface EmployeeDto {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  role: EmployeeRoles;
 }
 
 export interface Employee {
@@ -291,15 +347,15 @@ export interface Employee {
   username: string;
   password: string;
   phoneNumber: string;
-  userRole: string;
+  role: string;
 }
 
-import axios, { AxiosInstance, AxiosRequestConfig, HeadersDefaults, ResponseType } from "axios";
-import { Observable, from } from "rxjs";
+import axios, { AxiosInstance, AxiosRequestConfig, HeadersDefaults, ResponseType } from 'axios';
+import { Observable, from } from 'rxjs';
 
 export type QueryParamsType = Record<string | number, any>;
 
-export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
+export interface FullRequestParams extends Omit<AxiosRequestConfig, 'data' | 'params' | 'url' | 'responseType'> {
   /** set parameter to `true` for call `securityWorker` for this request */
   secure?: boolean;
   /** request path */
@@ -314,32 +370,30 @@ export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "pa
   body?: unknown;
 }
 
-export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
+export type RequestParams = Omit<FullRequestParams, 'body' | 'method' | 'query' | 'path'>;
 
-export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
-  securityWorker?: (
-    securityData: SecurityDataType | null
-  ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
+export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, 'data' | 'cancelToken'> {
+  securityWorker?: (securityData: SecurityDataType | null) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
   secure?: boolean;
   format?: ResponseType;
 }
 
 export enum ContentType {
-  Json = "application/json",
-  FormData = "multipart/form-data",
-  UrlEncoded = "application/x-www-form-urlencoded",
-  Text = "text/plain",
+  Json = 'application/json',
+  FormData = 'multipart/form-data',
+  UrlEncoded = 'application/x-www-form-urlencoded',
+  Text = 'text/plain',
 }
 
 export class HttpClient<SecurityDataType = unknown> {
   public instance: AxiosInstance;
   private securityData: SecurityDataType | null = null;
-  private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
+  private securityWorker?: ApiConfig<SecurityDataType>['securityWorker'];
   private secure?: boolean;
   private format?: ResponseType;
 
   constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "" });
+    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || '' });
     this.secure = secure;
     this.format = format;
     this.securityWorker = securityWorker;
@@ -365,7 +419,7 @@ export class HttpClient<SecurityDataType = unknown> {
   }
 
   protected stringifyFormItem(formItem: unknown) {
-    if (typeof formItem === "object" && formItem !== null) {
+    if (typeof formItem === 'object' && formItem !== null) {
       return JSON.stringify(formItem);
     } else {
       return `${formItem}`;
@@ -386,15 +440,7 @@ export class HttpClient<SecurityDataType = unknown> {
     }, new FormData());
   }
 
-  public request = <T = any, _E = any>({
-    secure,
-    path,
-    type,
-    query,
-    format,
-    body,
-    ...params
-  }: FullRequestParams): Observable<T> => {
+  public request = <T = any, _E = any>({ secure, path, type, query, format, body, ...params }: FullRequestParams): Observable<T> => {
     return from(
       this.sendRequest({
         secure,
@@ -404,32 +450,21 @@ export class HttpClient<SecurityDataType = unknown> {
         format,
         body,
         ...params,
-      })
+      }),
     );
   };
 
-  public sendRequest = async <T = any, _E = any>({
-    secure,
-    path,
-    type,
-    query,
-    format,
-    body,
-    ...params
-  }: FullRequestParams): Promise<T> => {
+  public sendRequest = async <T = any, _E = any>({ secure, path, type, query, format, body, ...params }: FullRequestParams): Promise<T> => {
     const secureParams =
-      ((typeof secure === "boolean" ? secure : this.secure) &&
-        this.securityWorker &&
-        (await this.securityWorker(this.securityData))) ||
-      {};
+      ((typeof secure === 'boolean' ? secure : this.secure) && this.securityWorker && (await this.securityWorker(this.securityData))) || {};
     const requestParams = this.mergeRequestParams(params, secureParams);
     const responseFormat = format || this.format || undefined;
 
-    if (type === ContentType.FormData && body && body !== null && typeof body === "object") {
+    if (type === ContentType.FormData && body && body !== null && typeof body === 'object') {
       body = this.createFormData(body as Record<string, unknown>);
     }
 
-    if (type === ContentType.Text && body && body !== null && typeof body !== "string") {
+    if (type === ContentType.Text && body && body !== null && typeof body !== 'string') {
       body = JSON.stringify(body);
     }
 
@@ -438,7 +473,7 @@ export class HttpClient<SecurityDataType = unknown> {
         ...requestParams,
         headers: {
           ...(requestParams.headers || {}),
-          ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
+          ...(type && type !== ContentType.FormData ? { 'Content-Type': type } : {}),
         },
         params: query,
         responseType: responseFormat,
@@ -466,11 +501,110 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   appGetInfo = (params: RequestParams = {}) =>
     this.request<void, any>({
       path: `/`,
-      method: "GET",
+      method: 'GET',
       ...params,
     });
 
   api = {
+    /**
+     * No description
+     *
+     * @tags bank-card
+     * @name BankCardControllerGetBankCardByPartnerId
+     * @summary Get bank card by partnerId
+     * @request GET:/api/bank-card/partner/{id}
+     */
+    bankCardGetBankCardByPartnerId: (id: string, params: RequestParams = {}) =>
+      this.request<BankCard[], any>({
+        path: `/api/bank-card/partner/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags bank-card
+     * @name BankCardControllerGetBankCardByPassengerId
+     * @summary Get bank card by passengerId
+     * @request GET:/api/bank-card/passenger/{id}
+     */
+    bankCardGetBankCardByPassengerId: (id: string, params: RequestParams = {}) =>
+      this.request<BankCard[], any>({
+        path: `/api/bank-card/passenger/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags bank-card
+     * @name BankCardControllerGetBankCardByUser
+     * @summary Get bank card by user
+     * @request GET:/api/bank-card
+     */
+    bankCardGetBankCardByUser: (params: RequestParams = {}) =>
+      this.request<BankCard[], any>({
+        path: `/api/bank-card`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags bank-card
+     * @name BankCardControllerCreateBankCardByUser
+     * @summary Create bank card by user
+     * @request POST:/api/bank-card
+     */
+    bankCardCreateBankCardByUser: (data: BankCardDto, params: RequestParams = {}) =>
+      this.request<BankCard[], any>({
+        path: `/api/bank-card`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags bank-card
+     * @name BankCardControllerUpdateBankCardByUser
+     * @summary Update bank card by user
+     * @request PUT:/api/bank-card/{id}
+     */
+    bankCardUpdateBankCardByUser: (id: string, params: RequestParams = {}) =>
+      this.request<BankCard[], any>({
+        path: `/api/bank-card/${id}`,
+        method: 'PUT',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags bank-card
+     * @name BankCardControllerUpdate
+     * @request PUT:/api/bankcard/{id}
+     */
+    bankCardUpdate: (id: string, data: BankCardDto, params: RequestParams = {}) =>
+      this.request<BankCard, any>({
+        path: `/api/bankcard/${id}`,
+        method: 'PUT',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
     /**
      * No description
      *
@@ -537,8 +671,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         }
       >({
         path: `/api/health`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -552,8 +686,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     systemConfigGetAll: (params: RequestParams = {}) =>
       this.request<SystemConfig[], any>({
         path: `/api/systemconfig`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -567,10 +701,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     systemConfigCreate: (data: SystemConfigDto, params: RequestParams = {}) =>
       this.request<SystemConfig, any>({
         path: `/api/systemconfig`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -584,8 +718,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     systemConfigGetById: (id: string, params: RequestParams = {}) =>
       this.request<SystemConfig, any>({
         path: `/api/systemconfig/${id}`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -599,10 +733,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     systemConfigUpdate: (id: string, data: SystemConfigDto, params: RequestParams = {}) =>
       this.request<SystemConfig, any>({
         path: `/api/systemconfig/${id}`,
-        method: "PUT",
+        method: 'PUT',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -621,13 +755,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         reference?: string;
         eventGroup?: EventGroup[];
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<Audit[], any>({
         path: `/api/${bucketId}/audit`,
-        method: "GET",
+        method: 'GET',
         query: query,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -641,8 +775,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     routeGetAll: (params: RequestParams = {}) =>
       this.request<Route[], any>({
         path: `/api/route`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -656,10 +790,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     routeCreate: (data: RouteDto, params: RequestParams = {}) =>
       this.request<Route, any>({
         path: `/api/route`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -673,8 +807,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     routeGetById: (id: string, params: RequestParams = {}) =>
       this.request<Route, any>({
         path: `/api/route/${id}`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -688,10 +822,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     routeUpdate: (id: string, data: RouteDto, params: RequestParams = {}) =>
       this.request<Route, any>({
         path: `/api/route/${id}`,
-        method: "PUT",
+        method: 'PUT',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -706,10 +840,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     stationCreate: (data: StationDto, params: RequestParams = {}) =>
       this.request<Station, any>({
         path: `/api/station`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -723,8 +857,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     stationGetAll: (params: RequestParams = {}) =>
       this.request<Station[], any>({
         path: `/api/station`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -739,8 +873,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     stationUpdate: (id: string, params: RequestParams = {}) =>
       this.request<Station, any>({
         path: `/api/station/${id}`,
-        method: "PUT",
-        format: "json",
+        method: 'PUT',
+        format: 'json',
         ...params,
       }),
 
@@ -755,8 +889,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     stationDelete: (id: string, params: RequestParams = {}) =>
       this.request<Station, any>({
         path: `/api/station/${id}`,
-        method: "DELETE",
-        format: "json",
+        method: 'DELETE',
+        format: 'json',
         ...params,
       }),
 
@@ -770,8 +904,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     stationGetById: (id: string, params: RequestParams = {}) =>
       this.request<Station, any>({
         path: `/api/station/${id}`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -786,10 +920,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     transportCreate: (data: TransportDto, params: RequestParams = {}) =>
       this.request<Transport, any>({
         path: `/api/transport`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -803,8 +937,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     transportGetAll: (params: RequestParams = {}) =>
       this.request<Transport[], any>({
         path: `/api/transport`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -818,8 +952,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     transportGetById: (id: string, params: RequestParams = {}) =>
       this.request<Transport, any>({
         path: `/api/transport/${id}`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -833,10 +967,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     transportUpdate: (id: string, data: TransportDto, params: RequestParams = {}) =>
       this.request<Transport, any>({
         path: `/api/transport/${id}`,
-        method: "PUT",
+        method: 'PUT',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -845,15 +979,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags auth
      * @name AuthControllerLogin
+     * @summary Login
      * @request POST:/api/auth/login
      */
     authLogin: (data: AuthCredentialsDto, params: RequestParams = {}) =>
       this.request<TokenResponse, any>({
         path: `/api/auth/login`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -861,16 +996,133 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags auth
-     * @name AuthControllerSignUp
-     * @request POST:/api/auth/signup
+     * @name AuthControllerPassengerSignUp
+     * @summary Passenger signup
+     * @request POST:/api/auth/passenger/signup
      */
-    authSignUp: (data: UserDto, params: RequestParams = {}) =>
+    authPassengerSignUp: (data: UserDto, params: RequestParams = {}) =>
       this.request<TokenResponse, any>({
-        path: `/api/auth/signup`,
-        method: "POST",
+        path: `/api/auth/passenger/signup`,
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerUpdatePassenger
+     * @summary Update passenger
+     * @request GET:/api/auth/passenger
+     */
+    authUpdatePassenger: (params: RequestParams = {}) =>
+      this.request<Passenger, any>({
+        path: `/api/auth/passenger`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerPartnerSignUp
+     * @summary Partner signup
+     * @request POST:/api/auth/partner/signup
+     */
+    authPartnerSignUp: (data: UserDto, params: RequestParams = {}) =>
+      this.request<TokenResponse, any>({
+        path: `/api/auth/partner/signup`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerGetAllPartner
+     * @summary Get all partner
+     * @request GET:/api/auth/partner
+     */
+    authGetAllPartner: (params: RequestParams = {}) =>
+      this.request<Partner[], any>({
+        path: `/api/auth/partner`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerUpdatePartner
+     * @summary Update partner
+     * @request PUT:/api/auth/partner
+     */
+    authUpdatePartner: (data: PartnerDto, params: RequestParams = {}) =>
+      this.request<Partner, any>({
+        path: `/api/auth/partner`,
+        method: 'PUT',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerGetAllPartnerPending
+     * @summary Get all partner pending
+     * @request GET:/api/auth/partner/pending
+     */
+    authGetAllPartnerPending: (params: RequestParams = {}) =>
+      this.request<Partner[], any>({
+        path: `/api/auth/partner/pending`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerDenyAccountPartner
+     * @summary Deny partner
+     * @request POST:/api/auth/partner/deny-account
+     */
+    authDenyAccountPartner: (id: number, params: RequestParams = {}) =>
+      this.request<Partner, any>({
+        path: `/api/auth/partner/deny-account`,
+        method: 'POST',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerAcceptAccountPartner
+     * @summary Accept partner
+     * @request POST:/api/auth/partner/accept-account
+     */
+    authAcceptAccountPartner: (id: number, params: RequestParams = {}) =>
+      this.request<Partner, any>({
+        path: `/api/auth/partner/accept-account`,
+        method: 'POST',
+        format: 'json',
         ...params,
       }),
 
@@ -879,15 +1131,50 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags auth
      * @name AuthControllerCreateEmployee
+     * @summary Create employee
      * @request POST:/api/auth/employee
      */
-    authCreateEmployee: (data: UserDto, params: RequestParams = {}) =>
+    authCreateEmployee: (data: EmployeeDto, params: RequestParams = {}) =>
       this.request<Employee, any>({
         path: `/api/auth/employee`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerGetAllEmployee
+     * @summary Get all employee
+     * @request GET:/api/auth/employee
+     */
+    authGetAllEmployee: (params: RequestParams = {}) =>
+      this.request<Employee[], any>({
+        path: `/api/auth/employee`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerUpdateEmployee
+     * @summary Update employee
+     * @request PUT:/api/auth/employee
+     */
+    authUpdateEmployee: (id: number, data: EmployeeDto, params: RequestParams = {}) =>
+      this.request<Employee, any>({
+        path: `/api/auth/employee`,
+        method: 'PUT',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
         ...params,
       }),
   };
