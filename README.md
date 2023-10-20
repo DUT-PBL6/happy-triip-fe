@@ -1,5 +1,7 @@
 # Happy Triip - PBL6 - Software Technology Project - FE
+
 ## Technology
+
 - [Angular](https://angular.io/) Application-design Framework
 - [Eslint](https://eslint.org/) Tool for identifying and reporting on patterns found in ECMAScript/JavaScript code
 - [Prettier](https://prettier.io/) An opinionated code formatter with support for
@@ -8,40 +10,34 @@
 - [PrimeNg](https://primeng.org/) Library UI
 - [Docker](https://docs.docker.com/) Environment Setup
 
-## Clone project
-### With SSH 
-```
-    git clone git@gitlab.com:pbl6-software-technology-project/pbl6-be.git
-```
-### With HTTPS
-```
-    git clone https://gitlab.com/pbl6-software-technology-project/pbl6-be.git
-```
+# Test
 
-## Git Flow
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
 
-### Flow these step to create a new branch, commit and Merge Request
-#### Step 1: Update Task in [Trello](https://trello.com/b/yU3jJhLL/happy-triip) and spent time in [GG Sheet](https://docs.google.com/spreadsheets/d/1jAGPitvpIeJg8PalK2oeOleiEmT9uiOO4arJmSdsLpM/edit#gid=1170519418) 
-#### Step 2: Checkout to `develop`, pull newest code from `develop`
-```
-    git checkout develop
-    git pull origin develop
-```
-#### Step 3: Create a new branch for task, base in branch `develop`
-**Rule of branch name**
-- Follow your tile task in [Trello](https://trello.com/b/yU3jJhLL/happy-triip), if your title task is `[HT - 123] - Config CI/ CD`, your branch name will be `ht-123/config-ci-cd`
-```
-    git checkout -b ht-123/config-ci-cd develop
-```
+## Development server
 
-#### Step 4: When commit, message of commit follow rule
-**Rule of commit message**
-- Follow your tile task in [Trello](https://trello.com/b/yU3jJhLL/happy-triip), if your title task is `[HT - 123] - Config CI/ CD`, your commit message will be `[HT - 123] - Config CI/ CD`
-- **Remember whitespace** (tips: You can copy message from Task Title in Trello)
-  
-#### Step 5: When create new Merge Request, follow rule
-**Rule of merge request**
-- Follow your tile task in [Trello](https://trello.com/b/yU3jJhLL/happy-triip), if your title task is `[HT - 123] - Config CI/ CD`, your title merge request will be `[HT - 123] - Config CI/ CD`
-- **Remember to describe everything you do in this task** 
-- **Assigner will be you**
-- **Reviewer will be anyone in this project**
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running Prettier & ESlint
+
+Run `ng run format` to format the code & run `ng run lint` to check code convention BEFORE committing.
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
