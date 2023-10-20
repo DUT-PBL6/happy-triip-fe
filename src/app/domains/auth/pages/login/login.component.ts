@@ -33,7 +33,7 @@ export class LoginComponent extends BaseDestroyable implements OnInit {
       ? "Passenger"
       : this.url.path().includes("partner")
       ? "Partner"
-      : "Admin";
+      : "Employee";
   }
 
   private initLoginForm(): void {

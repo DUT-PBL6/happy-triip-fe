@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Select, Store } from "@ngxs/store";
 import { Employee } from "_api";
 import { Observable } from "rxjs";
+import { GetAllEmployee } from "src/app/core/service/employee/employee.action";
 import { EmployeeService } from "src/app/core/service/employee/employee.service";
+import { EmployeeState } from "src/app/core/service/employee/employee.state";
 
 @Component({
   selector: "app-user-listbox",
@@ -13,12 +16,15 @@ export class UserListboxComponent implements OnInit {
   @Output() selectedEmployee = new EventEmitter<Employee | undefined>();
   @Output() isUpdateMode = new EventEmitter<boolean>();
   @Output() isUserFormVisible = new EventEmitter<boolean>();
-  public employees$: Observable<Employee[]>;
+  @Select(EmployeeState.getAllEmployee) public employees$: Observable<Employee[]>;
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(
+    private employeeService: EmployeeService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
-    this.employees$ = this.employeeService.getEmployees$();
+    if (this.store.selectSnapshot(EmployeeState.getAllEmployee).length === 0) this.store.dispatch(new GetAllEmployee());
   }
 
   public handleAddUser(): void {

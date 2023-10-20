@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   public tieredItems: MenuItem[] = [];
   public isLoggedIn = false;
   public isInAuthPage = false;
+  public username = cacheService.getUserInfo().username;
 
   constructor(
     private router: Router,

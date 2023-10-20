@@ -1,14 +1,12 @@
 import * as Rx from "rxjs";
-
+var Buffer = require("buffer/").Buffer;
 export type Caches = {
   accessToken?: string;
 };
 
-// export type UserInfo = {
-//   sub: string;
-//   avatar: string;
-//   roles: string[];
-// };
+export type UserInfo = {
+  username: string;
+};
 
 const cacheSubjects = new Rx.BehaviorSubject(
   typeof window !== "undefined" && JSON.parse(localStorage.getItem("info") ?? "{}")
@@ -32,20 +30,21 @@ const resetValue = () => {
   }
 };
 
-// function getUserInfo() {
-//   const token = cacheSubjects?.value?.accessToken ?? '';
-//   if (token) {
-//     const infoBase64 = token.split('.')?.[1];
-//     const info = Buffer.from(infoBase64, 'base64').toString('utf8');
-//     return JSON.parse(info) as UserInfo;
-//   }
-//   return {} as UserInfo;
-// }
+function getUserInfo() {
+  const token = cacheSubjects?.value?.accessToken ?? "";
+  if (token) {
+    const infoBase64 = token.split(".")?.[1];
+    const info = Buffer.from(infoBase64, "base64").toString("utf8");
+    return JSON.parse(info) as UserInfo;
+  }
+  return {} as UserInfo;
+}
 const cacheService = {
   cache: cacheSubjects.asObservable(),
   getValue(key: string) {
     return cacheSubjects?.value?.[key] ?? "";
   },
+  getUserInfo,
   setValue,
   resetValue,
 };
