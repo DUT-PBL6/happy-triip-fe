@@ -1,0 +1,12 @@
+@mixin base-header {
+  background-image: url(/assets/images/about-us.png);
+  height: 21.5rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left;
+  color: #fff;
+  padding: 3rem 10.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
