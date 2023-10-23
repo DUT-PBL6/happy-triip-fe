@@ -18,10 +18,7 @@ export class UserListboxComponent implements OnInit {
   @Output() isUserFormVisible = new EventEmitter<boolean>();
   @Select(EmployeeState.getAllEmployee) public employees$: Observable<Employee[]>;
 
-  constructor(
-    private employeeService: EmployeeService,
-    private store: Store
-  ) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     if (this.store.selectSnapshot(EmployeeState.getAllEmployee).length === 0) this.store.dispatch(new GetAllEmployee());

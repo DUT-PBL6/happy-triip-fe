@@ -1082,6 +1082,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags auth
+     * @name AuthControllerGetPartnerById
+     * @summary Get partner by id
+     * @request GET:/api/auth/partner/{id}
+     */
+    authGetPartnerById: (id: number, params: RequestParams = {}) =>
+      this.request<Partner, any>({
+        path: `/api/auth/partner/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
      * @name AuthControllerGetAllPartnerPending
      * @summary Get all partner pending
      * @request GET:/api/auth/partner/pending
@@ -1100,11 +1116,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags auth
      * @name AuthControllerDenyAccountPartner
      * @summary Deny partner
-     * @request POST:/api/auth/partner/deny-account
+     * @request POST:/api/auth/partner/deny-account/{id}
      */
     authDenyAccountPartner: (id: number, params: RequestParams = {}) =>
       this.request<Partner, any>({
-        path: `/api/auth/partner/deny-account`,
+        path: `/api/auth/partner/deny-account/${id}`,
         method: 'POST',
         format: 'json',
         ...params,
@@ -1116,11 +1132,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags auth
      * @name AuthControllerAcceptAccountPartner
      * @summary Accept partner
-     * @request POST:/api/auth/partner/accept-account
+     * @request POST:/api/auth/partner/accept-account/{id}
      */
     authAcceptAccountPartner: (id: number, params: RequestParams = {}) =>
       this.request<Partner, any>({
-        path: `/api/auth/partner/accept-account`,
+        path: `/api/auth/partner/accept-account/${id}`,
         method: 'POST',
         format: 'json',
         ...params,
@@ -1166,11 +1182,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags auth
      * @name AuthControllerUpdateEmployee
      * @summary Update employee
-     * @request PUT:/api/auth/employee
+     * @request PUT:/api/auth/employee/{id}
      */
     authUpdateEmployee: (id: number, data: EmployeeDto, params: RequestParams = {}) =>
       this.request<Employee, any>({
-        path: `/api/auth/employee`,
+        path: `/api/auth/employee/${id}`,
         method: 'PUT',
         body: data,
         type: ContentType.Json,

@@ -42,6 +42,14 @@
       "ADMIN": "Admin",
       "VIEWER": "Viewer",
       "EDITOR": "Editor"
+    },
+    "vehicleType": {
+      "BUS": "Bus",
+      "MINIVAN": "Minivan",
+      "LIMOUSINE": "Limousine",
+      "CAR": "Car",
+      "TRAIN": "Train",
+      "AIRPLANE": "Airplane"
     }
   }
 }
