@@ -1,0 +1,10 @@
+@import "../../layouts/policy/policy.component.scss";
+
+.booking-policy-container {
+  .header {
+    background-image: url("/assets/images/services/policies/booking-policy.png") !important;
+    background-position: center center !important;
+
+    @include base-header;
+  }
+}
