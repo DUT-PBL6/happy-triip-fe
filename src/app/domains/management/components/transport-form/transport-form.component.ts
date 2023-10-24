@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output, SimpleChanges } from "@angular/
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Transport, TransportDto, TypeVehical, Utility } from "_api";
 import { Option } from "src/app/core/interfaces/option.interface";
+import { CheckboxChangeEvent } from "primeng/checkbox";
 
 @Component({
   selector: "app-transport-form",
@@ -15,9 +16,9 @@ export class TransportFormComponent {
   @Output() cancelTransportForm = new EventEmitter<boolean>();
   @Output() form = new EventEmitter<TransportDto>();
   public transportForm: FormGroup;
+  public seatTypesForm: FormArray;
   public vehicleType: Option<TypeVehical>[] = [];
   public Utilities: string[] = Object.keys(Utility);
-  public selectedUtilities: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -25,8 +26,9 @@ export class TransportFormComponent {
   ) {}
 
   ngOnInit(): void {
-    this.initTransportForm();
     this.initVehicleType();
+    this.initSeatTypesForm();
+    this.initTransportForm();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -44,11 +46,24 @@ export class TransportFormComponent {
       name: ["", Validators.required],
       type: ["", Validators.required],
       mapSeat: ["", Validators.required],
-      seatTypes: ["", Validators.required],
-      images: ["", Validators.required],
-      utility: [new FormArray([]), Validators.required],
+      seatTypes: this.seatTypesForm,
+      images: [["https://shorturl.at/nptuP"], Validators.required],
+      utility: this.fb.array([], Validators.required),
     });
     if (this.selectedTransport) this.transportForm?.patchValue({ ...this.selectedTransport });
+  }
+
+  private initSeatTypesForm(): void {
+    this.seatTypesForm = this.fb.array(
+      [
+        this.fb.group({
+          name: ["", Validators.required],
+          description: [""],
+          price: ["", Validators.required],
+        }),
+      ],
+      Validators.required
+    );
   }
 
   private initVehicleType(): void {
@@ -70,8 +85,8 @@ export class TransportFormComponent {
     return this.transportForm.get("mapSeat") as FormControl;
   }
 
-  public get seatTypes(): FormControl {
-    return this.transportForm.get("seatTypes") as FormControl;
+  public get seatTypes(): FormArray {
+    return this.transportForm.get("seatTypes") as FormArray;
   }
 
   public get images(): FormControl {
@@ -82,22 +97,39 @@ export class TransportFormComponent {
     return this.transportForm.get("utility") as FormArray;
   }
 
-  public toggleUtility(index: number): void {
-    const utilityFormArray = this.transportForm.get("utility") as FormArray;
-    const utilityControl = utilityFormArray.at(index);
+  public onCheckboxChange(event: CheckboxChangeEvent): void {
+    const utility = event.checked[0];
 
-    if (utilityControl.value) {
-      utilityFormArray.push(new FormControl(this.Utilities[index]));
-    } else {
-      utilityFormArray.removeAt(index);
+    if (event.checked.length === 0) {
+      const index = this.utility.controls.findIndex((x) => x.value === utility);
+      this.utility.removeAt(index);
+      return;
     }
+    this.utility.push(this.fb.control(utility));
+  }
+
+  public addNewSeatType(): void {
+    const newSeatType = this.fb.group({
+      name: ["", Validators.required],
+      description: [""],
+      price: ["", Validators.required],
+    });
+
+    this.seatTypesForm.push(newSeatType);
+  }
+
+  public deleteSeatType(index: number): void {
+    this.seatTypesForm.removeAt(index);
   }
 
   public submit(): void {
+    console.log(this.transportForm.value);
+
     if (!this.transportForm.valid) {
       this.transportForm.markAllAsTouched();
       return;
     }
+
     this.form.emit(this.transportForm.value);
     this.transportForm.reset();
   }

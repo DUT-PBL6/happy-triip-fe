@@ -8,6 +8,7 @@ import { DropdownModule } from "primeng/dropdown";
 import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
 import { CheckboxModule } from "primeng/checkbox";
+import { InputNumberModule } from "primeng/inputnumber";
 
 @NgModule({
   declarations: [TransportFormComponent],
@@ -21,6 +22,7 @@ import { CheckboxModule } from "primeng/checkbox";
     PasswordModule,
     TranslateModule,
     CheckboxModule,
+    InputNumberModule,
   ],
   exports: [TransportFormComponent],
 })

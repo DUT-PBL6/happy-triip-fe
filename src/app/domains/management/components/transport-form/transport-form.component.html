@@ -63,15 +63,59 @@
           </small>
         </div>
       </div>
-      <div class="utility col-6 flex flex-column">
-        <label for="utility" class="block text-900 text-lg font-medium mb-2">Utility</label>
+      <div class="Seat Type col-12 flex flex-column">
+        <label for="seat-type" class="block text-900 text-lg font-medium mb-2">Seat Type</label>
         <div class="input-container">
-          <ng-container formArrayName="utility">
-            <div *ngFor="let util of Utilities; index as i" class="field-checkbox">
-              <p-checkbox [formControlName]="i" [value]="util" (onChange)="toggleUtility(i)"></p-checkbox>
-              <label [for]="util">{{ util }}</label>
+          <div formArrayName="seatTypes">
+            <div *ngFor="let group of seatTypes.controls; let i = index">
+              <div [formGroupName]="i" class="seat-type-group flex col-12 gap-2 px-0 align-items-center">
+                <input type="text" class="flex-1 flex" pInputText formControlName="name" placeholder="Name" />
+                <input
+                  type="text"
+                  class="flex-1 flex"
+                  pInputText
+                  formControlName="description"
+                  placeholder="Description"
+                />
+                <div class="flex flex-1 align-items-center">
+                  <p-inputNumber
+                    formControlName="price"
+                    mode="currency"
+                    currency="USD"
+                    locale="en-US"
+                    placeholder="Price"
+                    class="flex flex-1"
+                  ></p-inputNumber>
+                  <i
+                    *ngIf="i !== 0"
+                    style="font-size: 1.5rem"
+                    class="pi pi-trash p-error ml-2"
+                    (click)="deleteSeatType(i)"
+                    (keyup.enter)="deleteSeatType(i)"
+                    tabindex="0"
+                  ></i>
+                </div>
+              </div>
             </div>
-          </ng-container>
+          </div>
+        </div>
+        <p-button
+          label="Add New Type"
+          styleClass="p-button-secondary p-button-outlined"
+          severity="secondary"
+          icon="pi pi-plus"
+          iconPos="left"
+          (onClick)="addNewSeatType()"
+        ></p-button>
+      </div>
+      <div class="utility col-12 flex flex-column">
+        <label for="utility" class="block text-900 text-lg font-medium mb-2">Utility</label>
+        <div class="input-container flex flex-wrap">
+          <div *ngFor="let util of Utilities; index as i" class="field-checkbox mr-4">
+            <p-checkbox [value]="util" (onChange)="onCheckboxChange($event)"></p-checkbox>
+            <img [src]="'assets/icons/' + (util | lowercase) + '.svg'" alt="" class="ml-1" />
+            <label [for]="util">{{ "share.utilities." + util | translate }}</label>
+          </div>
         </div>
       </div>
       <div class="actions col-12 flex justify-content-end gap-2">
