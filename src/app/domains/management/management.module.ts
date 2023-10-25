@@ -6,6 +6,7 @@ import { RouterModule } from "@angular/router";
 import { SidebarModule } from "src/app/share/components/sidebar/sidebar.module";
 import { EmptyLayoutModule } from "src/app/share/layouts/empty-layout/empty-layout.module";
 import { ProfileSettingsModule } from "./pages/profile-settings/profile-settings.module";
+import { TransportModule } from "./pages/transport/transport.module";
 
 @NgModule({
   declarations: [ManagementLayoutComponent],
@@ -16,6 +17,7 @@ import { ProfileSettingsModule } from "./pages/profile-settings/profile-settings
     SidebarModule,
     EmptyLayoutModule,
     ProfileSettingsModule,
+    TransportModule,
   ],
   exports: [ManagementLayoutComponent],
 })

@@ -22,10 +22,7 @@ export class EmployeeState {
     return state.employees;
   }
 
-  constructor(
-    private employeeService: EmployeeService,
-    private store: Store
-  ) {}
+  constructor(private employeeService: EmployeeService) {}
 
   @Action(GetAllEmployee)
   public getAllEmployee$(ctx: StateContext<IEmployeeState>): Observable<Employee[]> {

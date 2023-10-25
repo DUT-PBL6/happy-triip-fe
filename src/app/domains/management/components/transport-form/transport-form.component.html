@@ -1,0 +1,165 @@
+<div class="card w-full h-full flex flex-column gap-4">
+  <h4>{{ updateMode ? "Transport Details" : "Add New Transport" }}</h4>
+  <div class="form">
+    <form [formGroup]="transportForm" (ngSubmit)="submit()" class="grid">
+      <!-- NAME -->
+      <div class="name col-6 flex flex-column">
+        <label for="name" class="block text-900 text-lg font-medium mb-2">Name</label>
+        <div class="input-container">
+          <input
+            pInputText
+            id="name"
+            type="text"
+            placeholder="Enter transport name"
+            class="w-full"
+            formControlName="name"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(name)
+            }"
+          />
+          <small class="p-error" *ngIf="validate(name)">
+            <strong>Name is required</strong>
+          </small>
+        </div>
+      </div>
+      <!-- VEHICLE TYPE -->
+      <div class="vehicle-type col-6 flex flex-column">
+        <label for="type" class="block text-900 text-lg font-medium mb-2">Vehicle type</label>
+        <div class="input-container">
+          <p-dropdown
+            id="type"
+            formControlName="type"
+            class="full-width-dropdown"
+            [showClear]="true"
+            [options]="vehicleType"
+            placeholder="Choose vehicle type"
+            optionLabel="name"
+            optionValue="value"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(type)
+            }"
+          >
+            <ng-template pTemplate="selectedItem" let-type>
+              <div class="flex align-items-center gap-2" *ngIf="type">
+                <img
+                  [src]="'assets/icons/' + (type.name | lowercase) + '.svg'"
+                  style="width: 18px"
+                  alt="vehicle icon"
+                />
+                <div>{{ type.name }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-transport pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <img
+                  [src]="'assets/icons/' + (transport.name | lowercase) + '.svg'"
+                  style="width: 18px"
+                  alt="vehicle icon"
+                />
+                <div>{{ transport.name }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <small class="p-error" *ngIf="validate(type)">
+            <strong>Vehicle type is required</strong>
+          </small>
+        </div>
+      </div>
+      <!-- SEAT TYPE -->
+      <div class="Seat Type col-12 flex flex-column">
+        <label for="seat-type" class="block text-900 text-lg font-medium mb-2">Seat Type</label>
+        <div class="input-container">
+          <div formArrayName="seatTypes">
+            <div *ngFor="let group of seatTypes.controls; let i = index">
+              <div [formGroupName]="i" class="seat-type-group flex col-12 gap-2 px-0 align-items-center">
+                <input type="text" class="flex-1 flex" pInputText formControlName="name" placeholder="Name" />
+                <input
+                  type="text"
+                  class="flex-1 flex"
+                  pInputText
+                  formControlName="description"
+                  placeholder="Description"
+                />
+                <div class="flex flex-1 align-items-center">
+                  <p-inputNumber
+                    formControlName="price"
+                    mode="currency"
+                    currency="USD"
+                    locale="en-US"
+                    placeholder="Price"
+                    class="flex flex-1"
+                  ></p-inputNumber>
+                  <i
+                    *ngIf="i !== 0"
+                    style="font-size: 1.5rem"
+                    class="pi pi-trash p-error ml-2"
+                    (click)="deleteSeatType(i)"
+                    (keyup.enter)="deleteSeatType(i)"
+                    tabindex="0"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p-button
+          label="Add New Type"
+          styleClass="p-button-secondary p-button-outlined"
+          severity="secondary"
+          icon="pi pi-plus"
+          iconPos="left"
+          (onClick)="addNewSeatType()"
+        ></p-button>
+      </div>
+      <!-- IMAGE -->
+      <div class="image col-12 flex flex-column">
+        <label for="image" class="block text-900 text-lg font-medium mb-2">Image</label>
+        <div class="input-container flex gap-4">
+          <ng-container *ngFor="let _ of [0, 1, 2, 3]; let i = index">
+            <app-upload-image
+              [existedImage]="images.value[i]"
+              (uploadedPhoto)="handleUploadedPhoto($event)"
+            ></app-upload-image>
+          </ng-container>
+        </div>
+      </div>
+      <!-- UTILITY -->
+      <div class="utility col-12 flex flex-column">
+        <label for="utility" class="block text-900 text-lg font-medium mb-2">Utility</label>
+        <div class="input-container flex flex-wrap" formArrayName="utility">
+          <div *ngFor="let util of Utilities; index as i" class="field-checkbox mr-4">
+            <p-checkbox [value]="util" (onChange)="onCheckboxChange($event)"></p-checkbox>
+            <img [src]="'assets/icons/' + (util | lowercase) + '.svg'" alt="" class="ml-1" />
+            <label [for]="util">{{ "share.utilities." + util | translate }}</label>
+          </div>
+        </div>
+      </div>
+      <div class="actions col-12 flex justify-content-end gap-2">
+        <p-button
+          label="Remove"
+          styleClass="p-button-danger p-button-outlined"
+          class="col-6 md:col-3 pr-0 full-width-button"
+          icon="pi pi-trash"
+          iconPos="right"
+          *ngIf="updateMode"
+        ></p-button>
+        <p-button
+          label="Cancel"
+          styleClass="p-button-danger p-button-outlined"
+          class="col-6 md:col-3 pr-0 full-width-button"
+          icon="pi pi-times"
+          iconPos="right"
+          *ngIf="!updateMode"
+          (onClick)="cancelTransportForm.emit(true)"
+        ></p-button>
+        <p-button
+          type="submit"
+          class="col-6 md:col-3 pr-0 full-width-button"
+          label="Save"
+          icon="pi pi-save"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </form>
+  </div>
+</div>

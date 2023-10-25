@@ -1,0 +1,29 @@
+<div class="image-container flex flex-column gap-3 align-items-center w-8rem">
+  <div class="image">
+    <img
+      class="w-8rem h-8rem bg-contain"
+      [src]="uploadedPhoto || existedImage || '/assets/images/dummy-image.png'"
+      alt="Dummy photo"
+    />
+    <p-fileUpload
+      *ngIf="!(uploadedPhoto || existedImage)"
+      mode="basic"
+      chooseIcon="pi-upload"
+      [multiple]="false"
+      (onSelect)="uploadPhoto($event)"
+      accept="image/*"
+      class="file-upload-button"
+      styleClass="p-button-rounded p-button-text"
+    ></p-fileUpload>
+  </div>
+  <div class="flex gap-2 w-full justify-content-center">
+    <p-button
+      type="button"
+      *ngIf="uploadedPhoto || existedImage"
+      (click)="clearUploadedPhoto()"
+      styleClass="p-button-danger p-button-rounded p-button-text"
+    >
+      <i class="pi pi-trash" style="font-size: 1.5rem"></i>
+    </p-button>
+  </div>
+</div>
