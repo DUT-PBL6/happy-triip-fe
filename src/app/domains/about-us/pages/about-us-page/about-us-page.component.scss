@@ -1,0 +1,84 @@
+.about-container {
+  width: 100%;
+
+  .about-banner {
+    height: 300px;
+    background: url("/assets/images/about/about-banner.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+    color: #fff;
+    padding: 2.5rem calc((100vw - 1312px) / 2 + 2.5rem);
+
+    .about-banner-title {
+      width: 100%;
+    }
+  }
+
+  .container {
+    padding: 2.5rem calc((100vw - 1312px) / 2);
+    background-color: #f7f8fa;
+
+    .container-wrapper {
+      padding: 40px;
+      background-color: #ffffff;
+    }
+
+    iframe {
+      max-width: 43.75rem;
+      height: 22.5rem;
+      border-radius: 0.3125rem;
+      width: 100%;
+      margin-bottom: 4rem;
+    }
+
+    .about-description {
+      padding-bottom: 56px;
+    }
+
+    .about-description-images {
+      padding-bottom: 56px;
+      flex-direction: row;
+
+      .image-container {
+        padding-inline: 10px;
+        object-fit: contain;
+        image {
+          width: auto;
+          height: auto;
+        }
+      }
+    }
+    .about-seat {
+      padding: 0 20px 0 0;
+      img {
+        height: 384px;
+      }
+    }
+
+    .about-description-with-image {
+      padding-bottom: 56px;
+      width: 100%;
+
+      .about-description-with-image-image-cover {
+        overflow: hidden;
+        height: 360px;
+      }
+
+      .about-description-with-image-content-cover {
+        padding-left: 40px;
+      }
+    }
+
+    .block-booking {
+      background-color: #f7f8fa;
+      padding: 40px;
+    }
+  }
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

@@ -5,4 +5,8 @@ import { Component } from "@angular/core";
   templateUrl: "./about-us-page.component.html",
   styleUrls: ["./about-us-page.component.scss"],
 })
-export class AboutUsPageComponent {}
+export class AboutUsPageComponent {
+  public getNumberRange(start: number, end: number): number[] {
+    return Array.from({ length: end - start + 1 }, (_, index) => index + start);
+  }
+}
