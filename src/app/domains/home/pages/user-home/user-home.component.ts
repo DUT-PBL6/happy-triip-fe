@@ -23,6 +23,7 @@ export class UserHomeComponent {
       date: "14 February 2023",
     },
   ];
+
   public getNumberRange(start: number, end: number): number[] {
     return Array.from({ length: end - start + 1 }, (_, index) => index + start);
   }
