@@ -46,7 +46,6 @@
   .latest-news {
     display: grid;
     gap: 3.125rem;
-    padding: 5.75rem 8rem;
   }
 
   .latest-news {
@@ -58,7 +57,7 @@
 
       img {
         width: 100%;
-        height: 17rem;
+        height: auto;
         object-fit: cover;
         border-radius: 0.75rem 0.75rem 0 0;
       }

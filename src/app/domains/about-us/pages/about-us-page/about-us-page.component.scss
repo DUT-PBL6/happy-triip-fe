@@ -1,0 +1,136 @@
+.about-container {
+    width: 100%;
+
+    .about-banner {
+        height: 300px;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), url('/assets/images/about/about-banner.png'), lightgray 0px -1229.122px / 100% 820.903% no-repeat;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 40px 104px;
+
+        .about-banner-title {
+            width: 100%;
+
+            .about-banner-title-1 {
+                color: var(--surface-a);
+                font-family: var(--font-family);
+                font-size: 48px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 66px;
+                /* 137.5% */
+                letter-spacing: -1px;
+            }
+
+            .about-banner-title-2 {
+                color: var(--surface-a);
+                /* Heading 1 */
+                font-family: var(--font-family);
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 26px;
+            }
+        }
+    }
+
+    .container {
+        padding: 40px 64px 40px 64px;
+        background-color: #E1E1E1;
+
+        .container-wrapper {
+            padding: 40px;
+            background-color: #FFFFFF;
+        }
+
+        .about-description {
+            color: #333;
+            /* Paragraph */
+            font-family: var(--font-family);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 26px; /* 162.5% */
+            letter-spacing: 0.5px;
+            padding-bottom: 56px;
+        }
+
+        .about-description-images {
+            padding-bottom: 56px;
+            flex-direction: row;
+            
+            .image-container {
+                padding-inline: 10px;
+                object-fit: contain;
+                image {
+                    width: auto;
+                    height: auto;
+                }
+            }
+        }
+        .about-seat {
+            padding:0 20px 0 0;
+            img{
+                height: 384px;
+            }
+        }
+
+        .about-description-with-image {
+            padding-bottom: 56px;
+            width: 100%;
+
+            .about-description-with-image-image-cover {
+                overflow: hidden;
+                height: 360px;
+            }
+
+            .about-description-with-image-content-cover {
+                color: #333;
+                /* Paragraph */
+                font-family: var(--font-family);
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 26px; /* 162.5% */
+                letter-spacing: 0.5px;
+                padding-left: 40px;
+            }
+        }
+
+        .block-booking {
+            background-color: #F7F8FA;
+            padding: 40px;
+            .block-booking-content {
+                h5, p {
+                    padding-bottom: 8px;
+                }
+            }
+
+
+
+            .block-booking-button {
+                padding-top: 24px;
+
+                button {
+                    border-radius: 4px;
+                    background: var(--primary-color);
+                    width: 250px;
+                    padding: 10px 8px;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 8px;
+    
+                    border: none;color: #333;
+                    /* Button Text */
+                    font-family: var(--font-family);
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 20px; /* 142.857% */
+                    text-transform: capitalize;
+                }
+            }
+        }
+    }
+}
