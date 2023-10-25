@@ -9,6 +9,7 @@ import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
 import { CheckboxModule } from "primeng/checkbox";
 import { InputNumberModule } from "primeng/inputnumber";
+import { UploadImageModule } from "src/app/share/components/upload-image/upload-image.module";
 
 @NgModule({
   declarations: [TransportFormComponent],
@@ -23,6 +24,7 @@ import { InputNumberModule } from "primeng/inputnumber";
     TranslateModule,
     CheckboxModule,
     InputNumberModule,
+    UploadImageModule,
   ],
   exports: [TransportFormComponent],
 })

@@ -26,8 +26,6 @@ export class ProfileSettingsComponent extends BaseDestroyable {
     super();
   }
 
-  ngOnInit(): void {}
-
   public cancelUserForm(isCancel): void {
     this.isUserFormVisible = !isCancel;
   }

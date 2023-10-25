@@ -15,7 +15,7 @@ export class TransportService {
     return this.apiService.api.transportCreate(transportDto);
   }
 
-  public updateTransport$(id: string, transportDto: TransportDto): Observable<Transport> {
+  public updateTransport$(id: number, transportDto: TransportDto): Observable<Transport> {
     return this.apiService.api.transportUpdate(id, transportDto);
   }
 }

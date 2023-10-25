@@ -17,6 +17,7 @@ export class TransportFormComponent {
   @Output() form = new EventEmitter<TransportDto>();
   public transportForm: FormGroup;
   public seatTypesForm: FormArray;
+  public utilityForm: FormArray;
   public vehicleType: Option<TypeVehical>[] = [];
   public Utilities: string[] = Object.keys(Utility);
 
@@ -28,6 +29,7 @@ export class TransportFormComponent {
   ngOnInit(): void {
     this.initVehicleType();
     this.initSeatTypesForm();
+    this.initUtilityForm();
     this.initTransportForm();
   }
 
@@ -48,7 +50,7 @@ export class TransportFormComponent {
       mapSeat: ["", Validators.required],
       seatTypes: this.seatTypesForm,
       images: [["https://shorturl.at/nptuP"], Validators.required],
-      utility: this.fb.array([], Validators.required),
+      utility: this.utilityForm,
     });
     if (this.selectedTransport) this.transportForm?.patchValue({ ...this.selectedTransport });
   }
@@ -64,6 +66,11 @@ export class TransportFormComponent {
       ],
       Validators.required
     );
+  }
+
+  private initUtilityForm(): void {
+    this.utilityForm = this.fb.array([]);
+    // this.Utilities.forEach((util) => this.utilityForm.push(this.fb.control(util)));
   }
 
   private initVehicleType(): void {
@@ -120,6 +127,10 @@ export class TransportFormComponent {
 
   public deleteSeatType(index: number): void {
     this.seatTypesForm.removeAt(index);
+  }
+
+  public handleUploadedPhoto(uploadedPhoto: any): void {
+    console.log(uploadedPhoto);
   }
 
   public submit(): void {

@@ -2,6 +2,7 @@
   <h4>{{ updateMode ? "Transport Details" : "Add New Transport" }}</h4>
   <div class="form">
     <form [formGroup]="transportForm" (ngSubmit)="submit()" class="grid">
+      <!-- NAME -->
       <div class="name col-6 flex flex-column">
         <label for="name" class="block text-900 text-lg font-medium mb-2">Name</label>
         <div class="input-container">
@@ -21,6 +22,7 @@
           </small>
         </div>
       </div>
+      <!-- VEHICLE TYPE -->
       <div class="vehicle-type col-6 flex flex-column">
         <label for="type" class="block text-900 text-lg font-medium mb-2">Vehicle type</label>
         <div class="input-container">
@@ -63,6 +65,7 @@
           </small>
         </div>
       </div>
+      <!-- SEAT TYPE -->
       <div class="Seat Type col-12 flex flex-column">
         <label for="seat-type" class="block text-900 text-lg font-medium mb-2">Seat Type</label>
         <div class="input-container">
@@ -108,9 +111,22 @@
           (onClick)="addNewSeatType()"
         ></p-button>
       </div>
+      <!-- IMAGE -->
+      <div class="image col-12 flex flex-column">
+        <label for="image" class="block text-900 text-lg font-medium mb-2">Image</label>
+        <div class="input-container flex gap-4">
+          <ng-container *ngFor="let _ of [0, 1, 2, 3]; let i = index">
+            <app-upload-image
+              [existedImage]="images.value[i]"
+              (uploadedPhoto)="handleUploadedPhoto($event)"
+            ></app-upload-image>
+          </ng-container>
+        </div>
+      </div>
+      <!-- UTILITY -->
       <div class="utility col-12 flex flex-column">
         <label for="utility" class="block text-900 text-lg font-medium mb-2">Utility</label>
-        <div class="input-container flex flex-wrap">
+        <div class="input-container flex flex-wrap" formArrayName="utility">
           <div *ngFor="let util of Utilities; index as i" class="field-checkbox mr-4">
             <p-checkbox [value]="util" (onChange)="onCheckboxChange($event)"></p-checkbox>
             <img [src]="'assets/icons/' + (util | lowercase) + '.svg'" alt="" class="ml-1" />
