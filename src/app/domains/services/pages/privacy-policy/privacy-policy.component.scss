@@ -1,0 +1,41 @@
+@import "../../layouts/policy/policy.component.scss";
+
+.privacy-policy-container {
+  background-color: #f7f8fa;
+  border-bottom: 0.0625rem solid #e1e1e1;
+  font-size: 1.2rem;
+  color: black;
+  .header {
+    background-image: url("/assets/images/services/policies/privacy-policy.png") !important;
+    background-position: center center !important;
+
+    @include base-header;
+    .title {
+      margin-left: -9rem;
+    }
+  }
+  .content {
+    padding: 2.5rem 0;
+    padding-left: calc((100vw - 1312px) / 2);
+    padding-right: calc((100vw - 1312px) / 2);
+    .main {
+      background-color: white;
+     
+      p {
+        margin: 0.8rem 0;
+      }
+      ul {
+        padding: 0;
+        font-weight: 380;
+        li {
+          margin: 0.4rem 1.3rem;
+          padding: 0;
+       
+        }
+      }
+    }
+    .menu {
+      @include base-policy-list;
+    }
+  }
+}

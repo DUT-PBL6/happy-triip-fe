@@ -1,1 +1,51 @@
-<p>baggage-regulations works!</p>
+<div class="baggage-regulations-container">
+  <div class="header">
+    <div class="lg:ml-2 title">
+      <h1 class="text-white lg:font-bold lg:text-6xl text-4xl font-medium">Baggage Regulations</h1>
+      <h4 class="text-white lg:text-2xl text-xl font-normal lg:font-medium">Last updated: 28 March 2023</h4>
+    </div>
+  </div>
+
+  <div class="content xl:mx-6 xl:mt-4 lg:flex m-auto gap-5 font-normal md:block px-3 py-4 lg:px-8">
+    <div class="main flex-1 w-full mb-3 px-3 py-2 lg:px-5 xl:px-6 xl:py-5">
+      <p class="mt-3 mb-5">
+        Each TravelBus journey provides sufficient space for your luggage. To ensure your trip is comfortable and safe,
+        please take note of the following regulations:
+      </p>
+
+      <div class="list-item">
+        <div *ngFor="let items of baggageRegulations" class="">
+          <div class="item mb-4 lg:mb-0">
+            <div class="item__img">
+              <img src="assets/icons/{{ items.image }}.svg" [alt]="'baggage-regulations-' + items.id" loading="lazy" />
+            </div>
+            <div class="item__description">
+              <p>
+                {{ items.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+   
+      </div>
+    </div>
+    <div class="menu max-h-20rem md:px-4 lg:px-6 lg:py-6">
+      <h3 class="lg:text-3xl md:mb-4 text-2xl mb-3">Other policies</h3>
+      <div class="policy-list flex flex-column">
+        <div class="policy-item">
+          <a href=""  ><span class="label">Booking Policy</span></a>
+        </div>
+        <div class="policy-item">
+          <a href=""><span class="label">Customer's Rights</span></a>
+        </div>
+        <div class="policy-item">
+          <a href=""><span class="label">Privacy Policy</span></a>
+        </div>
+        <div class="policy-item">
+          <a href=""><span class="label">Frequently Asked Questions</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

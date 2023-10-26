@@ -13,7 +13,7 @@ import { TicketComponent } from "./pages/ticket/ticket.component";
 import { CustomerRightsComponent } from "./pages/customer-rights/customer-rights.component";
 import { PrivacyPolicyComponent } from "./pages/privacy-policy/privacy-policy.component";
 import { BaggageRegulationsComponent } from "./pages/baggage-regulations/baggage-regulations.component";
-import { QuestionsModule } from "./pages/questions/questions.module";
+import { QuestionsComponent } from "./pages/questions/questions.component";
 
 const routes: Routes = [
   {
@@ -45,7 +45,7 @@ const routes: Routes = [
       { path: "customer-rights", component: CustomerRightsComponent },
       { path: "privacy-policy", component: PrivacyPolicyComponent },
       { path: "baggage-regulations", component: BaggageRegulationsComponent },
-      { path: "questions", component: QuestionsModule },
+      { path: "questions", component: QuestionsComponent },
     ],
   },
 ];
