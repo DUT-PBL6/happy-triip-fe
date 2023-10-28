@@ -2,12 +2,11 @@ import { LocationStrategy } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Select } from "@ngxs/store";
 import { AuthCredentialsDto, TokenResponse } from "_api";
-import { Observable, takeUntil, tap } from "rxjs";
+import { takeUntil, tap } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
 import { AuthService } from "src/app/core/service/auth/auth.service";
-import { LoadingState } from "src/app/core/service/loading/loading.state";
+import { validate } from "src/app/share/helpers/form.helper";
 import cacheService from "src/lib/cache-service";
 
 @Component({
@@ -81,6 +80,6 @@ export class LoginComponent extends BaseDestroyable implements OnInit {
   }
 
   public validate(fieldControl: FormControl): boolean {
-    return fieldControl.hasError("required") && (fieldControl?.dirty || fieldControl?.touched);
+    return validate(fieldControl);
   }
 }

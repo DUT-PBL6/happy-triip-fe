@@ -8,7 +8,7 @@ export class TransportService {
   constructor(protected apiService: ApiService) {}
 
   public getTransports$(): Observable<Transport[]> {
-    return this.apiService.api.transportGetAll();
+    return this.apiService.api.transportGetAllTransport();
   }
 
   public createTransport$(transportDto: TransportDto): Observable<Transport> {

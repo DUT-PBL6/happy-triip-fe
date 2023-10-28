@@ -71,32 +71,41 @@
         <div class="input-container">
           <div formArrayName="seatTypes">
             <div *ngFor="let group of seatTypes.controls; let i = index">
-              <div [formGroupName]="i" class="seat-type-group flex col-12 gap-2 px-0 align-items-center">
-                <input type="text" class="flex-1 flex" pInputText formControlName="name" placeholder="Name" />
-                <input
-                  type="text"
-                  class="flex-1 flex"
-                  pInputText
-                  formControlName="description"
-                  placeholder="Description"
-                />
-                <div class="flex flex-1 align-items-center">
-                  <p-inputNumber
-                    formControlName="price"
-                    mode="currency"
-                    currency="USD"
-                    locale="en-US"
-                    placeholder="Price"
-                    class="flex flex-1"
-                  ></p-inputNumber>
-                  <i
-                    *ngIf="i !== 0"
-                    style="font-size: 1.5rem"
-                    class="pi pi-trash p-error ml-2"
-                    (click)="deleteSeatType(i)"
-                    (keyup.enter)="deleteSeatType(i)"
-                    tabindex="0"
-                  ></i>
+              <div [formGroupName]="i" class="seat-type-group flex col-12 gap-3 px-0 pb-4">
+                <div class="flex flex-column gap-2">
+                  <input type="text" pInputText formControlName="name" placeholder="Name" />
+                  <small class="p-error" *ngIf="validate(getFormControl(i, 'name'))">
+                    <strong>Seat type's name is required</strong>
+                  </small>
+                </div>
+                <div class="flex flex-column gap-2">
+                  <input type="text" pInputText formControlName="description" placeholder="Description" />
+                  <small class="p-error" *ngIf="validate(getFormControl(i, 'description'))">
+                    <strong>Seat type's description is required</strong>
+                  </small>
+                </div>
+                <div class="flex flex-column gap-2">
+                  <div class="flex align-items-center">
+                    <p-inputNumber
+                      formControlName="price"
+                      mode="currency"
+                      currency="USD"
+                      locale="en-US"
+                      placeholder="Price"
+                      class="flex flex-1"
+                    ></p-inputNumber>
+                    <i
+                      *ngIf="i !== 0"
+                      style="font-size: 1.5rem"
+                      class="pi pi-trash p-error ml-2"
+                      (click)="deleteSeatType(i)"
+                      (keyup.enter)="deleteSeatType(i)"
+                      tabindex="0"
+                    ></i>
+                  </div>
+                  <small class="p-error" *ngIf="validate(getFormControl(i, 'price'))">
+                    <strong>Seat type's price is required</strong>
+                  </small>
                 </div>
               </div>
             </div>
@@ -114,25 +123,35 @@
       <!-- IMAGE -->
       <div class="image col-12 flex flex-column">
         <label for="image" class="block text-900 text-lg font-medium mb-2">Image</label>
-        <div class="input-container flex gap-4">
+        <div class="input-container flex gap-4 mb-2">
           <ng-container *ngFor="let _ of [0, 1, 2, 3]; let i = index">
             <app-upload-image
-              [existedImage]="images.value[i]"
-              (uploadedPhoto)="handleUploadedPhoto($event)"
+              [existedImage]="this.selectedTransport?.images[i]"
+              (uploadedPhotoEmitter)="handleUploadedPhoto($event)"
             ></app-upload-image>
           </ng-container>
         </div>
+        <small class="p-error" *ngIf="isSubmit && selectedImages.length === 0">
+          <strong>Image is required</strong>
+        </small>
       </div>
       <!-- UTILITY -->
       <div class="utility col-12 flex flex-column">
         <label for="utility" class="block text-900 text-lg font-medium mb-2">Utility</label>
-        <div class="input-container flex flex-wrap" formArrayName="utility">
+        <div class="input-container flex flex-wrap">
           <div *ngFor="let util of Utilities; index as i" class="field-checkbox mr-4">
-            <p-checkbox [value]="util" (onChange)="onCheckboxChange($event)"></p-checkbox>
+            <p-checkbox
+              [value]="util"
+              [(ngModel)]="selectedUtilities"
+              [ngModelOptions]="{ standalone: true }"
+            ></p-checkbox>
             <img [src]="'assets/icons/' + (util | lowercase) + '.svg'" alt="" class="ml-1" />
             <label [for]="util">{{ "share.utilities." + util | translate }}</label>
           </div>
         </div>
+        <small class="p-error" *ngIf="isSubmit && selectedUtilities.length === 0">
+          <strong>Utility is required</strong>
+        </small>
       </div>
       <div class="actions col-12 flex justify-content-end gap-2">
         <p-button

@@ -15,10 +15,10 @@
         <div class="from flex flex-column flex-1">
           <p class="font-medium my-3">From</p>
           <p-dropdown
-            [options]="locations$ | async"
+            [options]="locations"
             formControlName="fromAt"
             optionLabel="name"
-            optionValue="codename"
+            optionValue="value"
             [showClear]="true"
             placeholder="From"
             [filter]="true"
@@ -43,10 +43,10 @@
         <div class="to flex flex-column flex-1">
           <p class="font-medium my-3">To</p>
           <p-dropdown
-            [options]="locations$ | async"
+            [options]="locations"
             formControlName="toAt"
             optionLabel="name"
-            optionValue="codename"
+            optionValue="value"
             [showClear]="true"
             placeholder="To"
             [filter]="true"

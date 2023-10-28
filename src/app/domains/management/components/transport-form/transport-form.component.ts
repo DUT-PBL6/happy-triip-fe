@@ -1,35 +1,41 @@
 import { TranslateService } from "@ngx-translate/core";
-import { Component, EventEmitter, Input, Output, SimpleChanges } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Transport, TransportDto, TypeVehical, Utility } from "_api";
 import { Option } from "src/app/core/interfaces/option.interface";
-import { CheckboxChangeEvent } from "primeng/checkbox";
+import { UploadEvent } from "src/app/core/interfaces/upload-event.interface";
+import { validate } from "src/app/share/helpers/form.helper";
 
 @Component({
   selector: "app-transport-form",
   templateUrl: "./transport-form.component.html",
   styleUrls: ["./transport-form.component.scss"],
 })
-export class TransportFormComponent {
+export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() selectedTransport: Transport;
   @Input() updateMode: boolean;
   @Output() cancelTransportForm = new EventEmitter<boolean>();
   @Output() form = new EventEmitter<TransportDto>();
   public transportForm: FormGroup;
   public seatTypesForm: FormArray;
-  public utilityForm: FormArray;
   public vehicleType: Option<TypeVehical>[] = [];
   public Utilities: string[] = Object.keys(Utility);
+  public selectedUtilities: string[] = [];
+  public selectedImages: string[] = [];
+  public isSubmit = false;
 
   constructor(
     private fb: FormBuilder,
     private translate: TranslateService
   ) {}
 
+  ngOnDestroy(): void {
+    console.log("Destroying loop");
+  }
+
   ngOnInit(): void {
     this.initVehicleType();
     this.initSeatTypesForm();
-    this.initUtilityForm();
     this.initTransportForm();
   }
 
@@ -37,9 +43,11 @@ export class TransportFormComponent {
     if (changes.selectedTransport) {
       if (!this.updateMode) {
         this.transportForm?.reset();
+        this.selectedUtilities = [];
         return;
       }
       if (this.selectedTransport) this.transportForm?.patchValue({ ...this.selectedTransport });
+      this.selectedUtilities = this.selectedTransport?.utility.map((util) => util.toString());
     }
   }
 
@@ -47,30 +55,47 @@ export class TransportFormComponent {
     this.transportForm = this.fb.group({
       name: ["", Validators.required],
       type: ["", Validators.required],
-      mapSeat: ["", Validators.required],
+      mapSeat: [
+        [
+          [1, 0, 1],
+          [0, 1, 0],
+        ],
+        Validators.required,
+      ],
       seatTypes: this.seatTypesForm,
-      images: [["https://shorturl.at/nptuP"], Validators.required],
-      utility: this.utilityForm,
+      images: ["", Validators.required],
+      utility: ["", Validators.required],
     });
     if (this.selectedTransport) this.transportForm?.patchValue({ ...this.selectedTransport });
   }
 
   private initSeatTypesForm(): void {
+    const seatTypes = this.selectedTransport?.seatTypes || [];
+
+    if (this.selectedTransport?.seatTypes.length > 0) {
+      this.seatTypesForm = this.fb.array(
+        seatTypes.map((seatType) =>
+          this.fb.group({
+            name: [seatType.name, Validators.required],
+            description: [seatType.description, Validators.required],
+            price: [seatType.price, Validators.required],
+          })
+        ),
+        Validators.required
+      );
+      return;
+    }
+
     this.seatTypesForm = this.fb.array(
       [
         this.fb.group({
           name: ["", Validators.required],
-          description: [""],
+          description: ["", Validators.required],
           price: ["", Validators.required],
         }),
       ],
       Validators.required
     );
-  }
-
-  private initUtilityForm(): void {
-    this.utilityForm = this.fb.array([]);
-    // this.Utilities.forEach((util) => this.utilityForm.push(this.fb.control(util)));
   }
 
   private initVehicleType(): void {
@@ -96,6 +121,11 @@ export class TransportFormComponent {
     return this.transportForm.get("seatTypes") as FormArray;
   }
 
+  public getFormControl(index: number, controlName: string): FormControl {
+    const group = this.seatTypesForm.controls.at(index) as FormGroup;
+    return group.controls[controlName] as FormControl;
+  }
+
   public get images(): FormControl {
     return this.transportForm.get("images") as FormControl;
   }
@@ -104,21 +134,10 @@ export class TransportFormComponent {
     return this.transportForm.get("utility") as FormArray;
   }
 
-  public onCheckboxChange(event: CheckboxChangeEvent): void {
-    const utility = event.checked[0];
-
-    if (event.checked.length === 0) {
-      const index = this.utility.controls.findIndex((x) => x.value === utility);
-      this.utility.removeAt(index);
-      return;
-    }
-    this.utility.push(this.fb.control(utility));
-  }
-
   public addNewSeatType(): void {
     const newSeatType = this.fb.group({
       name: ["", Validators.required],
-      description: [""],
+      description: ["", Validators.required],
       price: ["", Validators.required],
     });
 
@@ -129,15 +148,26 @@ export class TransportFormComponent {
     this.seatTypesForm.removeAt(index);
   }
 
-  public handleUploadedPhoto(uploadedPhoto: any): void {
-    console.log(uploadedPhoto);
+  public handleUploadedPhoto(uploadEvent: UploadEvent): void {
+    if (uploadEvent.type === "upload") {
+      this.selectedImages.push(uploadEvent.photo as string);
+      return;
+    }
+    const imageIndex = this.selectedImages.findIndex((image) => image === uploadEvent.photo);
+    this.selectedImages.splice(imageIndex, 1);
   }
 
   public submit(): void {
-    console.log(this.transportForm.value);
+    this.isSubmit = true;
+    this.transportForm.patchValue({
+      ...this.transportForm.value,
+      images: this.selectedImages,
+      utility: this.selectedUtilities,
+    });
 
-    if (!this.transportForm.valid) {
+    if (!this.transportForm.valid || !this.seatTypesForm.valid) {
       this.transportForm.markAllAsTouched();
+      this.seatTypesForm.markAllAsTouched();
       return;
     }
 
@@ -146,6 +176,6 @@ export class TransportFormComponent {
   }
 
   public validate(fieldControl: FormControl): boolean {
-    return fieldControl.hasError("required") && (fieldControl?.dirty || fieldControl?.touched);
+    return validate(fieldControl);
   }
 }

@@ -43,7 +43,7 @@ export class ApiService extends Api<any> {
           }, []);
           msg = errorsMsg;
         }
-        this.toastService.showError("Error", error?.response.data?.message);
+        this.toastService.showError("Error", msg);
       }
     );
   }

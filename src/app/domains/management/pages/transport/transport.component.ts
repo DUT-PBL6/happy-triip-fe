@@ -14,7 +14,6 @@ import { TransportService } from "src/app/core/service/transport/transport.servi
 })
 export class TransportPageComponent extends BaseDestroyable {
   public currentTransport: Transport;
-  public transports$: Observable<Transport[]>;
   public isTransportFormVisible = false;
   public isUpdateMode = false;
 

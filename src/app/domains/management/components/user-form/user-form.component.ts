@@ -1,9 +1,9 @@
 import { TranslateService } from "@ngx-translate/core";
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { Employee, EmployeeDto, EmployeeRoles, UserDto } from "_api";
-import { UserRole } from "src/app/core/enums/user-role.enum";
+import { Employee, EmployeeDto, EmployeeRoles } from "_api";
 import { Option } from "src/app/core/interfaces/option.interface";
+import { validate } from "src/app/share/helpers/form.helper";
 
 @Component({
   selector: "app-user-form",
@@ -88,6 +88,6 @@ export class UserFormComponent implements OnInit, OnChanges {
   }
 
   public validate(fieldControl: FormControl): boolean {
-    return fieldControl.hasError("required") && (fieldControl?.dirty || fieldControl?.touched);
+    return validate(fieldControl);
   }
 }
