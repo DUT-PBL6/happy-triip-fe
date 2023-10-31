@@ -131,7 +131,7 @@
             ></app-upload-image>
           </ng-container>
         </div>
-        <small class="p-error" *ngIf="isSubmit && selectedImages.length === 0">
+        <small class="p-error" *ngIf="isSubmit && images.value.length === 0">
           <strong>Image is required</strong>
         </small>
       </div>
@@ -149,7 +149,7 @@
             <label [for]="util">{{ "share.utilities." + util | translate }}</label>
           </div>
         </div>
-        <small class="p-error" *ngIf="isSubmit && selectedUtilities.length === 0">
+        <small class="p-error" *ngIf="isSubmit && utility.value.length === 0">
           <strong>Utility is required</strong>
         </small>
       </div>

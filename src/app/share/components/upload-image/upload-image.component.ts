@@ -22,7 +22,7 @@ export class UploadImageComponent {
   }
 
   public clearUploadedPhoto(): void {
-    this.uploadedPhotoEmitter.emit({ photo: this.uploadedPhoto, type: "delete" });
+    this.uploadedPhotoEmitter.emit({ photo: this.existedImage || this.uploadedPhoto, type: "delete" });
     this.uploadedPhoto = null;
     this.existedImage = null;
   }

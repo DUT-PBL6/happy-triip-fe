@@ -1,5 +1,15 @@
 import { TranslateService } from "@ngx-translate/core";
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Transport, TransportDto, TypeVehical, Utility } from "_api";
 import { Option } from "src/app/core/interfaces/option.interface";
@@ -19,14 +29,15 @@ export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
   public transportForm: FormGroup;
   public seatTypesForm: FormArray;
   public vehicleType: Option<TypeVehical>[] = [];
-  public Utilities: string[] = Object.keys(Utility);
+  public Utilities: string[] = Object.values(Utility);
   public selectedUtilities: string[] = [];
   public selectedImages: string[] = [];
   public isSubmit = false;
 
   constructor(
     private fb: FormBuilder,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnDestroy(): void {
@@ -150,18 +161,18 @@ export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
 
   public handleUploadedPhoto(uploadEvent: UploadEvent): void {
     if (uploadEvent.type === "upload") {
-      this.selectedImages.push(uploadEvent.photo as string);
+      this.images.setValue([...this.images.value, uploadEvent.photo as string]);
       return;
     }
-    const imageIndex = this.selectedImages.findIndex((image) => image === uploadEvent.photo);
-    this.selectedImages.splice(imageIndex, 1);
+    const imagesValue = this.images.value.filter((image) => image !== uploadEvent.photo);
+    this.images.setValue(imagesValue);
   }
 
   public submit(): void {
     this.isSubmit = true;
+
     this.transportForm.patchValue({
       ...this.transportForm.value,
-      images: this.selectedImages,
       utility: this.selectedUtilities,
     });
 
@@ -170,7 +181,6 @@ export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
       this.seatTypesForm.markAllAsTouched();
       return;
     }
-
     this.form.emit(this.transportForm.value);
     this.transportForm.reset();
   }
