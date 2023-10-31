@@ -8,7 +8,7 @@ export class TransportService {
   constructor(protected apiService: ApiService) {}
 
   public getTransports$(): Observable<Transport[]> {
-    return this.apiService.api.transportGetAll();
+    return this.apiService.api.transportGetAllTransport();
   }
 
   public createTransport$(transportDto: TransportDto): Observable<Transport> {
@@ -16,6 +16,6 @@ export class TransportService {
   }
 
   public updateTransport$(id: number, transportDto: TransportDto): Observable<Transport> {
-    return this.apiService.api.transportUpdate(id, transportDto);
+    return this.apiService.api.transportUpdateById(id, transportDto);
   }
 }

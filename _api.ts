@@ -1,12 +1,12 @@
-export enum Status {
-  PENDING = "PENDING",
-  VERIFIED = "VERIFIED",
+export enum BankCardStatus {
+  PENDING = 'PENDING',
+  VERIFIED = 'VERIFIED',
 }
 
 export enum UserRoles {
-  PASSENGER = "PASSENGER",
-  PARTNER = "PARTNER",
-  EMPLOYEE = "EMPLOYEE",
+  PASSENGER = 'PASSENGER',
+  PARTNER = 'PARTNER',
+  EMPLOYEE = 'EMPLOYEE',
 }
 
 export interface BankCard {
@@ -14,7 +14,7 @@ export interface BankCard {
   accountNumber: string;
   accountName: string;
   bankName: string;
-  status: Status;
+  status: BankCardStatus;
   isDefaultCard: boolean;
   idUser: number;
   userRoles: UserRoles;
@@ -24,15 +24,15 @@ export interface BankCardDto {
   accountNumber: string;
   accountName: string;
   bankName: string;
-  status: Status;
+  status: BankCardStatus;
   isDefaultCard: boolean;
 }
 
 export enum SystemConfigType {
-  String = "string",
-  Number = "number",
-  Boolean = "boolean",
-  Select = "select",
+  String = 'string',
+  Number = 'number',
+  Boolean = 'boolean',
+  Select = 'select',
 }
 
 export interface SystemConfig {
@@ -46,6 +46,13 @@ export interface SystemConfig {
   dataType?: SystemConfigType;
 }
 
+export interface SystemConfigPagingResult {
+  total: number;
+  skip: number;
+  take: number;
+  data: SystemConfig[];
+}
+
 export interface SystemConfigDto {
   name: string;
   value: string;
@@ -56,13 +63,13 @@ export interface SystemConfigDto {
 }
 
 export enum EventGroup {
-  ConfigGroup = "ConfigGroup",
-  Configs = "Configs",
-  Segment = "Segment",
-  AbTest = "AbTest",
-  SchemaGroup = "SchemaGroup",
-  Schema = "Schema",
-  SegmentField = "SegmentField",
+  ConfigGroup = 'ConfigGroup',
+  Configs = 'Configs',
+  Segment = 'Segment',
+  AbTest = 'AbTest',
+  SchemaGroup = 'SchemaGroup',
+  Schema = 'Schema',
+  SegmentField = 'SegmentField',
 }
 
 export interface Audit {
@@ -72,71 +79,78 @@ export interface Audit {
   createdDate: string;
 }
 
+export interface SearchRouteDto {
+  firstCity: string;
+  secondCity: string;
+  firstDt: string;
+  secondDt: string;
+}
+
 export enum City {
-  ANGIANG = "ANGIANG",
-  BARIAVUNGTAU = "BARIAVUNGTAU",
-  BACLIEU = "BACLIEU",
-  BACKAN = "BACKAN",
-  BACGIANG = "BACGIANG",
-  BACNINH = "BACNINH",
-  BENTRE = "BENTRE",
-  BINHDUONG = "BINHDUONG",
-  BINHDINH = "BINHDINH",
-  BINHPHUOC = "BINHPHUOC",
-  BINHTHUAN = "BINHTHUAN",
-  CAMAU = "CAMAU",
-  CAOBANG = "CAOBANG",
-  CANTHO = "CANTHO",
-  DANANG = "DANANG",
-  DAKLAK = "DAKLAK",
-  DAKNONG = "DAKNONG",
-  DIENBIEN = "DIENBIEN",
-  DONGNAI = "DONGNAI",
-  DONGTHAP = "DONGTHAP",
-  GIALAI = "GIALAI",
-  HAGIANG = "HAGIANG",
-  HANAM = "HANAM",
-  HANOI = "HANOI",
-  HATAY = "HATAY",
-  HATINH = "HATINH",
-  HAIDUONG = "HAIDUONG",
-  HAIPHONG = "HAIPHONG",
-  HOABINH = "HOABINH",
-  HOCHIMINH = "HOCHIMINH",
-  HAUGIANG = "HAUGIANG",
-  HUNGYEN = "HUNGYEN",
-  KHANHHOA = "KHANHHOA",
-  KIENGIANG = "KIENGIANG",
-  KONTUM = "KONTUM",
-  LACHAU = "LACHAU",
-  LAOCAI = "LAOCAI",
-  LANGSON = "LANGSON",
-  LAMDONG = "LAMDONG",
-  LONGAN = "LONGAN",
-  NAMDINH = "NAMDINH",
-  NGHEAN = "NGHEAN",
-  NINHBINH = "NINHBINH",
-  NINHTHUAN = "NINHTHUAN",
-  PHUTHO = "PHUTHO",
-  PHUYEN = "PHUYEN",
-  QUANGBINH = "QUANGBINH",
-  QUANGNAM = "QUANGNAM",
-  QUANGNGAI = "QUANGNGAI",
-  QUANGNINH = "QUANGNINH",
-  QUANGTRI = "QUANGTRI",
-  SOCTRANG = "SOCTRANG",
-  SONLA = "SONLA",
-  TAYNINH = "TAYNINH",
-  THAIBINH = "THAIBINH",
-  THAINGUYEN = "THAINGUYEN",
-  THANHHOA = "THANHHOA",
-  THUATHIENHUE = "THUATHIENHUE",
-  TIENGIANG = "TIENGIANG",
-  TRAVINH = "TRAVINH",
-  TIENQUANG = "TIENQUANG",
-  VINHLONG = "VINHLONG",
-  VINHPHUC = "VINHPHUC",
-  YENBAI = "YENBAI",
+  ANGIANG = 'ANGIANG',
+  BARIAVUNGTAU = 'BARIAVUNGTAU',
+  BACLIEU = 'BACLIEU',
+  BACKAN = 'BACKAN',
+  BACGIANG = 'BACGIANG',
+  BACNINH = 'BACNINH',
+  BENTRE = 'BENTRE',
+  BINHDUONG = 'BINHDUONG',
+  BINHDINH = 'BINHDINH',
+  BINHPHUOC = 'BINHPHUOC',
+  BINHTHUAN = 'BINHTHUAN',
+  CAMAU = 'CAMAU',
+  CAOBANG = 'CAOBANG',
+  CANTHO = 'CANTHO',
+  DANANG = 'DANANG',
+  DAKLAK = 'DAKLAK',
+  DAKNONG = 'DAKNONG',
+  DIENBIEN = 'DIENBIEN',
+  DONGNAI = 'DONGNAI',
+  DONGTHAP = 'DONGTHAP',
+  GIALAI = 'GIALAI',
+  HAGIANG = 'HAGIANG',
+  HANAM = 'HANAM',
+  HANOI = 'HANOI',
+  HATAY = 'HATAY',
+  HATINH = 'HATINH',
+  HAIDUONG = 'HAIDUONG',
+  HAIPHONG = 'HAIPHONG',
+  HOABINH = 'HOABINH',
+  HOCHIMINH = 'HOCHIMINH',
+  HAUGIANG = 'HAUGIANG',
+  HUNGYEN = 'HUNGYEN',
+  KHANHHOA = 'KHANHHOA',
+  KIENGIANG = 'KIENGIANG',
+  KONTUM = 'KONTUM',
+  LACHAU = 'LACHAU',
+  LAOCAI = 'LAOCAI',
+  LANGSON = 'LANGSON',
+  LAMDONG = 'LAMDONG',
+  LONGAN = 'LONGAN',
+  NAMDINH = 'NAMDINH',
+  NGHEAN = 'NGHEAN',
+  NINHBINH = 'NINHBINH',
+  NINHTHUAN = 'NINHTHUAN',
+  PHUTHO = 'PHUTHO',
+  PHUYEN = 'PHUYEN',
+  QUANGBINH = 'QUANGBINH',
+  QUANGNAM = 'QUANGNAM',
+  QUANGNGAI = 'QUANGNGAI',
+  QUANGNINH = 'QUANGNINH',
+  QUANGTRI = 'QUANGTRI',
+  SOCTRANG = 'SOCTRANG',
+  SONLA = 'SONLA',
+  TAYNINH = 'TAYNINH',
+  THAIBINH = 'THAIBINH',
+  THAINGUYEN = 'THAINGUYEN',
+  THANHHOA = 'THANHHOA',
+  THUATHIENHUE = 'THUATHIENHUE',
+  TIENGIANG = 'TIENGIANG',
+  TRAVINH = 'TRAVINH',
+  TIENQUANG = 'TIENQUANG',
+  VINHLONG = 'VINHLONG',
+  VINHPHUC = 'VINHPHUC',
+  YENBAI = 'YENBAI',
 }
 
 export interface Station {
@@ -151,13 +165,20 @@ export interface Station {
   description: string;
 }
 
+export interface RouteSchedule {
+  id: number;
+  /** @format date-time */
+  date: string;
+  route: Route;
+}
+
 export enum TypeVehical {
-  BUS = "BUS",
-  MINIVAN = "MINIVAN",
-  LIMOUSINE = "LIMOUSINE",
-  CAR = "CAR",
-  TRAIN = "TRAIN",
-  AIRPLANE = "AIRPLANE",
+  BUS = 'BUS',
+  MINIVAN = 'MINIVAN',
+  LIMOUSINE = 'LIMOUSINE',
+  CAR = 'CAR',
+  TRAIN = 'TRAIN',
+  AIRPLANE = 'AIRPLANE',
 }
 
 export interface SeatType {
@@ -169,31 +190,58 @@ export interface SeatType {
 }
 
 export enum Utility {
-  AIR_CONDITIONER = "AIR_CONDITIONER",
-  ALMOST_FULL = "ALMOST_FULL",
-  BED_SEAT = "BED_SEAT",
-  BLANKET = "BLANKET",
-  CANCELLATION = "CANCELLATION",
-  ENGLISH_SUPPORTED = "ENGLISH_SUPPORTED",
-  E_TICKET = "E_TICKET",
-  INSTANT_CONFIRMATION = "INSTANT_CONFIRMATION",
-  MASSAGE_SEAT = "MASSAGE_SEAT",
-  ONBOARD_ENTERTAINMENT = "ONBOARD_ENTERTAINMENT",
-  ONE_FREE_LUGGAGE = "ONE_FREE_LUGGAGE",
-  OUTLETS = "OUTLETS",
-  PILLOW = "PILLOW",
-  RECLINING_SEAT = "RECLINING_SEAT",
-  REST_ROOM_ON_BUS = "REST_ROOM_ON_BUS",
-  REST_STOP = "REST_STOP",
-  SIGHT_SEEING = "SIGHT_SEEING",
-  SIGHT_SEEING_TICKET = "SIGHT_SEEING_TICKET",
-  SNACK = "SNACK",
-  SUPPORT24X7 = "SUPPORT_24x7",
-  TOUR_GUIDE = "TOUR_GUIDE",
-  TOWEL = "TOWEL",
-  TELEVISION = "TELEVISION",
-  WATER = "WATER",
-  WIFI = "WIFI",
+  AIR_CONDITIONER = 'AIR_CONDITIONER',
+  ALMOST_FULL = 'ALMOST_FULL',
+  BED_SEAT = 'BED_SEAT',
+  BLANKET = 'BLANKET',
+  CANCELLATION = 'CANCELLATION',
+  ENGLISH_SUPPORTED = 'ENGLISH_SUPPORTED',
+  E_TICKET = 'E_TICKET',
+  INSTANT_CONFIRMATION = 'INSTANT_CONFIRMATION',
+  MASSAGE_SEAT = 'MASSAGE_SEAT',
+  ONBOARD_ENTERTAINMENT = 'ONBOARD_ENTERTAINMENT',
+  ONE_FREE_LUGGAGE = 'ONE_FREE_LUGGAGE',
+  OUTLETS = 'OUTLETS',
+  PILLOW = 'PILLOW',
+  RECLINING_SEAT = 'RECLINING_SEAT',
+  REST_ROOM_ON_BUS = 'REST_ROOM_ON_BUS',
+  REST_STOP = 'REST_STOP',
+  SIGHT_SEEING = 'SIGHT_SEEING',
+  SIGHT_SEEING_TICKET = 'SIGHT_SEEING_TICKET',
+  SNACK = 'SNACK',
+  SUPPORT24X7 = 'SUPPORT_24x7',
+  TOUR_GUIDE = 'TOUR_GUIDE',
+  TOWEL = 'TOWEL',
+  TELEVISION = 'TELEVISION',
+  WATER = 'WATER',
+  WIFI = 'WIFI',
+}
+
+export interface Partner {
+  id: number;
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  description: string;
+  title: string;
+  medialLink: string;
+  routes: Route[];
+  transports: Transport[];
+  status: string;
+}
+
+export interface Transport {
+  id: number;
+  name: string;
+  type: TypeVehical;
+  mapSeat: number[][][];
+  capacity: number;
+  seatTypes: SeatType[];
+  images: string[];
+  utility?: Utility[];
+  partner: Partner;
 }
 
 export interface Passenger {
@@ -230,6 +278,9 @@ export interface BookingDetail {
 export interface Seat {
   id: number;
   seatCode: string;
+  col: number;
+  row: number;
+  floor: number;
   route: Route;
   /** @format date-time */
   date: string;
@@ -239,61 +290,47 @@ export interface Seat {
 export interface Route {
   id: number;
   name: string;
-  /** @format date-time */
   departAt: string;
-  /** @format date-time */
   arriveAt: string;
+  pickUpPoint: Record<string, string>;
+  dropOffPoint: Record<string, string>;
   fromAt: Station;
   toAt: Station;
   price: number;
-  schedule: string;
-  status: string;
+  routeSchedules: RouteSchedule[];
+  status: 'PENDING' | 'ACCEPTED' | 'DENIED';
   transport: Transport;
   partner: Partner;
   seats: Seat[];
 }
 
-export interface Partner {
-  id: number;
-  name: string;
-  email: string;
-  username: string;
-  password: string;
-  phoneNumber: string;
-  description: string;
-  title: string;
-  medialLink: string;
-  routes: Route[];
-  transports: Transport[];
-  status: string;
+export interface RouteSearchResponse {
+  oneWayRoutes: Route[];
+  roundTripRoutes: Route[];
 }
 
-export interface Transport {
-  id: number;
-  name: string;
-  type: TypeVehical;
-  mapSeat: number[][][];
-  seatTypes: SeatType[];
-  images: string[];
-  utility?: Utility[];
-  partner: Partner;
+export interface RouteScheduleDto {
+  date: string;
 }
 
 export interface RouteDto {
+  name: string;
+  departAt: string;
+  arriveAt: string;
   fromAt: Station;
   toAt: Station;
+  pickUpPoint: Record<string, string>;
+  dropOffPoint: Record<string, string>;
+  routeSchedules: RouteScheduleDto[];
+  price: number;
   transport: Transport;
 }
 
-export type StationDto = object;
-
-export interface TransportDto {
-  name: string;
-  type: TypeVehical;
-  mapSeat: string[];
-  seatTypes: SeatType[];
-  images: string[];
-  utility?: Utility[];
+export interface RoutePagingResult {
+  total: number;
+  skip: number;
+  take: number;
+  data: Route[];
 }
 
 export interface AuthCredentialsDto {
@@ -314,6 +351,14 @@ export interface UserDto {
   phoneNumber: string;
 }
 
+export interface PassengerDto {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+}
+
 export interface PartnerDto {
   name: string;
   email: string;
@@ -326,9 +371,9 @@ export interface PartnerDto {
 }
 
 export enum EmployeeRoles {
-  ADMIN = "ADMIN",
-  EDITOR = "EDITOR",
-  VIEWER = "VIEWER",
+  ADMIN = 'ADMIN',
+  EDITOR = 'EDITOR',
+  VIEWER = 'VIEWER',
 }
 
 export interface EmployeeDto {
@@ -350,12 +395,36 @@ export interface Employee {
   role: string;
 }
 
-import axios, { AxiosInstance, AxiosRequestConfig, HeadersDefaults, ResponseType } from "axios";
-import { Observable, from } from "rxjs";
+export type StationDto = object;
+
+export interface StationPagingResult {
+  total: number;
+  skip: number;
+  take: number;
+  data: Station[];
+}
+
+export interface SeatTypeDto {
+  name: string;
+  description: string;
+  price: number;
+}
+
+export interface TransportDto {
+  name: string;
+  type: TypeVehical;
+  mapSeat: string[];
+  seatTypes: SeatTypeDto[];
+  images: string[];
+  utility?: Utility[];
+}
+
+import axios, { AxiosInstance, AxiosRequestConfig, HeadersDefaults, ResponseType } from 'axios';
+import { Observable, from } from 'rxjs';
 
 export type QueryParamsType = Record<string | number, any>;
 
-export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
+export interface FullRequestParams extends Omit<AxiosRequestConfig, 'data' | 'params' | 'url' | 'responseType'> {
   /** set parameter to `true` for call `securityWorker` for this request */
   secure?: boolean;
   /** request path */
@@ -370,32 +439,30 @@ export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "pa
   body?: unknown;
 }
 
-export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
+export type RequestParams = Omit<FullRequestParams, 'body' | 'method' | 'query' | 'path'>;
 
-export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
-  securityWorker?: (
-    securityData: SecurityDataType | null
-  ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
+export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, 'data' | 'cancelToken'> {
+  securityWorker?: (securityData: SecurityDataType | null) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
   secure?: boolean;
   format?: ResponseType;
 }
 
 export enum ContentType {
-  Json = "application/json",
-  FormData = "multipart/form-data",
-  UrlEncoded = "application/x-www-form-urlencoded",
-  Text = "text/plain",
+  Json = 'application/json',
+  FormData = 'multipart/form-data',
+  UrlEncoded = 'application/x-www-form-urlencoded',
+  Text = 'text/plain',
 }
 
 export class HttpClient<SecurityDataType = unknown> {
   public instance: AxiosInstance;
   private securityData: SecurityDataType | null = null;
-  private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
+  private securityWorker?: ApiConfig<SecurityDataType>['securityWorker'];
   private secure?: boolean;
   private format?: ResponseType;
 
   constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "" });
+    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || '' });
     this.secure = secure;
     this.format = format;
     this.securityWorker = securityWorker;
@@ -421,7 +488,7 @@ export class HttpClient<SecurityDataType = unknown> {
   }
 
   protected stringifyFormItem(formItem: unknown) {
-    if (typeof formItem === "object" && formItem !== null) {
+    if (typeof formItem === 'object' && formItem !== null) {
       return JSON.stringify(formItem);
     } else {
       return `${formItem}`;
@@ -442,15 +509,7 @@ export class HttpClient<SecurityDataType = unknown> {
     }, new FormData());
   }
 
-  public request = <T = any, _E = any>({
-    secure,
-    path,
-    type,
-    query,
-    format,
-    body,
-    ...params
-  }: FullRequestParams): Observable<T> => {
+  public request = <T = any, _E = any>({ secure, path, type, query, format, body, ...params }: FullRequestParams): Observable<T> => {
     return from(
       this.sendRequest({
         secure,
@@ -460,32 +519,21 @@ export class HttpClient<SecurityDataType = unknown> {
         format,
         body,
         ...params,
-      })
+      }),
     );
   };
 
-  public sendRequest = async <T = any, _E = any>({
-    secure,
-    path,
-    type,
-    query,
-    format,
-    body,
-    ...params
-  }: FullRequestParams): Promise<T> => {
+  public sendRequest = async <T = any, _E = any>({ secure, path, type, query, format, body, ...params }: FullRequestParams): Promise<T> => {
     const secureParams =
-      ((typeof secure === "boolean" ? secure : this.secure) &&
-        this.securityWorker &&
-        (await this.securityWorker(this.securityData))) ||
-      {};
+      ((typeof secure === 'boolean' ? secure : this.secure) && this.securityWorker && (await this.securityWorker(this.securityData))) || {};
     const requestParams = this.mergeRequestParams(params, secureParams);
     const responseFormat = format || this.format || undefined;
 
-    if (type === ContentType.FormData && body && body !== null && typeof body === "object") {
+    if (type === ContentType.FormData && body && body !== null && typeof body === 'object') {
       body = this.createFormData(body as Record<string, unknown>);
     }
 
-    if (type === ContentType.Text && body && body !== null && typeof body !== "string") {
+    if (type === ContentType.Text && body && body !== null && typeof body !== 'string') {
       body = JSON.stringify(body);
     }
 
@@ -494,7 +542,7 @@ export class HttpClient<SecurityDataType = unknown> {
         ...requestParams,
         headers: {
           ...(requestParams.headers || {}),
-          ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
+          ...(type && type !== ContentType.FormData ? { 'Content-Type': type } : {}),
         },
         params: query,
         responseType: responseFormat,
@@ -522,7 +570,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   appGetInfo = (params: RequestParams = {}) =>
     this.request<void, any>({
       path: `/`,
-      method: "GET",
+      method: 'GET',
       ...params,
     });
 
@@ -535,11 +583,18 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Get bank card by partnerId
      * @request GET:/api/bank-card/partner/{id}
      */
-    bankCardGetBankCardByPartnerId: (id: string, params: RequestParams = {}) =>
+    bankCardGetBankCardByPartnerId: (
+      id: string,
+      query: {
+        id: number;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<BankCard[], any>({
         path: `/api/bank-card/partner/${id}`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        query: query,
+        format: 'json',
         ...params,
       }),
 
@@ -551,11 +606,18 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Get bank card by passengerId
      * @request GET:/api/bank-card/passenger/{id}
      */
-    bankCardGetBankCardByPassengerId: (id: string, params: RequestParams = {}) =>
+    bankCardGetBankCardByPassengerId: (
+      id: string,
+      query: {
+        id: number;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<BankCard[], any>({
         path: `/api/bank-card/passenger/${id}`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        query: query,
+        format: 'json',
         ...params,
       }),
 
@@ -570,8 +632,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     bankCardGetBankCardByUser: (params: RequestParams = {}) =>
       this.request<BankCard[], any>({
         path: `/api/bank-card`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -586,10 +648,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     bankCardCreateBankCardByUser: (data: BankCardDto, params: RequestParams = {}) =>
       this.request<BankCard[], any>({
         path: `/api/bank-card`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -601,11 +663,18 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Update bank card by user
      * @request PUT:/api/bank-card/{id}
      */
-    bankCardUpdateBankCardByUser: (id: string, params: RequestParams = {}) =>
+    bankCardUpdateBankCardByUser: (
+      id: string,
+      query: {
+        id: number;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<BankCard[], any>({
         path: `/api/bank-card/${id}`,
-        method: "PUT",
-        format: "json",
+        method: 'PUT',
+        query: query,
+        format: 'json',
         ...params,
       }),
 
@@ -616,13 +685,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name BankCardControllerUpdate
      * @request PUT:/api/bankcard/{id}
      */
-    bankCardUpdate: (id: string, data: BankCardDto, params: RequestParams = {}) =>
+    bankCardUpdate: (id: number, data: BankCardDto, params: RequestParams = {}) =>
       this.request<BankCard, any>({
         path: `/api/bankcard/${id}`,
-        method: "PUT",
+        method: 'PUT',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -692,8 +761,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         }
       >({
         path: `/api/health`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -704,11 +773,24 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name SystemConfigControllerGetAll
      * @request GET:/api/systemconfig
      */
-    systemConfigGetAll: (params: RequestParams = {}) =>
-      this.request<SystemConfig[], any>({
+    systemConfigGetAll: (
+      query?: {
+        /** Order */
+        order?: any;
+        /** Where filter */
+        where?: any;
+        /** Skip */
+        skip?: number;
+        /** Page size */
+        take?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<SystemConfigPagingResult, any>({
         path: `/api/systemconfig`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        query: query,
+        format: 'json',
         ...params,
       }),
 
@@ -722,10 +804,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     systemConfigCreate: (data: SystemConfigDto, params: RequestParams = {}) =>
       this.request<SystemConfig, any>({
         path: `/api/systemconfig`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -736,11 +818,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name SystemConfigControllerGetById
      * @request GET:/api/systemconfig/{id}
      */
-    systemConfigGetById: (id: string, params: RequestParams = {}) =>
+    systemConfigGetById: (id: number, params: RequestParams = {}) =>
       this.request<SystemConfig, any>({
         path: `/api/systemconfig/${id}`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -751,13 +833,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name SystemConfigControllerUpdate
      * @request PUT:/api/systemconfig/{id}
      */
-    systemConfigUpdate: (id: string, data: SystemConfigDto, params: RequestParams = {}) =>
+    systemConfigUpdate: (id: number, data: SystemConfigDto, params: RequestParams = {}) =>
       this.request<SystemConfig, any>({
         path: `/api/systemconfig/${id}`,
-        method: "PUT",
+        method: 'PUT',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -776,13 +858,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         reference?: string;
         eventGroup?: EventGroup[];
       },
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<Audit[], any>({
         path: `/api/${bucketId}/audit`,
-        method: "GET",
+        method: 'GET',
         query: query,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -790,14 +872,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Route
-     * @name RouteControllerGetAll
-     * @request GET:/api/route
+     * @name RouteControllerSearch
+     * @request POST:/api/route/search
      */
-    routeGetAll: (params: RequestParams = {}) =>
-      this.request<Route[], any>({
-        path: `/api/route`,
-        method: "GET",
-        format: "json",
+    routeSearch: (data: SearchRouteDto, params: RequestParams = {}) =>
+      this.request<RouteSearchResponse, any>({
+        path: `/api/route/search`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
         ...params,
       }),
 
@@ -811,10 +895,55 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     routeCreate: (data: RouteDto, params: RequestParams = {}) =>
       this.request<Route, any>({
         path: `/api/route`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerGetAll
+     * @request GET:/api/route
+     */
+    routeGetAll: (
+      query?: {
+        /** Order */
+        order?: any;
+        /** Where filter */
+        where?: any;
+        /** Skip */
+        skip?: number;
+        /** Page size */
+        take?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<RoutePagingResult, any>({
+        path: `/api/route`,
+        method: 'GET',
+        query: query,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerUpdateById
+     * @request PUT:/api/route/{id}
+     */
+    routeUpdateById: (id: number, data: RouteDto, params: RequestParams = {}) =>
+      this.request<Route, any>({
+        path: `/api/route/${id}`,
+        method: 'PUT',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
         ...params,
       }),
 
@@ -825,11 +954,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name RouteControllerGetById
      * @request GET:/api/route/{id}
      */
-    routeGetById: (id: string, params: RequestParams = {}) =>
+    routeGetById: (id: number, params: RequestParams = {}) =>
       this.request<Route, any>({
         path: `/api/route/${id}`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -837,161 +966,44 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Route
-     * @name RouteControllerUpdate
-     * @request PUT:/api/route/{id}
+     * @name RouteControllerAcceptRoute
+     * @request POST:/api/route/accept/{id}
      */
-    routeUpdate: (id: string, data: RouteDto, params: RequestParams = {}) =>
+    routeAcceptRoute: (id: number, params: RequestParams = {}) =>
       this.request<Route, any>({
-        path: `/api/route/${id}`,
-        method: "PUT",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
+        path: `/api/route/accept/${id}`,
+        method: 'POST',
+        format: 'json',
         ...params,
       }),
 
     /**
      * No description
      *
-     * @tags Station
-     * @name StationControllerCreate
-     * @summary Create station
-     * @request POST:/api/station
+     * @tags Route
+     * @name RouteControllerDenyRoute
+     * @request POST:/api/route/deny/{id}
      */
-    stationCreate: (data: StationDto, params: RequestParams = {}) =>
-      this.request<Station, any>({
-        path: `/api/station`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
+    routeDenyRoute: (id: number, params: RequestParams = {}) =>
+      this.request<Route, any>({
+        path: `/api/route/deny/${id}`,
+        method: 'POST',
+        format: 'json',
         ...params,
       }),
 
     /**
      * No description
      *
-     * @tags Station
-     * @name StationControllerGetAll
-     * @request GET:/api/station
+     * @tags Route
+     * @name RouteControllerGetRoutesPending
+     * @request GET:/api/route/pending
      */
-    stationGetAll: (params: RequestParams = {}) =>
-      this.request<Station[], any>({
-        path: `/api/station`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Station
-     * @name StationControllerUpdate
-     * @summary Update station
-     * @request PUT:/api/station/{id}
-     */
-    stationUpdate: (id: string, params: RequestParams = {}) =>
-      this.request<Station, any>({
-        path: `/api/station/${id}`,
-        method: "PUT",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Station
-     * @name StationControllerDelete
-     * @summary Delete station
-     * @request DELETE:/api/station/{id}
-     */
-    stationDelete: (id: string, params: RequestParams = {}) =>
-      this.request<Station, any>({
-        path: `/api/station/${id}`,
-        method: "DELETE",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Station
-     * @name StationControllerGetById
-     * @request GET:/api/station/{id}
-     */
-    stationGetById: (id: string, params: RequestParams = {}) =>
-      this.request<Station, any>({
-        path: `/api/station/${id}`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Transport
-     * @name TransportControllerCreate
-     * @summary Create transport
-     * @request POST:/api/transport
-     */
-    transportCreate: (data: TransportDto, params: RequestParams = {}) =>
-      this.request<Transport, any>({
-        path: `/api/transport`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Transport
-     * @name TransportControllerGetAll
-     * @request GET:/api/transport
-     */
-    transportGetAll: (params: RequestParams = {}) =>
-      this.request<Transport[], any>({
-        path: `/api/transport`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Transport
-     * @name TransportControllerGetById
-     * @request GET:/api/transport/{id}
-     */
-    transportGetById: (id: string, params: RequestParams = {}) =>
-      this.request<Transport, any>({
-        path: `/api/transport/${id}`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Transport
-     * @name TransportControllerUpdate
-     * @request PUT:/api/transport/{id}
-     */
-    transportUpdate: (id: number, data: TransportDto, params: RequestParams = {}) =>
-      this.request<Transport, any>({
-        path: `/api/transport/${id}`,
-        method: "PUT",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
+    routeGetRoutesPending: (params: RequestParams = {}) =>
+      this.request<Route[], any>({
+        path: `/api/route/pending`,
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -1006,10 +1018,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     authLogin: (data: AuthCredentialsDto, params: RequestParams = {}) =>
       this.request<TokenResponse, any>({
         path: `/api/auth/login`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -1024,10 +1036,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     authPassengerSignUp: (data: UserDto, params: RequestParams = {}) =>
       this.request<TokenResponse, any>({
         path: `/api/auth/passenger/signup`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -1039,11 +1051,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Update passenger
      * @request GET:/api/auth/passenger
      */
-    authUpdatePassenger: (params: RequestParams = {}) =>
+    authUpdatePassenger: (data: PassengerDto, params: RequestParams = {}) =>
       this.request<Passenger, any>({
         path: `/api/auth/passenger`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
         ...params,
       }),
 
@@ -1058,10 +1072,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     authPartnerSignUp: (data: UserDto, params: RequestParams = {}) =>
       this.request<TokenResponse, any>({
         path: `/api/auth/partner/signup`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -1076,8 +1090,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     authGetAllPartner: (params: RequestParams = {}) =>
       this.request<Partner[], any>({
         path: `/api/auth/partner`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -1092,10 +1106,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     authUpdatePartner: (data: PartnerDto, params: RequestParams = {}) =>
       this.request<Partner, any>({
         path: `/api/auth/partner`,
-        method: "PUT",
+        method: 'PUT',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -1110,8 +1124,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     authGetPartnerById: (id: number, params: RequestParams = {}) =>
       this.request<Partner, any>({
         path: `/api/auth/partner/${id}`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -1126,8 +1140,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     authGetAllPartnerPending: (params: RequestParams = {}) =>
       this.request<Partner[], any>({
         path: `/api/auth/partner/pending`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -1137,13 +1151,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags auth
      * @name AuthControllerDenyAccountPartner
      * @summary Deny partner
-     * @request POST:/api/auth/partner/deny-account/{id}
+     * @request POST:/api/auth/partner/deny/{id}
      */
     authDenyAccountPartner: (id: number, params: RequestParams = {}) =>
       this.request<Partner, any>({
-        path: `/api/auth/partner/deny-account/${id}`,
-        method: "POST",
-        format: "json",
+        path: `/api/auth/partner/deny/${id}`,
+        method: 'POST',
+        format: 'json',
         ...params,
       }),
 
@@ -1153,13 +1167,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags auth
      * @name AuthControllerAcceptAccountPartner
      * @summary Accept partner
-     * @request POST:/api/auth/partner/accept-account/{id}
+     * @request POST:/api/auth/partner/accept/{id}
      */
     authAcceptAccountPartner: (id: number, params: RequestParams = {}) =>
       this.request<Partner, any>({
-        path: `/api/auth/partner/accept-account/${id}`,
-        method: "POST",
-        format: "json",
+        path: `/api/auth/partner/accept/${id}`,
+        method: 'POST',
+        format: 'json',
         ...params,
       }),
 
@@ -1174,10 +1188,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     authCreateEmployee: (data: EmployeeDto, params: RequestParams = {}) =>
       this.request<Employee, any>({
         path: `/api/auth/employee`,
-        method: "POST",
+        method: 'POST',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
         ...params,
       }),
 
@@ -1192,8 +1206,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     authGetAllEmployee: (params: RequestParams = {}) =>
       this.request<Employee[], any>({
         path: `/api/auth/employee`,
-        method: "GET",
-        format: "json",
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
 
@@ -1208,10 +1222,187 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     authUpdateEmployee: (id: number, data: EmployeeDto, params: RequestParams = {}) =>
       this.request<Employee, any>({
         path: `/api/auth/employee/${id}`,
-        method: "PUT",
+        method: 'PUT',
         body: data,
         type: ContentType.Json,
-        format: "json",
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Station
+     * @name StationControllerCreate
+     * @summary Create station
+     * @request POST:/api/station
+     */
+    stationCreate: (data: StationDto, params: RequestParams = {}) =>
+      this.request<Station, any>({
+        path: `/api/station`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Station
+     * @name StationControllerGetAll
+     * @request GET:/api/station
+     */
+    stationGetAll: (
+      query?: {
+        /** Order */
+        order?: any;
+        /** Where filter */
+        where?: any;
+        /** Skip */
+        skip?: number;
+        /** Page size */
+        take?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<StationPagingResult, any>({
+        path: `/api/station`,
+        method: 'GET',
+        query: query,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Station
+     * @name StationControllerUpdate
+     * @summary Update station
+     * @request PUT:/api/station/{id}
+     */
+    stationUpdate: (
+      id: string,
+      query: {
+        id: number;
+      },
+      data: StationDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<Station, any>({
+        path: `/api/station/${id}`,
+        method: 'PUT',
+        query: query,
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Station
+     * @name StationControllerDelete
+     * @summary Delete station
+     * @request DELETE:/api/station/{id}
+     */
+    stationDelete: (
+      id: string,
+      query: {
+        id: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<Station, any>({
+        path: `/api/station/${id}`,
+        method: 'DELETE',
+        query: query,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Station
+     * @name StationControllerGetById
+     * @request GET:/api/station/{id}
+     */
+    stationGetById: (id: number, params: RequestParams = {}) =>
+      this.request<Station, any>({
+        path: `/api/station/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Transport
+     * @name TransportControllerCreate
+     * @summary Create transport
+     * @request POST:/api/transport
+     */
+    transportCreate: (data: TransportDto, params: RequestParams = {}) =>
+      this.request<Transport, any>({
+        path: `/api/transport`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Transport
+     * @name TransportControllerGetAllTransport
+     * @summary Get all transport by partner
+     * @request GET:/api/transport
+     */
+    transportGetAllTransport: (params: RequestParams = {}) =>
+      this.request<Transport[], any>({
+        path: `/api/transport`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Transport
+     * @name TransportControllerUpdateById
+     * @summary Update transport
+     * @request PUT:/api/transport/{id}
+     */
+    transportUpdateById: (id: number, data: TransportDto, params: RequestParams = {}) =>
+      this.request<Transport, any>({
+        path: `/api/transport/${id}`,
+        method: 'PUT',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Transport
+     * @name TransportControllerGetById
+     * @request GET:/api/transport/{id}
+     */
+    transportGetById: (id: number, params: RequestParams = {}) =>
+      this.request<Transport, any>({
+        path: `/api/transport/${id}`,
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
   };

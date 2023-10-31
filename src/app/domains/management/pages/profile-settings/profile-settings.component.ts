@@ -14,7 +14,6 @@ import { ToastService } from "src/app/core/service/toast/toast.service";
 })
 export class ProfileSettingsComponent extends BaseDestroyable {
   public currentEmployee: Employee;
-  public employees$: Observable<Employee[]>;
   public isUserFormVisible = false;
   public isUpdateMode = false;
 

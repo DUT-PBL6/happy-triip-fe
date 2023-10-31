@@ -2,12 +2,10 @@ import { TranslateService } from "@ngx-translate/core";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Option } from "src/app/core/interfaces/option.interface";
-import { Province } from "../../../domains/home/types/province.type";
-import { Observable } from "rxjs";
-import { ProvinceService } from "src/app/core/service/province/province.service";
 import { DATE_PICKER_FORMAT } from "src/app/share/constants";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BookingOption } from "src/app/core/enums/booking-option.enum";
+import { City } from "_api";
 
 @Component({
   selector: "app-booking-search-form",
@@ -18,11 +16,10 @@ export class BookingSearchFormComponent implements OnInit {
   public bookingSearchForm: FormGroup;
   public bookingOptions: Option<String>[];
   public selectedBookingOption = BookingOption.OneWay;
-  public locations$: Observable<Province[]>;
+  public locations: Option<City>[] = [];
   public readonly datePickerFormat = DATE_PICKER_FORMAT;
 
   constructor(
-    private provinceService: ProvinceService,
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -32,7 +29,7 @@ export class BookingSearchFormComponent implements OnInit {
   ngOnInit(): void {
     this.initBookingSearchForm();
     this.initBookingOptions();
-    this.locations$ = this.provinceService.getProvinces$();
+    this.initLocationOptions();
 
     this.route.queryParamMap.subscribe((params) => {
       if (params.get("arriveAt") !== null) {
@@ -64,6 +61,13 @@ export class BookingSearchFormComponent implements OnInit {
   private initBookingOptions(): void {
     this.bookingOptions = Object.entries(BookingOption).map(([key, value]) => ({
       name: this.translate.instant(`share.bookingOptions.${key}`),
+      value,
+    }));
+  }
+
+  private initLocationOptions(): void {
+    this.locations = Object.values(City).map((value) => ({
+      name: this.translate.instant(`share.city.${value}`),
       value,
     }));
   }
