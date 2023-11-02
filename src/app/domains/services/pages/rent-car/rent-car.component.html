@@ -1,1 +1,115 @@
-<p>rent-car works!</p>
+<div class="rent-car-container">
+  <div class="header"></div>
+  <div class="main">
+    <div class="content">
+      <h2 class="title lg:text-5xl text-3xl">Renting a car to travel in the central region</h2>
+      <h3 class="lg:text-3xl text-2xl">
+        By contacting Vietnam Travel Bus, you can immediately book a travel car or tour bus with the best price and
+        quality.
+      </h3>
+
+      <div class="paragraphs">
+        <p>
+          Vietnam Travel Bus is the solution for you to book travel cars or tour buses at the best prices. We provide
+          various types of vehicles to serve all your needs, including 9 or 11-seater Limousines, 4-7 seater cars, and
+          16, 29, 40, or 45-seater tourist buses.
+        </p>
+        <p>
+          Our modern and reliable bus fleet is equipped with the latest amenities to ensure a comfortable and safe
+          journey. Whether you are planning a family vacation or a business trip with a flexible itinerary, our diverse
+          range of vehicles can meet all your transportation needs. Our enthusiastic and professional drivers will make
+          your trip comfortable and assist you whenever you need it.
+        </p>
+        <p>
+          At Vietnam Travel Bus, we understand that each customer has different needs, which is why we provide
+          customized transportation solutions to fit your specific requirements. Whether you need a one-way or
+          round-trip journey, we can help you plan your trip efficiently and cost-effectively.
+        </p>
+        <p>
+          So why wait? Contact Vietnam Travel Bus today and book your next trip with us. We guarantee that you will have
+          a safe, comfortable, and unforgettable travel experience!
+        </p>
+      </div>
+      <div class="contact">
+        <h3 class="lg:text-3xl text-2xl">How to book</h3>
+        <p class="mt-4">
+          All our contact channels have 24/7 staff available to assist you in multiple languages. You can contact us
+          directly to make a reservation and ensure the best schedule and itinerary for you.
+        </p>
+        <div class="channels">
+          <div class="channel">
+            <img src="assets/icons/facebook.svg" alt="facebook" />
+            <p>
+              Contact us via
+              <a href="">Facebook Vietnam Travel Bus</a>
+            </p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/zalo.svg" alt="zalo" />
+            <p>
+              Book a car through our
+              <a href="">Zalo Business contact channel</a>
+            </p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/phone-callback.svg" alt="phone-callback" />
+            <p>Call our hotline directly 1900.25.25.65</p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/whatsapp.svg" alt="whatsapp" />
+            <p>
+              Our Whatsapp channel
+              <a href="">+84812995715</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="regulations">
+        <h3 class="lg:text-3xl text-2xl">Car Rental Regulations of Vietnam Travel Bus</h3>
+        <div class="regulations_item">
+          <h5>Step 1</h5>
+          <p>
+            After agreeing on the itinerary and rental price (including or excluding VAT) with a Travel Bus staff
+            member, you are required to transfer a 50% deposit of the contract value to the designated company account
+            through official channels.
+          </p>
+        </div>
+        <div class="regulations_item">
+          <h5>Step 2</h5>
+          <p>
+            Our advisor will immediately confirm your car reservation upon receiving the deposit. Before midnight on the
+            day of travel, our staff will provide you with the driver's phone number and the vehicle's license plate for
+            pick-up.
+          </p>
+        </div>
+        <div class="regulations_item">
+          <h5>Step 3</h5>
+          <p>
+            Please settle the remaining amount on the first day of the trip. If you require a VAT invoice, a 10% VAT
+            will be applied to the total invoice.
+          </p>
+        </div>
+      </div>
+      <div class="note">
+        <p>Note:</p>
+        <p>Services include: Car pick-up from 7 a.m. and car return by 8 p.m., driver's fees, and fuel expenses.</p>
+        <p>
+          Services not included: Bridge tolls, airport fees, parking fees at tourist attractions, overnight parking (if
+          applicable), and driver's meals if incurred during the day.
+        </p>
+        <p>
+          Additional charges: Limited to 100km per day, any additional kilometer will be charged 20,000 Vietnamese Dong,
+          and for each additional hour, a fee of 200,000 Vietnamese Dong will be charged.
+        </p>
+      </div>
+      <div class="tags lg:mt-0">
+        <p>Tag:</p>
+        <div *ngFor="let items of listTags" class="">
+          <div class="tag">
+            {{ items.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

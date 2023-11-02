@@ -14,10 +14,10 @@
       </p>
 
       <div class="list-item">
-        <div *ngFor="let items of baggageRegulations" class="">
+        <div *ngFor="let items of listRegulations" class="">
           <div class="item mb-4 lg:mb-0">
             <div class="item__img">
-              <img src="assets/icons/{{ items.image }}.svg" [alt]="'baggage-regulations-' + items.id" loading="lazy" />
+              <img src="assets/icons/{{ items.image }}.svg" [alt]="items.image + '.svg'" loading="lazy" />
             </div>
             <div class="item__description">
               <p>

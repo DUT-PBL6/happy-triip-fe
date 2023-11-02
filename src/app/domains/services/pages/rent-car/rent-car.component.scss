@@ -1,0 +1,57 @@
+@import "../../layouts/private-services/private-services.component.scss";
+
+.rent-car-container {
+  background-color: #f7f8fa;
+  border-bottom: 0.0625rem solid #e1e1e1;
+  font-size: 1.225rem;
+  line-height: 1.375rem;
+  color: black;
+  .header {
+    background-image: url("/assets/images/services/private-services/rent-car.png") !important;
+    background-position: center center !important;
+    @include base-header;
+  }
+  .main {
+    @include base-main;
+    .content {
+      .paragraphs {
+        display: grid;
+        gap: 0.75rem;
+      }
+      .contact {
+        @include base-contact;
+
+        @media (max-width: 959px) {
+          margin-top: 1.5rem;
+        }
+      }
+
+      .regulations {
+        display: grid;
+        gap: 2rem;
+
+        .regulations_item {
+          p {
+            margin-top: 0.2rem;
+          }
+        }
+      }
+
+      .tags {
+        @include base-tag;
+      }
+      .note {
+        display: grid;
+        font-weight: 300;
+        gap: 0.5em;
+        padding: 0.75rem;
+        background: #fcf4e5;
+        p {
+          margin: 0;
+          font-size: 1.2rem;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}

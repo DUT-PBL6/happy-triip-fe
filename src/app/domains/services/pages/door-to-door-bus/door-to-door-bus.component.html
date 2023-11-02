@@ -1,1 +1,87 @@
-<p>door-to-door-bus works!</p>
+<div class="door-to-door-bus-container">
+  <div class="header"></div>
+  <div class="main">
+    <div class="content">
+      <h2 class="title lg:text-5xl text-3xl">Door To Door Bus</h2>
+      <div class="paragraphs">
+        <p>
+          Our Door-to-Door service is designed to provide passengers with a comfortable and hassle-free travel
+          experience. Whether you are traveling for business or leisure, our home pick-up and drop-off service will take
+          you directly from your doorstep to your destination and vice versa, maximizing your travel time savings.
+        </p>
+        <p>
+          You can relax and enjoy your journey while we take care of everything else. Our experienced and friendly staff
+          will pick you up from your home or office and escort you to the designated boarding point, where you will
+          board our modern and spacious buses, trains, or planes.
+        </p>
+      </div>
+
+      <h3 class="lg:text-3xl text-2xl">Our buses are equipped with</h3>
+      <div class="list-item my-0">
+        <div *ngFor="let items of listRegulations" class="">
+          <div class="item mb-4 lg:mb-0">
+            <div class="flex gap-3 font-medium">
+              <div class="item__img">
+                <img src="assets/icons/{{ items.image }}.svg" [alt]="items.image + '.svg'" loading="lazy" />
+              </div>
+              <div class="item__tilte flex align-items-center">
+                {{ items.title }}
+              </div>
+            </div>
+
+            <div class="item__description">
+              <p>
+                {{ items.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact">
+        <h3 class="lg:text-3xl text-2xl">How to book</h3>
+        <p class="mt-4">
+          All our contact channels have 24/7 staff available to assist you in multiple languages. You can contact us
+          directly to make a reservation and ensure the best schedule and itinerary for you.
+        </p>
+        <div class="channels">
+          <div class="channel">
+            <img src="assets/icons/facebook.svg" alt="facebook" />
+            <p>
+              Contact us via
+              <a href="">Facebook Vietnam Travel Bus</a>
+            </p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/zalo.svg" alt="zalo" />
+            <p>
+              Book a car through our
+              <a href="">Zalo Business contact channel</a>
+            </p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/phone-callback.svg" alt="phone-callback" />
+            <p>Call our hotline directly 1900.25.25.65</p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/whatsapp.svg" alt="whatsapp" />
+            <p>
+              Our Whatsapp channel
+              <a href="">+84812995715</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tags lg:mt-0">
+        <p>Tag:</p>
+        <div *ngFor="let items of listTags" class="">
+          <div class="tag">
+            {{ items.name }}
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

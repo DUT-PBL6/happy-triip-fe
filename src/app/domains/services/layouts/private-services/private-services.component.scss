@@ -1,0 +1,175 @@
+@mixin base-header {
+  background-image: url(/assets/images/about-us.png);
+  width: 100%;
+  object-fit: cover;
+  height: 36rem;
+  object-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  @media (max-width: 960px) {
+    height: 21.5rem;
+  }
+}
+@mixin base-main {
+  margin-left: calc((100vw - 1312px) / 2);
+  margin-right: calc((100vw - 1312px) / 2);
+  margin-bottom: 4rem;
+  background: #ffffff;
+
+  @media ((min-width: 960px) and (max-width:1480px)) {
+    margin: 0 4.7rem;
+  }
+  @media (max-width: 959px) {
+    margin: 0 1rem;
+  }
+  .content {
+    margin-top: -6rem;
+    padding: 2.5rem 5.7rem;
+    .title {
+      font-size: 2.2rem;
+    }
+    h3 {
+      @media (max-width: 959px) {
+        margin: -0.8rem 0;
+      }
+    }
+    @media (max-width: 959px) {
+      padding: 1rem;
+    }
+    position: relative;
+    z-index: 10;
+    display: grid;
+    gap: 2.5rem;
+  }
+}
+@mixin base-list-regulations {
+  // margin-top: 2.5rem;
+
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 960px) {
+    display: block;
+    margin-top: 0;
+    font-size: 1.125rem;
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    .item__img {
+      img {
+        width: 2.9rem;
+        height: 2.9rem;
+      }
+    }
+    .item__description {
+      margin: 0;
+      font-weight: 400;
+      line-height: 1.375rem;
+      letter-spacing: 0.03125rem;
+    }
+  }
+}
+@mixin base-tag {
+  // margin-top: -2.5rem;
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.313em;
+  p {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.375rem;
+    font-weight: 600;
+  }
+  .tag {
+    font-size: 1.125rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.03125rem;
+    background: #f5f5f5;
+    border: 0.0625rem solid #e1e1e1;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5em;
+  }
+  @media (max-width: 959px) {
+    margin-top: -1rem;
+  }
+}
+@mixin base-contact {
+  h3 {
+    @media (max-width: 959px) {
+      margin-top: -2.5rem;
+    }
+  }
+
+  .channels {
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    @media (max-width: 959px) {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1.5rem;
+    }
+    .channel {
+      img {
+        width: 2.9rem;
+        height: 2.9rem;
+      }
+      p {
+        margin-top: 0.8rem;
+      }
+    }
+  }
+}
+
+.latest-news {
+  display: grid;
+  gap: 3.125rem;
+
+  padding: 5.75rem 8rem;
+  @media (max-width: 959px) {
+    gap: 2.2rem;
+    padding: 1rem;
+    .main {
+      h2 {
+        margin-top: 1rem;
+        font-size: 1.5rem;
+      }
+      h4 {
+        font-size: 1.2rem;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.latest-news {
+  .news-item {
+    margin: 0 0.75rem;
+    background: #f7f8fa;
+    border-radius: 0 0 0.5rem 0.5rem;
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 17rem;
+      object-fit: cover;
+      border-radius: 0.75rem 0.75rem 0 0;
+    }
+
+    .news-item__content {
+      display: flex;
+      padding: 1.75rem;
+      flex-direction: column;
+      gap: 0.5em;
+
+      h5 {
+        margin: 0;
+      }
+    }
+  }
+}

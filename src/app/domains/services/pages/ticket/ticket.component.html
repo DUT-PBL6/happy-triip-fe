@@ -1,1 +1,78 @@
-<p>ticket works!</p>
+<div class="ticker-container">
+  <div class="header"></div>
+  <div class="main">
+    <div class="content">
+      <h2 class="title lg:text-5xl text-3xl">Sight-Seeing Tickets</h2>
+      <h3 class="lg:text-3xl text-2xl">
+        Easily choose sightseeing and travel tickets nationwide with Vietnam Travel Bus.
+      </h3>
+      <p>
+        Currently, the trend of not purchasing full-package tours through travel agencies has become a new trend. In
+        addition to our car rental and tour guide services, we also offer ticket booking services for all tours and
+        attractions across the country, with many options at extremely discounted prices for our customers.
+      </p>
+      <div class="menu">
+        <img src="assets/images/services/private-services/ticket-menu.png" alt="ticket-menu" />
+      </div>
+      <div class="notes">
+        <div class="list-item">
+          <div *ngFor="let items of listRegulations" class="">
+            <div class="item mb-4 lg:mb-0">
+              <div class="item__img">
+                <img src="assets/icons/{{ items.image }}.svg" [alt]="items.image + '.svg'" loading="lazy" />
+              </div>
+
+              <div class="item__description">
+                <p>
+                  {{ items.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact">
+        <h3 class="lg:text-3xl text-2xl">How to book</h3>
+        <p class="mt-4">
+          All our contact channels have 24/7 staff available to assist you in multiple languages. You can contact us
+          directly to make a reservation and ensure the best schedule and itinerary for you.
+        </p>
+        <div class="channels">
+          <div class="channel">
+            <img src="assets/icons/facebook.svg" alt="facebook" />
+            <p>
+              Contact us via
+              <a href="">Facebook Vietnam Travel Bus</a>
+            </p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/zalo.svg" alt="zalo" />
+            <p>
+              Book a car through our
+              <a href="">Zalo Business contact channel</a>
+            </p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/phone-callback.svg" alt="phone-callback" />
+            <p>Call our hotline directly 1900.25.25.65</p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/whatsapp.svg" alt="whatsapp" />
+            <p>
+              Our Whatsapp channel
+              <a href="">+84812995715</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="tags lg:mt-0">
+        <p>Tag:</p>
+        <div *ngFor="let items of listTags" class="">
+          <div class="tag">
+            {{ items.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
