@@ -6,7 +6,7 @@ import { Component } from "@angular/core";
   styleUrls: ["./baggage-regulations.component.scss"],
 })
 export class BaggageRegulationsComponent {
-  public baggageRegulations = [
+  public listRegulations = [
     {
       id: "1",
       image: "business",
@@ -52,7 +52,7 @@ export class BaggageRegulationsComponent {
       id: "8",
       image: "question",
       description:
-        "We are available to support you 24/7 through various contact channels, including <a> Facebook</a>, hotline 1900252565, or +84812995715 (for international customers), as well as the WhatsApp number of the general operations representative: +84812995715.",
+        "We are available to support you 24/7 through various contact channels, including Facebook, hotline 1900252565, or +84812995715 (for international customers), as well as the WhatsApp number of the general operations representative: +84812995715.",
     },
   ];
 }

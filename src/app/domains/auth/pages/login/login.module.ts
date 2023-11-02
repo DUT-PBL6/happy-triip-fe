@@ -9,7 +9,6 @@ import { ButtonModule } from "primeng/button";
 import { AuthRoutesModule } from "src/app/domains/auth/auth.route";
 import { ToastModule } from "primeng/toast";
 import { MessageService } from "primeng/api";
-import { EmptyLayoutModule } from "src/app/share/layouts/empty-layout/empty-layout.module";
 
 @NgModule({
   declarations: [LoginComponent],
@@ -22,7 +21,6 @@ import { EmptyLayoutModule } from "src/app/share/layouts/empty-layout/empty-layo
     PasswordModule,
     ButtonModule,
     ToastModule,
-    EmptyLayoutModule,
   ],
   providers: [MessageService],
   exports: [LoginComponent],

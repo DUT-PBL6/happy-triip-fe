@@ -17,10 +17,11 @@ import { TicketModule } from "./pages/ticket/ticket.module";
 import { CustomerRightsModule } from "./pages/customer-rights/customer-rights.module";
 import { BaggageRegulationsModule } from "./pages/baggage-regulations/baggage-regulations.module";
 import { QuestionsModule } from "./pages/questions/questions.module";
-
+import { CarouselModule } from "primeng/carousel";
 @NgModule({
   declarations: [PolicyLayoutComponent, PrivateServicesLayoutComponent],
   imports: [
+    CarouselModule,
     CommonModule,
     ServicesRoutesModule,
     HowToBookModule,

@@ -1,0 +1,18 @@
+@import "../../layouts/policy/policy.component.scss";
+
+.how-to-book-container {
+  background-color: #f7f8fa;
+  border-bottom: 0.0625rem solid #e1e1e1;
+  font-size: 1.2rem;
+  line-height: 1.375rem;
+  color: black;
+  .header {
+    background-image: url("/assets/images/services/how-to-book.png") !important;
+    background-position: center center !important;
+
+    @include base-header;
+    .title {
+      margin: 0 -9rem;
+    }
+  }
+}

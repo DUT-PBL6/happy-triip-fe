@@ -139,6 +139,22 @@ export class HeaderComponent implements OnInit {
           },
         ],
       },
+      { separator: true },
+      {
+        label: "Sign up",
+        items: [
+          {
+            label: "Sign up as Passenger",
+            routerLink: "/auth/signup",
+            queryParams: { userRole: "passenger" },
+          },
+          {
+            label: "Sign up as Partner",
+            routerLink: "/auth/signup",
+            queryParams: { userRole: "partner" },
+          },
+        ],
+      },
     ];
 
     this.isLoggedIn = !!cacheService.getValue("accessToken");
