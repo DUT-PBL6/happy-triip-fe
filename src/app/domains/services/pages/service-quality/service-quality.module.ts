@@ -7,7 +7,7 @@ import { CopyrightModule } from "src/app/share/components/copyright/copyright.mo
 import { ButtonModule } from "primeng/button";
 @NgModule({
   declarations: [ServiceQualityComponent],
-  imports: [CommonModule, EmptyLayoutModule, ButtonModule,FooterModule, CopyrightModule],
+  imports: [CommonModule, EmptyLayoutModule, ButtonModule, FooterModule, CopyrightModule],
   exports: [ServiceQualityComponent],
 })
 export class ServiceQualityModule {}

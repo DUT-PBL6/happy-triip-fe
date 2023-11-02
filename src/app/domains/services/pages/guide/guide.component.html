@@ -1,98 +1,99 @@
 <div class="guide-container">
-    <div class="header"></div>
-    <div class="main">
-      <div class="content">
-        <h2 class="title lg:text-5xl text-3xl">Professional Guide Hiring Service</h2>
-        <h3 class="lg:text-3xl text-2xl">
-            By contacting Vietnam Travel Bus, you can immediately book tickets for travel by bus, train, or plane at the best prices.
-        </h3>
+  <div class="header"></div>
+  <div class="main">
+    <div class="content">
+      <h2 class="title lg:text-5xl text-3xl">Professional Guide Hiring Service</h2>
+      <h3 class="lg:text-3xl text-2xl">
+        By contacting Vietnam Travel Bus, you can immediately book tickets for travel by bus, train, or plane at the
+        best prices.
+      </h3>
 
-<div class="paragraphs">
-    <p>Currently, the trend of not purchasing complete tour packages through travel companies has become a new trend for families and groups of young friends. However, this is only suitable for frequent travelers who know how to travel. For those who have limited travel experience or are visiting a new destination for the first time, it is essential to have someone to guide them and show them the way. Even on a seemingly simple trip, there will be many issues that arise, and having a knowledgeable tour guide by your side is necessary.
-
-    </p>
-    <p>We provide you with a travel guide who can accompany you on your journey. You can hire a tour guide separately or hire a tour guide along with our transportation services when needed.</p>
-</div>
-<div class="">
-    <h3 class="lg:text-3xl text-2xl">
-        Reasonable and professional prices
-    </h3>
-    <ul class="lg:mt-3 mt-4 text-lg md:text-xl" >
-        <li>Tour guides who are knowledgeable about your desired destinations and areas</li>
-        <li>Passionate and dedicated to their profession</li>
-        <li>Skilled in entertaining and creating a fun atmosphere throughout the journey</li>
-        <li>Proficient in foreign languages (English, Chinese, Korean)</li>
-        <li>Good health and professional experience</li>
-        <li>Starting from 500,000 VND per day or $25 per day for international guests</li>
-    </ul>
-</div>
-<div class="notes">
-    <h3 class="lg:text-3xl text-2xl ">
-        Notes
-    </h3>
-    <div class="list-item">
-        <div *ngFor="let items of listRegulations" class="">
-          <div class="item mb-4 lg:mb-0">
-            
+      <div class="paragraphs">
+        <p>
+          Currently, the trend of not purchasing complete tour packages through travel companies has become a new trend
+          for families and groups of young friends. However, this is only suitable for frequent travelers who know how
+          to travel. For those who have limited travel experience or are visiting a new destination for the first time,
+          it is essential to have someone to guide them and show them the way. Even on a seemingly simple trip, there
+          will be many issues that arise, and having a knowledgeable tour guide by your side is necessary.
+        </p>
+        <p>
+          We provide you with a travel guide who can accompany you on your journey. You can hire a tour guide separately
+          or hire a tour guide along with our transportation services when needed.
+        </p>
+      </div>
+      <div class="">
+        <h3 class="lg:text-3xl text-2xl">Reasonable and professional prices</h3>
+        <ul class="lg:mt-3 mt-4 text-lg md:text-xl">
+          <li>Tour guides who are knowledgeable about your desired destinations and areas</li>
+          <li>Passionate and dedicated to their profession</li>
+          <li>Skilled in entertaining and creating a fun atmosphere throughout the journey</li>
+          <li>Proficient in foreign languages (English, Chinese, Korean)</li>
+          <li>Good health and professional experience</li>
+          <li>Starting from 500,000 VND per day or $25 per day for international guests</li>
+        </ul>
+      </div>
+      <div class="notes">
+        <h3 class="lg:text-3xl text-2xl">Notes</h3>
+        <div class="list-item">
+          <div *ngFor="let items of listRegulations" class="">
+            <div class="item mb-4 lg:mb-0">
               <div class="item__img">
-                <img
-                  src="assets/icons/{{ items.image }}.svg"
-                  [alt]="items.image + '.svg'"
-                  loading="lazy"
-                />
-            
-              
-            </div>
+                <img src="assets/icons/{{ items.image }}.svg" [alt]="items.image + '.svg'" loading="lazy" />
+              </div>
 
-            <div class="item__description">
-              <p>
-                {{ items.description }}
-              </p>
+              <div class="item__description">
+                <p>
+                  {{ items.description }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-</div>
 
-<div class="contact">
-    <h3 class="lg:text-3xl text-2xl">How to book</h3>
-    <p class="mt-4">
-      All our contact channels have 24/7 staff available to assist you in multiple languages. You can contact us
-      directly to make a reservation and ensure the best schedule and itinerary for you.
-    </p>
-    <div class="channels">
+      <div class="contact">
+        <h3 class="lg:text-3xl text-2xl">How to book</h3>
+        <p class="mt-4">
+          All our contact channels have 24/7 staff available to assist you in multiple languages. You can contact us
+          directly to make a reservation and ensure the best schedule and itinerary for you.
+        </p>
+        <div class="channels">
+          <div class="channel">
+            <img src="assets/icons/facebook.svg" alt="facebook" />
+            <p>
+              Contact us via
+              <a href="">Facebook Vietnam Travel Bus</a>
+            </p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/zalo.svg" alt="zalo" />
+            <p>
+              Book a car through our
+              <a href="">Zalo Business contact channel</a>
+            </p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/phone-callback.svg" alt="phone-callback" />
+            <p>Call our hotline directly 1900.25.25.65</p>
+          </div>
+          <div class="channel">
+            <img src="assets/icons/whatsapp.svg" alt="whatsapp" />
+            <p>
+              Our Whatsapp channel
+              <a href="">+84812995715</a>
+            </p>
+          </div>
+        </div>
+      </div>
 
-<div class="channel">
-<img src="assets/icons/facebook.svg" alt="facebook" />
-<p>Contact us via <a href="">Facebook Vietnam Travel Bus</a> </p>
-</div>
-<div class="channel">
-<img src="assets/icons/zalo.svg" alt="zalo" />
-<p>Book a car through our <a href=""> Zalo Business contact channel</a> </p>
-</div>
-<div class="channel">
-<img src="assets/icons/phone-callback.svg" alt="phone-callback" />
-<p>Call our hotline directly 1900.25.25.65</p>
-</div>
-<div class="channel">
-<img src="assets/icons/whatsapp.svg" alt="whatsapp" />
-<p> Our Whatsapp channel  <a href="">+84812995715</a> </p>
-</div>
-
-
-
-    </div>
-  </div>
-
-<div class="tags lg:mt-0">
-    <p>Tag:</p>
-    <div *ngFor="let items of listTags" class="">
-      <div class="tag">
-        {{ items.name }}
+      <div class="tags lg:mt-0">
+        <p>Tag:</p>
+        <div *ngFor="let items of listTags" class="">
+          <div class="tag">
+            {{ items.name }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 </div>
-</div>
-  

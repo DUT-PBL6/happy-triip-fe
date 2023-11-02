@@ -1,6 +1,5 @@
 @import "../../layouts/private-services/private-services.component.scss";
 
-
 .airport-pick-up-container {
   background-color: #f7f8fa;
   border-bottom: 0.0625rem solid #e1e1e1;
@@ -15,17 +14,12 @@
 
   .main {
     @include base-main;
-   
 
-   
     .content {
-     
       @media (max-width: 959px) {
-        .paragraphs{
+        .paragraphs {
           margin: -2.5rem 0;
         }
-        
-        
       }
       h3 {
         margin-top: -2rem;
@@ -43,14 +37,12 @@
         }
       }
       .list-item {
-        
-       @include  base-list-regulations;
-       @media (max-width: 959px) {
-        margin-bottom: -1.5rem;
-    }
+        @include base-list-regulations;
+        @media (max-width: 959px) {
+          margin-bottom: -1.5rem;
+        }
       }
       .tags {
-       
         @include base-tag;
       }
     }

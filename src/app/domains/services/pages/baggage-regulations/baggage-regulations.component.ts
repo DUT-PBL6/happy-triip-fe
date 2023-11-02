@@ -6,9 +6,7 @@ import { Component } from "@angular/core";
   styleUrls: ["./baggage-regulations.component.scss"],
 })
 export class BaggageRegulationsComponent {
-
   public listRegulations = [
-
     {
       id: "1",
       image: "business",

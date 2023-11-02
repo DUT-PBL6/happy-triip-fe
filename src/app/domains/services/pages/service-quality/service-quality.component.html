@@ -10,61 +10,57 @@
         </div>
       </div>
 
-      <div class="content xl:mx-6 xl:mt-4  m-auto gap-5 font-normal md:block px-3 py-4 lg:px-8">
+      <div class="content xl:mx-6 xl:mt-4 m-auto gap-5 font-normal md:block px-3 py-4 lg:px-8">
         <div class="main w-full mb-3 px-3 py-2 lg:px-5 xl:px-6 xl:py-5">
-
-        <p >
-          We understand that your journey with us is not just a trip, but an experience. Therefore, one thing for
-          certain is that we will bring you a memorable journey with all the trust you have placed in us. From the
-          moment you step onto one of our vehicles, you can expect to be welcomed by our friendly staff. Next, you will
-          find clean and comfortable seats to ensure the safest and most satisfying journey. We always maintain the
-          highest standards for our vehicles, and our drivers are professionally trained not only in driving but also in
-          customer service to ensure a smooth and enjoyable ride for passengers throughout the journey. Your
-          satisfaction is our top priority, and we continuously strive to improve our services to ensure that your trip
-          with us is the best experience in the travel and transportation industry.
-        </p>
-        <p class="my-6">
-          When traveling with TravelBus, you will feel that service quality is our utmost priority. On all our buses,
-          you will be provided with free WiFi and purified water, extra legroom, power outlets, and luggage compartments
-          for your convenience.
-        </p>
-        <div class="list-item">
-          <div *ngFor="let items of serviceQuality" class="">
-            <div class="item mb-4 lg:mb-0">
-              <div class="item__img">
-                <img src="assets/icons/{{ items.image }}.svg" [alt]="items.image + '.svg'" loading="lazy" />
-              </div>
-              <div class="item__description">
-                <p>
-                  {{ items.description }}
-                </p>
+          <p>
+            We understand that your journey with us is not just a trip, but an experience. Therefore, one thing for
+            certain is that we will bring you a memorable journey with all the trust you have placed in us. From the
+            moment you step onto one of our vehicles, you can expect to be welcomed by our friendly staff. Next, you
+            will find clean and comfortable seats to ensure the safest and most satisfying journey. We always maintain
+            the highest standards for our vehicles, and our drivers are professionally trained not only in driving but
+            also in customer service to ensure a smooth and enjoyable ride for passengers throughout the journey. Your
+            satisfaction is our top priority, and we continuously strive to improve our services to ensure that your
+            trip with us is the best experience in the travel and transportation industry.
+          </p>
+          <p class="my-6">
+            When traveling with TravelBus, you will feel that service quality is our utmost priority. On all our buses,
+            you will be provided with free WiFi and purified water, extra legroom, power outlets, and luggage
+            compartments for your convenience.
+          </p>
+          <div class="list-item">
+            <div *ngFor="let items of serviceQuality" class="">
+              <div class="item mb-4 lg:mb-0">
+                <div class="item__img">
+                  <img src="assets/icons/{{ items.image }}.svg" [alt]="items.image + '.svg'" loading="lazy" />
+                </div>
+                <div class="item__description">
+                  <p>
+                    {{ items.description }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-  
-     
-        </div>
 
-
-        <div class="block-booking flex flex-column gap-5 ">
-          <div class="block-booking__content flex flex-column gap-2">
-            <h4>Ready to book?</h4>
-            <p class="text-lg">
-              At our service, we believe that quality is the key to a great journey. We are proud to offer our
-              passengers an exceptional travel experience that begins with our commitment to service quality.
-            </p>
-            <p class="text-lg">
-              So why wait? Book now and experience the difference for yourself. With our commitment to service quality,
-              you can rest assured that you'll be travelling in comfort and style with the best in the business.
-            </p>
+          <div class="block-booking flex flex-column gap-5">
+            <div class="block-booking__content flex flex-column gap-2">
+              <h4>Ready to book?</h4>
+              <p class="text-lg">
+                At our service, we believe that quality is the key to a great journey. We are proud to offer our
+                passengers an exceptional travel experience that begins with our commitment to service quality.
+              </p>
+              <p class="text-lg">
+                So why wait? Book now and experience the difference for yourself. With our commitment to service
+                quality, you can rest assured that you'll be travelling in comfort and style with the best in the
+                business.
+              </p>
+            </div>
+            <div class="block-booking__button col-4 p-0">
+              <p-button label="Book Now" class="full-width-button w-full sm:w-auto"></p-button>
+            </div>
           </div>
-          <div class="block-booking__button col-4 p-0">
-            <p-button label="Book Now" class="full-width-button w-full sm:w-auto"></p-button>
-          </div>
-        </div>
         </div>
       </div>
-    
     </div>
   </div>
 </app-empty-layout>

@@ -1,25 +1,25 @@
 <div class="airport-pick-up-container">
   <div class="header"></div>
-  <div class="main ">
+  <div class="main">
     <div class="content">
-      <h2 class="title  lg:text-5xl text-3xl">
+      <h2 class="title lg:text-5xl text-3xl">
         Airport pick-up and drop-off service for international and domestic terminals of Da Nang City
       </h2>
-      <div class="about-description-images ">
-          <p-carousel
-            [value]="getNumberRange(1, 6)"
-            [numVisible]="4"
-            [numScroll]="4"
-            [circular]="true"
-            [responsiveOptions]="responsiveOptions"
-            [autoplayInterval]="3000"
-            styleClass="carousel-3"
-          >
-            <ng-template let-imageIndex ngFor [ngForOf]="getNumberRange(1, 6)" pTemplate="item">
-              <img src="/assets/images/about/about-{{ imageIndex }}.png" [alt]="'about-' + imageIndex" />
-            </ng-template>
-          </p-carousel>
-        </div>
+      <div class="about-description-images">
+        <p-carousel
+          [value]="getNumberRange(1, 6)"
+          [numVisible]="4"
+          [numScroll]="4"
+          [circular]="true"
+          [responsiveOptions]="responsiveOptions"
+          [autoplayInterval]="3000"
+          styleClass="carousel-3"
+        >
+          <ng-template let-imageIndex ngFor [ngForOf]="getNumberRange(1, 6)" pTemplate="item">
+            <img src="/assets/images/about/about-{{ imageIndex }}.png" [alt]="'about-' + imageIndex" />
+          </ng-template>
+        </p-carousel>
+      </div>
       <h3 class="lg:text-3xl text-2xl">We provide the most professional and safest airport transfer services.</h3>
       <p class="paragraphs">
         Travel Bus offers on-demand airport pick-up and drop-off services. Simply provide us with your flight number,
@@ -31,11 +31,7 @@
           <div class="item mb-4 lg:mb-0">
             <div class="flex gap-3 font-medium">
               <div class="item__img">
-                <img
-                  src="assets/icons/{{ items.image }}.svg"
-                  [alt]="items.image + '.svg'"
-                  loading="lazy"
-                />
+                <img src="assets/icons/{{ items.image }}.svg" [alt]="items.image + '.svg'" loading="lazy" />
               </div>
               <div class="item__tilte flex align-items-center">
                 {{ items.title }}

@@ -1,29 +1,31 @@
 <app-empty-layout>
-
-  <router-outlet></router-outlet> 
-   <div class="private-service-component">
-    <div class="latest-news ">
+  <router-outlet></router-outlet>
+  <div class="private-service-component">
+    <div class="latest-news">
       <div class="main">
         <h2 class="text-center my-0 text-primary">OUR PRIVATE SERVICES</h2>
-        <h4 class="text-center my-0 text-color-secondary">Discover the convenience and comfort of traveling with our service</h4>
+        <h4 class="text-center my-0 text-color-secondary">
+          Discover the convenience and comfort of traveling with our service
+        </h4>
       </div>
-      <p-carousel [value]="latestNews" [numVisible]="3" 
-   
-      [responsiveOptions]="responsiveOptions"
-      [autoplayInterval]="3000"
-       styleClass="default-carousel">
+      <p-carousel
+        [value]="latestNews"
+        [numVisible]="3"
+        [responsiveOptions]="responsiveOptions"
+        [autoplayInterval]="3000"
+        styleClass="default-carousel"
+      >
         <ng-template let-news pTemplate="item">
           <div class="news-item">
             <img src="/assets/images/services/private-services/{{ news.img }}-carousel.png" [alt]="'news-' + news.id" />
             <div class="news-item__content flex flex-column">
               <h5>{{ news.title }}</h5>
-            
             </div>
           </div>
         </ng-template>
       </p-carousel>
     </div>
-   </div>
+  </div>
 </app-empty-layout>
 <app-footer></app-footer>
 <app-copyright></app-copyright>

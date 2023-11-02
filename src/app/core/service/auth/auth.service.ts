@@ -10,12 +10,12 @@ export class AuthService {
   public login$(authCredentialsDto: AuthCredentialsDto): Observable<TokenResponse> {
     return this.apiService.api.authLogin(authCredentialsDto);
   }
-  public registerPartner$(user:UserDto):Observable<TokenResponse>{
-    return this.apiService.api.authPartnerSignUp(user)
-  }
-  public registerPassenger$(user:UserDto):Observable<TokenResponse>{
-    return this.apiService.api.authPassengerSignUp(user)
+
+  public registerPartner$(user: UserDto): Observable<TokenResponse> {
+    return this.apiService.api.authPartnerSignUp(user);
   }
 
-
+  public registerPassenger$(user: UserDto): Observable<TokenResponse> {
+    return this.apiService.api.authPassengerSignUp(user);
+  }
 }

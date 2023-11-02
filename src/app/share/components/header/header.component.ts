@@ -141,15 +141,15 @@ export class HeaderComponent implements OnInit {
       },
       { separator: true },
       {
-        label: "Register",
+        label: "Sign up",
         items: [
           {
-            label: "Register as Passenger",
+            label: "Sign up as Passenger",
             routerLink: "/auth/signup",
             queryParams: { userRole: "passenger" },
           },
           {
-            label: "Register as Partner",
+            label: "Sign up as Partner",
             routerLink: "/auth/signup",
             queryParams: { userRole: "partner" },
           },

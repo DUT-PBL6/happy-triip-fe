@@ -4,7 +4,7 @@ import { AirportPickUpComponent } from "./airport-pick-up.component";
 import { CarouselModule } from "primeng/carousel";
 @NgModule({
   declarations: [AirportPickUpComponent],
-  imports: [CommonModule,CarouselModule],
+  imports: [CommonModule, CarouselModule],
   exports: [AirportPickUpComponent],
 })
 export class AirportPickUpModule {}
