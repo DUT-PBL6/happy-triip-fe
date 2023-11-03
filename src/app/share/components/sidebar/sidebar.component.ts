@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { TreeNode } from "primeng/api";
 import { TreeNodeSelectEvent } from "primeng/tree";
+import cacheService from "src/lib/cache-service";
 
 @Component({
   selector: "app-sidebar",
@@ -11,10 +12,15 @@ import { TreeNodeSelectEvent } from "primeng/tree";
 export class SidebarComponent implements OnInit {
   public items: TreeNode[] = [];
   public selectedRoute!: TreeNode<any> | TreeNode<any>[];
+  public user = Object(cacheService.getUserInfo());
 
   constructor(private router: Router) {}
 
   ngOnInit() {
+    const isEmployee = this.user.userRole === "EMPLOYEE";
+    const isAdmin = this.user?.role === "ADMIN";
+    const isPartner = this.user.userRole === "PARTNER";
+
     this.items = [
       {
         label: "Booking Management",
@@ -65,6 +71,18 @@ export class SidebarComponent implements OnInit {
         data: "route",
       },
     ];
+
+    if (isEmployee) {
+      if (!isAdmin) {
+        this.items.splice(1, 1);
+        this.items.splice(-1, 1);
+      }
+      return;
+    }
+    if (isPartner) {
+      this.items.splice(5, 1);
+      this.items.splice(0, 4);
+    }
   }
 
   public nodeSelect(event: TreeNodeSelectEvent): void {

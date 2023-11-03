@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Route, RouteDto } from "_api";
 import { validate } from "src/app/share/helpers/form.helper";
 import { TranslateService } from "@ngx-translate/core";
@@ -25,7 +25,15 @@ export class RouteFormComponent implements OnInit {
     this.initRouteForm();
   }
 
-  private initRouteForm(): void {}
+  private initRouteForm(): void {
+    this.routeForm = this.fb.group({
+      name: ["", Validators.required],
+    });
+  }
+
+  public get name(): FormControl {
+    return this.routeForm.get("name") as FormControl;
+  }
 
   public submit(): void {}
 
