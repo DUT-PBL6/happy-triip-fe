@@ -8,7 +8,7 @@ import { TransportListboxModule } from "../../components/transport-listbox/trans
 
 @NgModule({
   declarations: [TransportPageComponent],
-  imports: [CommonModule, ListboxModule, ButtonModule, TransportFormModule, TransportListboxModule],
+  imports: [CommonModule, TransportFormModule, TransportListboxModule],
   exports: [TransportPageComponent],
 })
 export class TransportModule {}

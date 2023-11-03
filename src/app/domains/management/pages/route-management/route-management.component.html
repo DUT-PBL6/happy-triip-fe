@@ -1,0 +1,15 @@
+<div class="route-container">
+  <app-route-listbox
+    (selectedRoute)="onSelectedRouteChange($event)"
+    (isUpdateMode)="onUpdateModeChange($event)"
+    (isRouteFormVisible)="onFormVisibleChange($event)"
+  ></app-route-listbox>
+  <app-route-form
+    *ngIf="isRouteFormVisible"
+    class="w-full"
+    [selectedRoute]="currentRoute"
+    [updateMode]="isUpdateMode"
+    (cancelRouteForm)="cancelRouteForm($event)"
+    (form)="handleRouteForm($event)"
+  ></app-route-form>
+</div>
