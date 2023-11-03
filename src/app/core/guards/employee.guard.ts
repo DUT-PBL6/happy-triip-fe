@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import cacheService from "src/lib/cache-service";
 
 @Injectable({ providedIn: "root" })
-export class AuthGuard {
+export class EmployeeGuard {
   constructor(private route: Router) {}
 
   public canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {

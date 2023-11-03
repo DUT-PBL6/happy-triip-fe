@@ -22,8 +22,6 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(Object(cacheService.getUserInfo()));
-
     this.initProfileMenu();
     this.tieredItems = [
       {

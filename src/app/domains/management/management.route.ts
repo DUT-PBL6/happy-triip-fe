@@ -5,18 +5,19 @@ import { BookingConfirmationComponent } from "./pages/booking-confirmation/booki
 import { ProfileSettingsComponent } from "./pages/profile-settings/profile-settings.component";
 import { TransportPageComponent } from "./pages/transport/transport.component";
 import { RouteManagementComponent } from "./pages/route-management/route-management.component";
+import { AdminGuard } from "src/app/core/guards/admin.guard";
+import { PartnerGuard } from "src/app/core/guards/partner.guard";
 
 const routes: Routes = [
   {
     path: "",
     component: ManagementLayoutComponent,
-    // canActivate: [AuthGuard], TODO
     children: [
-      { path: "", redirectTo: "profile-settings", pathMatch: "full" },
+      { path: "", redirectTo: "booking-confirmation", pathMatch: "full" },
       { path: "booking-confirmation", component: BookingConfirmationComponent },
-      { path: "profile-settings", component: ProfileSettingsComponent },
+      { path: "profile-settings", component: ProfileSettingsComponent, canActivate: [AdminGuard] },
       { path: "transport", component: TransportPageComponent },
-      { path: "route", component: RouteManagementComponent },
+      { path: "route", component: RouteManagementComponent, canActivate: [PartnerGuard] },
     ],
   },
 ];
