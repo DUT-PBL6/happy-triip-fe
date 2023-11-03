@@ -1,0 +1,18 @@
+<div class="card flex flex-column justify-content-center align-items-center h-full gap-4 p-2">
+  <p-listbox
+    [options]="routes$ | async"
+    [(ngModel)]="currentRoute"
+    optionLabel="name"
+    [filter]="true"
+    [filterPlaceHolder]="'Search route'"
+    class="listbox-border-none w-full h-full border-none"
+    [listStyle]="{ 'max-height': '450px' }"
+    (onChange)="handleChangeSelectedRoute()"
+  ></p-listbox>
+  <p-button
+    label="Add Route"
+    icon="pi pi-plus"
+    class="full-width-button w-full text-xl"
+    (onClick)="handleAddRoute()"
+  ></p-button>
+</div>

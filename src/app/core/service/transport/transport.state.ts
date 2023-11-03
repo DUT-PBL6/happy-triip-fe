@@ -46,9 +46,9 @@ export class TransportState {
   @Action(UpdateTransport)
   public updateTransport$(ctx: StateContext<ITransportState>, action: UpdateTransport): void {
     const state = ctx.getState();
-    const updatedTransports = state.transports.map((employee) => {
-      if (employee.id === action.transport.id) return action.transport;
-      return employee;
+    const updatedTransports = state.transports.map((transport) => {
+      if (transport.id === action.transport.id) return action.transport;
+      return transport;
     });
     ctx.setState({
       ...state,

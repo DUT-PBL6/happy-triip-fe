@@ -15,6 +15,8 @@ import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { ApiService } from "./core/service/base-api/api.service";
 import { EmployeeState } from "./core/service/employee/employee.state";
 import { TransportState } from "./core/service/transport/transport.state";
+import { StationState } from "./core/service/station/station.state";
+import { RouteState } from "./core/service/route/route.state";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -30,7 +32,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     HttpClientModule,
     ToastModule,
-    NgxsModule.forRoot([LoadingState, EmployeeState, TransportState]),
+    NgxsModule.forRoot([LoadingState, EmployeeState, TransportState, StationState, RouteState]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

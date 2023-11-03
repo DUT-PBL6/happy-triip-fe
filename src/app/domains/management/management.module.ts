@@ -7,6 +7,7 @@ import { SidebarModule } from "src/app/share/components/sidebar/sidebar.module";
 import { EmptyLayoutModule } from "src/app/share/layouts/empty-layout/empty-layout.module";
 import { ProfileSettingsModule } from "./pages/profile-settings/profile-settings.module";
 import { TransportModule } from "./pages/transport/transport.module";
+import { RouteManagementModule } from "./pages/route-management/route-management.module";
 
 @NgModule({
   declarations: [ManagementLayoutComponent],
@@ -18,6 +19,7 @@ import { TransportModule } from "./pages/transport/transport.module";
     EmptyLayoutModule,
     ProfileSettingsModule,
     TransportModule,
+    RouteManagementModule,
   ],
   exports: [ManagementLayoutComponent],
 })

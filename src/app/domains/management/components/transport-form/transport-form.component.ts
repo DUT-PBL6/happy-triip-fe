@@ -1,15 +1,5 @@
 import { TranslateService } from "@ngx-translate/core";
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Transport, TransportDto, TypeVehical, Utility } from "_api";
 import { Option } from "src/app/core/interfaces/option.interface";
@@ -36,8 +26,7 @@ export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private translate: TranslateService,
-    private cd: ChangeDetectorRef
+    private translate: TranslateService
   ) {}
 
   ngOnDestroy(): void {
