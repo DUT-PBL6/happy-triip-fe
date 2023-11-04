@@ -1,0 +1,17 @@
+<div class="poi-stations">
+  <app-station-listbox
+    (selectedStation)="onSelectedStationChange($event)"
+    (isUpdateMode)="onUpdateModeChange($event)"
+    (isStationFormVisible)="onFormVisibleChange($event)"
+  ></app-station-listbox>
+
+  <app-station-form
+    *ngIf="isStationFormVisible"
+    class="w-full"
+    [selectedStation]="currentStation"
+    (cancelStationForm)="cancelStationForm($event)"
+    (removeStationForm)="removeStationForm()"
+    [updateMode]="isUpdateMode"
+    (form)="handleStationForm($event)"
+  ></app-station-form>
+</div>

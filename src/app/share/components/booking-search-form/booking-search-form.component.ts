@@ -113,8 +113,6 @@ export class BookingSearchFormComponent implements OnInit {
       arriveAt: this.bookingSearchForm.contains("arriveAt") ? this.bookingSearchForm.value.arriveAt : null,
     };
 
-    console.log(queryParams);
-
     this.router.navigate(["/booking/search"], {
       relativeTo: this.route,
       queryParams,
