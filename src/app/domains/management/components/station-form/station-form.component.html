@@ -1,0 +1,212 @@
+<div class="card w-full h-full flex flex-column gap-4">
+  <h4>{{ updateMode ? "POI & Station Details" : "Add New POI & Station" }}</h4>
+  <div class="form">
+    <form class="grid" [formGroup]="stationForm" (ngSubmit)="submit()">
+      <!-- NAME -->
+      <div class="name col-12 flex flex-column">
+        <label for="name" class="block text-900 text-lg font-medium mb-2">Name</label>
+        <div class="input-container">
+          <input
+            pInputText
+            id="name"
+            type="text"
+            placeholder="Enter poi & station name"
+            class="w-full"
+            formControlName="name"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(name)
+            }"
+          />
+          <small class="p-error" *ngIf="validate(name)">
+            <strong>Name is required</strong>
+          </small>
+        </div>
+      </div>
+      <!--  -->
+      <div class="city col-4 flex flex-column">
+        <label for="city" class="block text-900 text-lg font-medium mb-2">Province/City</label>
+        <div class="input-container">
+          <p-dropdown
+            id="city"
+            formControlName="city"
+            class="full-width-dropdown"
+            [showClear]="true"
+            [options]="cityEnum"
+            placeholder="Choose your province/city"
+            optionLabel="name"
+            optionValue="value"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(city)
+            }"
+          ></p-dropdown>
+          <small class="p-error" *ngIf="validate(city)">
+            <strong>Province/City is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="district col-4 flex flex-column">
+        <label for="dictrict" class="block text-900 text-lg font-medium mb-2">District</label>
+        <div class="input-container">
+          <input
+            pInputText
+            id="district"
+            type="text"
+            placeholder="Enter your district"
+            class="w-full"
+            formControlName="district"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(district)
+            }"
+          />
+          <small class="p-error" *ngIf="validate(district)">
+            <strong>District is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="ward col-4 flex flex-column">
+        <label for="ward" class="block text-900 text-lg font-medium mb-2">Ward</label>
+        <div class="input-container">
+          <input
+            pInputText
+            id="ward"
+            type="text"
+            placeholder="Enter your ward"
+            class="w-full"
+            formControlName="ward"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(ward)
+            }"
+          />
+          <small class="p-error" *ngIf="validate(ward)">
+            <strong>Ward is required</strong>
+          </small>
+        </div>
+      </div>
+
+      <div class="address col-12 flex flex-column">
+        <label for="address" class="block text-900 text-lg font-medium mb-2">Address</label>
+        <div class="input-container">
+          <input
+            pInputText
+            id="address"
+            type="text"
+            placeholder="Enter address"
+            class="w-full"
+            formControlName="address"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(address)
+            }"
+          />
+          <small class="p-error" *ngIf="validate(address)">
+            <strong>Address is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="gmap col-12 flex flex-column">
+        <label for="gmapLink" class="block text-900 text-lg font-medium mb-2">Google Map Link</label>
+        <div class="input-container">
+          <input
+            pInputText
+            id="gmapLink"
+            type="text"
+            placeholder="Enter google map link"
+            class="w-full"
+            formControlName="gmapLink"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(gmapLink)
+            }"
+          />
+          <small class="p-error" *ngIf="validate(gmapLink)">
+            <strong>Google map link is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="embedgmap col-12 flex flex-column">
+        <label for="embedGmapLink" class="block text-900 text-lg font-medium mb-2">Embed Google Map Link</label>
+        <div class="input-container">
+          <input
+            pInputText
+            id="embedGmapLink"
+            type="text"
+            placeholder="Enter embed google map link"
+            class="w-full"
+            formControlName="embedGmapLink"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(embedGmapLink)
+            }"
+          />
+          <small class="p-error" *ngIf="validate(embedGmapLink)">
+            <strong>Embed google map link is required</strong>
+          </small>
+        </div>
+      </div>
+
+      <div class="description col-12 flex flex-column">
+        <label for="description" class="block text-900 text-lg font-medium mb-2">Description</label>
+        <div class="input-container">
+          <textarea
+            cols="10"
+            rows="5"
+            pInputText
+            id="description"
+            type="textarea"
+            placeholder="Enter description"
+            class="w-full"
+            formControlName="description"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(description)
+            }"
+          ></textarea>
+
+          <small class="p-error" *ngIf="validate(description)">
+            <strong>Description is required</strong>
+          </small>
+        </div>
+      </div>
+
+      <!-- IMAGE -->
+      <div class="image col-12 flex flex-column">
+        <label for="image" class="block text-900 text-lg font-medium mb-2">Image</label>
+        <div class="input-container flex gap-4 mb-2">
+          <ng-container *ngFor="let _ of [0, 1, 2, 3]; let i = index">
+            <app-upload-image
+              [existedImage]="this.selectedStation?.images[i]"
+              (uploadedPhotoEmitter)="handleUploadedPhoto($event)"
+            ></app-upload-image>
+          </ng-container>
+        </div>
+        <small class="p-error" *ngIf="isSubmit && images.value.length=== 0">
+          <strong>Image is required</strong>
+        </small>
+      </div>
+
+      <div class="actions col-12 flex justify-content-end gap-2">
+        <p-button
+          label="Remove"
+          styleClass="p-button-danger p-button-outlined"
+          class="col-6 md:col-3 pr-0 full-width-button"
+          icon="pi pi-trash"
+          iconPos="right"
+          *ngIf="updateMode"
+          (onClick)="removeStationForm.emit(true)"
+        ></p-button>
+        <p-button
+          label="Cancel"
+          styleClass="p-button-danger p-button-outlined"
+          class="col-6 md:col-3 pr-0 full-width-button"
+          icon="pi pi-times"
+          iconPos="right"
+          *ngIf="!updateMode"
+          (onClick)="cancelStationForm.emit(true)"
+        ></p-button>
+        <p-button
+          type="submit"
+          class="col-6 md:col-3 pr-0 full-width-button"
+          label="Save"
+          icon="pi pi-save"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </form>
+  </div>
+</div>

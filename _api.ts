@@ -157,6 +157,7 @@ export interface Station {
   id: number;
   name: string;
   city: City;
+  images: string[];
   district: string;
   ward: string;
   address: string;
@@ -395,7 +396,9 @@ export interface Employee {
   role: string;
 }
 
-export type StationDto = object;
+export interface StationDto {
+  images: string[];
+}
 
 export interface StationPagingResult {
   total: number;
@@ -1279,22 +1282,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Station
-     * @name StationControllerUpdate
+     * @name StationControllerUpdateById
      * @summary Update station
      * @request PUT:/api/station/{id}
      */
-    stationUpdate: (
-      id: string,
-      query: {
-        id: number;
-      },
-      data: StationDto,
-      params: RequestParams = {},
-    ) =>
+    stationUpdateById: (id: number, data: StationDto, params: RequestParams = {}) =>
       this.request<Station, any>({
         path: `/api/station/${id}`,
         method: 'PUT',
-        query: query,
         body: data,
         type: ContentType.Json,
         format: 'json',
@@ -1309,17 +1304,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Delete station
      * @request DELETE:/api/station/{id}
      */
-    stationDelete: (
-      id: string,
-      query: {
-        id: number;
-      },
-      params: RequestParams = {},
-    ) =>
+    stationDelete: (id: number, params: RequestParams = {}) =>
       this.request<Station, any>({
         path: `/api/station/${id}`,
         method: 'DELETE',
-        query: query,
         format: 'json',
         ...params,
       }),
