@@ -57,8 +57,10 @@ export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
       type: ["", Validators.required],
       mapSeat: [
         [
-          [1, 0, 1],
-          [0, 1, 0],
+          [
+            [0, 0, 1],
+            [0, 1, 0],
+          ],
         ],
         Validators.required,
       ],
@@ -89,9 +91,9 @@ export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
     this.seatTypesForm = this.fb.array(
       [
         this.fb.group({
-          name: ["", Validators.required],
-          description: ["", Validators.required],
-          price: ["", Validators.required],
+          name: ["Normal seat", Validators.required],
+          description: ["Normal seat", Validators.required],
+          price: [0, Validators.required],
         }),
       ],
       Validators.required

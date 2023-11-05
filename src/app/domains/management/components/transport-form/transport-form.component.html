@@ -93,6 +93,9 @@
                       locale="en-US"
                       placeholder="Price"
                       class="flex flex-1"
+                      [ngClass]="{
+                        'ng-invalid ng-dirty': validate(name)
+                      }"
                     ></p-inputNumber>
                     <i
                       *ngIf="i !== 0"
