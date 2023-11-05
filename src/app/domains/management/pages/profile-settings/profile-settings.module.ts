@@ -4,8 +4,8 @@ import { ProfileSettingsComponent } from "./profile-settings.component";
 import { ListboxModule } from "primeng/listbox";
 import { FormsModule } from "@angular/forms";
 import { ButtonModule } from "primeng/button";
-import { UserFormModule } from "../../components/user-form/user-form.module";
-import { UserListboxModule } from "../../components/user-listbox/user-listbox.module";
+import { UserFormModule } from "../../components/user/user-form/user-form.module";
+import { UserListboxModule } from "../../components/user/user-listbox/user-listbox.module";
 
 @NgModule({
   declarations: [ProfileSettingsComponent],

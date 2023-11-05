@@ -20,7 +20,6 @@ const routes: Routes = [
       { path: "transport", component: TransportPageComponent },
       { path: "route", component: RouteManagementComponent, canActivate: [PartnerGuard] },
       { path: "poi-stations", component: PoiStationsComponent },
-
     ],
   },
 ];
@@ -29,4 +28,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ManagementRoutesModule { }
+export class ManagementRoutesModule {}

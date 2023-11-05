@@ -3,9 +3,9 @@
   <div class="form">
     <form class="grid" [formGroup]="stationForm" (ngSubmit)="submit()">
       <!-- NAME -->
-      <div class="name col-12 flex flex-column">
+      <div class="name col-12 py-2 flex flex-column">
         <label for="name" class="block text-900 text-lg font-medium mb-2">Name</label>
-        <div class="input-container">
+        <div class="input-container h-4rem">
           <input
             pInputText
             id="name"
@@ -22,31 +22,48 @@
           </small>
         </div>
       </div>
-      <!--  -->
-      <div class="city col-4 flex flex-column">
+      <!-- CITY -->
+      <div class="city col-4 py-2 flex flex-column">
         <label for="city" class="block text-900 text-lg font-medium mb-2">Province/City</label>
-        <div class="input-container">
+        <div class="input-container h-4rem">
           <p-dropdown
-            id="city"
+            [options]="locations"
             formControlName="city"
-            class="full-width-dropdown"
-            [showClear]="true"
-            [options]="cityEnum"
-            placeholder="Choose your province/city"
             optionLabel="name"
             optionValue="value"
+            [showClear]="true"
+            placeholder="From"
+            [filter]="true"
+            [filterBy]="'name'"
+            class="full-width-dropdown"
             [ngClass]="{
-              'ng-invalid ng-dirty': validate(city)
+              'ng-invalid ng-dirty': validate(city) || city.invalid
             }"
-          ></p-dropdown>
+          >
+            <ng-template let-location pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-map-marker"></i>
+                <div>{{ location.name }}</div>
+              </div>
+            </ng-template>
+
+            <ng-template let-location pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-map-marker"></i>
+                <div>{{ location.name }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+
           <small class="p-error" *ngIf="validate(city)">
             <strong>Province/City is required</strong>
           </small>
         </div>
       </div>
-      <div class="district col-4 flex flex-column">
+      <!-- DISTRICT -->
+      <div class="district col-4 py-2 flex flex-column">
         <label for="dictrict" class="block text-900 text-lg font-medium mb-2">District</label>
-        <div class="input-container">
+        <div class="input-container h-4rem">
           <input
             pInputText
             id="district"
@@ -63,9 +80,10 @@
           </small>
         </div>
       </div>
-      <div class="ward col-4 flex flex-column">
+      <!-- WARD -->
+      <div class="ward col-4 py-2 flex flex-column">
         <label for="ward" class="block text-900 text-lg font-medium mb-2">Ward</label>
-        <div class="input-container">
+        <div class="input-container h-4rem">
           <input
             pInputText
             id="ward"
@@ -82,10 +100,10 @@
           </small>
         </div>
       </div>
-
-      <div class="address col-12 flex flex-column">
+      <!-- ADDRESS -->
+      <div class="address col-12 py-2 flex flex-column">
         <label for="address" class="block text-900 text-lg font-medium mb-2">Address</label>
-        <div class="input-container">
+        <div class="input-container h-4rem">
           <input
             pInputText
             id="address"
@@ -102,9 +120,10 @@
           </small>
         </div>
       </div>
-      <div class="gmap col-12 flex flex-column">
+      <!-- GMAP -->
+      <div class="gmap col-12 py-2 flex flex-column">
         <label for="gmapLink" class="block text-900 text-lg font-medium mb-2">Google Map Link</label>
-        <div class="input-container">
+        <div class="input-container h-4rem">
           <input
             pInputText
             id="gmapLink"
@@ -121,9 +140,10 @@
           </small>
         </div>
       </div>
-      <div class="embedgmap col-12 flex flex-column">
+      <!-- EMBED GMAP -->
+      <div class="embedgmap col-12 py-2 flex flex-column">
         <label for="embedGmapLink" class="block text-900 text-lg font-medium mb-2">Embed Google Map Link</label>
-        <div class="input-container">
+        <div class="input-container h-4rem">
           <input
             pInputText
             id="embedGmapLink"
@@ -140,10 +160,10 @@
           </small>
         </div>
       </div>
-
-      <div class="description col-12 flex flex-column">
+      <!-- DESCRIPTION -->
+      <div class="description col-12 py-2 flex flex-column">
         <label for="description" class="block text-900 text-lg font-medium mb-2">Description</label>
-        <div class="input-container">
+        <div class="input-container h-9rem">
           <textarea
             cols="10"
             rows="5"
@@ -163,24 +183,25 @@
           </small>
         </div>
       </div>
-
       <!-- IMAGE -->
-      <div class="image col-12 flex flex-column">
+      <div class="image col-12 py-2 flex flex-column">
         <label for="image" class="block text-900 text-lg font-medium mb-2">Image</label>
-        <div class="input-container flex gap-4 mb-2">
-          <ng-container *ngFor="let _ of [0, 1, 2, 3]; let i = index">
-            <app-upload-image
-              [existedImage]="this.selectedStation?.images[i]"
-              (uploadedPhotoEmitter)="handleUploadedPhoto($event)"
-            ></app-upload-image>
-          </ng-container>
+        <div class="input-container h-10rem flex flex-column">
+          <div class="flex gap-4 mb-2">
+            <ng-container *ngFor="let _ of [0, 1, 2, 3]; let i = index">
+              <app-upload-image
+                [existedImage]="this.selectedStation?.images[i]"
+                (uploadedPhotoEmitter)="handleUploadedPhoto($event)"
+              ></app-upload-image>
+            </ng-container>
+          </div>
+          <small class="p-error" *ngIf="isSubmit && images.value.length === 0">
+            <strong>Image is required</strong>
+          </small>
         </div>
-        <small class="p-error" *ngIf="isSubmit && images.value.length=== 0">
-          <strong>Image is required</strong>
-        </small>
       </div>
 
-      <div class="actions col-12 flex justify-content-end gap-2">
+      <div class="actions col-12 py-2 flex justify-content-end gap-2">
         <p-button
           label="Remove"
           styleClass="p-button-danger p-button-outlined"

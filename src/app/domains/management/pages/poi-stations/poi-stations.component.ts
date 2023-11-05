@@ -10,9 +10,9 @@ import { CreateTransport, UpdateTransport } from "src/app/core/service/transport
 import { TransportService } from "src/app/core/service/transport/transport.service";
 
 @Component({
-  selector: 'app-poi-stations',
-  templateUrl: './poi-stations.component.html',
-  styleUrls: ['./poi-stations.component.scss']
+  selector: "app-poi-stations",
+  templateUrl: "./poi-stations.component.html",
+  styleUrls: ["./poi-stations.component.scss"],
 })
 export class PoiStationsComponent extends BaseDestroyable {
   public currentStation: Station;
@@ -32,25 +32,23 @@ export class PoiStationsComponent extends BaseDestroyable {
   }
 
   // remove
-  public removeStationForm():void{
-      this.stationService.deleteStation$(this.currentStation.id)
-    .pipe(takeUntil(this.destroy$)).subscribe({
-      next:()=>{
-        this.toastService.showSuccess(
-          "Success",
-          "Station is delete successfully" 
-        );
-      }
-    })
+  public removeStationForm(): void {
+    this.stationService
+      .deleteStation$(this.currentStation.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.toastService.showSuccess("Success", "Station is delete successfully");
+        },
+      });
     this.store.dispatch(new DeleteStation(this.currentStation.id));
-          this.currentStation =undefined;
-          this.isUpdateMode = false;
-          this.isStationFormVisible = false;
-         
+    this.currentStation = undefined;
+    this.isUpdateMode = false;
+    this.isStationFormVisible = false;
   }
 
-  public onSelectedStationChange(station : Station): void {
-    this.currentStation = station
+  public onSelectedStationChange(station: Station): void {
+    this.currentStation = station;
   }
 
   public onUpdateModeChange(isUpdateMode: boolean): void {
@@ -63,7 +61,7 @@ export class PoiStationsComponent extends BaseDestroyable {
 
   public handleStationForm(station: StationDto): void {
     const service$: Observable<Station> = this.isUpdateMode
-      ? this.stationService.updateStation$(this.currentStation.id,station)
+      ? this.stationService.updateStation$(this.currentStation.id, station)
       : this.stationService.createStation$(station);
 
     service$.pipe(takeUntil(this.destroy$)).subscribe({
@@ -78,6 +76,4 @@ export class PoiStationsComponent extends BaseDestroyable {
 
     this.isStationFormVisible = false;
   }
-
-
 }

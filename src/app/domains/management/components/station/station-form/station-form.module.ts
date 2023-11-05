@@ -11,6 +11,7 @@ import { CheckboxModule } from "primeng/checkbox";
 import { InputNumberModule } from "primeng/inputnumber";
 import { UploadImageModule } from "src/app/share/components/upload-image/upload-image.module";
 import { StationFormComponent } from "./station-form.component";
+import { InputTextareaModule } from "primeng/inputtextarea";
 
 @NgModule({
   declarations: [StationFormComponent],
@@ -26,8 +27,8 @@ import { StationFormComponent } from "./station-form.component";
     CheckboxModule,
     InputNumberModule,
     UploadImageModule,
+    InputTextareaModule,
   ],
   exports: [StationFormComponent],
 })
 export class StationFormModule {}
-

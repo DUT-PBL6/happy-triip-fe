@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 
-import { Station} from "_api";
+import { Station } from "_api";
 import { Observable, tap } from "rxjs";
 import { StationService } from "./station.service";
 import { CreateStation, DeleteStation, GetAllStation, UpdateStation } from "./station.action";
 
 interface IStationState {
-  stations:Station[];
+  stations: Station[];
 }
 
 @State<IStationState>({
@@ -64,8 +64,4 @@ export class StationState {
       stations: updatedStations,
     });
   }
-
-  
-
 }
-

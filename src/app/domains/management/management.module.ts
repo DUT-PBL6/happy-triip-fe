@@ -12,8 +12,6 @@ import { RouteManagementModule } from "./pages/route-management/route-management
 
 import { PoiStationsModule } from "./pages/poi-stations/poi-stations.module";
 
-
-
 @NgModule({
   declarations: [ManagementLayoutComponent],
   imports: [
@@ -26,9 +24,9 @@ import { PoiStationsModule } from "./pages/poi-stations/poi-stations.module";
     TransportModule,
 
     RouteManagementModule,
-    
+
     PoiStationsModule,
   ],
   exports: [ManagementLayoutComponent],
 })
-export class ManagementModule { }
+export class ManagementModule {}
