@@ -55,6 +55,7 @@ export class StationState {
       stations: updatedStations,
     });
   }
+
   @Action(DeleteStation)
   public deleteStation$(ctx: StateContext<IStationState>, action: DeleteStation): void {
     const state = ctx.getState();

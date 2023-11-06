@@ -4,24 +4,13 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import utc from "dayjs/plugin/utc";
 import timezonePlugin from "dayjs/plugin/timezone";
 import duration from "dayjs/plugin/duration";
+import { DATE_FORMAT } from "../constants";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(utc);
 dayjs.extend(timezonePlugin);
 dayjs.extend(duration);
-
-export const isBefore = (dateInput: string, dateMark: Date): boolean => {
-  return dayjs(dateInput).startOf("day").isSameOrBefore(dayjs(dateMark));
-};
-
-export const isAfter = (dateInput: string, dateMark: Date): boolean => {
-  return dayjs(dateInput).startOf("day").isSameOrAfter(dayjs(dateMark));
-};
-
-export const isSameDate = (dateInput: string, dateMark: Date): boolean => {
-  return dayjs(dateInput).startOf("day").isSame(dayjs(dateMark), "day");
-};
 
 export const getTime = (dateInput: string): string => {
   const date = new Date(dateInput);
@@ -39,4 +28,9 @@ export const getHoursDifference = (departAt: string, arriveAt: string) => {
   const hoursDifference = duration.hours();
 
   return hoursDifference;
+};
+
+export const formatDate = (dateString: string): string => {
+  const date = dayjs(dateString);
+  return date.format(DATE_FORMAT);
 };
