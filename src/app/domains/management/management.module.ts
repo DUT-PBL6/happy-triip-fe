@@ -7,7 +7,10 @@ import { SidebarModule } from "src/app/share/components/sidebar/sidebar.module";
 import { EmptyLayoutModule } from "src/app/share/layouts/empty-layout/empty-layout.module";
 import { ProfileSettingsModule } from "./pages/profile-settings/profile-settings.module";
 import { TransportModule } from "./pages/transport/transport.module";
+
 import { RouteManagementModule } from "./pages/route-management/route-management.module";
+
+import { PoiStationsModule } from "./pages/poi-stations/poi-stations.module";
 
 @NgModule({
   declarations: [ManagementLayoutComponent],
@@ -19,7 +22,10 @@ import { RouteManagementModule } from "./pages/route-management/route-management
     EmptyLayoutModule,
     ProfileSettingsModule,
     TransportModule,
+
     RouteManagementModule,
+
+    PoiStationsModule,
   ],
   exports: [ManagementLayoutComponent],
 })
