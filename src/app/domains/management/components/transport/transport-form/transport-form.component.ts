@@ -65,7 +65,10 @@ export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
         Validators.required,
       ],
       seatTypes: this.seatTypesForm,
-      images: ["", Validators.required],
+      images: [
+        "",
+        // , Validators.required
+      ],
       utility: ["", Validators.required],
     });
     if (this.selectedTransport) this.transportForm?.patchValue({ ...this.selectedTransport });

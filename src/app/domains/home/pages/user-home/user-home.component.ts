@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-user-home",
@@ -6,6 +7,8 @@ import { Component } from "@angular/core";
   styleUrls: ["./user-home.component.scss"],
 })
 export class UserHomeComponent {
+  constructor(private router: Router) {}
+
   public latestNews = [
     {
       id: "1",
@@ -26,5 +29,13 @@ export class UserHomeComponent {
 
   public getNumberRange(start: number, end: number): number[] {
     return Array.from({ length: end - start + 1 }, (_, index) => index + start);
+  }
+
+  public onClickMoreAboutUs(): void {
+    this.router.navigate(["/about-us"]);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
 }

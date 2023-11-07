@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { City, Route, RouteDto, Station, Transport } from "_api";
 import { validate } from "src/app/share/helpers/form.helper";
@@ -17,7 +17,7 @@ import { formatDate, getTime } from "src/app/share/helpers/date.helper";
   templateUrl: "./route-form.component.html",
   styleUrls: ["./route-form.component.scss"],
 })
-export class RouteFormComponent implements OnInit {
+export class RouteFormComponent implements OnInit, OnChanges {
   @Input() selectedRoute: Route;
   @Input() updateMode: boolean;
   @Output() cancelRouteForm = new EventEmitter<boolean>();
@@ -25,7 +25,8 @@ export class RouteFormComponent implements OnInit {
   @Select(TransportState.getAllTransport) public transports$: Observable<Transport[]>;
   @Select(StationState.getAllStation) public stations$: Observable<Station[]>;
   public routeForm: FormGroup;
-  public pickUpPointForm: FormArray;
+  public pickUpPointsForm: FormArray;
+  public dropOffPointsForm: FormArray;
   public minDate = new Date();
 
   constructor(
@@ -33,12 +34,24 @@ export class RouteFormComponent implements OnInit {
     private store: Store
   ) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.selectedRoute) {
+      console.log(changes.selectedRoute);
+
+      if (!this.updateMode) {
+        this.routeForm?.reset();
+        return;
+      }
+      if (this.selectedRoute) this.routeForm?.patchValue({ ...this.selectedRoute });
+    }
+  }
+
   ngOnInit(): void {
     if (this.store.selectSnapshot(TransportState.getAllTransport).length === 0)
       this.store.dispatch(new GetAllTransport());
     if (this.store.selectSnapshot(StationState.getAllStation).length === 0) this.store.dispatch(new GetAllStation());
 
-    this.initPickUpPointForm();
+    this.initPointsForm();
     this.initRouteForm();
   }
 
@@ -53,7 +66,9 @@ export class RouteFormComponent implements OnInit {
       toAt: this.fb.group({
         id: ["", Validators.required],
       }),
-      pickUpPoint: this.pickUpPointForm,
+      ndays: ["0", Validators.required],
+      pickUpPoints: this.pickUpPointsForm,
+      dropOffPoints: this.dropOffPointsForm,
       routeSchedules: ["", Validators.required],
       price: ["", Validators.required],
       transport: this.fb.group({
@@ -62,8 +77,9 @@ export class RouteFormComponent implements OnInit {
     });
   }
 
-  private initPickUpPointForm(): void {
-    this.pickUpPointForm = this.fb.array([]);
+  private initPointsForm(): void {
+    this.pickUpPointsForm = this.fb.array([]);
+    this.dropOffPointsForm = this.fb.array([]);
   }
 
   public get name(): FormControl {
@@ -86,8 +102,16 @@ export class RouteFormComponent implements OnInit {
     return this.routeForm.get("toAt") as FormGroup;
   }
 
-  public get pickUpPoint(): FormArray {
-    return this.routeForm.get("pickUpPoint") as FormArray;
+  public get ndays(): FormControl {
+    return this.routeForm.get("ndays") as FormControl;
+  }
+
+  public get pickUpPoints(): FormArray {
+    return this.routeForm.get("pickUpPoints") as FormArray;
+  }
+
+  public get dropOffPoints(): FormArray {
+    return this.routeForm.get("dropOffPoints") as FormArray;
   }
 
   public get routeSchedules(): FormControl {
@@ -102,8 +126,8 @@ export class RouteFormComponent implements OnInit {
     return this.routeForm.get("transport") as FormGroup;
   }
 
-  public getPickUpPointFormControl(index: number, controlName: string): FormControl {
-    const group = this.pickUpPointForm.controls.at(index) as FormGroup;
+  public getFormControlFromArray(formArray: FormArray, index: number, controlName: string): FormControl {
+    const group = formArray.controls.at(index) as FormGroup;
     return group.controls[controlName] as FormControl;
   }
 
@@ -111,17 +135,17 @@ export class RouteFormComponent implements OnInit {
     return formGroup.get(controlName) as FormControl;
   }
 
-  public deletePickUpPoint(index: number): void {
-    this.pickUpPointForm.removeAt(index);
+  public deleteFormControl(formArray: FormArray, index: number): void {
+    formArray.removeAt(index);
   }
 
-  public addNewPickUpPoint(): void {
-    const newPickUpPoint = this.fb.group({
-      name: ["", Validators.required],
+  public addNewPoint(formArray: FormArray): void {
+    const newPoint = this.fb.group({
+      address: ["", Validators.required],
       time: ["", Validators.required],
     });
 
-    this.pickUpPointForm.push(newPickUpPoint);
+    formArray.push(newPoint);
   }
 
   public submit(): void {
@@ -136,9 +160,14 @@ export class RouteFormComponent implements OnInit {
   }
 
   private convertDateTime(): RouteDto {
-    const updatedPickUpPoints = this.pickUpPoint.controls.map((pickUpPointGroup: AbstractControl) => ({
-      name: pickUpPointGroup.get("name").value,
-      time: getTime(pickUpPointGroup.get("time").value),
+    const updatedPickUpPoints = this.pickUpPoints.controls.map((pickUpPointsGroup: AbstractControl) => ({
+      address: pickUpPointsGroup.get("address").value,
+      time: getTime(pickUpPointsGroup.get("time").value),
+    }));
+
+    const updatedDropOffPoints = this.dropOffPoints.controls.map((dropOffPointsGroup: AbstractControl) => ({
+      address: dropOffPointsGroup.get("address").value,
+      time: getTime(dropOffPointsGroup.get("time").value),
     }));
 
     const updatedRouteSchedules = this.routeSchedules.value.map((schedule) => ({
@@ -150,7 +179,8 @@ export class RouteFormComponent implements OnInit {
       departAt: getTime(this.departAt.value),
       arriveAt: getTime(this.arriveAt.value),
       routeSchedules: updatedRouteSchedules,
-      pickUpPoint: updatedPickUpPoints,
+      pickUpPoints: updatedPickUpPoints,
+      dropOffPoints: updatedDropOffPoints,
     };
   }
 

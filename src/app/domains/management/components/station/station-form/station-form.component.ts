@@ -50,7 +50,10 @@ export class StationFormComponent implements OnInit, OnChanges {
       description: ["", Validators.required],
       district: ["", Validators.required],
       city: ["", Validators.required],
-      images: ["", Validators.required],
+      images: [
+        "",
+        // , Validators.required
+      ],
     });
     if (this.selectedStation) this.stationForm?.patchValue({ ...this.selectedStation });
   }

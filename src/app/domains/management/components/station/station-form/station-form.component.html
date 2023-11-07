@@ -37,7 +37,7 @@
             [filterBy]="'name'"
             class="full-width-dropdown"
             [ngClass]="{
-              'ng-invalid ng-dirty': validate(city) || city.invalid
+              'ng-invalid ng-dirty': validate(city)
             }"
           >
             <ng-template let-location pTemplate="selectedItem">

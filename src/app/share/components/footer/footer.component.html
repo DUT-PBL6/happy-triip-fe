@@ -69,19 +69,23 @@
     <div class="policy-list flex flex-column">
       <strong class="text-2xl font-medium">Policy</strong>
       <div class="policy-item">
-        <a><span class="label">Booking Policy</span></a>
+        <a (click)="onNavigate('/services/policy/booking-policy')">
+          <span class="label">Booking Policy</span>
+        </a>
       </div>
       <div class="policy-item">
-        <a><span class="label">Customer's Rights</span></a>
+        <a (click)="onNavigate('/services/policy/customer-rights')"><span class="label">Customer's Rights</span></a>
       </div>
       <div class="policy-item">
-        <a><span class="label">Privacy Policy</span></a>
+        <a (click)="onNavigate('/services/policy/privacy-policy')"><span class="label">Privacy Policy</span></a>
       </div>
       <div class="policy-item">
-        <a><span class="label">Baggage Regulations</span></a>
+        <a (click)="onNavigate('/services/policy/baggage-regulations')">
+          <span class="label">Baggage Regulations</span>
+        </a>
       </div>
       <div class="policy-item">
-        <a><span class="label">Frequently Asked Questions</span></a>
+        <a (click)="onNavigate('/services/policy/questions')"><span class="label">Frequently Asked Questions</span></a>
       </div>
     </div>
     <a href="http://online.gov.vn/Home/WebDetails/103473" target="_blank" rel="noopener noreferrer" class="logo">

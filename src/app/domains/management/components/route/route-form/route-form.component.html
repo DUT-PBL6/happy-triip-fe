@@ -10,7 +10,7 @@
             pInputText
             id="name"
             type="text"
-            placeholder="Enter transport name"
+            placeholder="Enter route name"
             class="w-full"
             formControlName="name"
             [ngClass]="{
@@ -44,7 +44,7 @@
         </div>
       </div>
       <!-- DEPART AT -->
-      <div class="depart-at col-6 py-2 flex flex-column">
+      <div class="depart-at col-4 py-2 flex flex-column">
         <label for="depart-at" class="block text-900 text-lg font-medium mb-2">Depart at*</label>
         <div class="input-container h-4rem flex flex-column">
           <p-calendar
@@ -65,7 +65,7 @@
         </div>
       </div>
       <!-- ARRIVE AT -->
-      <div class="arrive-at col-6 py-2 flex flex-column">
+      <div class="arrive-at col-4 py-2 flex flex-column">
         <label for="arrive-at" class="block text-900 text-lg font-medium mb-2">Arrive at*</label>
         <div class="input-container h-4rem flex flex-column">
           <p-calendar
@@ -82,6 +82,26 @@
           ></p-calendar>
           <small class="p-error" *ngIf="validate(arriveAt)">
             <strong>Arrive at is required</strong>
+          </small>
+        </div>
+      </div>
+      <!-- NDAYS -->
+      <div class="days col-4 py-2 flex flex-column">
+        <label for="days" class="block text-900 text-lg font-medium mb-2">Days*</label>
+        <div class="input-container h-4rem flex flex-column">
+          <p-inputNumber
+            formControlName="ndays"
+            mode="decimal"
+            [showButtons]="true"
+            [min]="0"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(ndays)
+            }"
+            styleClass="full-width"
+          ></p-inputNumber>
+
+          <small class="p-error" *ngIf="validate(ndays)">
+            <strong>Days is required</strong>
           </small>
         </div>
       </div>
@@ -205,21 +225,21 @@
       <div class="pickup-points col-12 py-2 flex flex-column">
         <label for="pickup-points" class="block text-900 text-lg font-medium mb-2">Pickup points</label>
         <div class="input-container">
-          <div formArrayName="pickUpPoint">
-            <div *ngFor="let group of pickUpPoint.controls; let i = index">
+          <div formArrayName="pickUpPoints">
+            <div *ngFor="let group of pickUpPoints.controls; let i = index">
               <div [formGroupName]="i" class="pickup-point-group flex align-items-center col-12 gap-3 px-0 pb-4">
                 <div class="flex flex-column gap-2 h-4rem">
                   <input
                     type="text"
                     pInputText
-                    formControlName="name"
-                    placeholder="Pickup point's name"
+                    formControlName="address"
+                    placeholder="Pickup point's address"
                     [ngClass]="{
-                      'ng-invalid ng-dirty': validate(getPickUpPointFormControl(i, 'name'))
+                      'ng-invalid ng-dirty': validate(getFormControlFromArray(pickUpPoints, i, 'address'))
                     }"
                   />
-                  <small class="p-error" *ngIf="validate(getPickUpPointFormControl(i, 'name'))">
-                    <strong>Pickup point's name is required</strong>
+                  <small class="p-error" *ngIf="validate(getFormControlFromArray(pickUpPoints, i, 'address'))">
+                    <strong>Pickup point's address is required</strong>
                   </small>
                 </div>
                 <div class="flex flex-column gap-2 h-4rem">
@@ -232,18 +252,18 @@
                     styleClass="w-full"
                     placeholder="Pickup point's time"
                     [ngClass]="{
-                      'ng-invalid ng-dirty': validate(getPickUpPointFormControl(i, 'time'))
+                      'ng-invalid ng-dirty': validate(getFormControlFromArray(pickUpPoints, i, 'time'))
                     }"
                   ></p-calendar>
-                  <small class="p-error" *ngIf="validate(getPickUpPointFormControl(i, 'time'))">
+                  <small class="p-error" *ngIf="validate(getFormControlFromArray(pickUpPoints, i, 'time'))">
                     <strong>Pickup point's time is required</strong>
                   </small>
                 </div>
                 <i
                   style="font-size: 1.5rem"
                   class="pi pi-trash p-error ml-2"
-                  (click)="deletePickUpPoint(i)"
-                  (keyup.enter)="deletePickUpPoint(i)"
+                  (click)="deleteFormControl(pickUpPoints, i)"
+                  (keyup.enter)="deleteFormControl(pickUpPoints, i)"
                   tabindex="0"
                 ></i>
               </div>
@@ -256,7 +276,65 @@
           severity="secondary"
           icon="pi pi-plus"
           iconPos="left"
-          (onClick)="addNewPickUpPoint()"
+          (onClick)="addNewPoint(pickUpPoints)"
+        ></p-button>
+      </div>
+      <!-- DROPOFF POINTS -->
+      <div class="dropoff-points col-12 py-2 flex flex-column">
+        <label for="dropoff-points" class="block text-900 text-lg font-medium mb-2">Drop off points</label>
+        <div class="input-container">
+          <div formArrayName="dropOffPoints">
+            <div *ngFor="let group of dropOffPoints.controls; let i = index">
+              <div [formGroupName]="i" class="dropoff-point-group flex align-items-center col-12 gap-3 px-0 pb-4">
+                <div class="flex flex-column gap-2 h-4rem">
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="address"
+                    placeholder="Drop off point's address"
+                    [ngClass]="{
+                      'ng-invalid ng-dirty': validate(getFormControlFromArray(dropOffPoints, i, 'address'))
+                    }"
+                  />
+                  <small class="p-error" *ngIf="validate(getFormControlFromArray(dropOffPoints, i, 'address'))">
+                    <strong>Drop off point's address is required</strong>
+                  </small>
+                </div>
+                <div class="flex flex-column gap-2 h-4rem">
+                  <p-calendar
+                    inputId="time"
+                    formControlName="time"
+                    [showTime]="true"
+                    [timeOnly]="true"
+                    hourFormat="24"
+                    styleClass="w-full"
+                    placeholder="Drop off point's time"
+                    [ngClass]="{
+                      'ng-invalid ng-dirty': validate(getFormControlFromArray(dropOffPoints, i, 'time'))
+                    }"
+                  ></p-calendar>
+                  <small class="p-error" *ngIf="validate(getFormControlFromArray(dropOffPoints, i, 'time'))">
+                    <strong>Drop off point's time is required</strong>
+                  </small>
+                </div>
+                <i
+                  style="font-size: 1.5rem"
+                  class="pi pi-trash p-error ml-2"
+                  (click)="deleteFormControl(dropOffPoints, i)"
+                  (keyup.enter)="deleteFormControl(dropOffPoints, i)"
+                  tabindex="0"
+                ></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p-button
+          label="Add New Drop Off Point"
+          styleClass="p-button-secondary p-button-outlined"
+          severity="secondary"
+          icon="pi pi-plus"
+          iconPos="left"
+          (onClick)="addNewPoint(dropOffPoints)"
         ></p-button>
       </div>
       <!-- ACTIONS -->

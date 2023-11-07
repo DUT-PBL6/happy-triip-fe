@@ -30,7 +30,13 @@ export class RouteManagementComponent extends BaseDestroyable {
   }
 
   public onSelectedRouteChange(route: Route): void {
-    this.currentRoute = route;
+    if (!route?.id) {
+      this.currentRoute = route;
+      return;
+    }
+    this.routeService.getRouteById$(route.id).subscribe((retrievedRoute) => {
+      this.currentRoute = retrievedRoute;
+    });
   }
 
   public onUpdateModeChange(isUpdateMode: boolean): void {
