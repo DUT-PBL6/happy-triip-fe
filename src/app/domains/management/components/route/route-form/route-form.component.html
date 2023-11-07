@@ -3,14 +3,14 @@
   <div class="form">
     <form [formGroup]="routeForm" (ngSubmit)="submit()" class="grid">
       <!-- NAME -->
-      <div class="name col-6 flex flex-column">
-        <label for="name" class="block text-900 text-lg font-medium mb-2">Name</label>
-        <div class="input-container">
+      <div class="name col-6 py-2 flex flex-column">
+        <label for="name" class="block text-900 text-lg font-medium mb-2">Name*</label>
+        <div class="input-container h-4rem">
           <input
             pInputText
             id="name"
             type="text"
-            placeholder="Enter transport name"
+            placeholder="Enter route name"
             class="w-full"
             formControlName="name"
             [ngClass]="{
@@ -22,8 +22,323 @@
           </small>
         </div>
       </div>
+      <!-- PRICE -->
+      <div class="price col-6 py-2 flex flex-column">
+        <label for="price" class="block text-900 text-lg font-medium mb-2">Price*</label>
+        <div class="input-container h-4rem">
+          <p-inputNumber
+            formControlName="price"
+            inputId="price"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+            placeholder="Price"
+            class="flex flex-1"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(price) || price.value === 0
+            }"
+          ></p-inputNumber>
+          <small class="p-error" *ngIf="validate(price) || price.value === 0">
+            <strong>Price is required</strong>
+          </small>
+        </div>
+      </div>
+      <!-- DEPART AT -->
+      <div class="depart-at col-4 py-2 flex flex-column">
+        <label for="depart-at" class="block text-900 text-lg font-medium mb-2">Depart at*</label>
+        <div class="input-container h-4rem flex flex-column">
+          <p-calendar
+            inputId="depart-at"
+            formControlName="departAt"
+            [showTime]="true"
+            [timeOnly]="true"
+            hourFormat="24"
+            styleClass="w-full"
+            placeholder="Select depart time"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(departAt)
+            }"
+          ></p-calendar>
+          <small class="p-error" *ngIf="validate(departAt)">
+            <strong>Depart at is required</strong>
+          </small>
+        </div>
+      </div>
+      <!-- ARRIVE AT -->
+      <div class="arrive-at col-4 py-2 flex flex-column">
+        <label for="arrive-at" class="block text-900 text-lg font-medium mb-2">Arrive at*</label>
+        <div class="input-container h-4rem flex flex-column">
+          <p-calendar
+            inputId="arrive-at"
+            formControlName="arriveAt"
+            [showTime]="true"
+            [timeOnly]="true"
+            hourFormat="24"
+            styleClass="w-full"
+            placeholder="Select arrive time"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(arriveAt)
+            }"
+          ></p-calendar>
+          <small class="p-error" *ngIf="validate(arriveAt)">
+            <strong>Arrive at is required</strong>
+          </small>
+        </div>
+      </div>
+      <!-- NDAYS -->
+      <div class="days col-4 py-2 flex flex-column">
+        <label for="days" class="block text-900 text-lg font-medium mb-2">Days*</label>
+        <div class="input-container h-4rem flex flex-column">
+          <p-inputNumber
+            formControlName="ndays"
+            mode="decimal"
+            [showButtons]="true"
+            [min]="0"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(ndays)
+            }"
+            styleClass="full-width"
+          ></p-inputNumber>
 
-      <div class="actions col-12 flex justify-content-end gap-2">
+          <small class="p-error" *ngIf="validate(ndays)">
+            <strong>Days is required</strong>
+          </small>
+        </div>
+      </div>
+      <!-- FROM AT -->
+      <div class="fromAt col-6 py-2 flex flex-column">
+        <label for="fromAt" class="block text-900 text-lg font-medium mb-2">From at*</label>
+        <div class="input-container h-4rem" formGroupName="fromAt">
+          <p-dropdown
+            [options]="stations$ | async"
+            formControlName="id"
+            optionLabel="name"
+            optionValue="id"
+            [showClear]="true"
+            placeholder="From"
+            [filter]="true"
+            [filterBy]="'name'"
+            class="full-width-dropdown"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(getFormControlFromGroup(fromAt, 'id'))
+            }"
+          >
+            <ng-template let-location pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-map-marker"></i>
+                <div>{{ location.name }}</div>
+              </div>
+            </ng-template>
+
+            <ng-template let-location pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-map-marker"></i>
+                <div>{{ location.name }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <small class="p-error" *ngIf="validate(getFormControlFromGroup(fromAt, 'id'))">
+            <strong>From at is required</strong>
+          </small>
+        </div>
+      </div>
+      <!-- TO AT -->
+      <div class="toAt col-6 py-2 flex flex-column">
+        <label for="toAt" class="block text-900 text-lg font-medium mb-2">To at*</label>
+        <div class="input-container h-4rem" formGroupName="toAt">
+          <p-dropdown
+            [options]="stations$ | async"
+            formControlName="id"
+            optionLabel="name"
+            optionValue="id"
+            [showClear]="true"
+            placeholder="From"
+            [filter]="true"
+            [filterBy]="'name'"
+            class="full-width-dropdown"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(getFormControlFromGroup(toAt, 'id'))
+            }"
+          >
+            <ng-template let-location pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-map-marker"></i>
+                <div>{{ location.name }}</div>
+              </div>
+            </ng-template>
+
+            <ng-template let-location pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-map-marker"></i>
+                <div>{{ location.name }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <small class="p-error" *ngIf="validate(getFormControlFromGroup(toAt, 'id'))">
+            <strong>To at is required</strong>
+          </small>
+        </div>
+      </div>
+      <!-- TRANSPORT -->
+      <div class="transport col-6 py-2 flex flex-column">
+        <label for="transport" class="block text-900 text-lg font-medium mb-2">Transport*</label>
+        <div class="input-container flex flex-column" formGroupName="transport">
+          <p-dropdown
+            [options]="transports$ | async"
+            formControlName="id"
+            optionLabel="name"
+            optionValue="id"
+            [showClear]="true"
+            placeholder="Select transport"
+            [filter]="true"
+            [filterBy]="'name'"
+            class="full-width-dropdown"
+          ></p-dropdown>
+          <small class="p-error" *ngIf="validate(getFormControlFromGroup(transport, 'id'))">
+            <strong>Transport is required</strong>
+          </small>
+        </div>
+      </div>
+      <!-- ROUTE SCHEDULES -->
+      <div class="route-schedules col-6 py-2 flex flex-column">
+        <label for="route-schedules" class="block text-900 text-lg font-medium mb-2">Route schedules*</label>
+        <div class="input-container h-4rem flex flex-column">
+          <p-calendar
+            formControlName="routeSchedules"
+            selectionMode="multiple"
+            [minDate]="minDate"
+            [readonlyInput]="true"
+            dateFormat="yy-mm-dd"
+            styleClass="w-full"
+            placeholder="Select route schedules"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(routeSchedules)
+            }"
+          ></p-calendar>
+
+          <small class="p-error" *ngIf="validate(routeSchedules)">
+            <strong>Route schedules is required</strong>
+          </small>
+        </div>
+      </div>
+      <!-- PICKUP POINTS -->
+      <div class="pickup-points col-12 py-2 flex flex-column">
+        <label for="pickup-points" class="block text-900 text-lg font-medium mb-2">Pickup points</label>
+        <div class="input-container">
+          <div formArrayName="pickUpPoints">
+            <div *ngFor="let group of pickUpPoints.controls; let i = index">
+              <div [formGroupName]="i" class="pickup-point-group flex align-items-center col-12 gap-3 px-0 pb-4">
+                <div class="flex flex-column gap-2 h-4rem">
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="address"
+                    placeholder="Pickup point's address"
+                    [ngClass]="{
+                      'ng-invalid ng-dirty': validate(getFormControlFromArray(pickUpPoints, i, 'address'))
+                    }"
+                  />
+                  <small class="p-error" *ngIf="validate(getFormControlFromArray(pickUpPoints, i, 'address'))">
+                    <strong>Pickup point's address is required</strong>
+                  </small>
+                </div>
+                <div class="flex flex-column gap-2 h-4rem">
+                  <p-calendar
+                    inputId="time"
+                    formControlName="time"
+                    [showTime]="true"
+                    [timeOnly]="true"
+                    hourFormat="24"
+                    styleClass="w-full"
+                    placeholder="Pickup point's time"
+                    [ngClass]="{
+                      'ng-invalid ng-dirty': validate(getFormControlFromArray(pickUpPoints, i, 'time'))
+                    }"
+                  ></p-calendar>
+                  <small class="p-error" *ngIf="validate(getFormControlFromArray(pickUpPoints, i, 'time'))">
+                    <strong>Pickup point's time is required</strong>
+                  </small>
+                </div>
+                <i
+                  style="font-size: 1.5rem"
+                  class="pi pi-trash p-error ml-2"
+                  (click)="deleteFormControl(pickUpPoints, i)"
+                  (keyup.enter)="deleteFormControl(pickUpPoints, i)"
+                  tabindex="0"
+                ></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p-button
+          label="Add New Pickup Point"
+          styleClass="p-button-secondary p-button-outlined"
+          severity="secondary"
+          icon="pi pi-plus"
+          iconPos="left"
+          (onClick)="addNewPoint(pickUpPoints)"
+        ></p-button>
+      </div>
+      <!-- DROPOFF POINTS -->
+      <div class="dropoff-points col-12 py-2 flex flex-column">
+        <label for="dropoff-points" class="block text-900 text-lg font-medium mb-2">Drop off points</label>
+        <div class="input-container">
+          <div formArrayName="dropOffPoints">
+            <div *ngFor="let group of dropOffPoints.controls; let i = index">
+              <div [formGroupName]="i" class="dropoff-point-group flex align-items-center col-12 gap-3 px-0 pb-4">
+                <div class="flex flex-column gap-2 h-4rem">
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="address"
+                    placeholder="Drop off point's address"
+                    [ngClass]="{
+                      'ng-invalid ng-dirty': validate(getFormControlFromArray(dropOffPoints, i, 'address'))
+                    }"
+                  />
+                  <small class="p-error" *ngIf="validate(getFormControlFromArray(dropOffPoints, i, 'address'))">
+                    <strong>Drop off point's address is required</strong>
+                  </small>
+                </div>
+                <div class="flex flex-column gap-2 h-4rem">
+                  <p-calendar
+                    inputId="time"
+                    formControlName="time"
+                    [showTime]="true"
+                    [timeOnly]="true"
+                    hourFormat="24"
+                    styleClass="w-full"
+                    placeholder="Drop off point's time"
+                    [ngClass]="{
+                      'ng-invalid ng-dirty': validate(getFormControlFromArray(dropOffPoints, i, 'time'))
+                    }"
+                  ></p-calendar>
+                  <small class="p-error" *ngIf="validate(getFormControlFromArray(dropOffPoints, i, 'time'))">
+                    <strong>Drop off point's time is required</strong>
+                  </small>
+                </div>
+                <i
+                  style="font-size: 1.5rem"
+                  class="pi pi-trash p-error ml-2"
+                  (click)="deleteFormControl(dropOffPoints, i)"
+                  (keyup.enter)="deleteFormControl(dropOffPoints, i)"
+                  tabindex="0"
+                ></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p-button
+          label="Add New Drop Off Point"
+          styleClass="p-button-secondary p-button-outlined"
+          severity="secondary"
+          icon="pi pi-plus"
+          iconPos="left"
+          (onClick)="addNewPoint(dropOffPoints)"
+        ></p-button>
+      </div>
+      <!-- ACTIONS -->
+      <div class="actions col-12 py-2 flex justify-content-end gap-2">
         <p-button
           label="Remove"
           styleClass="p-button-danger p-button-outlined"

@@ -57,13 +57,18 @@ export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
       type: ["", Validators.required],
       mapSeat: [
         [
-          [1, 0, 1],
-          [0, 1, 0],
+          [
+            [0, 0, 1],
+            [0, 1, 0],
+          ],
         ],
         Validators.required,
       ],
       seatTypes: this.seatTypesForm,
-      images: ["", Validators.required],
+      images: [
+        "",
+        // , Validators.required
+      ],
       utility: ["", Validators.required],
     });
     if (this.selectedTransport) this.transportForm?.patchValue({ ...this.selectedTransport });
@@ -89,9 +94,9 @@ export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
     this.seatTypesForm = this.fb.array(
       [
         this.fb.group({
-          name: ["", Validators.required],
-          description: ["", Validators.required],
-          price: ["", Validators.required],
+          name: ["Normal seat", Validators.required],
+          description: ["Normal seat", Validators.required],
+          price: [0, Validators.required],
         }),
       ],
       Validators.required

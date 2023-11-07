@@ -16,7 +16,11 @@ const routes: Routes = [
     children: [
       { path: "", redirectTo: "booking-confirmation", pathMatch: "full" },
       { path: "booking-confirmation", component: BookingConfirmationComponent },
-      { path: "profile-settings", component: ProfileSettingsComponent, canActivate: [AdminGuard] },
+      {
+        path: "profile-settings",
+        component: ProfileSettingsComponent,
+        canActivate: [AdminGuard],
+      },
       { path: "transport", component: TransportPageComponent },
       { path: "route", component: RouteManagementComponent, canActivate: [PartnerGuard] },
       { path: "poi-stations", component: PoiStationsComponent },

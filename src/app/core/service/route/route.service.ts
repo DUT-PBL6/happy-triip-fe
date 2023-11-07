@@ -28,6 +28,10 @@ export class RouteService {
     return this.apiService.api.routeGetAll().pipe(map((result: RoutePagingResult) => result.data));
   }
 
+  public getRouteById$(id: number): Observable<Route> {
+    return this.apiService.api.routeGetRouteById(id);
+  }
+
   public createRoute$(routeDto: RouteDto): Observable<Route> {
     return this.apiService.api.routeCreate(routeDto);
   }
