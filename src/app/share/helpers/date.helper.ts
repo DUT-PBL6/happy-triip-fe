@@ -34,3 +34,14 @@ export const formatDate = (dateString: string): string => {
   const date = dayjs(dateString);
   return date.format(DATE_FORMAT);
 };
+
+export const parseTimeStringToDate = (timeString: string): Date => {
+  const [hours, minutes, seconds] = timeString.split(":");
+
+  const currentTime = new Date();
+  currentTime.setUTCHours(Number(hours));
+  currentTime.setUTCMinutes(Number(minutes));
+  currentTime.setUTCSeconds(Number(seconds));
+
+  return currentTime;
+};

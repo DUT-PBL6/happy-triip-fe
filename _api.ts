@@ -1143,6 +1143,86 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags auth
+     * @name AuthControllerDenyAccountPartner
+     * @summary Deny partner
+     * @request POST:/api/auth/partner/deny/{id}
+     */
+    authDenyAccountPartner: (id: number, params: RequestParams = {}) =>
+      this.request<Partner, any>({
+        path: `/api/auth/partner/deny/${id}`,
+        method: 'POST',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerAcceptAccountPartner
+     * @summary Accept partner
+     * @request POST:/api/auth/partner/accept/{id}
+     */
+    authAcceptAccountPartner: (id: number, params: RequestParams = {}) =>
+      this.request<Partner, any>({
+        path: `/api/auth/partner/accept/${id}`,
+        method: 'POST',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerGetDetailPartner
+     * @summary Get detail of partner for view profile
+     * @request GET:/api/auth/partner/profile
+     */
+    authGetDetailPartner: (params: RequestParams = {}) =>
+      this.request<Partner, any>({
+        path: `/api/auth/partner/profile`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerGetAllPartnerPending
+     * @summary Get all partner pending
+     * @request GET:/api/auth/partner/pending
+     */
+    authGetAllPartnerPending: (params: RequestParams = {}) =>
+      this.request<Partner[], any>({
+        path: `/api/auth/partner/pending`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerGetPartnerById
+     * @summary Get partner by id
+     * @request GET:/api/auth/partner/{id}
+     */
+    authGetPartnerById: (id: number, params: RequestParams = {}) =>
+      this.request<Partner, any>({
+        path: `/api/auth/partner/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
      * @name AuthControllerGetAllPartner
      * @summary Get all partner
      * @request GET:/api/auth/partner
@@ -1169,70 +1249,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: 'PUT',
         body: data,
         type: ContentType.Json,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags auth
-     * @name AuthControllerGetPartnerById
-     * @summary Get partner by id
-     * @request GET:/api/auth/partner/{id}
-     */
-    authGetPartnerById: (id: number, params: RequestParams = {}) =>
-      this.request<Partner, any>({
-        path: `/api/auth/partner/${id}`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags auth
-     * @name AuthControllerGetAllPartnerPending
-     * @summary Get all partner pending
-     * @request GET:/api/auth/partner/pending
-     */
-    authGetAllPartnerPending: (params: RequestParams = {}) =>
-      this.request<Partner[], any>({
-        path: `/api/auth/partner/pending`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags auth
-     * @name AuthControllerDenyAccountPartner
-     * @summary Deny partner
-     * @request POST:/api/auth/partner/deny/{id}
-     */
-    authDenyAccountPartner: (id: number, params: RequestParams = {}) =>
-      this.request<Partner, any>({
-        path: `/api/auth/partner/deny/${id}`,
-        method: 'POST',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags auth
-     * @name AuthControllerAcceptAccountPartner
-     * @summary Accept partner
-     * @request POST:/api/auth/partner/accept/{id}
-     */
-    authAcceptAccountPartner: (id: number, params: RequestParams = {}) =>
-      this.request<Partner, any>({
-        path: `/api/auth/partner/accept/${id}`,
-        method: 'POST',
         format: 'json',
         ...params,
       }),
