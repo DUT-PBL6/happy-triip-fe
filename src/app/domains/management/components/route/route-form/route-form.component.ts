@@ -11,6 +11,7 @@ import { Observable } from "rxjs";
 import { StationState } from "src/app/core/service/station/station.state";
 import { GetAllStation } from "src/app/core/service/station/station.action";
 import { formatDate, getTime } from "src/app/share/helpers/date.helper";
+import { UpdateRouteResponse } from "../../../types/update-route-response";
 
 @Component({
   selector: "app-route-form",
@@ -18,7 +19,7 @@ import { formatDate, getTime } from "src/app/share/helpers/date.helper";
   styleUrls: ["./route-form.component.scss"],
 })
 export class RouteFormComponent implements OnInit, OnChanges {
-  @Input() selectedRoute: Route;
+  @Input() selectedRoute: Route | UpdateRouteResponse;
   @Input() updateMode: boolean;
   @Output() cancelRouteForm = new EventEmitter<boolean>();
   @Output() form = new EventEmitter<RouteDto>();
@@ -36,13 +37,13 @@ export class RouteFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedRoute) {
-      console.log(changes.selectedRoute);
-
       if (!this.updateMode) {
         this.routeForm?.reset();
         return;
       }
-      if (this.selectedRoute) this.routeForm?.patchValue({ ...this.selectedRoute });
+      if (this.selectedRoute) {
+        this.routeForm?.patchValue({ ...this.selectedRoute });
+      }
     }
   }
 
@@ -78,8 +79,45 @@ export class RouteFormComponent implements OnInit, OnChanges {
   }
 
   private initPointsForm(): void {
-    this.pickUpPointsForm = this.fb.array([]);
-    this.dropOffPointsForm = this.fb.array([]);
+    const pickUpPoints = this.selectedRoute?.pickUpPoints || [];
+    const dropOffPoints = this.selectedRoute?.dropOffPoints || [];
+
+    if (this.selectedRoute?.pickUpPoints.length > 0) {
+      this.pickUpPointsForm = this.fb.array(
+        pickUpPoints.map((point) =>
+          this.fb.group({
+            address: [point.address, Validators.required],
+            time: [point.time, Validators.required],
+          })
+        ),
+        Validators.required
+      );
+    } else {
+      this.pickUpPointsForm = this.fb.array([
+        this.fb.group({
+          address: ["", Validators.required],
+          time: ["", Validators.required],
+        }),
+      ]);
+    }
+    if (this.selectedRoute?.dropOffPoints.length > 0) {
+      this.dropOffPointsForm = this.fb.array(
+        dropOffPoints.map((point) =>
+          this.fb.group({
+            address: [point.address, Validators.required],
+            time: [point.time, Validators.required],
+          })
+        ),
+        Validators.required
+      );
+    } else {
+      this.dropOffPointsForm = this.fb.array([
+        this.fb.group({
+          address: ["", Validators.required],
+          time: ["", Validators.required],
+        }),
+      ]);
+    }
   }
 
   public get name(): FormControl {
