@@ -20,13 +20,13 @@ export const getTime = (dateInput: string): string => {
   return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
 };
 
-export const getHoursDifference = (departAt: string, arriveAt: string) => {
+export const getHoursDifference = (departAt: string, arriveAt: string): number => {
   const departTime = dayjs(departAt);
   const arriveTime = dayjs(arriveAt);
 
   const duration = dayjs.duration(arriveTime.diff(departTime));
-  const hoursDifference = duration.hours();
 
+  const hoursDifference = duration.asHours();
   return hoursDifference;
 };
 

@@ -28,6 +28,10 @@ export class RouteService {
     return this.apiService.api.routeGetAllRoutesOfPartner();
   }
 
+  public getPendingRoutes$(): Observable<Route[]> {
+    return this.apiService.api.routeGetRoutesPending();
+  }
+
   public getRouteById$(id: number): Observable<Route> {
     return this.apiService.api.routeGetRouteById(id);
   }

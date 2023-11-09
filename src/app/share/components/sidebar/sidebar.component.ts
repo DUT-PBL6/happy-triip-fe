@@ -75,10 +75,8 @@ export class SidebarComponent implements OnInit {
     if (isEmployee) {
       if (!isAdmin) {
         this.items.splice(1, 1);
-        this.items.splice(this.items.length - 2, 1);
         return;
       }
-      this.items.splice(this.items.length - 1, 1);
       return;
     }
     if (isPartner) {
