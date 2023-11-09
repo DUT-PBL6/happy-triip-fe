@@ -22,7 +22,7 @@ const routes: Routes = [
         canActivate: [AdminGuard],
       },
       { path: "transport", component: TransportPageComponent },
-      { path: "route", component: RouteManagementComponent, canActivate: [PartnerGuard] },
+      { path: "route", component: RouteManagementComponent },
       { path: "poi-stations", component: PoiStationsComponent },
     ],
   },

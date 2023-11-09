@@ -1,15 +1,31 @@
-<div class="route-container">
-  <app-route-listbox
-    (selectedRoute)="onSelectedRouteChange($event)"
-    (isUpdateMode)="onUpdateModeChange($event)"
-    (isRouteFormVisible)="onFormVisibleChange($event)"
-  ></app-route-listbox>
-  <app-route-form
-    *mcRerender="isSelectedRouteChangeTrigged && isFetchDone"
-    class="w-full"
-    [selectedRoute]="currentRoute"
-    [updateMode]="isUpdateMode"
-    (cancelRouteForm)="cancelRouteForm($event)"
-    (form)="handleRouteForm($event)"
-  ></app-route-form>
-</div>
+<ng-container *ngIf="isEmployee; else notEmployee">
+  <ng-container *ngIf="pendingRoutes$ | async as pendingRoutes">
+    <div class="card surface-0 p-4">
+      <h2 class="text-center mb-2">Pending route list</h2>
+      <div class="flex flex-wrap">
+        <ng-container *ngFor="let route of pendingRoutes">
+          <div class="col-12 lg:col-6 xl:col-4">
+            <app-pending-route [route]="route"></app-pending-route>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-template #notEmployee>
+  <div class="route-container">
+    <app-route-listbox
+      (selectedRoute)="onSelectedRouteChange($event)"
+      (isUpdateMode)="onUpdateModeChange($event)"
+      (isRouteFormVisible)="onFormVisibleChange($event)"
+    ></app-route-listbox>
+    <app-route-form
+      *mcRerender="isSelectedRouteChangeTrigged && isFetchDone"
+      class="w-full"
+      [selectedRoute]="currentRoute"
+      [updateMode]="isUpdateMode"
+      (cancelRouteForm)="cancelRouteForm($event)"
+      (form)="handleRouteForm($event)"
+    ></app-route-form>
+  </div>
+</ng-template>

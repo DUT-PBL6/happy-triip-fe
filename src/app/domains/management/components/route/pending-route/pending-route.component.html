@@ -1,0 +1,43 @@
+<div class="card mb-0 p-4 cursor-pointer hover:bg-green-50">
+  <div class="flex flex-column mb-3">
+    <h5 class="block text-primary font-bold mb-3 white-space-nowrap overflow-hidden text-overflow-ellipsis w-full">
+      {{ route.name }}
+    </h5>
+    <!-- Main content -->
+    <div class="route-detail">
+      <div class="stations flex flex-column gap-1">
+        <div class="departure flex align-items-center">
+          <i class="pi pi-map-marker"></i>
+          <div class="departure__time">
+            {{ getTime(parseTimeStringToDateString(route.departAt)) }}
+          </div>
+          <div class="dot"></div>
+          <div class="departure__name">{{ this.route.fromAt["name"] }}</div>
+        </div>
+        <div class="time-estimate flex gap-3 align-items-center">
+          <div class="dashed"></div>
+          <span>{{ getHoursDifference(route.departAt, route.arriveAt) }} hour(s) ride</span>
+          <div class="dot"></div>
+          <div class="flex flex-column gap-1">
+            <div class="partner">Operated by {{ route.partner["name"] }}</div>
+            <div>({{ route.partner["email"] }})</div>
+          </div>
+        </div>
+        <div class="arrive flex align-items-center">
+          <i class="pi pi-map-marker"></i>
+          <div class="arrive__time">
+            {{ getTime(parseTimeStringToDateString(route.arriveAt)) }}
+          </div>
+          <div class="dot"></div>
+          <div class="arrive__name">{{ this.route.toAt["name"] }}</div>
+        </div>
+      </div>
+    </div>
+    <!--  -->
+  </div>
+  <h5 class="text-right">
+    Price:
+    <span class="text-primary">{{ route.price }}</span>
+    USD
+  </h5>
+</div>

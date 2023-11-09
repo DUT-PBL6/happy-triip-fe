@@ -1,25 +1,29 @@
-import { Component } from "@angular/core";
-import { Store } from "@ngxs/store";
+import { Component, OnInit } from "@angular/core";
+import { Select, Store } from "@ngxs/store";
 import { Route, RouteDto, RouteResponse } from "_api";
 import { Observable, takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
-import { CreateRoute, UpdateRoute } from "src/app/core/service/route/route.action";
+import { CreateRoute, GetAllPendingRoute, UpdateRoute } from "src/app/core/service/route/route.action";
 import { RouteService } from "src/app/core/service/route/route.service";
 import { ToastService } from "src/app/core/service/toast/toast.service";
 import { parseTimeStringToDate } from "src/app/share/helpers/date.helper";
 import { UpdateRouteResponse } from "../../types/update-route-response";
+import cacheService from "src/lib/cache-service";
+import { RouteState } from "src/app/core/service/route/route.state";
 
 @Component({
   selector: "app-route-management",
   templateUrl: "./route-management.component.html",
   styleUrls: ["./route-management.component.scss"],
 })
-export class RouteManagementComponent extends BaseDestroyable {
+export class RouteManagementComponent extends BaseDestroyable implements OnInit {
   public currentRoute: Route | UpdateRouteResponse;
   public isRouteFormVisible = false;
   public isUpdateMode = false;
   public isSelectedRouteChangeTrigged = 0;
   public isFetchDone = true;
+  public isEmployee = false;
+  @Select(RouteState.getAllPendingRoute) public pendingRoutes$: Observable<Route[]>;
 
   constructor(
     private routeService: RouteService,
@@ -27,6 +31,14 @@ export class RouteManagementComponent extends BaseDestroyable {
     private store: Store
   ) {
     super();
+  }
+
+  ngOnInit(): void {
+    this.isEmployee = Object(cacheService.getUserInfo()).userRole === "EMPLOYEE";
+    if (this.isEmployee) {
+      if (this.store.selectSnapshot(RouteState.getAllPendingRoute).length === 0)
+        this.store.dispatch(new GetAllPendingRoute());
+    }
   }
 
   public cancelRouteForm(isCancel: boolean): void {
