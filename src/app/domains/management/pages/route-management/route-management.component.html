@@ -5,7 +5,7 @@
     (isRouteFormVisible)="onFormVisibleChange($event)"
   ></app-route-listbox>
   <app-route-form
-    *mcRerender="isSelectedRouteChangeTrigged"
+    *mcRerender="isSelectedRouteChangeTrigged && isFetchDone"
     class="w-full"
     [selectedRoute]="currentRoute"
     [updateMode]="isUpdateMode"

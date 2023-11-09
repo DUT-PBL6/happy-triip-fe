@@ -361,13 +361,6 @@ export interface RouteDto {
   transport: Transport;
 }
 
-export interface RoutePagingResult {
-  total: number;
-  skip: number;
-  take: number;
-  data: Route[];
-}
-
 export interface AuthCredentialsDto {
   username: string;
   password: string;
@@ -816,7 +809,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags system-config
      * @name SystemConfigControllerGetAll
-     * @request GET:/api/systemconfig
+     * @request GET:/api/systemconfig/all
      */
     systemConfigGetAll: (
       query?: {
@@ -832,7 +825,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<SystemConfigPagingResult, any>({
-        path: `/api/systemconfig`,
+        path: `/api/systemconfig/all`,
         method: 'GET',
         query: query,
         format: 'json',
@@ -917,6 +910,53 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Route
+     * @name RouteControllerGetAllRoutesOfPartner
+     * @request GET:/api/route
+     */
+    routeGetAllRoutesOfPartner: (params: RequestParams = {}) =>
+      this.request<Route[], any>({
+        path: `/api/route`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerCreate
+     * @request POST:/api/route
+     */
+    routeCreate: (data: RouteDto, params: RequestParams = {}) =>
+      this.request<Route, any>({
+        path: `/api/route`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerGetAllRoutesByPartnerId
+     * @request GET:/api/route/partner/{id}
+     */
+    routeGetAllRoutesByPartnerId: (id: number, params: RequestParams = {}) =>
+      this.request<Route[], any>({
+        path: `/api/route/partner/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
      * @name RouteControllerGetRoutesPending
      * @request GET:/api/route/pending
      */
@@ -949,12 +989,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Route
-     * @name RouteControllerGetRouteById
-     * @request GET:/api/route/{id}
+     * @name RouteControllerGetRouteByIdAndDate
+     * @request GET:/api/route/{id}/date/{date}
      */
-    routeGetRouteById: (id: number, params: RequestParams = {}) =>
+    routeGetRouteByIdAndDate: (id: number, date: string, params: RequestParams = {}) =>
       this.request<Route, any>({
-        path: `/api/route/${id}`,
+        path: `/api/route/${id}/date/${date}`,
         method: 'GET',
         format: 'json',
         ...params,
@@ -981,58 +1021,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Route
-     * @name RouteControllerGetRouteByIdAndDate
-     * @request GET:/api/route/{id}/date/{date}
+     * @name RouteControllerGetRouteById
+     * @request GET:/api/route/{id}
      */
-    routeGetRouteByIdAndDate: (id: number, date: string, params: RequestParams = {}) =>
+    routeGetRouteById: (id: number, params: RequestParams = {}) =>
       this.request<Route, any>({
-        path: `/api/route/${id}/date/${date}`,
+        path: `/api/route/${id}`,
         method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerCreate
-     * @request POST:/api/route
-     */
-    routeCreate: (data: RouteDto, params: RequestParams = {}) =>
-      this.request<Route, any>({
-        path: `/api/route`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerGetAll
-     * @request GET:/api/route
-     */
-    routeGetAll: (
-      query?: {
-        /** Order */
-        order?: any;
-        /** Where filter */
-        where?: any;
-        /** Skip */
-        skip?: number;
-        /** Page size */
-        take?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<RoutePagingResult, any>({
-        path: `/api/route`,
-        method: 'GET',
-        query: query,
         format: 'json',
         ...params,
       }),
@@ -1327,34 +1322,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Station
-     * @name StationControllerGetAll
-     * @request GET:/api/station
-     */
-    stationGetAll: (
-      query?: {
-        /** Order */
-        order?: any;
-        /** Where filter */
-        where?: any;
-        /** Skip */
-        skip?: number;
-        /** Page size */
-        take?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<StationPagingResult, any>({
-        path: `/api/station`,
-        method: 'GET',
-        query: query,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Station
      * @name StationControllerUpdateById
      * @summary Update station
      * @request PUT:/api/station/{id}
@@ -1396,6 +1363,34 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<Station, any>({
         path: `/api/station/${id}`,
         method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Station
+     * @name StationControllerGetAll
+     * @request GET:/api/station/all
+     */
+    stationGetAll: (
+      query?: {
+        /** Order */
+        order?: any;
+        /** Where filter */
+        where?: any;
+        /** Skip */
+        skip?: number;
+        /** Page size */
+        take?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<StationPagingResult, any>({
+        path: `/api/station/all`,
+        method: 'GET',
+        query: query,
         format: 'json',
         ...params,
       }),

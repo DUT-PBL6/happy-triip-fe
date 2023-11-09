@@ -36,6 +36,9 @@ export class RouteFormComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.initPointsForm();
+    this.initRouteForm();
+
     if (changes.selectedRoute) {
       if (!this.updateMode) {
         this.routeForm?.reset();
@@ -51,9 +54,6 @@ export class RouteFormComponent implements OnInit, OnChanges {
     if (this.store.selectSnapshot(TransportState.getAllTransport).length === 0)
       this.store.dispatch(new GetAllTransport());
     if (this.store.selectSnapshot(StationState.getAllStation).length === 0) this.store.dispatch(new GetAllStation());
-
-    this.initPointsForm();
-    this.initRouteForm();
   }
 
   private initRouteForm(): void {
@@ -93,12 +93,7 @@ export class RouteFormComponent implements OnInit, OnChanges {
         Validators.required
       );
     } else {
-      this.pickUpPointsForm = this.fb.array([
-        this.fb.group({
-          address: ["", Validators.required],
-          time: ["", Validators.required],
-        }),
-      ]);
+      this.pickUpPointsForm = this.fb.array([]);
     }
     if (this.selectedRoute?.dropOffPoints.length > 0) {
       this.dropOffPointsForm = this.fb.array(
@@ -111,12 +106,7 @@ export class RouteFormComponent implements OnInit, OnChanges {
         Validators.required
       );
     } else {
-      this.dropOffPointsForm = this.fb.array([
-        this.fb.group({
-          address: ["", Validators.required],
-          time: ["", Validators.required],
-        }),
-      ]);
+      this.dropOffPointsForm = this.fb.array([]);
     }
   }
 
