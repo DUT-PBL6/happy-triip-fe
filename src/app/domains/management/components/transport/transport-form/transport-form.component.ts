@@ -11,7 +11,7 @@ import { validate } from "src/app/share/helpers/form.helper";
   templateUrl: "./transport-form.component.html",
   styleUrls: ["./transport-form.component.scss"],
 })
-export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
+export class TransportFormComponent implements OnInit, OnChanges {
   @Input() selectedTransport: Transport;
   @Input() updateMode: boolean;
   @Output() cancelTransportForm = new EventEmitter<boolean>();
@@ -28,10 +28,6 @@ export class TransportFormComponent implements OnInit, OnChanges, OnDestroy {
     private fb: FormBuilder,
     private translate: TranslateService
   ) {}
-
-  ngOnDestroy(): void {
-    console.log("Destroying loop");
-  }
 
   ngOnInit(): void {
     this.initVehicleType();

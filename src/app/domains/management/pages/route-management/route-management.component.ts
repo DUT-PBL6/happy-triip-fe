@@ -19,6 +19,7 @@ export class RouteManagementComponent extends BaseDestroyable {
   public isRouteFormVisible = false;
   public isUpdateMode = false;
   public isSelectedRouteChangeTrigged = 0;
+  public isFetchDone = true;
 
   constructor(
     private routeService: RouteService,
@@ -33,8 +34,11 @@ export class RouteManagementComponent extends BaseDestroyable {
   }
 
   public onSelectedRouteChange(route: Route): void {
+    this.isFetchDone = false;
+
     if (!route?.id) {
       this.currentRoute = route;
+      this.isFetchDone = true;
       return;
     }
     this.routeService.getRouteById$(route.id).subscribe((retrievedRoute: Route) => {
@@ -52,6 +56,7 @@ export class RouteManagementComponent extends BaseDestroyable {
           time: new Date(parseTimeStringToDate(point.time)),
         })),
       };
+      this.isFetchDone = true;
     });
   }
 

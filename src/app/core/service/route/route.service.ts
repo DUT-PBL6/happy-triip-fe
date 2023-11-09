@@ -1,4 +1,4 @@
-import { RouteDto, RoutePagingResult } from "./../../../../../_api";
+import { RouteDto } from "./../../../../../_api";
 import { Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
 import { HttpClient } from "@angular/common/http";
@@ -25,7 +25,7 @@ export class RouteService {
   }
 
   public getRoutes$(): Observable<Route[]> {
-    return this.apiService.api.routeGetAll().pipe(map((result: RoutePagingResult) => result.data));
+    return this.apiService.api.routeGetAllRoutesOfPartner();
   }
 
   public getRouteById$(id: number): Observable<Route> {
