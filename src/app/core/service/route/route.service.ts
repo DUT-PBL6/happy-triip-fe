@@ -43,4 +43,12 @@ export class RouteService {
   public updateRoute$(id: number, routeDto: RouteDto): Observable<Route> {
     return this.apiService.api.routeUpdateById(id, routeDto);
   }
+
+  public acceptRoute$(id: number): Observable<Route> {
+    return this.apiService.api.routeAcceptRoute(id);
+  }
+
+  public denyRoute$(id: number): Observable<Route> {
+    return this.apiService.api.routeDenyRoute(id);
+  }
 }
