@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
-import { Route, RouteDto, RouteResponse } from "_api";
-import { Observable, takeUntil } from "rxjs";
+import { Route, RouteDto, RouteResponse, Station } from "_api";
+import { Observable, combineLatest, map, switchMap, takeUntil, tap } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
 import { CreateRoute, GetAllPendingRoute, UpdateRoute } from "src/app/core/service/route/route.action";
 import { RouteService } from "src/app/core/service/route/route.service";
@@ -10,6 +10,10 @@ import { parseTimeStringToDate } from "src/app/share/helpers/date.helper";
 import { UpdateRouteResponse } from "../../types/update-route-response";
 import cacheService from "src/lib/cache-service";
 import { RouteState } from "src/app/core/service/route/route.state";
+import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
+import { StationState } from "src/app/core/service/station/station.state";
+import { GetAllStation } from "src/app/core/service/station/station.action";
+import { PendingRouteDetailComponent } from "../../components/route/pending-route-detail/pending-route-detail.component";
 
 @Component({
   selector: "app-route-management",
@@ -23,14 +27,38 @@ export class RouteManagementComponent extends BaseDestroyable implements OnInit 
   public isSelectedRouteChangeTrigged = 0;
   public isFetchDone = true;
   public isEmployee = false;
+  public ref: DynamicDialogRef | undefined;
   @Select(RouteState.getAllPendingRoute) public pendingRoutes$: Observable<Route[]>;
 
   constructor(
     private routeService: RouteService,
     private toastService: ToastService,
-    private store: Store
+    private store: Store,
+    public dialogService: DialogService
   ) {
     super();
+  }
+
+  public onPendingRouteClick(route: Route): void {
+    this.routeService
+      .getRouteById$(route.id)
+      .pipe(
+        takeUntil(this.destroy$),
+        map((routeDetail) => ({
+          ...routeDetail,
+          fromAt: route.fromAt,
+          toAt: route.toAt,
+          partner: route.partner,
+        }))
+      )
+      .subscribe((routeDetails) => {
+        this.ref = this.dialogService.open(PendingRouteDetailComponent, {
+          data: { routeDetails },
+          header: "Pending route details",
+          width: "70%",
+          contentStyle: { overflow: "auto" },
+        });
+      });
   }
 
   ngOnInit(): void {
@@ -38,6 +66,7 @@ export class RouteManagementComponent extends BaseDestroyable implements OnInit 
     if (this.isEmployee) {
       if (this.store.selectSnapshot(RouteState.getAllPendingRoute).length === 0)
         this.store.dispatch(new GetAllPendingRoute());
+      if (this.store.selectSnapshot(StationState.getAllStation).length === 0) this.store.dispatch(new GetAllStation());
     }
   }
 

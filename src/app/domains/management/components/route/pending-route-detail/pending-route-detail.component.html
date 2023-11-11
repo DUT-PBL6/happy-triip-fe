@@ -1,0 +1,116 @@
+<div class="route-details-container flex flex-column gap-4">
+  <h3 class="text-primary text-center font-bold white-space-nowrap overflow-hidden text-overflow-ellipsis w-full">
+    {{ route.name }}
+  </h3>
+  <div class="route-detail flex flex-column gap-3">
+    <div class="flex justify-content-between flex-column gap-2 md:flex-row md:gap-0">
+      <div class="stations flex flex-column gap-1">
+        <div class="departure flex align-items-center text-lg">
+          <i class="pi pi-map-marker"></i>
+          <div class="departure__time">
+            {{ getTime(parseTimeStringToDateString(route.departAt)) }}
+          </div>
+          <div class="dot"></div>
+          <div class="departure__name white-space-nowrap overflow-hidden text-overflow-ellipsis w-full">
+            {{ this.route.fromAt["name"] }}
+          </div>
+        </div>
+        <div class="time-estimate flex gap-3 align-items-center text-base">
+          <div class="dashed"></div>
+          <span>{{ getHoursDifference(route.departAt, route.arriveAt) }} hour(s) ride</span>
+          <div class="dot"></div>
+          <div class="flex flex-column gap-1">
+            <div class="partner">Operated by {{ route.partner["name"] }} ({{ route.partner["email"] }})</div>
+          </div>
+        </div>
+
+        <div class="arrive flex align-items-center text-lg">
+          <i class="pi pi-map-marker"></i>
+          <div class="arrive__time">
+            {{ getTime(parseTimeStringToDateString(route.arriveAt)) }}
+          </div>
+          <div class="dot"></div>
+          <div class="arrive__name white-space-nowrap overflow-hidden text-overflow-ellipsis w-full">
+            {{ this.route.toAt["name"] }}
+          </div>
+        </div>
+      </div>
+      <div class="price text-lg md:text-3xl flex align-items-center">
+        <i class="pi pi-money-bill"></i>
+        <div class="flex gap-1">
+          <span>Price:</span>
+          <div class="text-base font-normal md:text-3xl md:font-medium">{{ route.price }} USD</div>
+        </div>
+      </div>
+    </div>
+    <div class="route-schedules text-lg flex align-items-center">
+      <i class="pi pi-calendar"></i>
+      <div>Route schedules:</div>
+      <ng-container *ngFor="let schedule of route.routeSchedules; index as i">
+        <div class="text-base font-normal">
+          {{ schedule.date }}
+          <span *ngIf="i !== route.routeSchedules.length - 1" class="mr-1">,</span>
+        </div>
+      </ng-container>
+    </div>
+    <div class="transport text-lg flex align-items-center">
+      <i class="pi pi-car"></i>
+      <div>Transport:</div>
+      <div class="text-base font-normal">
+        {{ route.transport.name }} ({{ "share.vehicleType." + route.transport["type"] | translate }})
+      </div>
+    </div>
+
+    <div class="tables flex gap-4">
+      <div class="flex-1">
+        <p-table [value]="route.pickUpPoints" styleClass="p-datatable-gridlines p-datatable-sm">
+          <ng-template pTemplate="caption">Pick up points</ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 50%">Time</th>
+              <th style="width: 50%">Address</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-point>
+            <tr>
+              <td>{{ getTime(parseTimeStringToDateString(point.time)) }}</td>
+              <td>{{ point.address }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="flex-1">
+        <p-table [value]="route.dropOffPoints" styleClass="p-datatable-gridlines p-datatable-sm">
+          <ng-template pTemplate="caption">Drop off points</ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 50%">Time</th>
+              <th style="width: 50%">Address</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-point>
+            <tr>
+              <td>{{ getTime(parseTimeStringToDateString(point.time)) }}</td>
+              <td>{{ point.address }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+  <div class="actions flex justify-content-end gap-2">
+    <p-confirmPopup></p-confirmPopup>
+    <p-button
+      icon="pi pi-times"
+      label="Deny"
+      styleClass="p-button-outlined p-button-danger"
+      (onClick)="handleRouteAction($event, false)"
+    ></p-button>
+    <p-button
+      icon="pi pi-check"
+      label="Accept"
+      styleClass="p-button-outlined"
+      (onClick)="handleRouteAction($event, true)"
+    ></p-button>
+  </div>
+</div>

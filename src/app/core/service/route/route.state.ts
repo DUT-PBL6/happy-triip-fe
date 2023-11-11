@@ -3,7 +3,7 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Route } from "_api";
 import { RouteService } from "./route.service";
 import { Observable, tap } from "rxjs";
-import { CreateRoute, GetAllPendingRoute, GetAllRoute, UpdateRoute } from "./route.action";
+import { AcceptRoute, CreateRoute, DenyRoute, GetAllPendingRoute, GetAllRoute, UpdateRoute } from "./route.action";
 
 interface IRouteState {
   routes: Route[];
@@ -42,7 +42,7 @@ export class RouteState {
   }
 
   @Action(GetAllPendingRoute)
-  public getAllPendingRoute$$(ctx: StateContext<IRouteState>): Observable<Route[]> {
+  public getAllPendingRoute$(ctx: StateContext<IRouteState>): Observable<Route[]> {
     ctx.patchState({ pendingRoutes: [] });
     return this.routeService.getPendingRoutes$().pipe(
       tap({
@@ -70,6 +70,16 @@ export class RouteState {
     ctx.setState({
       ...state,
       routes: updatedRoutes,
+    });
+  }
+
+  @Action([AcceptRoute, DenyRoute])
+  public updatePendingRoutes$(ctx: StateContext<IRouteState>, action: AcceptRoute | DenyRoute): void {
+    const state = ctx.getState();
+    const updatedPendingRoutes = state.pendingRoutes.filter((route) => route.id !== action.route.id);
+    ctx.setState({
+      ...state,
+      pendingRoutes: updatedPendingRoutes,
     });
   }
 }

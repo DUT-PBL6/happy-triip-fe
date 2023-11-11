@@ -5,7 +5,7 @@
       <div class="flex flex-wrap">
         <ng-container *ngFor="let route of pendingRoutes">
           <div class="col-12 lg:col-6 xl:col-4">
-            <app-pending-route [route]="route"></app-pending-route>
+            <app-pending-route [route]="route" (click)="onPendingRouteClick(route)"></app-pending-route>
           </div>
         </ng-container>
       </div>
