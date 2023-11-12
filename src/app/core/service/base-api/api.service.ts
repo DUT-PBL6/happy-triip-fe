@@ -5,17 +5,20 @@ import CodeMessage from "src/lib/http-client/code-message";
 import { ToastService } from "../toast/toast.service";
 import { Injectable } from "@angular/core";
 import { LoadingService } from "../loading/loading.service";
+import { Store } from "@ngxs/store";
+import { ToggleProgressSpinner } from "../loading/loading.action";
 
 @Injectable({ providedIn: "root" })
 export class ApiService extends Api<any> {
   constructor(
     protected toastService: ToastService,
-    protected loadingService: LoadingService
+    protected loadingService: LoadingService,
+    protected store: Store
   ) {
     super({ baseURL: environment.apiUrl });
     this.instance.interceptors.request.use(
       (configOriginal) => {
-        this.loadingService.startProgress();
+        this.onRequest();
         const config = configOriginal;
         const accessToken = cacheService.getValue("accessToken");
         if (accessToken) {
@@ -26,18 +29,18 @@ export class ApiService extends Api<any> {
         return config;
       },
       (error) => {
-        this.loadingService.stopProgress();
+        this.onFinalize();
         this.toastService.showError("Error", error.message);
         Promise.reject(error);
       }
     );
     this.instance.interceptors.response.use(
       (response) => {
-        this.loadingService.stopProgress();
+        this.onFinalize();
         return response;
       },
       (error) => {
-        this.loadingService.stopProgress();
+        this.onFinalize();
         if (error?.response.status === 401) {
           cacheService.setValue({
             accessToken: undefined,
@@ -56,5 +59,19 @@ export class ApiService extends Api<any> {
         this.toastService.showError("Error", msg);
       }
     );
+  }
+
+  private onRequest(): void {
+    this.store.dispatch(new ToggleProgressSpinner(true));
+    if (this.loadingService) {
+      this.loadingService.startProgress();
+    }
+  }
+
+  private onFinalize(): void {
+    this.store.dispatch(new ToggleProgressSpinner(false));
+    if (this.loadingService) {
+      this.loadingService.stopProgress();
+    }
   }
 }
