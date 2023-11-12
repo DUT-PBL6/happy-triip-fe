@@ -4,13 +4,18 @@ import cacheService from "src/lib/cache-service";
 import CodeMessage from "src/lib/http-client/code-message";
 import { ToastService } from "../toast/toast.service";
 import { Injectable } from "@angular/core";
+import { LoadingService } from "../loading/loading.service";
 
 @Injectable({ providedIn: "root" })
 export class ApiService extends Api<any> {
-  constructor(protected toastService: ToastService) {
+  constructor(
+    protected toastService: ToastService,
+    protected loadingService: LoadingService
+  ) {
     super({ baseURL: environment.apiUrl });
     this.instance.interceptors.request.use(
       (configOriginal) => {
+        this.loadingService.startProgress();
         const config = configOriginal;
         const accessToken = cacheService.getValue("accessToken");
         if (accessToken) {
@@ -21,13 +26,18 @@ export class ApiService extends Api<any> {
         return config;
       },
       (error) => {
+        this.loadingService.stopProgress();
         this.toastService.showError("Error", error.message);
         Promise.reject(error);
       }
     );
     this.instance.interceptors.response.use(
-      (response) => response,
+      (response) => {
+        this.loadingService.stopProgress();
+        return response;
+      },
       (error) => {
+        this.loadingService.stopProgress();
         if (error?.response.status === 401) {
           cacheService.setValue({
             accessToken: undefined,
