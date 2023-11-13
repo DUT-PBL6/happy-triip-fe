@@ -1,9 +1,8 @@
-import { RouteDto } from "./../../../../../_api";
+import { RouteDto, RouteSearchResponse, SearchRouteDto } from "./../../../../../_api";
 import { Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { PopularRoute } from "src/app/domains/home/types/popular-route.type";
-import { RouteInfo } from "src/app/domains/booking/types/route-info.type";
 import { Route } from "_api";
 import { ApiService } from "../base-api/api.service";
 
@@ -19,9 +18,8 @@ export class RouteService {
     return this.http.get<PopularRoute[]>("https://mocki.io/v1/be8ed4c5-de67-4ef7-8c64-6ade52a01d0b");
   }
 
-  public getRoutesByInfo$(routeInfo: RouteInfo): Observable<Route[]> {
-    // TODO: Replace by calling real API
-    return this.http.get<Route[]>("https://mocki.io/v1/171e83d4-66b1-4d73-b4eb-35eea3fd263d");
+  public searchRoutes$(searchRouteDto: SearchRouteDto): Observable<RouteSearchResponse> {
+    return this.apiService.api.routeSearch(searchRouteDto);
   }
 
   public getRoutes$(): Observable<Route[]> {
@@ -34,6 +32,10 @@ export class RouteService {
 
   public getRouteById$(id: number): Observable<Route> {
     return this.apiService.api.routeGetRouteById(id);
+  }
+
+  public getRouteByIdAndDate$(id: number, date: string): Observable<Route> {
+    return this.apiService.api.routeGetRouteByIdAndDate(id, date);
   }
 
   public createRoute$(routeDto: RouteDto): Observable<Route> {

@@ -32,17 +32,16 @@ export class BookingSearchFormComponent implements OnInit {
     this.initLocationOptions();
 
     this.route.queryParamMap.subscribe((params) => {
-      if (params.get("arriveAt") !== null) {
+      if (params.get("secondDt") !== null) {
         this.selectedBookingOption = BookingOption.RoundTrip;
         this.onBookingOptionChange();
       }
 
       this.bookingSearchForm.patchValue({
-        fromAt: params.get("fromAt") || this.fromAt.value,
-        toAt: params.get("toAt") || this.toAt.value,
-        departAt: params.get("departAt") ? new Date(decodeURIComponent(params.get("departAt"))) : this.departAt.value,
-        arriveAt: params.get("arriveAt") ? new Date(decodeURIComponent(params.get("arriveAt"))) : this.arriveAt?.value,
-        passengers: params.get("passengers") || this.passengers.value,
+        firstCity: params.get("firstCity") || this.firstCity.value,
+        secondCity: params.get("secondCity") || this.secondCity.value,
+        firstDt: params.get("firstDt") ? new Date(decodeURIComponent(params.get("firstDt"))) : this.firstDt.value,
+        secondDt: params.get("secondDt") ? new Date(decodeURIComponent(params.get("secondDt"))) : this.secondDt?.value,
       });
     });
   }
@@ -51,10 +50,9 @@ export class BookingSearchFormComponent implements OnInit {
     const currentDate = new Date();
 
     this.bookingSearchForm = this.fb.group({
-      fromAt: ["", Validators.required],
-      toAt: ["", Validators.required],
-      departAt: [currentDate, Validators.required],
-      passengers: ["1", Validators.required],
+      firstCity: ["", Validators.required],
+      secondCity: ["", Validators.required],
+      firstDt: [currentDate, Validators.required],
     });
   }
 
@@ -74,32 +72,28 @@ export class BookingSearchFormComponent implements OnInit {
 
   public onBookingOptionChange(): void {
     if (this.selectedBookingOption !== "ROUND_TRIP") {
-      this.bookingSearchForm.removeControl("arriveAt");
+      this.bookingSearchForm.removeControl("secondDt");
       return;
     }
     const tomorrowDate = new Date();
     tomorrowDate.setDate(tomorrowDate.getDate() + 1);
-    this.bookingSearchForm.addControl("arriveAt", new FormControl(tomorrowDate, Validators.required));
+    this.bookingSearchForm.addControl("secondDt", new FormControl(tomorrowDate, Validators.required));
   }
 
-  public get fromAt(): FormControl {
-    return this.bookingSearchForm.get("fromAt") as FormControl;
+  public get firstCity(): FormControl {
+    return this.bookingSearchForm.get("firstCity") as FormControl;
   }
 
-  public get toAt(): FormControl {
-    return this.bookingSearchForm.get("toAt") as FormControl;
+  public get secondCity(): FormControl {
+    return this.bookingSearchForm.get("secondCity") as FormControl;
   }
 
-  public get departAt(): FormControl {
-    return this.bookingSearchForm.get("departAt") as FormControl;
+  public get firstDt(): FormControl {
+    return this.bookingSearchForm.get("firstDt") as FormControl;
   }
 
-  public get arriveAt(): FormControl {
-    return this.bookingSearchForm.get("arriveAt") as FormControl;
-  }
-
-  public get passengers(): FormControl {
-    return this.bookingSearchForm.get("passengers") as FormControl;
+  public get secondDt(): FormControl {
+    return this.bookingSearchForm.get("secondDt") as FormControl;
   }
 
   public searchTicket(): void {
@@ -110,7 +104,7 @@ export class BookingSearchFormComponent implements OnInit {
 
     const queryParams = {
       ...this.bookingSearchForm.value,
-      arriveAt: this.bookingSearchForm.contains("arriveAt") ? this.bookingSearchForm.value.arriveAt : null,
+      secondDt: this.bookingSearchForm.contains("secondDt") ? this.bookingSearchForm.value.secondDt : null,
     };
 
     this.router.navigate(["/booking/search"], {
