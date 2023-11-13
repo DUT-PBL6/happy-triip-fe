@@ -27,13 +27,6 @@
       "WATER": "Water",
       "WIFI": "WiFi"
     },
-    "transportType": {
-      "BUS": "Bus",
-      "MINIVAN": "Minivan",
-      "CAR": "Car",
-      "TRAIN": "Train",
-      "AIR_PLANE": "Air plane"
-    },
     "bookingOptions": {
       "OneWay": "One Way",
       "RoundTrip": "Round Trip"

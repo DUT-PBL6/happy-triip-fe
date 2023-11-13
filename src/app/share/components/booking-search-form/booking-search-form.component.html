@@ -16,7 +16,7 @@
           <p class="font-medium my-3">From</p>
           <p-dropdown
             [options]="locations"
-            formControlName="fromAt"
+            formControlName="firstCity"
             optionLabel="name"
             optionValue="value"
             [showClear]="true"
@@ -44,7 +44,7 @@
           <p class="font-medium my-3">To</p>
           <p-dropdown
             [options]="locations"
-            formControlName="toAt"
+            formControlName="secondCity"
             optionLabel="name"
             optionValue="value"
             [showClear]="true"
@@ -73,35 +73,31 @@
         <div class="depart-date flex flex-column flex-1">
           <p class="font-medium my-3">Depart Date</p>
           <p-calendar
-            formControlName="departAt"
+            formControlName="firstDt"
             class="w-full sm:w-auto"
             styleClass="w-full"
             [showIcon]="true"
             [showButtonBar]="true"
             [dateFormat]="datePickerFormat"
             class="full-width-calendar"
-            [maxDate]="arriveAt?.value"
+            [maxDate]="secondDt?.value"
           ></p-calendar>
         </div>
         <div class="return-date flex flex-column flex-1" *ngIf="selectedBookingOption === 'ROUND_TRIP'">
           <p class="font-medium my-3">Return Date</p>
           <p-calendar
-            formControlName="arriveAt"
+            formControlName="secondDt"
             class="w-full sm:w-auto"
             styleClass="w-full"
             [showIcon]="true"
             [showButtonBar]="true"
             [dateFormat]="datePickerFormat"
             class="full-width-calendar"
-            [minDate]="departAt?.value"
+            [minDate]="firstDt?.value"
           ></p-calendar>
         </div>
       </div>
       <div class="passengers-container flex">
-        <div class="passengers flex flex-column flex-1">
-          <p class="font-medium my-3">Passenger(s)</p>
-          <p-inputNumber formControlName="passengers" mode="decimal" [showButtons]="true" [min]="1"></p-inputNumber>
-        </div>
         <div class="action flex-1 align-self-end">
           <p-button
             label="Search Ticket"

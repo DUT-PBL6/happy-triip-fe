@@ -3,7 +3,8 @@
   <div class="header">
     <div class="vehicle flex align-items-center w-auto">
       <img [src]="'assets/icons/' + (route.transport['type'] | lowercase) + '.svg'" alt="Vehicle type" />
-      <span>{{ "share.transportType." + getKey(route.transport["type"], TransportType) | translate }}</span>
+      <span>{{ route.transport["name"] }}</span>
+      <span>({{ "share.vehicleType." + getKey(route.transport["type"], vehicleType) | translate }})</span>
     </div>
   </div>
   <div class="route-item">
@@ -13,7 +14,7 @@
           <div class="departure flex align-items-center">
             <i class="pi pi-map-marker"></i>
             <div class="departure__time">
-              {{ getTime(route.departAt) }}
+              {{ getTime(parseTimeStringToDateString(route.departAt)) }}
             </div>
             <div class="dot"></div>
             <div class="departure__name">
@@ -26,15 +27,13 @@
           <div class="time-estimate flex gap-3 align-items-center">
             <div class="dashed"></div>
             <span>{{ getHoursDifference(route.departAt, route.arriveAt) }} hour(s) ride</span>
-            <ng-container *ngIf="isViewDetails">
-              <div class="dot"></div>
-              <div class="partner">Operated by {{ route.partner["name"] }}</div>
-            </ng-container>
+            <div class="dot"></div>
+            <div class="partner">Operated by {{ route.partner["name"] }}</div>
           </div>
           <div class="arrive flex align-items-center">
             <i class="pi pi-map-marker"></i>
             <div class="arrive__time">
-              {{ getTime(route.arriveAt) }}
+              {{ getTime(parseTimeStringToDateString(route.arriveAt)) }}
             </div>
             <div class="dot"></div>
             <div class="arrive__name">
@@ -54,7 +53,7 @@
             styleClass="p-button-outlined p-button-secondary"
             icon="{{ !isViewDetails ? 'pi pi-angle-down' : 'pi pi-angle-up' }}"
             iconPos="right"
-            (onClick)="isViewDetails = !isViewDetails"
+            (onClick)="handleViewDetails()"
           ></p-button>
           <p-button label="Book Now" icon="pi pi-angle-right" iconPos="right"></p-button>
         </div>
@@ -78,9 +77,11 @@
             </div>
             <div class="images flex justify-content-between">
               <div class="list flex gap-2">
-                <ng-template let-image ngFor [ngForOf]="route.transport['images']" pTemplate="item">
-                  <p-image src="{{ image }}" alt="Image" width="120" [preview]="true"></p-image>
-                </ng-template>
+                <ng-container *ngIf="route.transport['images'].length > 0; else noImage">
+                  <ng-template let-image ngFor [ngForOf]="route.transport['images']" pTemplate="item">
+                    <p-image src="{{ image }}" alt="Image" width="120" [preview]="true"></p-image>
+                  </ng-template>
+                </ng-container>
               </div>
             </div>
           </div>
@@ -97,9 +98,11 @@
             </div>
             <div class="images flex justify-content-between">
               <div class="list flex gap-2">
-                <ng-template let-image ngFor [ngForOf]="route.fromAt['images']" pTemplate="item">
-                  <p-image src="{{ image }}" alt="Image" width="120" [preview]="true"></p-image>
-                </ng-template>
+                <ng-container *ngIf="route.fromAt['images'].length > 0; else noImage">
+                  <ng-template let-image ngFor [ngForOf]="route.fromAt['images']" pTemplate="item">
+                    <p-image src="{{ image }}" alt="Image" width="120" [preview]="true"></p-image>
+                  </ng-template>
+                </ng-container>
               </div>
               <iframe
                 allowfullscreen=""
@@ -119,9 +122,11 @@
             </div>
             <div class="images flex justify-content-between">
               <div class="list flex gap-2">
-                <ng-template let-image ngFor [ngForOf]="route.toAt['images']" pTemplate="item">
-                  <p-image src="{{ image }}" alt="Image" width="120" [preview]="true"></p-image>
-                </ng-template>
+                <ng-container *ngIf="route.toAt['images'].length > 0; else noImage">
+                  <ng-template let-image ngFor [ngForOf]="route.toAt['images']" pTemplate="item">
+                    <p-image src="{{ image }}" alt="Image" width="120" [preview]="true"></p-image>
+                  </ng-template>
+                </ng-container>
               </div>
               <iframe allowfullscreen="" loading="lazy" style="border: 0" [src]="sanitizedToAtEmbedMapLink"></iframe>
             </div>
@@ -132,7 +137,7 @@
   </ng-container>
 
   <ng-template #utilitiesList>
-    <ng-container *ngFor="let utility of route.transport['utilities']">
+    <ng-container *ngFor="let utility of route.transport['utility']">
       <div class="item flex align-items-center">
         <img [src]="'assets/icons/' + (utility | lowercase) + '.svg'" alt="Image" class="w-1rem" />
         <span>{{ "share.utilities." + getKey(utility, Utility) | translate }}</span>
@@ -140,3 +145,6 @@
     </ng-container>
   </ng-template>
 </div>
+<ng-template #noImage>
+  <img src="/assets/images/no-image.jpg" width="120" alt="no-image" />
+</ng-template>

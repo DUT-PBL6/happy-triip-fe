@@ -1,9 +1,21 @@
 <app-booking-search-form></app-booking-search-form>
 <div class="results flex flex-column mt-4 gap-4">
   <ng-container *ngIf="routes$ | async as routes">
-    <ng-container *ngFor="let route of routes">
-      <app-result-card [route]="route"></app-result-card>
+    <h5>{{ routes.length }} result(s)</h5>
+    <ng-container *ngIf="routes.length > 0; else noResults">
+      <ng-container *ngFor="let route of routes">
+        <app-result-card [route]="route"></app-result-card>
+      </ng-container>
     </ng-container>
+    <ng-template #noResults>
+      <div class="no-results flex flex-column gap-4 align-items-center py-8">
+        <img src="/assets/icons/ticket.svg" alt="no-results" class="h-5rem" />
+        <div class="message flex flex-column gap-2 justify-content-center text-center">
+          <h4>Sorry, there is no ticket available on this date</h4>
+          <p>Please choose another date or try using a different search criteria.</p>
+        </div>
+      </div>
+    </ng-template>
   </ng-container>
 </div>
 <app-popular-routes></app-popular-routes>
