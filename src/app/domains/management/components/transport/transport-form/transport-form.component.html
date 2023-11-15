@@ -4,7 +4,7 @@
     <form [formGroup]="transportForm" (ngSubmit)="submit()" class="grid">
       <!-- NAME -->
       <div class="name col-6 py-2 flex flex-column">
-        <label for="name" class="block text-900 text-lg font-medium mb-2">Name</label>
+        <label for="name" class="block text-900 text-lg font-medium mb-2">Name*</label>
         <div class="input-container h-4rem">
           <input
             pInputText
@@ -24,7 +24,7 @@
       </div>
       <!-- VEHICLE TYPE -->
       <div class="vehicle-type col-6 py-2 flex flex-column">
-        <label for="type" class="block text-900 text-lg font-medium mb-2">Vehicle type</label>
+        <label for="type" class="block text-900 text-lg font-medium mb-2">Vehicle type*</label>
         <div class="input-container h-4rem">
           <p-dropdown
             id="type"
@@ -61,13 +61,13 @@
             </ng-template>
           </p-dropdown>
           <small class="p-error" *ngIf="validate(type)">
-            <strong>Vehicle type is required</strong>
+            <strong>Vehicle type is required*</strong>
           </small>
         </div>
       </div>
       <!-- SEAT TYPE -->
       <div class="Seat Type col-12 py-2 flex flex-column">
-        <label for="seat-type" class="block text-900 text-lg font-medium mb-2">Seat Type</label>
+        <label for="seat-type" class="block text-900 text-lg font-medium mb-2">Seat Type*</label>
         <div class="input-container">
           <div formArrayName="seatTypes">
             <div *ngFor="let group of seatTypes.controls; let i = index">
@@ -151,14 +151,14 @@
               ></app-upload-image>
             </ng-container>
           </div>
-          <small class="p-error" *ngIf="isSubmit && images.value.length === 0">
+          <!-- <small class="p-error" *ngIf="isSubmit && images.value.length === 0">
             <strong>Image is required</strong>
-          </small>
+          </small> -->
         </div>
       </div>
       <!-- UTILITY -->
       <div class="utility col-12 py-2 h-19rem flex flex-column">
-        <label for="utility" class="block text-900 text-lg font-medium mb-2">Utility</label>
+        <label for="utility" class="block text-900 text-lg font-medium mb-2">Utility*</label>
         <div class="input-container flex flex-wrap">
           <div *ngFor="let util of Utilities; index as i" class="field-checkbox mr-4">
             <p-checkbox
@@ -170,28 +170,11 @@
             <label [for]="util">{{ "share.utilities." + util | translate }}</label>
           </div>
         </div>
-        <small class="p-error" *ngIf="isSubmit && utility.value.length === 0">
+        <small class="p-error" *ngIf="isSubmit && utility.value?.length === 0">
           <strong>Utility is required</strong>
         </small>
       </div>
       <div class="actions col-12 py-2 flex justify-content-end gap-2">
-        <p-button
-          label="Remove"
-          styleClass="p-button-danger p-button-outlined"
-          class="col-6 py-2 md:col-3 pr-0 full-width-button"
-          icon="pi pi-trash"
-          iconPos="right"
-          *ngIf="updateMode"
-        ></p-button>
-        <p-button
-          label="Cancel"
-          styleClass="p-button-danger p-button-outlined"
-          class="col-6 py-2 md:col-3 pr-0 full-width-button"
-          icon="pi pi-times"
-          iconPos="right"
-          *ngIf="!updateMode"
-          (onClick)="cancelTransportForm.emit(true)"
-        ></p-button>
         <p-button
           type="submit"
           class="col-6 py-2 md:col-3 pr-0 full-width-button"

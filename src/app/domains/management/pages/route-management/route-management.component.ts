@@ -22,7 +22,6 @@ import { PendingRouteDetailComponent } from "../../components/route/pending-rout
 })
 export class RouteManagementComponent extends BaseDestroyable implements OnInit {
   public currentRoute: Route | UpdateRouteResponse;
-  public isRouteFormVisible = false;
   public isUpdateMode = false;
   public isSelectedRouteChangeTrigged = 0;
   public isFetchDone = true;
@@ -70,10 +69,6 @@ export class RouteManagementComponent extends BaseDestroyable implements OnInit 
     }
   }
 
-  public cancelRouteForm(isCancel: boolean): void {
-    this.isRouteFormVisible = !isCancel;
-  }
-
   public onSelectedRouteChange(route: Route): void {
     this.isFetchDone = false;
 
@@ -106,10 +101,6 @@ export class RouteManagementComponent extends BaseDestroyable implements OnInit 
     this.isSelectedRouteChangeTrigged++;
   }
 
-  public onFormVisibleChange(isVisible: boolean): void {
-    this.isRouteFormVisible = isVisible;
-  }
-
   public handleRouteForm(route: RouteDto): void {
     const service$: Observable<Route> = this.isUpdateMode
       ? this.routeService.updateRoute$(this.currentRoute.id, route)
@@ -122,9 +113,8 @@ export class RouteManagementComponent extends BaseDestroyable implements OnInit 
           this.isUpdateMode ? "Route is updated successfully" : "Route is created successfully"
         );
         this.store.dispatch(this.isUpdateMode ? new UpdateRoute(response) : new CreateRoute(response));
+        this.isUpdateMode = false;
       },
     });
-
-    this.isRouteFormVisible = false;
   }
 }

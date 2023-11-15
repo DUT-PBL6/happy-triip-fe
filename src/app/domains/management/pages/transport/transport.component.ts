@@ -14,8 +14,8 @@ import { TransportService } from "src/app/core/service/transport/transport.servi
 })
 export class TransportPageComponent extends BaseDestroyable {
   public currentTransport: Transport;
-  public isTransportFormVisible = false;
   public isUpdateMode = false;
+  public isSelectedTransportChangeTrigged = 0;
 
   constructor(
     private transportService: TransportService,
@@ -25,23 +25,19 @@ export class TransportPageComponent extends BaseDestroyable {
     super();
   }
 
-  public cancelTransportForm(isCancel: boolean): void {
-    this.isTransportFormVisible = !isCancel;
-  }
-
   public onSelectedTransportChange(transport: Transport): void {
     this.currentTransport = transport;
   }
 
   public onUpdateModeChange(isUpdateMode: boolean): void {
     this.isUpdateMode = isUpdateMode;
-  }
-
-  public onFormVisibleChange(isVisible: boolean): void {
-    this.isTransportFormVisible = isVisible;
+    this.isSelectedTransportChangeTrigged++;
   }
 
   public handleTransportForm(transport: TransportDto): void {
+    console.log(transport);
+    console.log(this.isUpdateMode);
+
     const service$: Observable<Transport> = this.isUpdateMode
       ? this.transportService.updateTransport$(this.currentTransport.id, transport)
       : this.transportService.createTransport$(transport);
@@ -53,9 +49,11 @@ export class TransportPageComponent extends BaseDestroyable {
           this.isUpdateMode ? "Transport is updated successfully" : "Transport is created successfully"
         );
         this.store.dispatch(this.isUpdateMode ? new UpdateTransport(response) : new CreateTransport(response));
+        this.isUpdateMode = false;
+      },
+      error: () => {
+        this.isUpdateMode = false;
       },
     });
-
-    this.isTransportFormVisible = false;
   }
 }

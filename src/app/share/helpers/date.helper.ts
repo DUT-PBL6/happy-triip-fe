@@ -13,11 +13,10 @@ dayjs.extend(timezonePlugin);
 dayjs.extend(duration);
 
 export const getTime = (dateInput: string): string => {
-  const date = new Date(dateInput);
-  const hours = date.getUTCHours();
-  const minutes = date.getUTCMinutes();
+  const date = dayjs(dateInput);
+  const timeString = date.format("HH:mm");
 
-  return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+  return timeString;
 };
 
 export const getHoursDifference = (departAt: string, arriveAt: string): number => {
@@ -36,12 +35,11 @@ export const formatDate = (dateString: string): string => {
 };
 
 export const parseTimeStringToDate = (timeString: string): Date => {
-  const [hours, minutes, seconds] = timeString.split(":");
-
-  const currentTime = new Date();
-  currentTime.setUTCHours(Number(hours));
-  currentTime.setUTCMinutes(Number(minutes));
-  currentTime.setUTCSeconds(Number(seconds));
+  const currentTime = dayjs()
+    .set("hour", Number(timeString.split(":")[0]))
+    .set("minute", Number(timeString.split(":")[1]))
+    .set("second", Number(timeString.split(":")[2]))
+    .toDate();
 
   return currentTime;
 };

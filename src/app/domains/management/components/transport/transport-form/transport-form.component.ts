@@ -14,7 +14,6 @@ import { validate } from "src/app/share/helpers/form.helper";
 export class TransportFormComponent implements OnInit, OnChanges {
   @Input() selectedTransport: Transport;
   @Input() updateMode: boolean;
-  @Output() cancelTransportForm = new EventEmitter<boolean>();
   @Output() form = new EventEmitter<TransportDto>();
   public transportForm: FormGroup;
   public seatTypesForm: FormArray;
@@ -171,8 +170,15 @@ export class TransportFormComponent implements OnInit, OnChanges {
       this.seatTypesForm.markAllAsTouched();
       return;
     }
+
     this.form.emit(this.transportForm.value);
+    this.resetForm();
+  }
+
+  private resetForm(): void {
     this.transportForm.reset();
+    this.selectedImages = [];
+    this.selectedUtilities = [];
   }
 
   public validate(fieldControl: FormControl): boolean {

@@ -21,7 +21,6 @@ import { UpdateRouteResponse } from "../../../types/update-route-response";
 export class RouteFormComponent implements OnInit, OnChanges {
   @Input() selectedRoute: Route | UpdateRouteResponse;
   @Input() updateMode: boolean;
-  @Output() cancelRouteForm = new EventEmitter<boolean>();
   @Output() form = new EventEmitter<RouteDto>();
   @Select(TransportState.getAllTransport) public transports$: Observable<Transport[]>;
   @Select(StationState.getAllStation) public stations$: Observable<Station[]>;
@@ -46,6 +45,7 @@ export class RouteFormComponent implements OnInit, OnChanges {
       }
       if (this.selectedRoute) {
         this.routeForm?.patchValue({ ...this.selectedRoute });
+        if (this.isStatusAccepted()) this.routeForm?.disable();
       }
     }
   }
@@ -67,7 +67,7 @@ export class RouteFormComponent implements OnInit, OnChanges {
       toAt: this.fb.group({
         id: ["", Validators.required],
       }),
-      ndays: ["0", Validators.required],
+      ndays: [0, Validators.required],
       pickUpPoints: this.pickUpPointsForm,
       dropOffPoints: this.dropOffPointsForm,
       routeSchedules: ["", Validators.required],
@@ -76,6 +76,10 @@ export class RouteFormComponent implements OnInit, OnChanges {
         id: ["", Validators.required],
       }),
     });
+  }
+
+  public isStatusAccepted(): boolean {
+    return this.selectedRoute?.status === "ACCEPTED";
   }
 
   private initPointsForm(): void {
@@ -183,6 +187,13 @@ export class RouteFormComponent implements OnInit, OnChanges {
     }
 
     const formattedForm = this.convertDateTime();
+    console.log(formattedForm);
+
+    if (formattedForm.departAt === "00:00" && formattedForm.arriveAt === "00:00" && formattedForm.ndays == 0) {
+      this.ndays.setErrors({ timeEstimate: true });
+      return;
+    }
+
     this.form.emit(formattedForm);
     this.routeForm.reset();
   }
