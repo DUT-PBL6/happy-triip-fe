@@ -1,5 +1,10 @@
 <div class="card w-full h-full flex flex-column gap-4">
-  <h4>{{ updateMode ? "Route Details" : "Add New Route" }}</h4>
+  <div class="flex justify-content-between">
+    <h4>{{ updateMode ? "Route Details" : "Add New Route" }}</h4>
+    <strong *ngIf="isStatusAccepted()" class="text-orange-400">
+      This route is in view mode because it was accepted!
+    </strong>
+  </div>
   <div class="form">
     <form [formGroup]="routeForm" (ngSubmit)="submit()" class="grid">
       <!-- NAME -->
@@ -95,13 +100,16 @@
             [showButtons]="true"
             [min]="0"
             [ngClass]="{
-              'ng-invalid ng-dirty': validate(ndays)
+              'ng-invalid ng-dirty': validate(ndays) || ndays.hasError('timeEstimate')
             }"
             styleClass="full-width"
           ></p-inputNumber>
 
           <small class="p-error" *ngIf="validate(ndays)">
             <strong>Days is required</strong>
+          </small>
+          <small class="p-error" *ngIf="ndays.hasError('timeEstimate')">
+            <strong>Days must be greater than 1</strong>
           </small>
         </div>
       </div>
@@ -260,6 +268,7 @@
                   </small>
                 </div>
                 <i
+                  *ngIf="!isStatusAccepted()"
                   style="font-size: 1.5rem"
                   class="pi pi-trash p-error ml-2"
                   (click)="deleteFormControl(pickUpPoints, i)"
@@ -277,6 +286,7 @@
           icon="pi pi-plus"
           iconPos="left"
           (onClick)="addNewPoint(pickUpPoints)"
+          [disabled]="isStatusAccepted()"
         ></p-button>
       </div>
       <!-- DROPOFF POINTS -->
@@ -318,6 +328,7 @@
                   </small>
                 </div>
                 <i
+                  *ngIf="!isStatusAccepted()"
                   style="font-size: 1.5rem"
                   class="pi pi-trash p-error ml-2"
                   (click)="deleteFormControl(dropOffPoints, i)"
@@ -335,33 +346,18 @@
           icon="pi pi-plus"
           iconPos="left"
           (onClick)="addNewPoint(dropOffPoints)"
+          [disabled]="isStatusAccepted()"
         ></p-button>
       </div>
       <!-- ACTIONS -->
       <div class="actions col-12 py-2 flex justify-content-end gap-2">
-        <p-button
-          label="Remove"
-          styleClass="p-button-danger p-button-outlined"
-          class="col-6 md:col-3 pr-0 full-width-button"
-          icon="pi pi-trash"
-          iconPos="right"
-          *ngIf="updateMode"
-        ></p-button>
-        <p-button
-          label="Cancel"
-          styleClass="p-button-danger p-button-outlined"
-          class="col-6 md:col-3 pr-0 full-width-button"
-          icon="pi pi-times"
-          iconPos="right"
-          *ngIf="!updateMode"
-          (onClick)="cancelRouteForm.emit(true)"
-        ></p-button>
         <p-button
           type="submit"
           class="col-6 md:col-3 pr-0 full-width-button"
           label="Save"
           icon="pi pi-save"
           iconPos="right"
+          [disabled]="isStatusAccepted()"
         ></p-button>
       </div>
     </form>

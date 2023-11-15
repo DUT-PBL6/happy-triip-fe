@@ -2,14 +2,12 @@
   <app-transport-listbox
     (selectedTransport)="onSelectedTransportChange($event)"
     (isUpdateMode)="onUpdateModeChange($event)"
-    (isTransportFormVisible)="onFormVisibleChange($event)"
   ></app-transport-listbox>
   <app-transport-form
-    *ngIf="isTransportFormVisible"
+    *mcRerender="isSelectedTransportChangeTrigged"
     class="w-full"
     [selectedTransport]="currentTransport"
     [updateMode]="isUpdateMode"
-    (cancelTransportForm)="cancelTransportForm($event)"
     (form)="handleTransportForm($event)"
   ></app-transport-form>
 </div>

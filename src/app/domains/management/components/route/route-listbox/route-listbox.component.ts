@@ -14,7 +14,6 @@ export class RouteListboxComponent implements OnInit {
   public currentRoute: Route;
   @Output() selectedRoute = new EventEmitter<Route | undefined>();
   @Output() isUpdateMode = new EventEmitter<boolean>();
-  @Output() isRouteFormVisible = new EventEmitter<boolean>();
   @Select(RouteState.getAllRoute) public routes$: Observable<Route[]>;
 
   constructor(private store: Store) {}
@@ -24,14 +23,12 @@ export class RouteListboxComponent implements OnInit {
   }
 
   public handleAddRoute(): void {
-    this.isRouteFormVisible.emit(true);
     this.isUpdateMode.emit(false);
     this.selectedRoute.emit(undefined);
     this.currentRoute = undefined;
   }
 
   public handleChangeSelectedRoute(): void {
-    this.isRouteFormVisible.emit(true);
     this.isUpdateMode.emit(true);
     this.selectedRoute.emit(this.currentRoute);
   }
