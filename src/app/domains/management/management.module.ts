@@ -9,6 +9,7 @@ import { ProfileSettingsModule } from "./pages/profile-settings/profile-settings
 import { TransportModule } from "./pages/transport/transport.module";
 import { RouteManagementModule } from "./pages/route-management/route-management.module";
 import { PoiStationsModule } from "./pages/poi-stations/poi-stations.module";
+import { PartnerModule } from "./pages/partner-management/partner-management.module";
 
 @NgModule({
   declarations: [ManagementLayoutComponent],
@@ -22,6 +23,7 @@ import { PoiStationsModule } from "./pages/poi-stations/poi-stations.module";
     TransportModule,
     RouteManagementModule,
     PoiStationsModule,
+    PartnerModule,
   ],
   exports: [ManagementLayoutComponent],
 })

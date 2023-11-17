@@ -80,7 +80,7 @@ export class SidebarComponent implements OnInit {
       return;
     }
     if (isPartner) {
-      this.items.splice(5, 1);
+      // this.items.splice(5, 1);
       this.items.splice(0, 4);
     }
   }

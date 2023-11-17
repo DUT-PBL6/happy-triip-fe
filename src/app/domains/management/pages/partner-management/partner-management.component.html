@@ -1,0 +1,52 @@
+<div class="partner-management" *ngIf="isEmployee">
+  <div class="card surface-0 p-4">
+    <h2 class="text-center mb-2">List partner</h2>
+
+    <div class="search-wrapper">
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        (input)="onSearchTextChanged()"
+        placeholder="Search Partners"
+        class="search-input"
+      />
+
+      <i class="pi pi-search"></i>
+    </div>
+
+    <ng-container *ngIf="Partners$ | async as Partners">
+      <!-- <ng-container *ngIf="PendingPartners$ | async as PendingPartners"> -->
+      <div class="container">
+        <div class="table">
+          <div class="table-header">
+            <div class="header__item">STT</div>
+            <div class="header__item">Name</div>
+            <div class="header__item">Username</div>
+            <div class="header__item">Password</div>
+            <div class="header__item">Phonenumber</div>
+            <div class="header__item">Email</div>
+            <div class="header__item">Status</div>
+          </div>
+        </div>
+
+        <div class="table-content">
+          <div class="table-row" *ngFor="let partner of filteredPartners; let i = index">
+            <app-pending-partner
+              [partner]="partner"
+              (click)="onPendingPartnerClick(partner)"
+              [stt]="i"
+            ></app-pending-partner>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div *ngIf="isPartner">
+  <app-partner-form
+    *ngIf="currentPartner"
+    [partner]="currentPartner"
+    (form)="handlePartnerForm($event)"
+  ></app-partner-form>
+</div>

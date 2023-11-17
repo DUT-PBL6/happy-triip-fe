@@ -8,6 +8,7 @@ import { RouteManagementComponent } from "./pages/route-management/route-managem
 import { AdminGuard } from "src/app/core/guards/admin.guard";
 import { PartnerGuard } from "src/app/core/guards/partner.guard";
 import { PoiStationsComponent } from "./pages/poi-stations/poi-stations.component";
+import { PartnerPageComponent } from "./pages/partner-management/partner-management.component";
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: "transport", component: TransportPageComponent },
       { path: "route", component: RouteManagementComponent },
       { path: "poi-stations", component: PoiStationsComponent },
+      { path: "partner", component: PartnerPageComponent },
     ],
   },
 ];

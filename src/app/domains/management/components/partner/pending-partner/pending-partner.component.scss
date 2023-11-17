@@ -1,0 +1,24 @@
+$base-spacing-unit: 12px;
+$half-spacing-unit: $base-spacing-unit / 2;
+.table-row {
+  border-bottom: 1px solid rgb(215, 211, 211);
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: ($half-spacing-unit * 1.5) 0;
+
+  &:nth-of-type(odd) {
+    background: #f5f3f3;
+  }
+  .table-data {
+    flex: 1 1 20%;
+    // display: flex;
+    // justify-content: space-between;
+    text-align: center;
+  }
+  &:hover {
+    background: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+}
