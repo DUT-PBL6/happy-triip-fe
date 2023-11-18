@@ -17,6 +17,7 @@ import { EmployeeState } from "./core/service/employee/employee.state";
 import { TransportState } from "./core/service/transport/transport.state";
 import { StationState } from "./core/service/station/station.state";
 import { RouteState } from "./core/service/route/route.state";
+import { PartnerState } from "./core/service/partner/partner.state";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -32,7 +33,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     HttpClientModule,
     ToastModule,
-    NgxsModule.forRoot([LoadingState, EmployeeState, TransportState, StationState, RouteState]),
+    NgxsModule.forRoot([LoadingState, EmployeeState, TransportState, StationState, RouteState, PartnerState]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

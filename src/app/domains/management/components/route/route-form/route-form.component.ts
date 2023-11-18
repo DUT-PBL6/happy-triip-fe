@@ -187,7 +187,6 @@ export class RouteFormComponent implements OnInit, OnChanges {
     }
 
     const formattedForm = this.convertDateTime();
-    console.log(formattedForm);
 
     if (formattedForm.departAt === "00:00" && formattedForm.arriveAt === "00:00" && formattedForm.ndays == 0) {
       this.ndays.setErrors({ timeEstimate: true });

@@ -109,6 +109,12 @@
       "VINHLONG": "Vĩnh Long",
       "VINHPHUC": "Vĩnh Phúc",
       "YENBAI": "Yên Bái"
+    },
+    "partnerStatus": {
+      "INCOMPLETE_DATA": "Incomplete data",
+      "PENDING": "Pending",
+      "ACCEPTED": "Accepted",
+      "DENIED": "Denied"
     }
   }
 }
