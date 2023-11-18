@@ -2,18 +2,18 @@ import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Partner } from "_api";
 import { PartnerService } from "./partner.service";
-import { AcceptPartner, DenyPartner, GetAllPartner, GetAllPendingPartner, UpdatePartner } from "./partner.action";
-import { Observable, map, tap } from "rxjs";
+import { AcceptPartner, DenyPartner, GetAllPartner, GetCurrentPartner, UpdatePartner } from "./partner.action";
+import { Observable, tap } from "rxjs";
 
 interface IPartnerState {
   partners: Partner[];
-  pendingPartners: Partner[];
+  currentPartner: Partner | undefined;
 }
 @State<IPartnerState>({
   name: "partner",
   defaults: {
     partners: [],
-    pendingPartners: [],
+    currentPartner: undefined,
   },
 })
 @Injectable()
@@ -22,9 +22,10 @@ export class PartnerState {
   public static getAllPartner(state: IPartnerState): Partner[] {
     return state.partners;
   }
+
   @Selector()
-  public static getAllPendingPartner(state: IPartnerState): Partner[] {
-    return state.pendingPartners;
+  public static getCurrentPartner(state: IPartnerState): Partner {
+    return state.currentPartner;
   }
 
   constructor(private partnerService: PartnerService) {}
@@ -32,7 +33,7 @@ export class PartnerState {
   @Action(GetAllPartner)
   public getAllPartner$(ctx: StateContext<IPartnerState>): Observable<Partner[]> {
     ctx.patchState({ partners: [] });
-    console.log("all");
+
     return this.partnerService.getPartners$().pipe(
       tap({
         next: (partners) => ctx.patchState({ partners }),
@@ -40,23 +41,48 @@ export class PartnerState {
     );
   }
 
-  @Action(GetAllPendingPartner)
-  public getAllPendingPartner$(ctx: StateContext<IPartnerState>): Observable<Partner[]> {
-    ctx.patchState({ pendingPartners: [] });
-    return this.partnerService.getPendingPartners$().pipe(
+  @Action(GetCurrentPartner)
+  public getCurrentPartner$(ctx: StateContext<IPartnerState>): Observable<Partner> {
+    ctx.patchState({ currentPartner: undefined });
+
+    return this.partnerService.getCurrentPartner$().pipe(
       tap({
-        next: (pendingPartners) => ctx.patchState({ pendingPartners }),
+        next: (currentPartner) => ctx.patchState({ currentPartner }),
       })
     );
   }
 
-  @Action([AcceptPartner, DenyPartner])
-  public updatePendingPartners$(ctx: StateContext<IPartnerState>, action: AcceptPartner | DenyPartner): void {
+  @Action([AcceptPartner])
+  public acceptPartner$(ctx: StateContext<IPartnerState>, action: AcceptPartner): void {
     const state = ctx.getState();
-    const updatedPendingPartners = state.pendingPartners.filter((partner) => partner.id !== action.partnerId);
+    const updatedPartners = state.partners.map((partner) => {
+      if (partner.id !== action.partnerId) return partner;
+      return {
+        ...partner,
+        status: "ACCEPTED",
+      };
+    });
+
     ctx.setState({
       ...state,
-      pendingPartners: updatedPendingPartners,
+      partners: updatedPartners,
+    });
+  }
+
+  @Action([DenyPartner])
+  public denyPartner$(ctx: StateContext<IPartnerState>, action: DenyPartner): void {
+    const state = ctx.getState();
+    const updatedPartners = state.partners.map((partner) => {
+      if (partner.id !== action.partnerId) return partner;
+      return {
+        ...partner,
+        status: "DENIED",
+      };
+    });
+
+    ctx.setState({
+      ...state,
+      partners: updatedPartners,
     });
   }
 
@@ -64,17 +90,9 @@ export class PartnerState {
   public updatePartner$(ctx: StateContext<IPartnerState>, action: UpdatePartner): void {
     const state = ctx.getState();
 
-    console.log(state.partners);
-    console.log(action.partner);
     ctx.setState({
       ...state,
-      partners: [action.partner],
+      currentPartner: action.partner,
     });
-    console.log(
-      ctx.setState({
-        ...state,
-        partners: [action.partner],
-      })
-    );
   }
 }

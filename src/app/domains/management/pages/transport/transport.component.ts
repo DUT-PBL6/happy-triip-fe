@@ -35,9 +35,6 @@ export class TransportPageComponent extends BaseDestroyable {
   }
 
   public handleTransportForm(transport: TransportDto): void {
-    console.log(transport);
-    console.log(this.isUpdateMode);
-
     const service$: Observable<Transport> = this.isUpdateMode
       ? this.transportService.updateTransport$(this.currentTransport.id, transport)
       : this.transportService.createTransport$(transport);

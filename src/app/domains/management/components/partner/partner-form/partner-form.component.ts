@@ -23,7 +23,6 @@ export class PartnerFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log("nhan", this.partner);
     this.initPartnerForm();
     if (this.partner.status === "ACCEPTED" || this.partner.status === "DENIED") {
       this.isUpdated = false;
@@ -44,6 +43,7 @@ export class PartnerFormComponent implements OnInit {
     });
     this.partnerForm.patchValue(this.partner);
   }
+
   public get name(): FormControl {
     return this.partnerForm.get("name") as FormControl;
   }
@@ -51,6 +51,7 @@ export class PartnerFormComponent implements OnInit {
   public get username(): FormControl {
     return this.partnerForm.get("username") as FormControl;
   }
+
   public get password(): FormControl {
     return this.partnerForm.get("password") as FormControl;
   }
@@ -61,6 +62,7 @@ export class PartnerFormComponent implements OnInit {
   public get email(): FormControl {
     return this.partnerForm.get("email") as FormControl;
   }
+
   public get status(): FormControl {
     return this.partnerForm.get("status") as FormControl;
   }
@@ -68,18 +70,20 @@ export class PartnerFormComponent implements OnInit {
   public get description(): FormControl {
     return this.partnerForm.get("description") as FormControl;
   }
+
   public get title(): FormControl {
     return this.partnerForm.get("title") as FormControl;
   }
+
   public get medialLink(): FormControl {
     return this.partnerForm.get("medialLink") as FormControl;
   }
+
   public submit(): void {
     if (!this.partnerForm.valid) {
       this.partnerForm.markAllAsTouched();
       return;
     }
-    console.log("form value", this.partnerForm.value);
     this.form.emit(this.partnerForm.value);
     this.isReadOnly = true;
   }
@@ -93,6 +97,7 @@ export class PartnerFormComponent implements OnInit {
   public validate(fieldControl: AbstractControl): boolean {
     return validate(fieldControl);
   }
+
   public handleReadOnly(): void {
     this.isReadOnly = false;
   }

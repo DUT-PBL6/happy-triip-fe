@@ -1,48 +1,124 @@
 <div class="partner-management" *ngIf="isEmployee">
   <div class="card surface-0 p-4">
-    <h2 class="text-center mb-2">List partner</h2>
-
-    <div class="search-wrapper">
-      <input
-        type="text"
-        [(ngModel)]="searchText"
-        (input)="onSearchTextChanged()"
-        placeholder="Search Partners"
-        class="search-input"
-      />
-
-      <i class="pi pi-search"></i>
-    </div>
-
-    <ng-container *ngIf="Partners$ | async as Partners">
-      <!-- <ng-container *ngIf="PendingPartners$ | async as PendingPartners"> -->
-      <div class="container">
-        <div class="table">
-          <div class="table-header">
-            <div class="header__item">STT</div>
-            <div class="header__item">Name</div>
-            <div class="header__item">Username</div>
-            <div class="header__item">Password</div>
-            <div class="header__item">Phonenumber</div>
-            <div class="header__item">Email</div>
-            <div class="header__item">Status</div>
+    <h2 class="text-center mb-4">Partner list</h2>
+    <ng-container *ngIf="partners$ | async as partners">
+      <p-table
+        #dt1
+        [value]="partners"
+        dataKey="id"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 15, 20]"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['name', 'username', 'phoneNumber', 'email', 'status']"
+        selectionMode="single"
+        [(selection)]="selectedPartner"
+        (onRowSelect)="onRowSelect($event)"
+        [scrollable]="true"
+        scrollHeight="630px"
+        styleClass="p-datatable-striped"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <p-button
+              label="Clear"
+              class="p-button-outlined"
+              icon="pi pi-filter-slash"
+              (click)="dt1.clear()"
+            ></p-button>
+            <span class="p-input-icon-left ml-auto">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Search keyword"
+              />
+            </span>
           </div>
-        </div>
-
-        <div class="table-content">
-          <div class="table-row" *ngFor="let partner of filteredPartners; let i = index">
-            <app-pending-partner
-              [partner]="partner"
-              (click)="onPendingPartnerClick(partner)"
-              [stt]="i"
-            ></app-pending-partner>
-          </div>
-        </div>
-      </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="min-width: 15rem">
+              <div class="flex align-items-center">
+                Name
+                <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width: 15rem">
+              <div class="flex align-items-center">
+                Username
+                <p-columnFilter type="text" field="username" display="menu"></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width: 15rem">
+              <div class="flex align-items-center">Password</div>
+            </th>
+            <th style="min-width: 10rem">
+              <div class="flex align-items-center">
+                Phone number
+                <p-columnFilter type="text" field="phoneNumber" display="menu"></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width: 10rem">
+              <div class="flex align-items-center">
+                Email
+                <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width: 10rem">
+              <div class="flex align-items-center">
+                Status
+                <p-columnFilter field="status" matchMode="equals" display="menu">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown
+                      [ngModel]="value"
+                      [options]="statuses"
+                      (onChange)="filter($event.value)"
+                      placeholder="Any"
+                    >
+                      <ng-template let-option pTemplate="item">
+                        <p-tag [value]="option.value" [severity]="getSeverity(option.value)"></p-tag>
+                      </ng-template>
+                    </p-dropdown>
+                  </ng-template>
+                </p-columnFilter>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-partner>
+          <tr [pSelectableRow]="partner">
+            <td>
+              {{ partner.name }}
+            </td>
+            <td>
+              {{ partner.username }}
+            </td>
+            <td>
+              {{ partner.password }}
+            </td>
+            <td>
+              {{ partner.phoneNumber }}
+            </td>
+            <td>
+              {{ partner.email }}
+            </td>
+            <td>
+              <p-tag [value]="partner.status" [severity]="getSeverity(partner.status)"></p-tag>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="7">No partners found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </ng-container>
   </div>
 </div>
-
 <div *ngIf="isPartner">
   <app-partner-form
     *ngIf="currentPartner"

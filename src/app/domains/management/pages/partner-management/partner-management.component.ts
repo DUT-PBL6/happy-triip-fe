@@ -4,12 +4,26 @@ import { Partner, PartnerDto } from "_api";
 import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
 import { Observable, map, takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
-import { GetAllPartner, GetAllPendingPartner, UpdatePartner } from "src/app/core/service/partner/partner.action";
+import {
+  GetAllPartner,
+  GetAllPendingPartner,
+  GetCurrentPartner,
+  UpdatePartner,
+} from "src/app/core/service/partner/partner.action";
 import { PartnerService } from "src/app/core/service/partner/partner.service";
 import { PartnerState } from "src/app/core/service/partner/partner.state";
 import { ToastService } from "src/app/core/service/toast/toast.service";
 import { PendingPartnerDetailComponent } from "../../components/partner/pending-partner-detail/pending-partner-detail.component";
 import cacheService from "src/lib/cache-service";
+import { Table } from "primeng/table";
+import { TranslateService } from "@ngx-translate/core";
+
+enum PartnerStatus {
+  Incomplete_data = "INCOMPLETE_DATA",
+  Pending = "PENDING",
+  Denied = "DENIED",
+  Accepted = "ACCEPTED",
+}
 
 @Component({
   selector: "app-partner-management",
@@ -18,39 +32,47 @@ import cacheService from "src/lib/cache-service";
 })
 export class PartnerPageComponent extends BaseDestroyable implements OnInit {
   public currentPartner: Partner;
-  public isPartnerFormVisible = false;
   public ref: DynamicDialogRef | undefined;
   public isEmployee = false;
   public isPartner = false;
-  public searchText: string = "";
-  @Select(PartnerState.getAllPartner) public Partners$: Observable<Partner[]>;
-  @Select(PartnerState.getAllPendingPartner) public PendingPartners$: Observable<Partner[]>;
+  public statuses!: any[];
+  public selectedPartner: Partner;
+  @Select(PartnerState.getAllPartner) public partners$: Observable<Partner[]>;
+  @Select(PartnerState.getCurrentPartner) public currentPartner$: Observable<Partner>;
 
   constructor(
     private partnerService: PartnerService,
     private toastService: ToastService,
     private store: Store,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private translate: TranslateService
   ) {
     super();
   }
-  public allPartners: Partner[] = [];
-  public filteredPartners: Partner[] = [];
 
-  public filterPartners(): void {
-    this.filteredPartners = this.allPartners.filter(
-      (partner) =>
-        partner.status.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        partner.name.toLowerCase().includes(this.searchText.toLowerCase())
-    );
+  ngOnInit(): void {
+    this.isEmployee = Object(cacheService.getUserInfo()).userRole === "EMPLOYEE";
+    this.isPartner = Object(cacheService.getUserInfo()).userRole === "PARTNER";
+    this.statuses = Object.values(PartnerStatus).map((value) => ({
+      label: this.translate.instant(`share.partnerStatus.${value}`),
+      value,
+    }));
+
+    if (this.isPartner) {
+      if (this.store.selectSnapshot(PartnerState.getCurrentPartner) == undefined)
+        this.store.dispatch(new GetCurrentPartner());
+      this.currentPartner$.pipe(takeUntil(this.destroy$)).subscribe((partner) => (this.currentPartner = partner));
+      return;
+    }
+
+    if (this.isEmployee) {
+      if (this.store.selectSnapshot(PartnerState.getAllPartner).length === 0) this.store.dispatch(new GetAllPartner());
+    }
   }
 
-  public onSearchTextChanged(): void {
-    this.filterPartners();
-  }
-  public onPendingPartnerClick(partner: Partner): void {
+  public onRowSelect(event): void {
     this.partnerService
-      .getPartnerById$(partner.id)
+      .getPartnerById$(event.data.id)
       .pipe(
         takeUntil(this.destroy$),
         map((partnerDetail) => ({
@@ -66,35 +88,6 @@ export class PartnerPageComponent extends BaseDestroyable implements OnInit {
         });
       });
   }
-  ngOnInit(): void {
-    this.isEmployee = Object(cacheService.getUserInfo()).userRole === "EMPLOYEE";
-    this.isPartner = Object(cacheService.getUserInfo()).userRole === "PARTNER";
-    if (this.isPartner) {
-      this.partnerService
-        .getPartnerProfile$()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (response: Partner) => {
-            this.currentPartner = response;
-            console.log("Current Partner:", this.currentPartner);
-            // this.store.dispatch(new GetPartnerProfile());
-          },
-        });
-    }
-
-    if (this.isEmployee) {
-      if (this.store.selectSnapshot(PartnerState.getAllPartner).length === 0) this.store.dispatch(new GetAllPartner());
-
-      if (this.store.selectSnapshot(PartnerState.getAllPendingPartner).length === 0)
-        this.store.dispatch(new GetAllPendingPartner());
-
-      // this.PendingPartners$.pipe(takeUntil(this.destroy$)).subscribe(partners => {
-      this.Partners$.pipe(takeUntil(this.destroy$)).subscribe((partners) => {
-        this.allPartners = partners;
-        this.filteredPartners = partners;
-      });
-    }
-  }
 
   public handlePartnerForm(partner: PartnerDto): void {
     this.partnerService
@@ -102,10 +95,25 @@ export class PartnerPageComponent extends BaseDestroyable implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
-          this.toastService.showSuccess("Success", "Profile updated successfully");
-          console.log("handle", response);
+          this.toastService.showSuccess("Success", "Profile updated successfully!");
           this.store.dispatch(new UpdatePartner(response));
         },
       });
+  }
+
+  public getSeverity(status: string): string {
+    switch (status) {
+      case "DENIED":
+        return "danger";
+
+      case "ACCEPTED":
+        return "success";
+
+      case "INCOMPLETE_DATA":
+        return "info";
+
+      case "PENDING":
+        return "warning";
+    }
   }
 }
