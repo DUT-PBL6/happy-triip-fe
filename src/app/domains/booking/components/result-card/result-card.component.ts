@@ -1,17 +1,18 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { formatDate, getHoursDifference, getTime, parseTimeStringToDate } from "src/app/share/helpers/date.helper";
 import { TranslateService } from "@ngx-translate/core";
 import { getKeyFromEnumValue } from "src/app/share/helpers/enum.helper";
 import { Route, RouteResponse, TypeVehical, Utility } from "_api";
 import { RouteService } from "src/app/core/service/route/route.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-result-card",
   templateUrl: "./result-card.component.html",
   styleUrls: ["./result-card.component.scss"],
 })
-export class ResultCardComponent implements OnInit {
+export class ResultCardComponent {
   @Input() route: RouteResponse | Route;
   public isViewDetails: boolean = false;
   public sanitizedFromAtEmbedMapLink: SafeResourceUrl;
@@ -23,10 +24,9 @@ export class ResultCardComponent implements OnInit {
   constructor(
     public sanitizer: DomSanitizer,
     public translate: TranslateService,
-    private routeService: RouteService
+    private routeService: RouteService,
+    private router: Router
   ) {}
-
-  ngOnInit(): void {}
 
   public handleViewDetails(): void {
     if (this.isFetchDetail) {
@@ -43,6 +43,10 @@ export class ResultCardComponent implements OnInit {
       this.isViewDetails = !this.isViewDetails;
       this.isFetchDetail = true;
     });
+  }
+
+  public handleBookNow(): void {
+    this.router.navigate(["/booking/proceed"]);
   }
 
   public getTime(date: string): string {

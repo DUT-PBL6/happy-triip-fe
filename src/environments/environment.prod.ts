@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: "http://54.152.71.117",
+  apiUrl: "https://backend.dqh.world",
 };

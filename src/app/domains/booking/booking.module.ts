@@ -4,10 +4,11 @@ import { BookingRoutesModule } from "./booking.route";
 import { SearchRouteModule } from "./pages/search-route/search-route.module";
 import { RouterModule } from "@angular/router";
 import { EmptyLayoutModule } from "src/app/share/layouts/empty-layout/empty-layout.module";
+import { ProceedModule } from "./pages/proceed/proceed.module";
 
 @NgModule({
   declarations: [BookingLayoutComponent],
-  imports: [RouterModule, BookingRoutesModule, SearchRouteModule, EmptyLayoutModule],
+  imports: [RouterModule, BookingRoutesModule, SearchRouteModule, EmptyLayoutModule, ProceedModule],
   exports: [BookingLayoutComponent],
 })
 export class BookingModule {}

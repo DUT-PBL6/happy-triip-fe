@@ -9,14 +9,15 @@ import { AdminGuard } from "src/app/core/guards/admin.guard";
 import { PartnerGuard } from "src/app/core/guards/partner.guard";
 import { PoiStationsComponent } from "./pages/poi-stations/poi-stations.component";
 import { PartnerPageComponent } from "./pages/partner-management/partner-management.component";
+import { EmployeeGuard } from "src/app/core/guards/employee.guard";
 
 const routes: Routes = [
   {
     path: "",
     component: ManagementLayoutComponent,
     children: [
-      { path: "", redirectTo: "booking-confirmation", pathMatch: "full" },
-      { path: "booking-confirmation", component: BookingConfirmationComponent },
+      { path: "", redirectTo: "partner", pathMatch: "full" },
+      { path: "booking-confirmation", component: BookingConfirmationComponent, canActivate: [EmployeeGuard] },
       {
         path: "profile-settings",
         component: ProfileSettingsComponent,
@@ -24,7 +25,7 @@ const routes: Routes = [
       },
       { path: "transport", component: TransportPageComponent },
       { path: "route", component: RouteManagementComponent },
-      { path: "poi-stations", component: PoiStationsComponent },
+      { path: "poi-stations", component: PoiStationsComponent, canActivate: [EmployeeGuard] },
       { path: "partner", component: PartnerPageComponent },
     ],
   },
