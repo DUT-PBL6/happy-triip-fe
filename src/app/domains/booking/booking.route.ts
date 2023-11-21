@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { SearchRouteComponent } from "./pages/search-route/search-route.component";
 import { BookingLayoutComponent } from "./layouts/booking.component";
 import { ProceedComponent } from "./pages/proceed/proceed.component";
+import { ProceedGuard } from "src/app/core/guards/proceed.guard";
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       {
         path: "proceed",
         component: ProceedComponent,
+        canActivate: [ProceedGuard],
       },
     ],
   },

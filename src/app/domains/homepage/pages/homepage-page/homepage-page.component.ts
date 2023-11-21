@@ -12,7 +12,9 @@ export class HomepagePageComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if (!cacheService.getValue("accessToken")) {
+    const user = Object(cacheService.getUserInfo());
+
+    if (!cacheService.getValue("accessToken") || user.userRole === "PASSENGER") {
       this.router.navigate([`/home`]);
       return;
     }

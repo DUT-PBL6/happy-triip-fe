@@ -2,10 +2,12 @@ import { LocationStrategy } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Store } from "@ngxs/store";
 import { AuthCredentialsDto, TokenResponse } from "_api";
 import { takeUntil, tap } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
 import { AuthService } from "src/app/core/service/auth/auth.service";
+import { RouteState } from "src/app/core/service/route/route.state";
 import { validate } from "src/app/share/helpers/form.helper";
 import cacheService from "src/lib/cache-service";
 
@@ -22,7 +24,8 @@ export class LoginComponent extends BaseDestroyable implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
-    private url: LocationStrategy
+    private url: LocationStrategy,
+    private store: Store
   ) {
     super();
   }
@@ -74,6 +77,14 @@ export class LoginComponent extends BaseDestroyable implements OnInit {
       )
       .subscribe({
         next: () => {
+          if (
+            Object(cacheService.getUserInfo()).userRole === "PASSENGER" &&
+            this.store.selectSnapshot(RouteState.getRouteByIdAndDate) !== undefined
+          ) {
+            this.router.navigate(["/booking/proceed"]);
+            return;
+          }
+
           this.router.navigate(["/homepage"]);
         },
       });

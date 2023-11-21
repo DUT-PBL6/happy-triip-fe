@@ -1,6 +1,9 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from "@angular/core";
-import { Seat } from "_api";
+import { Select } from "@ngxs/store";
+import { Route, Seat } from "_api";
+import { Observable } from "rxjs";
 import Seatchart, { Options, SeatIndex, SeatInfo, SeatType, SeatTypeDefault } from "seatchart";
+import { RouteState } from "src/app/core/service/route/route.state";
 
 @Component({
   selector: "app-seat-chart",
@@ -9,27 +12,23 @@ import Seatchart, { Options, SeatIndex, SeatInfo, SeatType, SeatTypeDefault } fr
 })
 export class SeatChartComponent implements OnInit {
   @ViewChild("container", { static: true }) public containerRef!: ElementRef<HTMLDivElement>;
+  @Select(RouteState.getRouteByIdAndDate) public route$: Observable<Route>;
   public seatchart!: Seatchart;
-  public mapSeat: number[][] = [
-    [0, 0, 1],
-    [0, 1, 0],
-  ]; //TODO: Update
-  public reservedSeat: any[] = [
-    {
-      col: 0,
-      row: 0,
-      floor: 1,
-    },
-  ]; // TODO: Update (type is Seat[])
+  public mapSeat: number[][] = [];
+  public reservedSeat: Seat[] = [];
 
   constructor(private renderer: Renderer2) {}
 
   ngOnInit() {
-    this.configSeatChart();
+    this.route$.subscribe((route: Route) => {
+      this.mapSeat = route.transport["mapSeat"][0];
+      this.reservedSeat = route.seats;
+      this.configSeatChart();
 
-    const checkoutButton = this.containerRef.nativeElement.querySelector(".sc-cart-btn-submit");
-    this.renderer.listen(checkoutButton, "click", () => {
-      this.submitSeats();
+      const checkoutButton = this.containerRef.nativeElement.querySelector(".sc-cart-btn-submit");
+      this.renderer.listen(checkoutButton, "click", () => {
+        this.submitSeats();
+      });
     });
   }
 

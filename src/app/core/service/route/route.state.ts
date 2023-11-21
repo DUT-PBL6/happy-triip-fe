@@ -3,11 +3,20 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Route } from "_api";
 import { RouteService } from "./route.service";
 import { Observable, tap } from "rxjs";
-import { AcceptRoute, CreateRoute, DenyRoute, GetAllPendingRoute, GetAllRoute, UpdateRoute } from "./route.action";
+import {
+  AcceptRoute,
+  CreateRoute,
+  DenyRoute,
+  GetAllPendingRoute,
+  GetAllRoute,
+  GetRouteByIdAndDate,
+  UpdateRoute,
+} from "./route.action";
 
 interface IRouteState {
   routes: Route[];
   pendingRoutes: Route[];
+  routeDetail: Route | undefined;
 }
 
 @State<IRouteState>({
@@ -15,6 +24,7 @@ interface IRouteState {
   defaults: {
     routes: [],
     pendingRoutes: [],
+    routeDetail: undefined,
   },
 })
 @Injectable()
@@ -27,6 +37,11 @@ export class RouteState {
   @Selector()
   public static getAllPendingRoute(state: IRouteState): Route[] {
     return state.pendingRoutes;
+  }
+
+  @Selector()
+  public static getRouteByIdAndDate(state: IRouteState): Route {
+    return state.routeDetail;
   }
 
   constructor(private routeService: RouteService) {}
@@ -49,6 +64,16 @@ export class RouteState {
         next: (pendingRoutes) => ctx.patchState({ pendingRoutes }),
       })
     );
+  }
+
+  @Action(GetRouteByIdAndDate)
+  public getRouteByIdAndDate$(ctx: StateContext<IRouteState>, action: GetRouteByIdAndDate): void {
+    const state = ctx.getState();
+
+    ctx.setState({
+      ...state,
+      routeDetail: action.route,
+    });
   }
 
   @Action(CreateRoute)

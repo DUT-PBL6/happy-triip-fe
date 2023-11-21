@@ -6,6 +6,10 @@ import { getKeyFromEnumValue } from "src/app/share/helpers/enum.helper";
 import { Route, RouteResponse, TypeVehical, Utility } from "_api";
 import { RouteService } from "src/app/core/service/route/route.service";
 import { Router } from "@angular/router";
+import { Store } from "@ngxs/store";
+import { GetRouteByIdAndDate } from "src/app/core/service/route/route.action";
+import cacheService from "src/lib/cache-service";
+import { ToastService } from "src/app/core/service/toast/toast.service";
 
 @Component({
   selector: "app-result-card",
@@ -20,12 +24,15 @@ export class ResultCardComponent {
   public readonly vehicleType = TypeVehical;
   public readonly Utility = Utility;
   public isFetchDetail = false;
+  public formattedDate: string;
 
   constructor(
     public sanitizer: DomSanitizer,
     public translate: TranslateService,
     private routeService: RouteService,
-    private router: Router
+    private router: Router,
+    private store: Store,
+    private toastService: ToastService
   ) {}
 
   public handleViewDetails(): void {
@@ -33,8 +40,8 @@ export class ResultCardComponent {
       this.isViewDetails = !this.isViewDetails;
       return;
     }
-    const formatDate = this.formatDate((this.route as RouteResponse).date);
-    this.routeService.getRouteByIdAndDate$(this.route.id, formatDate).subscribe((routeDetails: Route) => {
+    this.formattedDate = this.formatDate((this.route as RouteResponse).date);
+    this.routeService.getRouteByIdAndDate$(this.route.id, this.formattedDate).subscribe((routeDetails: Route) => {
       this.route = { ...this.route, ...routeDetails };
       this.sanitizedFromAtEmbedMapLink = this.sanitizer.bypassSecurityTrustResourceUrl(
         this.route.fromAt["embedGmapLink"]
@@ -45,8 +52,22 @@ export class ResultCardComponent {
     });
   }
 
-  public handleBookNow(): void {
-    this.router.navigate(["/booking/proceed"]);
+  public handleBookNow(routeId: number): void {
+    this.routeService.getRouteByIdAndDate$(this.route.id, this.formattedDate).subscribe((routeDetail) => {
+      const user = Object(cacheService.getUserInfo());
+      this.store.dispatch(new GetRouteByIdAndDate(routeDetail));
+
+      //nếu đã có token passenger -> vào proceed
+      if (cacheService.getValue("accessToken") && user.userRole === "PASSENGER") {
+        this.router.navigate(["/booking/proceed"]);
+        return;
+      }
+      // else vào login passenger -> login ok -> vào proceed
+      this.router.navigate(["/auth/login"], { queryParams: { userRole: "passenger" } });
+      this.toastService.showInfo("Info", "Please login as a passenger before booking!");
+
+      // this.routeService.getRouteByIdAndDate$(this.route.id, this.formattedDate)
+    });
   }
 
   public getTime(date: string): string {
