@@ -1,8 +1,9 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild } from "@angular/core";
 import { Select } from "@ngxs/store";
-import { Route, Seat } from "_api";
+import { BookingDto, Route, Seat, SeatDto } from "_api";
 import { Observable } from "rxjs";
 import Seatchart, { Options, SeatIndex, SeatInfo, SeatType, SeatTypeDefault } from "seatchart";
+import { BookingService } from "src/app/core/service/booking/booking.service";
 import { RouteState } from "src/app/core/service/route/route.state";
 
 @Component({
@@ -13,14 +14,21 @@ import { RouteState } from "src/app/core/service/route/route.state";
 export class SeatChartComponent implements OnInit {
   @ViewChild("container", { static: true }) public containerRef!: ElementRef<HTMLDivElement>;
   @Select(RouteState.getRouteByIdAndDate) public route$: Observable<Route>;
+  @Select(RouteState.getBookingDate) public date$: Observable<string>;
+  @Output() checkOutUrl = new EventEmitter<{ url: string }>();
+  public currentRoute: Route;
   public seatchart!: Seatchart;
   public mapSeat: number[][] = [];
   public reservedSeat: Seat[] = [];
 
-  constructor(private renderer: Renderer2) {}
+  constructor(
+    private renderer: Renderer2,
+    private bookingService: BookingService
+  ) {}
 
   ngOnInit() {
     this.route$.subscribe((route: Route) => {
+      this.currentRoute = route;
       this.mapSeat = route.transport["mapSeat"][0];
       this.reservedSeat = route.seats;
       this.configSeatChart();
@@ -41,7 +49,22 @@ export class SeatChartComponent implements OnInit {
   }
 
   private submitSeats(): void {
-    console.log("Selected seats:", (this.seatchart as any).store.cart);
+    this.date$.subscribe((date) => {
+      const seats: SeatDto[] = (this.seatchart as any).store.cart.map((seat) => ({
+        col: seat.index["col"],
+        row: seat.index["row"],
+        floor: 1,
+        date,
+        route: {
+          id: this.currentRoute.id,
+        },
+      }));
+      const bookingDto: BookingDto = { seats };
+
+      this.bookingService.createBooking$(bookingDto).subscribe((url) => {
+        this.checkOutUrl.emit(url);
+      });
+    });
   }
 
   private configSeatChart(): void {

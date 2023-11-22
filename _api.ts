@@ -28,55 +28,30 @@ export interface BankCardDto {
   isDefaultCard: boolean;
 }
 
-export enum SystemConfigType {
-  String = 'string',
-  Number = 'number',
-  Boolean = 'boolean',
-  Select = 'select',
+export interface AuthCredentialsDto {
+  username: string;
+  password: string;
+  userRole: string;
 }
 
-export interface SystemConfig {
-  id: number;
+export interface TokenResponse {
+  accessToken: string;
+}
+
+export interface UserDto {
   name: string;
-  value: string;
-  archived?: boolean;
-  title?: string;
-  description?: string;
-  /** @default "string" */
-  dataType?: SystemConfigType;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
 }
 
-export interface SystemConfigPagingResult {
-  total: number;
-  skip: number;
-  take: number;
-  data: SystemConfig[];
-}
-
-export interface SystemConfigDto {
-  name: string;
-  value: string;
-  title?: string;
-  description?: string;
-  /** @default "string" */
-  dataType?: SystemConfigType;
-}
-
-export enum EventGroup {
-  ConfigGroup = 'ConfigGroup',
-  Configs = 'Configs',
-  Segment = 'Segment',
-  AbTest = 'AbTest',
-  SchemaGroup = 'SchemaGroup',
-  Schema = 'Schema',
-  SegmentField = 'SegmentField',
-}
-
-export interface Audit {
+export interface SubPoint {
   id: number;
-  createdBy: string;
-  /** @format date-time */
-  createdDate: string;
+  time: string;
+  address: string;
+  routePickUp: Route;
+  routeDropOff: Route;
 }
 
 export enum City {
@@ -251,34 +226,23 @@ export interface Passenger {
 
 export interface Booking {
   id: number;
-  name: string;
   bookingCode: string;
   /** @format date-time */
   soldOn: string;
-  bookingDetail: BookingDetail[];
   passenger: Passenger;
-  status: string;
-}
-
-export interface BookingDetail {
-  id: number;
-  booking: Booking;
-  route: Route;
   seats: Seat[];
-  /** @format date-time */
-  departAt: string;
+  status: 'PENDING' | 'MONEYPENDING' | 'SUCCESS' | 'FAILED';
 }
 
 export interface Seat {
   id: number;
-  seatCode: string;
   col: number;
   row: number;
   floor: number;
-  route: Route;
   /** @format date-time */
   date: string;
-  bookingDetail: BookingDetail;
+  route: Route;
+  booking: Booking;
 }
 
 export interface Route {
@@ -299,12 +263,122 @@ export interface Route {
   seats: Seat[];
 }
 
-export interface SubPoint {
+export interface PassengerDto {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+}
+
+export interface PartnerDto {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  description: string;
+  title: string;
+  medialLink: string;
+}
+
+export enum EmployeeRoles {
+  ADMIN = 'ADMIN',
+  EDITOR = 'EDITOR',
+  VIEWER = 'VIEWER',
+}
+
+export interface EmployeeDto {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  role: EmployeeRoles;
+}
+
+export interface Employee {
   id: number;
-  time: string;
-  address: string;
-  routePickUp: Route;
-  routeDropOff: Route;
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  role: string;
+}
+
+export enum SystemConfigType {
+  String = 'string',
+  Number = 'number',
+  Boolean = 'boolean',
+  Select = 'select',
+}
+
+export interface SystemConfig {
+  id: number;
+  name: string;
+  value: string;
+  archived?: boolean;
+  title?: string;
+  description?: string;
+  /** @default "string" */
+  dataType?: SystemConfigType;
+}
+
+export interface SystemConfigPagingResult {
+  total: number;
+  skip: number;
+  take: number;
+  data: SystemConfig[];
+}
+
+export interface SystemConfigDto {
+  name: string;
+  value: string;
+  title?: string;
+  description?: string;
+  /** @default "string" */
+  dataType?: SystemConfigType;
+}
+
+export enum EventGroup {
+  ConfigGroup = 'ConfigGroup',
+  Configs = 'Configs',
+  Segment = 'Segment',
+  AbTest = 'AbTest',
+  SchemaGroup = 'SchemaGroup',
+  Schema = 'Schema',
+  SegmentField = 'SegmentField',
+}
+
+export interface Audit {
+  id: number;
+  createdBy: string;
+  /** @format date-time */
+  createdDate: string;
+}
+
+export interface SeatDto {
+  col: number;
+  row: number;
+  floor: number;
+  date: string;
+  route: Route;
+}
+
+export interface BookingDto {
+  seats: SeatDto[];
+}
+
+export interface PaymentGatewayDto {
+  url: string;
+}
+
+export interface BookingPagingResult {
+  total: number;
+  skip: number;
+  take: number;
+  data: Booking[];
 }
 
 export interface SearchRouteDto {
@@ -359,68 +433,6 @@ export interface RouteDto {
   routeSchedules: RouteScheduleDto[];
   price: number;
   transport: Transport;
-}
-
-export interface AuthCredentialsDto {
-  username: string;
-  password: string;
-  userRole: string;
-}
-
-export interface TokenResponse {
-  accessToken: string;
-}
-
-export interface UserDto {
-  name: string;
-  email: string;
-  username: string;
-  password: string;
-  phoneNumber: string;
-}
-
-export interface PassengerDto {
-  name: string;
-  email: string;
-  username: string;
-  password: string;
-  phoneNumber: string;
-}
-
-export interface PartnerDto {
-  name: string;
-  email: string;
-  username: string;
-  password: string;
-  phoneNumber: string;
-  description: string;
-  title: string;
-  medialLink: string;
-}
-
-export enum EmployeeRoles {
-  ADMIN = 'ADMIN',
-  EDITOR = 'EDITOR',
-  VIEWER = 'VIEWER',
-}
-
-export interface EmployeeDto {
-  name: string;
-  email: string;
-  username: string;
-  password: string;
-  phoneNumber: string;
-  role: EmployeeRoles;
-}
-
-export interface Employee {
-  id: number;
-  name: string;
-  email: string;
-  username: string;
-  password: string;
-  phoneNumber: string;
-  role: string;
 }
 
 export interface StationDto {
@@ -736,335 +748,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @name HealthControllerCheck
-     * @request GET:/api/health
-     */
-    healthCheck: (params: RequestParams = {}) =>
-      this.request<
-        {
-          /** @example "ok" */
-          status?: string;
-          /** @example {"database":{"status":"up"}} */
-          info?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {} */
-          error?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {"database":{"status":"up"}} */
-          details?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-        },
-        {
-          /** @example "error" */
-          status?: string;
-          /** @example {"database":{"status":"up"}} */
-          info?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {"redis":{"status":"down","message":"Could not connect"}} */
-          error?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {"database":{"status":"up"},"redis":{"status":"down","message":"Could not connect"}} */
-          details?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-        }
-      >({
-        path: `/api/health`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags system-config
-     * @name SystemConfigControllerGetAll
-     * @request GET:/api/systemconfig/all
-     */
-    systemConfigGetAll: (
-      query?: {
-        /** Order */
-        order?: any;
-        /** Where filter */
-        where?: any;
-        /** Skip */
-        skip?: number;
-        /** Page size */
-        take?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<SystemConfigPagingResult, any>({
-        path: `/api/systemconfig/all`,
-        method: 'GET',
-        query: query,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags system-config
-     * @name SystemConfigControllerCreate
-     * @request POST:/api/systemconfig
-     */
-    systemConfigCreate: (data: SystemConfigDto, params: RequestParams = {}) =>
-      this.request<SystemConfig, any>({
-        path: `/api/systemconfig`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags system-config
-     * @name SystemConfigControllerGetById
-     * @request GET:/api/systemconfig/{id}
-     */
-    systemConfigGetById: (id: number, params: RequestParams = {}) =>
-      this.request<SystemConfig, any>({
-        path: `/api/systemconfig/${id}`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags system-config
-     * @name SystemConfigControllerUpdate
-     * @request PUT:/api/systemconfig/{id}
-     */
-    systemConfigUpdate: (id: number, data: SystemConfigDto, params: RequestParams = {}) =>
-      this.request<SystemConfig, any>({
-        path: `/api/systemconfig/${id}`,
-        method: 'PUT',
-        body: data,
-        type: ContentType.Json,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Audit
-     * @name AuditControllerGetListFilteredAudit
-     * @summary get audit by bucketid
-     * @request GET:/api/{bucketId}/audit
-     */
-    auditGetListFilteredAudit: (
-      bucketId: number,
-      query?: {
-        message?: string;
-        reference?: string;
-        eventGroup?: EventGroup[];
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<Audit[], any>({
-        path: `/api/${bucketId}/audit`,
-        method: 'GET',
-        query: query,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerGetAllRoutesOfPartner
-     * @request GET:/api/route
-     */
-    routeGetAllRoutesOfPartner: (params: RequestParams = {}) =>
-      this.request<Route[], any>({
-        path: `/api/route`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerCreate
-     * @request POST:/api/route
-     */
-    routeCreate: (data: RouteDto, params: RequestParams = {}) =>
-      this.request<Route, any>({
-        path: `/api/route`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerGetAllRoutesByPartnerId
-     * @request GET:/api/route/partner/{id}
-     */
-    routeGetAllRoutesByPartnerId: (id: number, params: RequestParams = {}) =>
-      this.request<Route[], any>({
-        path: `/api/route/partner/${id}`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerGetRoutesPending
-     * @request GET:/api/route/pending
-     */
-    routeGetRoutesPending: (params: RequestParams = {}) =>
-      this.request<Route[], any>({
-        path: `/api/route/pending`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerSearch
-     * @request POST:/api/route/search
-     */
-    routeSearch: (data: SearchRouteDto, params: RequestParams = {}) =>
-      this.request<RouteSearchResponse, any>({
-        path: `/api/route/search`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerGetRouteByIdAndDate
-     * @request GET:/api/route/{id}/date/{date}
-     */
-    routeGetRouteByIdAndDate: (id: number, date: string, params: RequestParams = {}) =>
-      this.request<Route, any>({
-        path: `/api/route/${id}/date/${date}`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerUpdateById
-     * @request PUT:/api/route/{id}
-     */
-    routeUpdateById: (id: number, data: RouteDto, params: RequestParams = {}) =>
-      this.request<Route, any>({
-        path: `/api/route/${id}`,
-        method: 'PUT',
-        body: data,
-        type: ContentType.Json,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerGetRouteById
-     * @request GET:/api/route/{id}
-     */
-    routeGetRouteById: (id: number, params: RequestParams = {}) =>
-      this.request<Route, any>({
-        path: `/api/route/${id}`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerAcceptRoute
-     * @request POST:/api/route/accept/{id}
-     */
-    routeAcceptRoute: (id: number, params: RequestParams = {}) =>
-      this.request<Route, any>({
-        path: `/api/route/accept/${id}`,
-        method: 'POST',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Route
-     * @name RouteControllerDenyRoute
-     * @request POST:/api/route/deny/{id}
-     */
-    routeDenyRoute: (id: number, params: RequestParams = {}) =>
-      this.request<Route, any>({
-        path: `/api/route/deny/${id}`,
-        method: 'POST',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
      * @tags auth
      * @name AuthControllerLogin
      * @summary Login
@@ -1296,6 +979,455 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: 'PUT',
         body: data,
         type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags system-config
+     * @name SystemConfigControllerGetAll
+     * @request GET:/api/systemconfig/all
+     */
+    systemConfigGetAll: (
+      query?: {
+        /** Order */
+        order?: any;
+        /** Where filter */
+        where?: any;
+        /** Skip */
+        skip?: number;
+        /** Page size */
+        take?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<SystemConfigPagingResult, any>({
+        path: `/api/systemconfig/all`,
+        method: 'GET',
+        query: query,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags system-config
+     * @name SystemConfigControllerCreate
+     * @request POST:/api/systemconfig
+     */
+    systemConfigCreate: (data: SystemConfigDto, params: RequestParams = {}) =>
+      this.request<SystemConfig, any>({
+        path: `/api/systemconfig`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags system-config
+     * @name SystemConfigControllerGetById
+     * @request GET:/api/systemconfig/{id}
+     */
+    systemConfigGetById: (id: number, params: RequestParams = {}) =>
+      this.request<SystemConfig, any>({
+        path: `/api/systemconfig/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags system-config
+     * @name SystemConfigControllerUpdate
+     * @request PUT:/api/systemconfig/{id}
+     */
+    systemConfigUpdate: (id: number, data: SystemConfigDto, params: RequestParams = {}) =>
+      this.request<SystemConfig, any>({
+        path: `/api/systemconfig/${id}`,
+        method: 'PUT',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Audit
+     * @name AuditControllerGetListFilteredAudit
+     * @summary get audit by bucketid
+     * @request GET:/api/{bucketId}/audit
+     */
+    auditGetListFilteredAudit: (
+      bucketId: number,
+      query?: {
+        message?: string;
+        reference?: string;
+        eventGroup?: EventGroup[];
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<Audit[], any>({
+        path: `/api/${bucketId}/audit`,
+        method: 'GET',
+        query: query,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerBooking
+     * @request POST:/api/booking
+     */
+    bookingBooking: (data: BookingDto, params: RequestParams = {}) =>
+      this.request<PaymentGatewayDto, any>({
+        path: `/api/booking`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerConfirmPayment
+     * @request PUT:/api/booking/confirm-payment/{id}
+     */
+    bookingConfirmPayment: (id: number, params: RequestParams = {}) =>
+      this.request<Booking, any>({
+        path: `/api/booking/confirm-payment/${id}`,
+        method: 'PUT',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetBookingMoneyPending
+     * @request GET:/api/booking/money-pending
+     */
+    bookingGetBookingMoneyPending: (params: RequestParams = {}) =>
+      this.request<Booking, any>({
+        path: `/api/booking/money-pending`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerAcceptBooking
+     * @request PUT:/api/booking/accept-booking/{id}
+     */
+    bookingAcceptBooking: (id: number, params: RequestParams = {}) =>
+      this.request<Booking, any>({
+        path: `/api/booking/accept-booking/${id}`,
+        method: 'PUT',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerDenyBooking
+     * @request PUT:/api/booking/deny-booking/{id}
+     */
+    bookingDenyBooking: (id: number, params: RequestParams = {}) =>
+      this.request<Booking, any>({
+        path: `/api/booking/deny-booking/${id}`,
+        method: 'PUT',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetAll
+     * @request GET:/api/booking/all
+     */
+    bookingGetAll: (
+      query?: {
+        /** Order */
+        order?: any;
+        /** Where filter */
+        where?: any;
+        /** Skip */
+        skip?: number;
+        /** Page size */
+        take?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BookingPagingResult, any>({
+        path: `/api/booking/all`,
+        method: 'GET',
+        query: query,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetById
+     * @request GET:/api/booking/{id}
+     */
+    bookingGetById: (id: number, params: RequestParams = {}) =>
+      this.request<Booking, any>({
+        path: `/api/booking/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name HealthControllerCheck
+     * @request GET:/api/health
+     */
+    healthCheck: (params: RequestParams = {}) =>
+      this.request<
+        {
+          /** @example "ok" */
+          status?: string;
+          /** @example {"database":{"status":"up"}} */
+          info?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {} */
+          error?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"database":{"status":"up"}} */
+          details?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+        },
+        {
+          /** @example "error" */
+          status?: string;
+          /** @example {"database":{"status":"up"}} */
+          info?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"redis":{"status":"down","message":"Could not connect"}} */
+          error?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"database":{"status":"up"},"redis":{"status":"down","message":"Could not connect"}} */
+          details?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+        }
+      >({
+        path: `/api/health`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerGetAllRoutesOfPartner
+     * @request GET:/api/route
+     */
+    routeGetAllRoutesOfPartner: (params: RequestParams = {}) =>
+      this.request<Route[], any>({
+        path: `/api/route`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerCreate
+     * @request POST:/api/route
+     */
+    routeCreate: (data: RouteDto, params: RequestParams = {}) =>
+      this.request<Route, any>({
+        path: `/api/route`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerGetAllRoutesByPartnerId
+     * @request GET:/api/route/partner/{id}
+     */
+    routeGetAllRoutesByPartnerId: (id: number, params: RequestParams = {}) =>
+      this.request<Route[], any>({
+        path: `/api/route/partner/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerGetRoutesPending
+     * @request GET:/api/route/pending
+     */
+    routeGetRoutesPending: (params: RequestParams = {}) =>
+      this.request<Route[], any>({
+        path: `/api/route/pending`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerSearch
+     * @request POST:/api/route/search
+     */
+    routeSearch: (data: SearchRouteDto, params: RequestParams = {}) =>
+      this.request<RouteSearchResponse, any>({
+        path: `/api/route/search`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerGetRouteByIdAndDate
+     * @request GET:/api/route/{id}/date/{date}
+     */
+    routeGetRouteByIdAndDate: (id: number, date: string, params: RequestParams = {}) =>
+      this.request<Route, any>({
+        path: `/api/route/${id}/date/${date}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerUpdateById
+     * @request PUT:/api/route/{id}
+     */
+    routeUpdateById: (id: number, data: RouteDto, params: RequestParams = {}) =>
+      this.request<Route, any>({
+        path: `/api/route/${id}`,
+        method: 'PUT',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerGetRouteById
+     * @request GET:/api/route/{id}
+     */
+    routeGetRouteById: (id: number, params: RequestParams = {}) =>
+      this.request<Route, any>({
+        path: `/api/route/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerAcceptRoute
+     * @request POST:/api/route/accept/{id}
+     */
+    routeAcceptRoute: (id: number, params: RequestParams = {}) =>
+      this.request<Route, any>({
+        path: `/api/route/accept/${id}`,
+        method: 'POST',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerDenyRoute
+     * @request POST:/api/route/deny/{id}
+     */
+    routeDenyRoute: (id: number, params: RequestParams = {}) =>
+      this.request<Route, any>({
+        path: `/api/route/deny/${id}`,
+        method: 'POST',
         format: 'json',
         ...params,
       }),

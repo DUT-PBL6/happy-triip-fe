@@ -4,7 +4,7 @@
     <h5>{{ routes.length }} result(s)</h5>
     <ng-container *ngIf="routes.length > 0; else noResults">
       <ng-container *ngFor="let route of routes">
-        <app-result-card [route]="route"></app-result-card>
+        <app-result-card [route]="route" [date]="route.date"></app-result-card>
       </ng-container>
     </ng-container>
     <ng-template #noResults>

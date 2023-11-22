@@ -7,7 +7,7 @@ import { Route, RouteResponse, TypeVehical, Utility } from "_api";
 import { RouteService } from "src/app/core/service/route/route.service";
 import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
-import { GetRouteByIdAndDate } from "src/app/core/service/route/route.action";
+import { GetRouteByIdAndDate, UpdateBookingDate } from "src/app/core/service/route/route.action";
 import cacheService from "src/lib/cache-service";
 import { ToastService } from "src/app/core/service/toast/toast.service";
 
@@ -18,6 +18,7 @@ import { ToastService } from "src/app/core/service/toast/toast.service";
 })
 export class ResultCardComponent {
   @Input() route: RouteResponse | Route;
+  @Input() date: string;
   public isViewDetails: boolean = false;
   public sanitizedFromAtEmbedMapLink: SafeResourceUrl;
   public sanitizedToAtEmbedMapLink: SafeResourceUrl;
@@ -56,17 +57,15 @@ export class ResultCardComponent {
     this.routeService.getRouteByIdAndDate$(this.route.id, this.formattedDate).subscribe((routeDetail) => {
       const user = Object(cacheService.getUserInfo());
       this.store.dispatch(new GetRouteByIdAndDate(routeDetail));
+      this.store.dispatch(new UpdateBookingDate(this.date));
 
-      //nếu đã có token passenger -> vào proceed
       if (cacheService.getValue("accessToken") && user.userRole === "PASSENGER") {
         this.router.navigate(["/booking/proceed"]);
         return;
       }
-      // else vào login passenger -> login ok -> vào proceed
+
       this.router.navigate(["/auth/login"], { queryParams: { userRole: "passenger" } });
       this.toastService.showInfo("Info", "Please login as a passenger before booking!");
-
-      // this.routeService.getRouteByIdAndDate$(this.route.id, this.formattedDate)
     });
   }
 

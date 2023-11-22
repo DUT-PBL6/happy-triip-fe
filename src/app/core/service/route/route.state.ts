@@ -10,6 +10,7 @@ import {
   GetAllPendingRoute,
   GetAllRoute,
   GetRouteByIdAndDate,
+  UpdateBookingDate,
   UpdateRoute,
 } from "./route.action";
 
@@ -17,6 +18,7 @@ interface IRouteState {
   routes: Route[];
   pendingRoutes: Route[];
   routeDetail: Route | undefined;
+  bookingDate: string;
 }
 
 @State<IRouteState>({
@@ -25,6 +27,7 @@ interface IRouteState {
     routes: [],
     pendingRoutes: [],
     routeDetail: undefined,
+    bookingDate: "",
   },
 })
 @Injectable()
@@ -42,6 +45,11 @@ export class RouteState {
   @Selector()
   public static getRouteByIdAndDate(state: IRouteState): Route {
     return state.routeDetail;
+  }
+
+  @Selector()
+  public static getBookingDate(state: IRouteState): string {
+    return state.bookingDate;
   }
 
   constructor(private routeService: RouteService) {}
@@ -64,6 +72,16 @@ export class RouteState {
         next: (pendingRoutes) => ctx.patchState({ pendingRoutes }),
       })
     );
+  }
+
+  @Action(UpdateBookingDate)
+  public updateBookingDate$(ctx: StateContext<IRouteState>, action: UpdateBookingDate): void {
+    const state = ctx.getState();
+
+    ctx.setState({
+      ...state,
+      bookingDate: action.date,
+    });
   }
 
   @Action(GetRouteByIdAndDate)

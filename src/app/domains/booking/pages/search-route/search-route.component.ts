@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Observable, map, takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
 import { RouteService } from "src/app/core/service/route/route.service";
-import { RouteResponse, SearchRouteDto } from "_api";
+import { RouteResponse, RouteSearchResponse, SearchRouteDto } from "_api";
 import { formatDate } from "src/app/share/helpers/date.helper";
 
 @Component({
@@ -38,7 +38,7 @@ export class SearchRouteComponent extends BaseDestroyable implements OnInit, OnC
 
       this.routes$ = this.routeService.searchRoutes$(this.routeInfo).pipe(
         takeUntil(this.destroy$),
-        map((response) => {
+        map((response: RouteSearchResponse) => {
           return this.isFindingRoundTrip ? response.roundTripRoutes : response.oneWayRoutes;
         })
       );

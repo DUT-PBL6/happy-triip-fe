@@ -1,0 +1,144 @@
+<div class="flex flex-column align-items-center gap-4 p-4">
+  <h2>Your booking is order successfully!</h2>
+  <img src="https://img.vietqr.io/image/vietinbank-113366668888-compact.jpg" alt="Url" style="width: 500px" />
+  <!-- <div class="card flex flex-column w-6">
+    <h4 class="route-title mb-3">{{ currentRoute.name }}</h4>
+    <div class="header">
+      <div class="vehicle flex align-items-center w-auto">
+        <img [src]="'assets/icons/' + (currentRoute.transport['type'] | lowercase) + '.svg'" alt="Vehicle type" />
+        <span>{{ currentRoute.transport["name"] }}</span>
+        <span>({{ "share.vehicleType." + getKey(currentRoute.transport["type"], vehicleType) | translate }})</span>
+      </div>
+    </div>
+    <div class="route-item">
+      <div class="content flex justify-content-between gap-4">
+        <div class="route-detail">
+          <div class="stations flex flex-column">
+            <div class="departure flex align-items-center">
+              <i class="pi pi-map-marker"></i>
+              <div class="departure__time">
+                {{ getTime(parseTimeStringToDateString(currentRoute.departAt)) }}
+              </div>
+              <div class="dot"></div>
+              <div class="departure__name">
+                {{ currentRoute.fromAt["name"] }}
+              </div>
+              <div class="departure__link">
+                <a href="{{ currentRoute.fromAt['gmapLink'] }}" target="_blank">View on map</a>
+              </div>
+            </div>
+            <div class="time-estimate flex gap-3 align-items-center">
+              <div class="dashed"></div>
+              <span>{{ getHoursDifference(currentRoute.departAt, currentRoute.arriveAt) }} hour(s) ride</span>
+              <div class="dot"></div>
+              <div class="partner">Operated by {{ currentRoute.partner["name"] }}</div>
+            </div>
+            <div class="arrive flex align-items-center">
+              <i class="pi pi-map-marker"></i>
+              <div class="arrive__time">
+                {{ getTime(parseTimeStringToDateString(currentRoute.arriveAt)) }}
+              </div>
+              <div class="dot"></div>
+              <div class="arrive__name">
+                {{ currentRoute.toAt["name"] }}
+              </div>
+              <div class="arrive__link">
+                <a href="{{ currentRoute.toAt['gmapLink'] }}" target="_blank">View on map</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="price-container flex flex-column">
+          <div class="price text-5xl font-semibold">USD {{ currentRoute.price }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="utilities-list flex flex-wrap gap-2">
+      <ng-container [ngTemplateOutlet]="utilitiesList"></ng-container>
+    </div>
+
+    <ng-container *ngIf="sanitizedFromAtEmbedMapLink && sanitizedToAtEmbedMapLink">
+      <div class="utilities">
+        <p-tabView>
+          <p-tabPanel header="{{ currentRoute.transport['name'] }}">
+            <div class="tab-content flex justify-content-between">
+              <div class="utilities-content flex-column align-items-center">
+                <h4 class="mb-3">Utilities On The Vehicle</h4>
+                <div class="utilities-list flex flex-wrap gap-2">
+                  <ng-container [ngTemplateOutlet]="utilitiesList"></ng-container>
+                </div>
+              </div>
+              <div class="images flex justify-content-between">
+                <div class="list flex gap-2">
+                  <ng-container *ngIf="currentRoute.transport['images'].length > 0; else noImage">
+                    <ng-template let-image ngFor [ngForOf]="currentRoute.transport['images']" pTemplate="item">
+                      <img src="{{ image }}" alt="Image" style="width: 120px" />
+                    </ng-template>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+      <div class="locations">
+        <p-tabView>
+          <p-tabPanel header="Departure">
+            <div class="tab-content">
+              <div class="address flex align-items-center">
+                <i class="pi pi-map-marker"></i>
+                <span>{{ currentRoute.fromAt["name"] }}</span>
+              </div>
+              <div class="images flex justify-content-between">
+                <div class="list flex gap-2">
+                  <ng-container *ngIf="currentRoute.fromAt['images'].length > 0; else noImage">
+                    <ng-template let-image ngFor [ngForOf]="currentRoute.fromAt['images']" pTemplate="item">
+                      <img src="{{ image }}" alt="Image" style="width: 120px" />
+                    </ng-template>
+                  </ng-container>
+                </div>
+                <iframe
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  style="border: 0"
+                  [src]="sanitizedFromAtEmbedMapLink"
+                ></iframe>
+              </div>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="Arrival">
+            <div class="tab-content">
+              <div class="address flex align-items-center">
+                <i class="pi pi-map-marker"></i>
+                <span>{{ currentRoute.toAt["name"] }}</span>
+              </div>
+              <div class="images flex justify-content-between">
+                <div class="list flex gap-2">
+                  <ng-container *ngIf="currentRoute.toAt['images'].length > 0; else noImage">
+                    <ng-template let-image ngFor [ngForOf]="currentRoute.toAt['images']" pTemplate="item">
+                      <img src="{{ image }}" alt="Image" style="width: 120px" />
+                    </ng-template>
+                  </ng-container>
+                </div>
+                <iframe allowfullscreen="" loading="lazy" style="border: 0" [src]="sanitizedToAtEmbedMapLink"></iframe>
+              </div>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </ng-container>
+
+    <ng-template #utilitiesList>
+      <ng-container *ngFor="let utility of currentRoute.transport['utility']">
+        <div class="item flex align-items-center">
+          <img [src]="'assets/icons/' + (utility | lowercase) + '.svg'" alt="Image" class="w-1rem" />
+          <span>{{ "share.utilities." + getKey(utility, Utility) | translate }}</span>
+        </div>
+      </ng-container>
+    </ng-template>
+  </div>
+  <ng-template #noImage>
+    <img src="/assets/images/no-image.jpg" width="120" alt="no-image" />
+  </ng-template> -->
+</div>
