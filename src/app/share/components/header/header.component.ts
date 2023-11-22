@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   public tieredItems: MenuItem[] = [];
   public isLoggedIn = false;
   public isInAuthPage = false;
-  public username = cacheService.getUserInfo().username;
+  public user = Object(cacheService.getUserInfo());
 
   constructor(
     private router: Router,
@@ -162,6 +162,10 @@ export class HeaderComponent implements OnInit {
   private initProfileMenu(): void {
     this.itemsProfileMenu = [
       {
+        label: "Management",
+        command: () => this.router.navigate(["/management"]),
+      },
+      {
         label: "Log out",
         command: () => {
           cacheService.resetValue();
@@ -169,5 +173,7 @@ export class HeaderComponent implements OnInit {
         },
       },
     ];
+
+    if (this.user.userRole !== "PASSENGER") this.itemsProfileMenu.splice(0, 1);
   }
 }
