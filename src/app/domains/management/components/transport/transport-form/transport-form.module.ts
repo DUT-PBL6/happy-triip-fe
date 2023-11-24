@@ -10,6 +10,8 @@ import { PasswordModule } from "primeng/password";
 import { CheckboxModule } from "primeng/checkbox";
 import { InputNumberModule } from "primeng/inputnumber";
 import { UploadImageModule } from "src/app/share/components/upload-image/upload-image.module";
+import { MapSeatDetailModule } from "../map-seat-detail/map-seat-detail.module";
+import { DialogService, DynamicDialogModule } from "primeng/dynamicdialog";
 
 @NgModule({
   declarations: [TransportFormComponent],
@@ -25,7 +27,10 @@ import { UploadImageModule } from "src/app/share/components/upload-image/upload-
     CheckboxModule,
     InputNumberModule,
     UploadImageModule,
+    MapSeatDetailModule,
+    DynamicDialogModule,
   ],
   exports: [TransportFormComponent],
+  providers: [DialogService],
 })
 export class TransportFormModule {}

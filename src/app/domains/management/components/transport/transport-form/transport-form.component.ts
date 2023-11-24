@@ -5,6 +5,8 @@ import { Transport, TransportDto, TypeVehical, Utility } from "_api";
 import { Option } from "src/app/core/interfaces/option.interface";
 import { UploadEvent } from "src/app/core/interfaces/upload-event.interface";
 import { validate } from "src/app/share/helpers/form.helper";
+import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
+import { MapSeatDetailComponent } from "../map-seat-detail/map-seat-detail.component";
 
 @Component({
   selector: "app-transport-form",
@@ -22,10 +24,12 @@ export class TransportFormComponent implements OnInit, OnChanges {
   public selectedUtilities: string[] = [];
   public selectedImages: string[] = [];
   public isSubmit = false;
+  public ref: DynamicDialogRef | undefined;
 
   constructor(
     private fb: FormBuilder,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -142,6 +146,15 @@ export class TransportFormComponent implements OnInit, OnChanges {
     });
 
     this.seatTypesForm.push(newSeatType);
+  }
+
+  public handleMapSeat(): void {
+    this.ref = this.dialogService.open(MapSeatDetailComponent, {
+      data: { selectedTransport: this.selectedTransport, seatTypes: this.seatTypes.controls },
+      header: "Create seat types & map seat",
+      width: "70%",
+      contentStyle: { overflow: "auto" },
+    });
   }
 
   public deleteSeatType(index: number): void {

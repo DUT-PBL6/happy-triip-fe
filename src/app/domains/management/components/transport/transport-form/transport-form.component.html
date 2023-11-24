@@ -68,7 +68,7 @@
       <!-- SEAT TYPE -->
       <div class="Seat Type col-12 py-2 flex flex-column">
         <label for="seat-type" class="block text-900 text-lg font-medium mb-2">Seat Type*</label>
-        <div class="input-container">
+        <!-- <div class="input-container">
           <div formArrayName="seatTypes">
             <div *ngFor="let group of seatTypes.controls; let i = index">
               <div [formGroupName]="i" class="seat-type-group flex col-12 gap-3 px-0 pb-3">
@@ -137,6 +137,14 @@
           icon="pi pi-plus"
           iconPos="left"
           (onClick)="addNewSeatType()"
+        ></p-button> -->
+        <p-button
+          label="Add Seat Types & Map Seat"
+          styleClass="p-button-secondary p-button-outlined"
+          severity="secondary"
+          icon="pi pi-plus"
+          iconPos="left"
+          (onClick)="handleMapSeat()"
         ></p-button>
       </div>
       <!-- IMAGE -->

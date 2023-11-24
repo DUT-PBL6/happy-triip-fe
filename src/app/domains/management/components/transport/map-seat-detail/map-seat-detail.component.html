@@ -1,0 +1,2 @@
+<app-seat-types-form *ngIf="backToPreviousStep" (nextStep)="handleNextStep($event)"></app-seat-types-form>
+<app-map-seat-form *ngIf="moveToNextStep" (backToPreviousStep)="handlePreviousStep($event)"></app-map-seat-form>
