@@ -4,7 +4,6 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import utc from "dayjs/plugin/utc";
 import timezonePlugin from "dayjs/plugin/timezone";
 import duration from "dayjs/plugin/duration";
-import { DATE_FORMAT } from "../constants";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -29,9 +28,9 @@ export const getHoursDifference = (departAt: string, arriveAt: string): number =
   return hoursDifference;
 };
 
-export const formatDate = (dateString: string): string => {
+export const formatDate = (dateString: string, formatPattern: string): string => {
   const date = dayjs(dateString);
-  return date.format(DATE_FORMAT);
+  return date.format(formatPattern);
 };
 
 export const parseTimeStringToDate = (timeString: string): Date => {

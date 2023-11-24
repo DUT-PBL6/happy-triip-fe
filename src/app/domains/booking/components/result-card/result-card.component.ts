@@ -10,6 +10,7 @@ import { Store } from "@ngxs/store";
 import { GetRouteByIdAndDate, UpdateBookingDate } from "src/app/core/service/route/route.action";
 import cacheService from "src/lib/cache-service";
 import { ToastService } from "src/app/core/service/toast/toast.service";
+import { DATE_FORMAT } from "src/app/share/constants";
 
 @Component({
   selector: "app-result-card",
@@ -74,7 +75,7 @@ export class ResultCardComponent {
   }
 
   public formatDate(date: string): string {
-    return formatDate(date);
+    return formatDate(date, DATE_FORMAT);
   }
 
   public getHoursDifference(departAt: string, arriveAt: string): string {

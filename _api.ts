@@ -1125,7 +1125,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/api/booking/money-pending
      */
     bookingGetBookingMoneyPending: (params: RequestParams = {}) =>
-      this.request<Booking, any>({
+      this.request<Booking[], any>({
         path: `/api/booking/money-pending`,
         method: 'GET',
         format: 'json',
