@@ -1132,7 +1132,7 @@ p-inputnumber.p-inputnumber-clearable .p-inputnumber-buttons-horizontal .p-input
   background: #fff;
 }
 .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
-  background: #68bb02;
+  background: #7dcb1d;
 }
 p-inputswitch.ng-dirty.ng-invalid > .p-inputswitch {
   border-color: #e24c4c;
@@ -1623,8 +1623,8 @@ p-radiobutton.ng-dirty.ng-invalid > .p-radiobutton > .p-radiobutton-box {
   color: #0b0b0b;
 }
 .p-selectbutton .p-button.p-highlight:hover {
-  background: #68bb02;
-  border-color: #68bb02;
+  background: #7dcb1d;
+  border-color: #7dcb1d;
   color: #0b0b0b;
 }
 .p-selectbutton .p-button.p-highlight:hover .p-button-icon-left,
@@ -1732,8 +1732,8 @@ p-selectbutton.ng-dirty.ng-invalid > .p-selectbutton > .p-button {
   color: #0b0b0b;
 }
 .p-togglebutton.p-button.p-highlight:hover {
-  background: #68bb02;
-  border-color: #68bb02;
+  background: #7dcb1d;
+  border-color: #7dcb1d;
   color: #0b0b0b;
 }
 .p-togglebutton.p-button.p-highlight:hover .p-button-icon-left,
@@ -1891,9 +1891,9 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   border-radius: 6px;
 }
 .p-button:enabled:hover {
-  background: #68bb02;
+  background: #7dcb1d;
   color: #0b0b0b;
-  border-color: #68bb02;
+  border-color: #7dcb1d;
 }
 .p-button:enabled:active {
   background: #5da800;
@@ -3314,8 +3314,8 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   border-right: 1px solid #dee2e6;
 }
 .fc.fc-unthemed .fc-view-container .fc-event {
-  background: #68bb02;
-  border: 1px solid #68bb02;
+  background: #7dcb1d;
+  border: 1px solid #7dcb1d;
   color: #0b0b0b;
 }
 .fc.fc-unthemed .fc-view-container .fc-divider {
@@ -3337,9 +3337,9 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   align-items: center;
 }
 .fc.fc-unthemed .fc-toolbar .fc-button:enabled:hover {
-  background: #68bb02;
+  background: #7dcb1d;
   color: #0b0b0b;
-  border-color: #68bb02;
+  border-color: #7dcb1d;
 }
 .fc.fc-unthemed .fc-toolbar .fc-button:enabled:active {
   background: #5da800;
@@ -3401,8 +3401,8 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 .fc.fc-unthemed .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active:hover,
 .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active:hover,
 .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active:hover {
-  background: #68bb02;
-  border-color: #68bb02;
+  background: #7dcb1d;
+  border-color: #7dcb1d;
   color: #0b0b0b;
 }
 .fc.fc-unthemed .fc-toolbar .fc-button.fc-dayGridMonth-button:focus,
@@ -3490,15 +3490,15 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 .fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event {
   color: #0b0b0b;
-  background: #68bb02;
-  border-color: #68bb02;
+  background: #7dcb1d;
+  border-color: #7dcb1d;
 }
 .fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event .fc-event-main {
   color: #0b0b0b;
 }
 .fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-dot-event .fc-daygrid-event-dot {
-  background: #68bb02;
-  border-color: #68bb02;
+  background: #7dcb1d;
+  border-color: #7dcb1d;
 }
 .fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-dot-event:hover {
   background: #e9ecef;
@@ -3520,9 +3520,9 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   border-radius: 6px;
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button:enabled:hover {
-  background: #68bb02;
+  background: #7dcb1d;
   color: #0b0b0b;
-  border-color: #68bb02;
+  border-color: #7dcb1d;
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button:enabled:active {
   background: #5da800;
@@ -3590,8 +3590,8 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 .fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active:hover,
 .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active:hover,
 .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active:hover {
-  background: #68bb02;
-  border-color: #68bb02;
+  background: #7dcb1d;
+  border-color: #7dcb1d;
   color: #0b0b0b;
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button:not(:disabled):focus,
@@ -4736,7 +4736,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   right: -1rem;
 }
 .p-overlaypanel .p-overlaypanel-close:enabled:hover {
-  background: #68bb02;
+  background: #7dcb1d;
   color: #0b0b0b;
 }
 .p-overlaypanel:after {
@@ -4852,9 +4852,9 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   margin-top: 0;
 }
 .p-fileupload-choose:not(.p-disabled):hover {
-  background: #68bb02;
+  background: #7dcb1d;
   color: #0b0b0b;
-  border-color: #68bb02;
+  border-color: #7dcb1d;
 }
 .p-fileupload-choose:not(.p-disabled):active {
   background: #5da800;

@@ -12,6 +12,7 @@ import { StationState } from "src/app/core/service/station/station.state";
 import { GetAllStation } from "src/app/core/service/station/station.action";
 import { formatDate, getTime } from "src/app/share/helpers/date.helper";
 import { UpdateRouteResponse } from "../../../types/update-route-response";
+import { DATE_FORMAT } from "src/app/share/constants";
 
 @Component({
   selector: "app-route-form",
@@ -209,7 +210,7 @@ export class RouteFormComponent implements OnInit, OnChanges {
     }));
 
     const updatedRouteSchedules = this.routeSchedules.value.map((schedule) => ({
-      date: formatDate(schedule),
+      date: formatDate(schedule, DATE_FORMAT),
     }));
 
     return {

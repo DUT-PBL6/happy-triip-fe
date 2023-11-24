@@ -5,6 +5,7 @@ import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-d
 import { RouteService } from "src/app/core/service/route/route.service";
 import { RouteResponse, RouteSearchResponse, SearchRouteDto } from "_api";
 import { formatDate } from "src/app/share/helpers/date.helper";
+import { DATE_FORMAT } from "src/app/share/constants";
 
 @Component({
   selector: "app-search-route",
@@ -30,8 +31,8 @@ export class SearchRouteComponent extends BaseDestroyable implements OnInit, OnC
       this.routeInfo = {
         firstCity: queryParamMap.get("firstCity"),
         secondCity: queryParamMap.get("secondCity"),
-        firstDt: formatDate(queryParamMap.get("firstDt")),
-        secondDt: queryParamMap.has("secondDt") ? formatDate(queryParamMap.get("secondDt")) : undefined,
+        firstDt: formatDate(queryParamMap.get("firstDt"), DATE_FORMAT),
+        secondDt: queryParamMap.has("secondDt") ? formatDate(queryParamMap.get("secondDt"), DATE_FORMAT) : undefined,
       };
 
       if (queryParamMap.has("secondDt")) this.isFindingRoundTrip = true;

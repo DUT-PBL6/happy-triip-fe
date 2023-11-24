@@ -1,33 +1,34 @@
 import { Component, OnInit } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
 import { Booking, City, TypeVehical } from "_api";
-import { Observable, takeUntil } from "rxjs";
+import { Observable, map, takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
 import { Option } from "src/app/core/interfaces/option.interface";
 import { AcceptBooking, DenyBooking, GetBookingMoneyPending } from "src/app/core/service/booking/booking.action";
 import { BookingState } from "src/app/core/service/booking/booking.state";
 import { ToastService } from "src/app/core/service/toast/toast.service";
-import { formatDate } from "src/app/share/helpers/date.helper";
-
 import { TranslateService } from "@ngx-translate/core";
-
 import { ConfirmationService } from "primeng/api";
 import { BookingService } from "src/app/core/service/booking/booking.service";
 import { DynamicDialogRef } from "primeng/dynamicdialog";
+import dayjs from "dayjs";
+
+type BookingResult = Omit<Booking, "soldOn"> & {
+  soldOn: Date;
+  totalPrice: number;
+};
+
 @Component({
   selector: "app-booking-confirmation",
   templateUrl: "./booking-confirmation.component.html",
   styleUrls: ["./booking-confirmation.component.scss"],
 })
 export class BookingConfirmationComponent extends BaseDestroyable implements OnInit {
-  // public date: Date | undefined;
-  // Inside your component class
- public date: Date = new Date();
-
+  @Select(BookingState.getBookingMoneyPending) public bookings$: Observable<Booking[]>;
   public vehicleType: Option<TypeVehical>[] = [];
   public locations: Option<City>[] = [];
   public ref: DynamicDialogRef | undefined;
-  @Select(BookingState.getBookingMoneyPending) public bookings$: Observable<Booking[]>;
+  public bookingsResult: BookingResult[] = [];
 
   constructor(
     private toastService: ToastService,
@@ -41,19 +42,27 @@ export class BookingConfirmationComponent extends BaseDestroyable implements OnI
   ngOnInit(): void {
     if (this.store.selectSnapshot(BookingState.getBookingMoneyPending).length === 0)
       this.store.dispatch(new GetBookingMoneyPending());
-    console.log(this.bookings$);
 
-    // this.bookings$.subscribe((bookings: Booking[]) => {
-    //   console.log(bookings);
-    // });
+    this.bookings$
+      .pipe(
+        takeUntil(this.destroy$),
+        map((bookings) => {
+          return bookings.map((booking) => ({
+            ...booking,
+            soldOn: new Date(dayjs(booking.soldOn).format("YYYY-MM-DD")),
+            totalPrice: this.totalPrice(booking.seats),
+          }));
+        })
+      )
+      .subscribe((bookings) => {
+        this.bookingsResult = bookings;
+      });
+
     this.initVehicleType();
     this.initLocationOptions();
   }
 
-  public formatDate(date: string): string {
-    return formatDate(date);
-  }
-  public totalPrice(seats: any[]){
+  public totalPrice(seats: any[]): number {
     return seats.reduce((total, seat) => total + seat.route["price"], 0);
   }
 
@@ -63,6 +72,7 @@ export class BookingConfirmationComponent extends BaseDestroyable implements OnI
       value,
     }));
   }
+
   private initLocationOptions(): void {
     this.locations = Object.values(City).map((value) => ({
       name: this.translate.instant(`share.city.${value}`),
@@ -70,10 +80,7 @@ export class BookingConfirmationComponent extends BaseDestroyable implements OnI
     }));
   }
 
-
   public handleBookingAction(event: Event, isAccept: boolean, id: number): void {
-    console.log("handle", isAccept, id);
-
     const confirmationMessage = isAccept
       ? "Are you sure that you want to accept this booking?"
       : "Are you sure that you want to deny this booking?";
@@ -92,13 +99,13 @@ export class BookingConfirmationComponent extends BaseDestroyable implements OnI
             this.store.dispatch(isAccept ? new AcceptBooking(response.id) : new DenyBooking(response.id));
             this.store.dispatch(new GetBookingMoneyPending());
             this.toastService.showSuccess("Success", successMessage);
+
             if (this.ref) {
               this.ref.close();
             }
           },
         });
       },
-
       reject: () => {
         if (this.ref) {
           this.ref.close();

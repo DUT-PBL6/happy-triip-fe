@@ -7,168 +7,141 @@
           <h5>Booking confirmation</h5>
         </ng-template>
       </p-confirmDialog>
-      <ng-container *ngIf="bookings$ | async as bookings">
-        <p-table
-          #dt2
-          [value]="bookings"
-          dataKey="id"
-          [rows]="10"
-          [showCurrentPageReport]="true"
-          [rowsPerPageOptions]="[10, 25, 50]"
-          [globalFilterFields]="['soldOn', 'passenger.name', 'passenger.phoneNumber']"
-          [paginator]="true"
-          [scrollable]="true"
-          scrollHeight="630px"
-          selectionMode="single"
-          styleClass="p-datatable-striped"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          [tableStyle]="{ 'min-width': '75rem' }"
-        >
-          <ng-template pTemplate="caption">
-            <div class="flex">
-              <p-button
-                label="Clear"
-                class="p-button-outlined"
-                icon="pi pi-filter-slash"
-                (click)="dt2.clear()"
-              ></p-button>
-              <span class="p-input-icon-left ml-auto">
-                <i class="pi pi-search"></i>
-                <input
-                  pInputText
-                  type="text"
-                  (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                  placeholder="Search keyword"
-                />
+      <p-table
+        #dt2
+        [value]="bookingsResult"
+        dataKey="id"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [globalFilterFields]="['soldOn', 'passenger.name', 'passenger.phoneNumber', '']"
+        [paginator]="true"
+        [scrollable]="true"
+        scrollHeight="560px"
+        selectionMode="single"
+        styleClass="p-datatable-striped"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [tableStyle]="{ 'min-width': '75rem' }"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <p-button
+              label="Clear"
+              class="p-button-outlined"
+              icon="pi pi-filter-slash"
+              (click)="dt2.clear()"
+            ></p-button>
+            <span class="p-input-icon-left ml-auto">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Search keyword"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr class="list-header" style="width: 100%">
+            <th class="item-header" style="width: 5%">
+              <div class="flex align-items-center">Code</div>
+            </th>
+            <th class="item-header" style="width: 15%">
+              <div class="flex align-items-center">
+                Sold On
+                <p-columnFilter type="date" field="soldOn" display="menu"></p-columnFilter>
+              </div>
+            </th>
+            <th class="item-header" style="width: 15%">
+              <div class="flex align-items-center">Passengers</div>
+            </th>
+            <th class="item-header" style="width: 10%">
+              <div class="flex align-items-center">Email & Phone</div>
+            </th>
+            <th class="item-header" style="width: 20%">
+              <div class="flex align-items-center">Route</div>
+            </th>
+            <th class="item-header" style="width: 5%" pSortableColumn="totalPrice">
+              <div class="flex align-items-center">
+                Price
+                <p-sortIcon field="totalPrice"></p-sortIcon>
+              </div>
+            </th>
+            <th class="item-header" style="width: 20%">
+              <div class="flex align-items-center">Vehicle - Agency</div>
+            </th>
+            <th class="item-header" style="width: 5%">
+              <div class="flex align-items-center">Confirm</div>
+            </th>
+            <th class="item-header" style="width: 5%">
+              <div class="flex align-items-center">Cancel</div>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-booking>
+          <tr class="text-center">
+            <td>
+              {{ booking.id }}
+            </td>
+            <td>
+              <span class="ml-1 vertical-align-middle">{{ booking.soldOn | date: "dd/MM/yyyy" }}</span>
+            </td>
+            <td>
+              <span class="ml-1 vertical-align-middle">{{ booking.passenger["name"] }}</span>
+            </td>
+            <td>
+              <span class="ml-1 vertical-align-middle">
+                {{ booking.passenger["email"] }}
+                <br />
+                {{ booking.passenger["phoneNumber"] }}
               </span>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr class="list-header" style="width: 100%">
-              <th class="item-header" style="width: 11, 2%">Booking Code</th>
-              <th class="item-header" style="width: 9.2%">Sold On</th>
-              <th class="item-header">Passengers</th>
-              <th class="item-header" style="width: 9.2%">Email & Phone</th>
-              <th class="item-header">Route</th>
-              <th class="item-header">Total Price</th>
-              <th class="item-header">Vehicle-Agency</th>
-              <th class="item-header">Confirm</th>
-              <th class="item-header">Cancel</th>
-            </tr>
-            <!-- <tr>
-              <th>
-                <p-calendar 
-              [(ngModel)]="date" [showIcon]="true" dateFormat="dd.mm.yy"
-              class="w-full sm:w-auto"
-              styleClass="w-full"
-              [showButtonBar]="true"
-              class="full-width-calendar"  
-              
-              >
-            </p-calendar>
-              </th>
-              <th>
-                <p-columnFilter field="" matchMode="equals" [showMenu]="false">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-dropdown
-                      id="type"
-                      [options]="vehicleType"
-                      optionLabel="name"
-                      optionValue="value"
-                      (onChange)="filter($event.value)"
-                      placeholder="All Vehicles"
-                      [showClear]="true"
-                    ></p-dropdown>
-                  </ng-template>
-                </p-columnFilter>
-              </th>
-              <th>
-   
-                <p-columnFilter field="soldOn" matchMode="equals" [showMenu]="false">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-calendar
-                      [(ngModel)]="date"
-                      dateFormat="dd.mm.yy"
-                      class="w-full sm:w-auto"
-                      styleClass="w-full"
-                      [showButtonBar]="true"
-                      (onSelect)="filter(date, 'equals')"
-                    ></p-calendar>
-                  </ng-template>
-                </p-columnFilter>
-              </th>
-            </tr> -->
-          </ng-template>
-
-          <ng-template pTemplate="body" let-booking>
-            <tr class="text-center">
-              <td>
-                {{ booking.id }}
-              </td>
-
-              <td>
-                <span class="ml-1 vertical-align-middle">{{ formatDate(booking.soldOn) }}</span>
-              </td>
-              <td>
-                <span class="ml-1 vertical-align-middle">{{ booking.passenger["name"] }}</span>
-              </td>
-              <td>
-                <span class="ml-1 vertical-align-middle">
-                  {{ booking.passenger["email"] }}
-                  <br />
-                  {{ booking.passenger["phoneNumber"] }}
-                </span>
-              </td>
-
-              <td>
-                <span class="ml-1 vertical-align-middle">{{ booking.seats[0].route["name"] }}</span>
-              </td>
-
-              <td>
-                <span class="ml-1 vertical-align-middle">${{ totalPrice(booking.seats) }}</span>
-              </td>
-
-              <td>
-                <span class="upto ml-1 vertical-align-middle">
-                  {{
-                    booking.seats[0].route.transport["type"].charAt(0).toUpperCase() +
-                      booking.seats[0].route.transport["type"].slice(1).toLowerCase()
-                  }}
-                  <br />
-                  {{ booking.seats[0].route.transport.partner["name"] }}
-                </span>
-              </td>
-
-              <td>
-                <p-button
-                  (onClick)="handleBookingAction($event, true, booking.id)"
-                  icon="pi pi-save"
-                  iconPos="right"
-                  styleClass="px-1 py-2 p-button-warning "
-                  label="Confirm"
-                  class="col-4 md:col-1 pr-0 full-width-button"
-                ></p-button>
-              </td>
-
-              <td>
-                <p-button
-                  (onClick)="handleBookingAction($event, false, booking.id)"
-                  icon="pi pi-times"
-                  label="Cancel"
-                  class="col-4 md:col-1 pr-0 full-width-button"
-                  styleClass="px-1 py-2 p-button-danger p-button-outlined"
-                  iconPos="right"
-                ></p-button>
-              </td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="emptymessage">
-            <tr>
-              <td colspan="5">No bookings found.</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </ng-container>
+            </td>
+            <td>
+              <span class="ml-1 vertical-align-middle">{{ booking.seats[0].route["name"] }}</span>
+            </td>
+            <td>
+              <span class="ml-1 vertical-align-middle">${{ booking.totalPrice }}</span>
+            </td>
+            <td>
+              <span class="upto ml-1 vertical-align-middle">
+                {{
+                  booking.seats[0].route.transport["type"].charAt(0).toUpperCase() +
+                    booking.seats[0].route.transport["type"].slice(1).toLowerCase()
+                }}
+                -
+                {{ booking.seats[0].route.transport.partner["name"] }}
+              </span>
+            </td>
+            <td>
+              <p-button
+                (onClick)="handleBookingAction($event, true, booking.id)"
+                icon="pi pi-save"
+                iconPos="right"
+                styleClass="px-1 py-2 p-button-warning"
+                label="Confirm"
+                class="col-4 md:col-1 pr-0 full-width-button"
+              ></p-button>
+            </td>
+            <td>
+              <p-button
+                (onClick)="handleBookingAction($event, false, booking.id)"
+                icon="pi pi-times"
+                label="Cancel"
+                class="col-4 md:col-1 pr-0 full-width-button"
+                styleClass="px-1 py-2 p-button-danger p-button-outlined"
+                iconPos="right"
+              ></p-button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5">No bookings found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
   </div>
 </div>

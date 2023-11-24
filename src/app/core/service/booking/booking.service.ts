@@ -20,6 +20,4 @@ export class BookingService {
   public createBooking$(bookingDto: BookingDto): Observable<PaymentGatewayDto> {
     return this.apiService.api.bookingBooking(bookingDto);
   }
-
-
 }

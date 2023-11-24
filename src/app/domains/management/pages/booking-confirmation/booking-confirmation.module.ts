@@ -6,9 +6,7 @@ import { InputTextModule } from "primeng/inputtext";
 import { TagModule } from "primeng/tag";
 import { DropdownModule } from "primeng/dropdown";
 import { CalendarModule } from "primeng/calendar";
-import { FormsModule } from "@angular/forms";
 import { ButtonModule } from "primeng/button";
-import { ConfirmPopupModule } from "primeng/confirmpopup";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 @NgModule({
   declarations: [BookingConfirmationComponent],
@@ -18,9 +16,7 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
     InputTextModule,
     TagModule,
     DropdownModule,
-    FormsModule,
     ButtonModule,
-    ConfirmPopupModule,
     ConfirmDialogModule,
     CalendarModule,
   ],
