@@ -25,6 +25,7 @@ export class TransportFormComponent implements OnInit, OnChanges {
   public selectedImages: string[] = [];
   public isSubmit = false;
   public ref: DynamicDialogRef | undefined;
+  public;
 
   constructor(
     private fb: FormBuilder,
@@ -54,15 +55,7 @@ export class TransportFormComponent implements OnInit, OnChanges {
     this.transportForm = this.fb.group({
       name: ["", Validators.required],
       type: ["", Validators.required],
-      mapSeat: [
-        [
-          [
-            [0, 0, 1],
-            [0, 1, 0],
-          ],
-        ],
-        Validators.required,
-      ],
+      mapSeat: [[], Validators.required],
       seatTypes: this.seatTypesForm,
       images: [
         "",
@@ -150,10 +143,14 @@ export class TransportFormComponent implements OnInit, OnChanges {
 
   public handleMapSeat(): void {
     this.ref = this.dialogService.open(MapSeatDetailComponent, {
-      data: { selectedTransport: this.selectedTransport, seatTypes: this.seatTypes.controls },
+      data: { selectedTransport: this.selectedTransport, transportForm: this.transportForm },
       header: "Create seat types & map seat",
-      width: "70%",
+      width: "60%",
       contentStyle: { overflow: "auto" },
+    });
+
+    this.ref.onClose.subscribe((result) => {
+      console.log(this.transportForm);
     });
   }
 

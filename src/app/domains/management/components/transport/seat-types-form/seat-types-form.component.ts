@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Output } from "@angular/core";
-import { SeatService } from "../../../services/seat.service";
-import { Router } from "@angular/router";
-import { SeatTypeDto, Transport } from "_api";
+import { Transport } from "_api";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { validate } from "src/app/share/helpers/form.helper";
 import { DynamicDialogConfig } from "primeng/dynamicdialog";
@@ -14,18 +12,20 @@ import { DynamicDialogConfig } from "primeng/dynamicdialog";
 export class SeatTypesFormComponent {
   @Output() nextStep = new EventEmitter<boolean>(false);
   public selectedTransport: Transport;
-  public seatTypes: any;
+  public transportForm: FormGroup;
   public seatTypesForm: FormArray;
 
   constructor(
-    public seatService: SeatService,
     private fb: FormBuilder,
     private config: DynamicDialogConfig
   ) {}
 
   ngOnInit() {
     this.selectedTransport = this.config.data["selectedTransport"];
-    this.seatTypes = this.config.data["seatTypes"];
+    this.transportForm = this.config.data["transportForm"];
+
+    console.log(this.selectedTransport, this.transportForm);
+
     this.initSeatTypesForm();
   }
 
@@ -58,6 +58,10 @@ export class SeatTypesFormComponent {
     );
   }
 
+  public get seatTypes(): FormArray {
+    return this.transportForm.get("seatTypes") as FormArray;
+  }
+
   public nextPage(): void {
     this.nextStep.emit(true);
   }
@@ -67,11 +71,26 @@ export class SeatTypesFormComponent {
   }
 
   public getFormControl(index: number, controlName: string): FormControl {
-    const group = this.seatTypesForm.controls.at(index) as FormGroup;
+    const group = (this.transportForm.get("seatTypes") as FormArray).controls.at(index) as FormGroup;
     return group.controls[controlName] as FormControl;
   }
 
   public deleteSeatType(index: number): void {
-    this.seatTypesForm.removeAt(index);
+    (this.transportForm.get("seatTypes") as FormArray).removeAt(index);
+  }
+
+  public addNewSeatType(): void {
+    const newSeatType = this.fb.group({
+      name: ["", Validators.required],
+      description: ["", Validators.required],
+      price: ["", Validators.required],
+    });
+
+    (this.transportForm.get("seatTypes") as FormArray).push(newSeatType);
+  }
+
+  onCellEditComplete(event: Event, product: any): void {
+    // Handle cell edit completion here
+    console.log("Cell edit complete:", product);
   }
 }

@@ -83,7 +83,7 @@ export class PartnerPageComponent extends BaseDestroyable implements OnInit {
         this.ref = this.dialogService.open(PendingPartnerDetailComponent, {
           data: { partnerDetails },
           header: "Partner details",
-          width: "70%",
+          width: "50%",
           contentStyle: { overflow: "auto" },
         });
       });
