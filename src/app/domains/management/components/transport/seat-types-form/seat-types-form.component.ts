@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from "@angular/core";
-import { Transport } from "_api";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { validate } from "src/app/share/helpers/form.helper";
 import { DynamicDialogConfig } from "primeng/dynamicdialog";
@@ -14,10 +13,7 @@ export class SeatTypesFormComponent {
   public transportForm: FormGroup;
   public seatTypesForm: FormArray;
 
-  constructor(
-    private fb: FormBuilder,
-    private config: DynamicDialogConfig
-  ) {}
+  constructor(private config: DynamicDialogConfig) {}
 
   ngOnInit() {
     this.transportForm = this.config.data["transportForm"];
@@ -42,10 +38,5 @@ export class SeatTypesFormComponent {
   public getFormControl(index: number, controlName: string): FormControl {
     const group = (this.transportForm.get("seatTypes") as FormArray).controls.at(index) as FormGroup;
     return group.controls[controlName] as FormControl;
-  }
-
-  onCellEditComplete(event: Event, product: any): void {
-    // Handle cell edit completion here
-    console.log("Cell edit complete:", product);
   }
 }

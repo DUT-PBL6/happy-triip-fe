@@ -73,7 +73,7 @@ export class TransportFormComponent implements OnInit, OnChanges {
       this.seatTypesForm = this.fb.array(
         seatTypes.map((seatType) =>
           this.fb.group({
-            name: [{ value: seatType.name, disabled: true }, Validators.required],
+            name: [seatType.name, Validators.required],
             description: [seatType.description],
             price: [seatType.price, Validators.required],
           })
@@ -86,12 +86,12 @@ export class TransportFormComponent implements OnInit, OnChanges {
     this.seatTypesForm = this.fb.array(
       [
         this.fb.group({
-          name: [{ value: "Normal seat", disabled: true }, Validators.required],
+          name: ["Normal seat", Validators.required],
           description: ["Normal seat's description"],
           price: [0, Validators.required],
         }),
         this.fb.group({
-          name: [{ value: "Vip seat", disabled: true }, Validators.required],
+          name: ["Vip seat", Validators.required],
           description: ["Vip seat's description"],
           price: [15, Validators.required],
         }),
