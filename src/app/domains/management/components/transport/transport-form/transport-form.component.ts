@@ -5,6 +5,8 @@ import { Transport, TransportDto, TypeVehical, Utility } from "_api";
 import { Option } from "src/app/core/interfaces/option.interface";
 import { UploadEvent } from "src/app/core/interfaces/upload-event.interface";
 import { validate } from "src/app/share/helpers/form.helper";
+import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
+import { MapSeatDetailComponent } from "../map-seat-detail/map-seat-detail.component";
 
 @Component({
   selector: "app-transport-form",
@@ -22,10 +24,13 @@ export class TransportFormComponent implements OnInit, OnChanges {
   public selectedUtilities: string[] = [];
   public selectedImages: string[] = [];
   public isSubmit = false;
+  public ref: DynamicDialogRef | undefined;
+  public;
 
   constructor(
     private fb: FormBuilder,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -50,15 +55,7 @@ export class TransportFormComponent implements OnInit, OnChanges {
     this.transportForm = this.fb.group({
       name: ["", Validators.required],
       type: ["", Validators.required],
-      mapSeat: [
-        [
-          [
-            [0, 0, 1],
-            [0, 1, 0],
-          ],
-        ],
-        Validators.required,
-      ],
+      mapSeat: [[], Validators.required],
       seatTypes: this.seatTypesForm,
       images: [
         "",
@@ -76,8 +73,8 @@ export class TransportFormComponent implements OnInit, OnChanges {
       this.seatTypesForm = this.fb.array(
         seatTypes.map((seatType) =>
           this.fb.group({
-            name: [seatType.name, Validators.required],
-            description: [seatType.description, Validators.required],
+            name: [{ value: seatType.name, disabled: true }, Validators.required],
+            description: [seatType.description],
             price: [seatType.price, Validators.required],
           })
         ),
@@ -89,9 +86,14 @@ export class TransportFormComponent implements OnInit, OnChanges {
     this.seatTypesForm = this.fb.array(
       [
         this.fb.group({
-          name: ["Normal seat", Validators.required],
-          description: ["Normal seat", Validators.required],
+          name: [{ value: "Normal seat", disabled: true }, Validators.required],
+          description: ["Normal seat's description"],
           price: [0, Validators.required],
+        }),
+        this.fb.group({
+          name: [{ value: "Vip seat", disabled: true }, Validators.required],
+          description: ["Vip seat's description"],
+          price: [15, Validators.required],
         }),
       ],
       Validators.required
@@ -134,14 +136,13 @@ export class TransportFormComponent implements OnInit, OnChanges {
     return this.transportForm.get("utility") as FormArray;
   }
 
-  public addNewSeatType(): void {
-    const newSeatType = this.fb.group({
-      name: ["", Validators.required],
-      description: ["", Validators.required],
-      price: ["", Validators.required],
+  public handleMapSeat(): void {
+    this.ref = this.dialogService.open(MapSeatDetailComponent, {
+      data: { selectedTransport: this.selectedTransport, transportForm: this.transportForm },
+      header: this.selectedTransport ? "Update seat types & map seat" : "Create seat types & map seat",
+      width: "60%",
+      contentStyle: { overflow: "auto" },
     });
-
-    this.seatTypesForm.push(newSeatType);
   }
 
   public deleteSeatType(index: number): void {

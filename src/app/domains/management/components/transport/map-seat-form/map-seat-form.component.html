@@ -1,0 +1,135 @@
+<div class="flex flex-column gap-3">
+  <div class="h-4rem flex flex-column gap-2">
+    <h4 class="title">Map Seat Information</h4>
+    <p class="subtitle text-500">Enter rows & cols for transport.</p>
+  </div>
+  <div class="content">
+    <form [formGroup]="mapSeatForm" class="grid">
+      <div class="row col-4 py-2 flex flex-column">
+        <label for="row" class="block text-900 text-lg font-medium mb-2">Row*</label>
+        <div class="input-container h-4rem">
+          <p-inputNumber
+            inputId="integeronly"
+            id="row"
+            type="text"
+            placeholder="Enter row"
+            class="w-full"
+            formControlName="row"
+            [min]="1"
+            [showButtons]="true"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(row)
+            }"
+          ></p-inputNumber>
+          <small class="p-error" *ngIf="validate(row)">
+            <strong>Row is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="col col-4 py-2 flex flex-column">
+        <label for="col" class="block text-900 text-lg font-medium mb-2">Col*</label>
+        <div class="input-container h-4rem">
+          <p-inputNumber
+            inputId="integeronly"
+            id="col"
+            type="text"
+            placeholder="Enter column"
+            class="w-full"
+            formControlName="col"
+            [min]="1"
+            [showButtons]="true"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(col)
+            }"
+          ></p-inputNumber>
+          <small class="p-error" *ngIf="validate(col)">
+            <strong>Col is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="flex align-items-center mt-3">
+        <p-button
+          *ngIf="!isConfirmRowCol"
+          label="Confirm"
+          (onClick)="confirmRowCol()"
+          icon="pi pi-check"
+          iconPos="right"
+          styleClass="p-button-outlined p-button-secondary"
+        ></p-button>
+        <p-button
+          *ngIf="isConfirmRowCol"
+          label="Clear"
+          (onClick)="clearColRow()"
+          icon="pi pi-check"
+          iconPos="right"
+          styleClass="p-button-outlined p-button-danger"
+        ></p-button>
+      </div>
+    </form>
+
+    <div class="matrix-container flex flex-column gap-4" *ngIf="mapSeatMatrix.length > 0">
+      <div class="h-4rem flex flex-column gap-3">
+        <h4 class="title">Map Seat Matrix</h4>
+        <p class="subtitle text-500" *ngIf="this.currentSeatColor">
+          You are selecting:
+          <strong class="text-primary">
+            {{ this.currentSeatColor === "normal-seat" ? "Normal Seat" : "Vip seat" }}
+          </strong>
+        </p>
+        <p class="subtitle" *ngIf="!this.currentSeatColor">
+          <span class="text-orrange-500">Please choose a seat color first!</span>
+        </p>
+      </div>
+      <div class="grid">
+        <div class="col-6 col-offset-3 matrix flex flex-column">
+          <div *ngFor="let row of mapSeatMatrix; let i = index">
+            <div class="matrix-row flex">
+              <p-checkbox
+                *ngFor="let seat of row; let j = index"
+                [autofocus]="false"
+                [disabled]="!this.currentSeatColor"
+                class="checkbox-seat p-2"
+                [ngClass]="{
+                  'normal-seat': this.mapSeatMatrix[i][j] === 0,
+                  'vip-seat': this.mapSeatMatrix[i][j] === 1
+                }"
+                (onChange)="setSeatColor(i, j)"
+              ></p-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-column justify-content-end mb-3 gap-3">
+          <div class="flex gap-3" pTooltip="Click to choose seat color" tooltipPosition="top">
+            <p-checkbox
+              inputId="normal-seat-color"
+              class="pr-2 normal-seat"
+              (onChange)="setCurrentSeatColor('normal-seat')"
+            ></p-checkbox>
+            <label for="normal-seat-color" class="font-bold block mb-2 cursor-pointer">Normal Seat</label>
+          </div>
+          <div class="flex gap-3" pTooltip="Click to choose seat color" tooltipPosition="top">
+            <p-checkbox
+              inputId="vip-seat-color"
+              class="pr-2 vip-seat"
+              (onChange)="setCurrentSeatColor('vip-seat')"
+            ></p-checkbox>
+            <label for="vip-seat-color" class="font-bold block mb-2 cursor-pointer">VIP Seat</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer mt-3">
+      <div class="grid grid-nogutter justify-content-between">
+        <p-button label="Previous" (onClick)="previousStep()" icon="pi pi-angle-right" iconPos="right"></p-button>
+        <p-button
+          *ngIf="this.isConfirmRowCol"
+          label="Complete"
+          (onClick)="complete()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</div>

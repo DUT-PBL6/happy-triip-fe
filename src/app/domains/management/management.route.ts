@@ -10,6 +10,8 @@ import { PartnerGuard } from "src/app/core/guards/partner.guard";
 import { PoiStationsComponent } from "./pages/poi-stations/poi-stations.component";
 import { PartnerPageComponent } from "./pages/partner-management/partner-management.component";
 import { EmployeeGuard } from "src/app/core/guards/employee.guard";
+import { SeatTypesFormComponent } from "./components/transport/seat-types-form/seat-types-form.component";
+import { MapSeatFormComponent } from "./components/transport/map-seat-form/map-seat-form.component";
 
 const routes: Routes = [
   {
@@ -23,7 +25,14 @@ const routes: Routes = [
         component: ProfileSettingsComponent,
         canActivate: [AdminGuard],
       },
-      { path: "transport", component: TransportPageComponent },
+      {
+        path: "transport",
+        component: TransportPageComponent,
+        children: [
+          { path: "seat-types", component: SeatTypesFormComponent },
+          { path: "map-seat", component: MapSeatFormComponent },
+        ],
+      },
       { path: "route", component: RouteManagementComponent },
       { path: "poi-stations", component: PoiStationsComponent, canActivate: [EmployeeGuard] },
       { path: "partner", component: PartnerPageComponent },

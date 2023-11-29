@@ -68,75 +68,13 @@
       <!-- SEAT TYPE -->
       <div class="Seat Type col-12 py-2 flex flex-column">
         <label for="seat-type" class="block text-900 text-lg font-medium mb-2">Seat Type*</label>
-        <div class="input-container">
-          <div formArrayName="seatTypes">
-            <div *ngFor="let group of seatTypes.controls; let i = index">
-              <div [formGroupName]="i" class="seat-type-group flex col-12 gap-3 px-0 pb-3">
-                <div class="flex flex-column gap-2 h-4rem">
-                  <input
-                    type="text"
-                    pInputText
-                    formControlName="name"
-                    placeholder="Name"
-                    [ngClass]="{
-                      'ng-invalid ng-dirty': validate(getFormControl(i, 'name'))
-                    }"
-                  />
-                  <small class="p-error" *ngIf="validate(getFormControl(i, 'name'))">
-                    <strong>Seat type's name is required</strong>
-                  </small>
-                </div>
-                <div class="flex flex-column gap-2 h-4rem">
-                  <input
-                    type="text"
-                    pInputText
-                    formControlName="description"
-                    placeholder="Description"
-                    [ngClass]="{
-                      'ng-invalid ng-dirty': validate(getFormControl(i, 'description'))
-                    }"
-                  />
-                  <small class="p-error" *ngIf="validate(getFormControl(i, 'description'))">
-                    <strong>Seat type's description is required</strong>
-                  </small>
-                </div>
-                <div class="flex flex-column gap-2 h-4rem">
-                  <div class="flex align-items-center">
-                    <p-inputNumber
-                      formControlName="price"
-                      mode="currency"
-                      currency="USD"
-                      locale="en-US"
-                      placeholder="Price"
-                      class="flex flex-1"
-                      [ngClass]="{
-                        'ng-invalid ng-dirty': validate(getFormControl(i, 'price'))
-                      }"
-                    ></p-inputNumber>
-                    <i
-                      *ngIf="i !== 0"
-                      style="font-size: 1.5rem"
-                      class="pi pi-trash p-error ml-2"
-                      (click)="deleteSeatType(i)"
-                      (keyup.enter)="deleteSeatType(i)"
-                      tabindex="0"
-                    ></i>
-                  </div>
-                  <small class="p-error" *ngIf="validate(getFormControl(i, 'price'))">
-                    <strong>Seat type's price is required</strong>
-                  </small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <p-button
-          label="Add New Type"
+          label="{{ this.selectedTransport ? 'Update Seat Types & Map Seat' : 'Add Seat Types & Map Seat' }}"
           styleClass="p-button-secondary p-button-outlined"
           severity="secondary"
-          icon="pi pi-plus"
+          icon="{{ this.selectedTransport ? 'pi pi-pencil' : 'pi pi-plus' }}"
           iconPos="left"
-          (onClick)="addNewSeatType()"
+          (onClick)="handleMapSeat()"
         ></p-button>
       </div>
       <!-- IMAGE -->

@@ -1,0 +1,12 @@
+:host::ng-deep {
+  .normal-seat {
+    .p-checkbox .p-checkbox-box {
+      background: var(--normal-seat);
+    }
+  }
+  .vip-seat {
+    .p-checkbox .p-checkbox-box {
+      background: var(--vip-seat);
+    }
+  }
+}

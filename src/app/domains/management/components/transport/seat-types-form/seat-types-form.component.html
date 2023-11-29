@@ -1,0 +1,58 @@
+<div class="flex flex-column gap-2">
+  <h4 class="title">Seat Types Information</h4>
+  <p class="subtitle text-500">Adjust the information of seat types.</p>
+  <div class="form w-full">
+    <form [formGroup]="transportForm">
+      <div class="content">
+        <div formArrayName="seatTypes">
+          <div *ngFor="let group of seatTypes.controls; let i = index">
+            <div [formGroupName]="i" class="seat-type-group flex col-12 gap-3 px-0 pb-3">
+              <div class="flex flex-column gap-2 h-4rem">
+                <input type="text" pInputText formControlName="name" placeholder="Name" />
+              </div>
+              <div class="flex flex-column gap-2 h-4rem">
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="description"
+                  placeholder="Description"
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': validate(getFormControl(i, 'description'))
+                  }"
+                />
+                <small class="p-error" *ngIf="validate(getFormControl(i, 'description'))">
+                  <strong>Seat type's description is required</strong>
+                </small>
+              </div>
+              <div class="flex flex-column gap-2 h-4rem">
+                <div class="flex align-items-center">
+                  <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">$</span>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="price"
+                      placeholder="Price"
+                      [ngClass]="{
+                        'ng-invalid ng-dirty': validate(getFormControl(i, 'price'))
+                      }"
+                    />
+                    <span class="p-inputgroup-addon">.00</span>
+                  </div>
+                </div>
+                <small class="p-error" *ngIf="validate(getFormControl(i, 'price'))">
+                  <strong>Seat type's price is required</strong>
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="footer">
+    <div class="grid grid-nogutter justify-content-end">
+      <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+    </div>
+  </div>
+</div>
