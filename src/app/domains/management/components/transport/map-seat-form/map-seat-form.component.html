@@ -5,28 +5,6 @@
   </div>
   <div class="content">
     <form [formGroup]="mapSeatForm" class="grid">
-      <div class="col col-4 py-2 flex flex-column">
-        <label for="col" class="block text-900 text-lg font-medium mb-2">Col*</label>
-        <div class="input-container h-4rem">
-          <p-inputNumber
-            inputId="integeronly"
-            id="col"
-            type="text"
-            placeholder="Enter column"
-            class="w-full"
-            formControlName="col"
-            [min]="1"
-            [showButtons]="true"
-            [ngClass]="{
-              'ng-invalid ng-dirty': validate(col)
-            }"
-            [disabled]="isConfirmRowCol"
-          ></p-inputNumber>
-          <small class="p-error" *ngIf="validate(col)">
-            <strong>Col is required</strong>
-          </small>
-        </div>
-      </div>
       <div class="row col-4 py-2 flex flex-column">
         <label for="row" class="block text-900 text-lg font-medium mb-2">Row*</label>
         <div class="input-container h-4rem">
@@ -42,10 +20,30 @@
             [ngClass]="{
               'ng-invalid ng-dirty': validate(row)
             }"
-            [disabled]="isConfirmRowCol"
           ></p-inputNumber>
           <small class="p-error" *ngIf="validate(row)">
             <strong>Row is required</strong>
+          </small>
+        </div>
+      </div>
+      <div class="col col-4 py-2 flex flex-column">
+        <label for="col" class="block text-900 text-lg font-medium mb-2">Col*</label>
+        <div class="input-container h-4rem">
+          <p-inputNumber
+            inputId="integeronly"
+            id="col"
+            type="text"
+            placeholder="Enter column"
+            class="w-full"
+            formControlName="col"
+            [min]="1"
+            [showButtons]="true"
+            [ngClass]="{
+              'ng-invalid ng-dirty': validate(col)
+            }"
+          ></p-inputNumber>
+          <small class="p-error" *ngIf="validate(col)">
+            <strong>Col is required</strong>
           </small>
         </div>
       </div>

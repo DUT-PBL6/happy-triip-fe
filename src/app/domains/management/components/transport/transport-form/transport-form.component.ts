@@ -73,8 +73,8 @@ export class TransportFormComponent implements OnInit, OnChanges {
       this.seatTypesForm = this.fb.array(
         seatTypes.map((seatType) =>
           this.fb.group({
-            name: [seatType.name, Validators.required],
-            description: [seatType.description, Validators.required],
+            name: [{ value: seatType.name, disabled: true }, Validators.required],
+            description: [seatType.description],
             price: [seatType.price, Validators.required],
           })
         ),
@@ -86,9 +86,14 @@ export class TransportFormComponent implements OnInit, OnChanges {
     this.seatTypesForm = this.fb.array(
       [
         this.fb.group({
-          name: ["Normal seat", Validators.required],
-          description: ["Normal seat", Validators.required],
+          name: [{ value: "Normal seat", disabled: true }, Validators.required],
+          description: ["Normal seat's description"],
           price: [0, Validators.required],
+        }),
+        this.fb.group({
+          name: [{ value: "Vip seat", disabled: true }, Validators.required],
+          description: ["Vip seat's description"],
+          price: [15, Validators.required],
         }),
       ],
       Validators.required
@@ -131,26 +136,12 @@ export class TransportFormComponent implements OnInit, OnChanges {
     return this.transportForm.get("utility") as FormArray;
   }
 
-  public addNewSeatType(): void {
-    const newSeatType = this.fb.group({
-      name: ["", Validators.required],
-      description: ["", Validators.required],
-      price: ["", Validators.required],
-    });
-
-    this.seatTypesForm.push(newSeatType);
-  }
-
   public handleMapSeat(): void {
     this.ref = this.dialogService.open(MapSeatDetailComponent, {
       data: { selectedTransport: this.selectedTransport, transportForm: this.transportForm },
-      header: "Create seat types & map seat",
+      header: this.selectedTransport ? "Update seat types & map seat" : "Create seat types & map seat",
       width: "60%",
       contentStyle: { overflow: "auto" },
-    });
-
-    this.ref.onClose.subscribe((result) => {
-      console.log(this.transportForm);
     });
   }
 

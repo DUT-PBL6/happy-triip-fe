@@ -15,6 +15,7 @@ export class MapSeatFormComponent implements OnInit {
   public mapSeatMatrix: number[][] = [];
   public isConfirmRowCol = false;
   public currentSeatColor: string;
+  public isUpdateMode = false;
 
   constructor(
     private fb: FormBuilder,
@@ -24,13 +25,27 @@ export class MapSeatFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.transportForm = this.config.data["transportForm"];
+    this.isUpdateMode = this.transportForm.get("mapSeat").value.length !== 0;
     this.initMapSeatForm();
+
+    if (this.isUpdateMode) {
+      this.confirmRowCol();
+    }
   }
 
   public initMapSeatForm(): void {
+    const mapSeatArray = this.transportForm.get("mapSeat").value;
+    if (mapSeatArray.length === 0) {
+      this.mapSeatForm = this.fb.group({
+        col: [{ value: 1, disabled: this.isConfirmRowCol }, Validators.required],
+        row: [1, Validators.required],
+      });
+      return;
+    }
+
     this.mapSeatForm = this.fb.group({
-      col: [1, Validators.required],
-      row: [1, Validators.required],
+      row: [mapSeatArray[0].length, Validators.required],
+      col: [mapSeatArray[0][0].length, Validators.required],
     });
   }
 
@@ -43,6 +58,13 @@ export class MapSeatFormComponent implements OnInit {
   }
 
   public confirmRowCol(): void {
+    this.isConfirmRowCol = true;
+
+    if (this.isUpdateMode) {
+      this.mapSeatMatrix.push(...this.transportForm.get("mapSeat").value.flat());
+      return;
+    }
+
     for (let i = 0; i < this.row.value; i++) {
       const rowArray: number[] = [];
       for (let j = 0; j < this.col.value; j++) {
@@ -50,7 +72,6 @@ export class MapSeatFormComponent implements OnInit {
       }
       this.mapSeatMatrix.push(rowArray);
     }
-    this.isConfirmRowCol = true;
   }
 
   public clearColRow(): void {

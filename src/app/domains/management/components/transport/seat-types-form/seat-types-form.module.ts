@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ButtonModule } from "primeng/button";
 import { InputTextModule } from "primeng/inputtext";
 import { InputNumberModule } from "primeng/inputnumber";
+import { CheckboxModule } from "primeng/checkbox";
 
 @NgModule({
   declarations: [SeatTypesFormComponent],
@@ -17,6 +18,7 @@ import { InputNumberModule } from "primeng/inputnumber";
     ButtonModule,
     InputTextModule,
     InputNumberModule,
+    CheckboxModule,
   ],
   exports: [SeatTypesFormComponent],
 })
