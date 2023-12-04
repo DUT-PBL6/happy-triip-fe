@@ -1,0 +1,15 @@
+<div class="map-seat-preview h-full flex flex-column justify-content-center">
+  <div *ngFor="let row of mapSeatMatrix; let i = index">
+    <div class="matrix-row flex">
+      <p-checkbox
+        *ngFor="let seat of row; let j = index"
+        class="checkbox-seat p-2"
+        [disabled]="true"
+        [ngClass]="{
+          'normal-seat': this.mapSeatMatrix[i][j] === 0,
+          'vip-seat': this.mapSeatMatrix[i][j] === 1
+        }"
+      ></p-checkbox>
+    </div>
+  </div>
+</div>

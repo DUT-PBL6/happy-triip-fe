@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private url: LocationStrategy
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initProfileMenu();
@@ -169,9 +169,9 @@ export class HeaderComponent implements OnInit {
         label: "Log out",
         command: () => {
           cacheService.resetValue();
-          (this.user.userRole !== "EMPLOYEE") ? this.router.navigate(["/auth/login"],
-            { queryParams: { userRole: this.user.userRole.toLowerCase() } }) :
-            this.router.navigate(["/auth"]);
+          this.user.userRole !== "EMPLOYEE"
+            ? this.router.navigate(["/auth/login"], { queryParams: { userRole: this.user.userRole.toLowerCase() } })
+            : this.router.navigate(["/auth"]);
         },
       },
     ];

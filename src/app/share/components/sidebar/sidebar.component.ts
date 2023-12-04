@@ -78,7 +78,7 @@ export class SidebarComponent implements OnInit {
         return;
       }
       // this.items.splice()
-      this.items = this.items.filter(item => item.data !== "transport");
+      this.items = this.items.filter((item) => item.data !== "transport");
       return;
     }
     if (isPartner) {

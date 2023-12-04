@@ -66,16 +66,21 @@
         </div>
       </div>
       <!-- SEAT TYPE -->
-      <div class="Seat Type col-12 py-2 flex flex-column">
-        <label for="seat-type" class="block text-900 text-lg font-medium mb-2">Seat Type*</label>
-        <p-button
-          label="{{ this.selectedTransport ? 'Update Seat Types & Map Seat' : 'Add Seat Types & Map Seat' }}"
-          styleClass="p-button-secondary p-button-outlined"
-          severity="secondary"
-          icon="{{ this.selectedTransport ? 'pi pi-pencil' : 'pi pi-plus' }}"
-          iconPos="left"
-          (onClick)="handleMapSeat()"
-        ></p-button>
+      <div class="Seat Type col-12 py-2 flex">
+        <div class="flex flex-column col-6">
+          <label for="seat-type" class="block text-900 text-lg font-medium mb-2">Seat Type*</label>
+          <p-button
+            label="{{ this.selectedTransport ? 'Update Seat Types & Map Seat' : 'Add Seat Types & Map Seat' }}"
+            styleClass="p-button-secondary p-button-outlined"
+            severity="secondary"
+            icon="{{ this.selectedTransport ? 'pi pi-pencil' : 'pi pi-plus' }}"
+            iconPos="left"
+            (onClick)="handleMapSeat()"
+          ></p-button>
+        </div>
+        <ng-container *ngIf="mapSeat.value[0]?.length > 0">
+          <app-map-seat-preview [mapSeatMatrix]="mapSeat.value[0]"></app-map-seat-preview>
+        </ng-container>
       </div>
       <!-- IMAGE -->
       <div class="image col-12 py-2 flex flex-column">

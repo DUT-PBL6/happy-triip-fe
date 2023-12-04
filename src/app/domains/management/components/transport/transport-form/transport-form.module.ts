@@ -12,6 +12,7 @@ import { InputNumberModule } from "primeng/inputnumber";
 import { UploadImageModule } from "src/app/share/components/upload-image/upload-image.module";
 import { MapSeatDetailModule } from "../map-seat-detail/map-seat-detail.module";
 import { DialogService, DynamicDialogModule } from "primeng/dynamicdialog";
+import { MapSeatPreviewModule } from "../map-seat-preview/map-seat-preview.module";
 
 @NgModule({
   declarations: [TransportFormComponent],
@@ -29,6 +30,7 @@ import { DialogService, DynamicDialogModule } from "primeng/dynamicdialog";
     UploadImageModule,
     MapSeatDetailModule,
     DynamicDialogModule,
+    MapSeatPreviewModule,
   ],
   exports: [TransportFormComponent],
   providers: [DialogService],
