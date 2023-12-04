@@ -1,8 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-
 import { Partner, PartnerDto } from "_api";
-
 import { ToastService } from "src/app/core/service/toast/toast.service";
 import { validate } from "src/app/share/helpers/form.helper";
 
@@ -12,11 +10,12 @@ import { validate } from "src/app/share/helpers/form.helper";
   styleUrls: ["./partner-form.component.scss"],
 })
 export class PartnerFormComponent implements OnInit {
-  @Input() partner: Partner;
-  @Output() form = new EventEmitter<PartnerDto>();
+  @Input() public partner: Partner;
+  @Output() public form = new EventEmitter<PartnerDto>();
   public isReadOnly = true;
   public isUpdated = true;
   public partnerForm: FormGroup;
+
   constructor(
     private fb: FormBuilder,
     private toastService: ToastService
@@ -27,6 +26,7 @@ export class PartnerFormComponent implements OnInit {
     if (this.partner.status === "ACCEPTED" || this.partner.status === "DENIED") {
       this.isUpdated = false;
     }
+    if (this.isReadOnly) this.partnerForm?.disable();
   }
 
   private initPartnerForm(): void {
@@ -91,7 +91,7 @@ export class PartnerFormComponent implements OnInit {
   public cancelPartnerForm(): void {
     this.partnerForm.patchValue(this.partner);
     this.isReadOnly = true;
-    this.toastService.showSuccess("Success", "Reset partner successfully");
+    this.toastService.showSuccess("Success", "Reset partner successfully!");
   }
 
   public validate(fieldControl: AbstractControl): boolean {
