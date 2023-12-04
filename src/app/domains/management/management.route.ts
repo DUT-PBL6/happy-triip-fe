@@ -18,7 +18,7 @@ const routes: Routes = [
     path: "",
     component: ManagementLayoutComponent,
     children: [
-      { path: "", redirectTo: "partner", pathMatch: "full" },
+      { path: "", redirectTo: "", pathMatch: "full" },
       { path: "booking-confirmation", component: BookingConfirmationComponent, canActivate: [EmployeeGuard] },
       {
         path: "profile-settings",
