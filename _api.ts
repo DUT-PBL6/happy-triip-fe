@@ -186,6 +186,15 @@ export enum Utility {
   WIFI = 'WIFI',
 }
 
+export interface News {
+  id: number;
+  title: string;
+  description: string;
+  images: string[];
+  slug: string;
+  partner: Partner;
+}
+
 export interface Partner {
   id: number;
   name: string;
@@ -199,6 +208,7 @@ export interface Partner {
   routes: Route[];
   transports: Transport[];
   status: string;
+  news: News[];
 }
 
 export interface Transport {
@@ -227,6 +237,7 @@ export interface Passenger {
 export interface Booking {
   id: number;
   bookingCode: string;
+  totalAmount: number;
   /** @format date-time */
   soldOn: string;
   passenger: Passenger;
@@ -358,6 +369,16 @@ export interface Audit {
   createdDate: string;
 }
 
+export interface PaymentGatewayResDto {
+  result: string;
+  checksum: string;
+}
+
+export interface PaymentGatewayDto {
+  url: string;
+  invoiceNo: string;
+}
+
 export interface SeatDto {
   col: number;
   row: number;
@@ -368,10 +389,6 @@ export interface SeatDto {
 
 export interface BookingDto {
   seats: SeatDto[];
-}
-
-export interface PaymentGatewayDto {
-  url: string;
 }
 
 export interface BookingPagingResult {
@@ -467,6 +484,20 @@ export interface TransportDto {
   seatTypes: SeatTypeDto[];
   images: string[];
   utility?: Utility[];
+}
+
+export interface NewsDto {
+  title: string;
+  description: string;
+  slug: string;
+  images: string[];
+}
+
+export interface NewsPagingResult {
+  total: number;
+  skip: number;
+  take: number;
+  data: News[];
 }
 
 import axios, { AxiosInstance, AxiosRequestConfig, HeadersDefaults, ResponseType } from 'axios';
@@ -1089,6 +1120,38 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Booking
+     * @name BookingControllerUpdateStatus
+     * @request POST:/api/booking/update-status
+     */
+    bookingUpdateStatus: (data: PaymentGatewayResDto, params: RequestParams = {}) =>
+      this.request<PaymentGatewayDto, any>({
+        path: `/api/booking/update-status`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetStatus
+     * @request GET:/api/booking/status/{invoiceNo}
+     */
+    bookingGetStatus: (invoiceNo: string, params: RequestParams = {}) =>
+      this.request<PaymentGatewayDto, any>({
+        path: `/api/booking/status/${invoiceNo}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
      * @name BookingControllerBooking
      * @request POST:/api/booking
      */
@@ -1106,13 +1169,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Booking
-     * @name BookingControllerConfirmPayment
-     * @request PUT:/api/booking/confirm-payment/{id}
+     * @name BookingControllerGetAllBookingOfPassenger
+     * @request GET:/api/booking
      */
-    bookingConfirmPayment: (id: number, params: RequestParams = {}) =>
-      this.request<Booking, any>({
-        path: `/api/booking/confirm-payment/${id}`,
-        method: 'PUT',
+    bookingGetAllBookingOfPassenger: (params: RequestParams = {}) =>
+      this.request<Booking[], any>({
+        path: `/api/booking`,
+        method: 'GET',
         format: 'json',
         ...params,
       }),
@@ -1128,6 +1191,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<Booking[], any>({
         path: `/api/booking/money-pending`,
         method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerConfirmPayment
+     * @request PUT:/api/booking/confirm-payment/{id}
+     */
+    bookingConfirmPayment: (id: number, params: RequestParams = {}) =>
+      this.request<Booking, any>({
+        path: `/api/booking/confirm-payment/${id}`,
+        method: 'PUT',
         format: 'json',
         ...params,
       }),
@@ -1166,6 +1244,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Booking
+     * @name BookingControllerGetById
+     * @request GET:/api/booking/{id}
+     */
+    bookingGetById: (id: number, params: RequestParams = {}) =>
+      this.request<Booking, any>({
+        path: `/api/booking/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
      * @name BookingControllerGetAll
      * @request GET:/api/booking/all
      */
@@ -1186,92 +1279,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/api/booking/all`,
         method: 'GET',
         query: query,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Booking
-     * @name BookingControllerGetById
-     * @request GET:/api/booking/{id}
-     */
-    bookingGetById: (id: number, params: RequestParams = {}) =>
-      this.request<Booking, any>({
-        path: `/api/booking/${id}`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @name HealthControllerCheck
-     * @request GET:/api/health
-     */
-    healthCheck: (params: RequestParams = {}) =>
-      this.request<
-        {
-          /** @example "ok" */
-          status?: string;
-          /** @example {"database":{"status":"up"}} */
-          info?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {} */
-          error?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {"database":{"status":"up"}} */
-          details?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-        },
-        {
-          /** @example "error" */
-          status?: string;
-          /** @example {"database":{"status":"up"}} */
-          info?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {"redis":{"status":"down","message":"Could not connect"}} */
-          error?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {"database":{"status":"up"},"redis":{"status":"down","message":"Could not connect"}} */
-          details?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-        }
-      >({
-        path: `/api/health`,
-        method: 'GET',
         format: 'json',
         ...params,
       }),
@@ -1435,6 +1442,77 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @name HealthControllerCheck
+     * @request GET:/api/health
+     */
+    healthCheck: (params: RequestParams = {}) =>
+      this.request<
+        {
+          /** @example "ok" */
+          status?: string;
+          /** @example {"database":{"status":"up"}} */
+          info?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {} */
+          error?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"database":{"status":"up"}} */
+          details?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+        },
+        {
+          /** @example "error" */
+          status?: string;
+          /** @example {"database":{"status":"up"}} */
+          info?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"redis":{"status":"down","message":"Could not connect"}} */
+          error?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"database":{"status":"up"},"redis":{"status":"down","message":"Could not connect"}} */
+          details?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+        }
+      >({
+        path: `/api/health`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags Station
      * @name StationControllerCreate
      * @summary Create station
@@ -1590,6 +1668,133 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<Transport, any>({
         path: `/api/transport/${id}`,
         method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerGetAllNews
+     * @summary Get all news
+     * @request GET:/api/news
+     */
+    newsGetAllNews: (params: RequestParams = {}) =>
+      this.request<News[], any>({
+        path: `/api/news`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerCreateNews
+     * @summary Create news
+     * @request POST:/api/news
+     */
+    newsCreateNews: (data: NewsDto, params: RequestParams = {}) =>
+      this.request<News, any>({
+        path: `/api/news`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerGetAllNewsOfPartner
+     * @summary Get all news of partner
+     * @request GET:/api/news/partner
+     */
+    newsGetAllNewsOfPartner: (params: RequestParams = {}) =>
+      this.request<News[], any>({
+        path: `/api/news/partner`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerGetById
+     * @request GET:/api/news/{id}
+     */
+    newsGetById: (id: number, params: RequestParams = {}) =>
+      this.request<News, any>({
+        path: `/api/news/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerUpdateNews
+     * @summary Update news
+     * @request PUT:/api/news/{id}
+     */
+    newsUpdateNews: (id: number, data: NewsDto, params: RequestParams = {}) =>
+      this.request<News, any>({
+        path: `/api/news/${id}`,
+        method: 'PUT',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerDeleteNews
+     * @summary Delete news
+     * @request DELETE:/api/news/{id}
+     */
+    newsDeleteNews: (id: number, params: RequestParams = {}) =>
+      this.request<News, any>({
+        path: `/api/news/${id}`,
+        method: 'DELETE',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerGetAll
+     * @request GET:/api/news/all
+     */
+    newsGetAll: (
+      query?: {
+        /** Order */
+        order?: any;
+        /** Where filter */
+        where?: any;
+        /** Skip */
+        skip?: number;
+        /** Page size */
+        take?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<NewsPagingResult, any>({
+        path: `/api/news/all`,
+        method: 'GET',
+        query: query,
         format: 'json',
         ...params,
       }),

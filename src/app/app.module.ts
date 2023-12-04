@@ -1,3 +1,4 @@
+
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgxsModule } from "@ngxs/store";
@@ -19,6 +20,7 @@ import { StationState } from "./core/service/station/station.state";
 import { RouteState } from "./core/service/route/route.state";
 import { PartnerState } from "./core/service/partner/partner.state";
 import { BookingState } from "./core/service/booking/booking.state";
+import { NewsState } from "./core/service/news/news.state";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -41,7 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       StationState,
       RouteState,
       PartnerState,
-      BookingState,
+      BookingState,NewsState,
     ]),
     TranslateModule.forRoot({
       loader: {
@@ -54,4 +56,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [MessageService, ApiService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

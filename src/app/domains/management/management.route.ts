@@ -12,6 +12,8 @@ import { PartnerPageComponent } from "./pages/partner-management/partner-managem
 import { EmployeeGuard } from "src/app/core/guards/employee.guard";
 import { SeatTypesFormComponent } from "./components/transport/seat-types-form/seat-types-form.component";
 import { MapSeatFormComponent } from "./components/transport/map-seat-form/map-seat-form.component";
+import { NewsManagementComponent } from "./pages/news-management/news-management.component";
+// import { NewsPageComponent } from "./pages/news-management/news-management.component";
 
 const routes: Routes = [
   {
@@ -36,6 +38,7 @@ const routes: Routes = [
       { path: "route", component: RouteManagementComponent },
       { path: "poi-stations", component: PoiStationsComponent, canActivate: [EmployeeGuard] },
       { path: "partner", component: PartnerPageComponent },
+      { path: "news", component: NewsManagementComponent },
     ],
   },
 ];

@@ -70,6 +70,11 @@ export class SidebarComponent implements OnInit {
         icon: "route",
         data: "route",
       },
+      {
+        label: "News Management",
+        icon: "news",
+        data: "news",
+      },
     ];
 
     if (isEmployee) {
@@ -78,7 +83,7 @@ export class SidebarComponent implements OnInit {
         return;
       }
       // this.items.splice()
-      this.items = this.items.filter((item) => item.data !== "transport");
+      this.items = this.items.filter((item) => item.data !== "transport" && item.data !== "news");
       return;
     }
     if (isPartner) {
