@@ -1,9 +1,18 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild } from "@angular/core";
 import { Select } from "@ngxs/store";
-import { BookingDto, Route, Seat, SeatDto } from "_api";
+import { BookingDto, PaymentGatewayDto, Route, Seat, SeatDto, SeatTypeDto } from "_api";
 import { Observable } from "rxjs";
-import Seatchart, { Options, SeatIndex, SeatInfo, SeatType, SeatTypeDefault } from "seatchart";
+import Seatchart, {
+  CartChangeEvent,
+  Options,
+  SeatChangeEvent,
+  SeatIndex,
+  SeatInfo,
+  SeatType,
+  SeatTypeDefault,
+} from "seatchart";
 import { BookingService } from "src/app/core/service/booking/booking.service";
+import { BookingState } from "src/app/core/service/booking/booking.state";
 import { RouteState } from "src/app/core/service/route/route.state";
 
 @Component({
@@ -14,12 +23,14 @@ import { RouteState } from "src/app/core/service/route/route.state";
 export class SeatChartComponent implements OnInit {
   @ViewChild("container", { static: true }) public containerRef!: ElementRef<HTMLDivElement>;
   @Select(RouteState.getRouteByIdAndDate) public route$: Observable<Route>;
-  @Select(RouteState.getBookingDate) public date$: Observable<string>;
-  @Output() checkOutUrl = new EventEmitter<{ url: string }>();
+  @Select(BookingState.getBookingDate) public date$: Observable<string>;
+  @Output() checkOutUrl = new EventEmitter<PaymentGatewayDto>();
   public currentRoute: Route;
   public seatchart!: Seatchart;
   public mapSeat: number[][] = [];
+  public seatTypes: SeatTypeDto[] = [];
   public reservedSeat: Seat[] = [];
+  public chosenSeats: Array<Number> = [];
 
   constructor(
     private renderer: Renderer2,
@@ -29,23 +40,66 @@ export class SeatChartComponent implements OnInit {
   ngOnInit() {
     this.route$.subscribe((route: Route) => {
       this.currentRoute = route;
+      this.seatTypes = this.currentRoute.transport.seatTypes;
       this.mapSeat = route.transport["mapSeat"][0];
       this.reservedSeat = route.seats;
       this.configSeatChart();
 
       const checkoutButton = this.containerRef.nativeElement.querySelector(".sc-cart-btn-submit");
+
       this.renderer.listen(checkoutButton, "click", () => {
         this.submitSeats();
       });
+
+      this.seatchart.addEventListener("cartchange", (event: CartChangeEvent) => {
+        const typeOfSeat = event.seat.type;
+
+        if (event.action === "add") {
+          if (typeOfSeat === "default") {
+            this.chosenSeats.push(this.seatTypes[0].price);
+          } else this.chosenSeats.push(this.seatTypes[1].price);
+        }
+
+        if (event.action === "remove") {
+          if (typeOfSeat === "default") {
+            const defaultSeatIndex = this.chosenSeats.indexOf(this.seatTypes[0].price);
+            if (defaultSeatIndex !== -1) {
+              this.chosenSeats.splice(defaultSeatIndex, 1);
+            }
+          } else {
+            const premiumSeatIndex = this.chosenSeats.indexOf(this.seatTypes[1].price);
+            if (premiumSeatIndex !== -1) {
+              this.chosenSeats.splice(premiumSeatIndex, 1);
+            }
+          }
+        }
+
+        const cartFooter = document.querySelector(".sc-cart-footer");
+        const cartTotal = document.querySelector(".sc-cart-total");
+
+        if (cartTotal) {
+          cartFooter.removeChild(cartTotal);
+        }
+
+        const node = document.createElement("p");
+        node.classList.add("sc-cart-total");
+
+        const totalSeatsPrice = this.chosenSeats.reduce((partialSum: number, a: number) => partialSum + a, 0);
+
+        const textnode = document.createTextNode(
+          `Total: ${this.chosenSeats.length} ticket(s) = $${
+            Number(this.chosenSeats.length * route.price) + totalSeatsPrice.valueOf()
+          } `
+        );
+        node.appendChild(textnode);
+
+        if (cartFooter.firstChild) {
+          cartFooter.insertBefore(node, cartFooter.firstChild);
+        } else {
+          cartFooter.appendChild(node);
+        }
+      });
     });
-  }
-
-  public getSeat(index: SeatIndex): SeatInfo | undefined {
-    return this.seatchart.getSeat(index);
-  }
-
-  public setSeat(index: SeatIndex, seat: SeatInfo): void {
-    this.seatchart.setSeat(index, seat);
   }
 
   private submitSeats(): void {
@@ -53,7 +107,7 @@ export class SeatChartComponent implements OnInit {
       const seats: SeatDto[] = (this.seatchart as any).store.cart.map((seat) => ({
         col: seat.index["col"],
         row: seat.index["row"],
-        floor: 1,
+        floor: 0,
         date,
         route: {
           id: this.currentRoute.id,
@@ -61,8 +115,8 @@ export class SeatChartComponent implements OnInit {
       }));
       const bookingDto: BookingDto = { seats };
 
-      this.bookingService.createBooking$(bookingDto).subscribe((url) => {
-        this.checkOutUrl.emit(url);
+      this.bookingService.createBooking$(bookingDto).subscribe((paymentGatewayDto: PaymentGatewayDto) => {
+        this.checkOutUrl.emit(paymentGatewayDto);
       });
     });
   }
@@ -76,12 +130,12 @@ export class SeatChartComponent implements OnInit {
           default: {
             label: "Normal seat",
             cssClass: "normal-seat",
-            price: 0,
+            price: this.seatTypes[0].price,
           },
           vipSeat: {
             label: "VIP seat",
             cssClass: "vip-seat",
-            price: 15,
+            price: this.seatTypes[1].price,
           },
         },
         reservedSeats: this.reservedSeat.map((seat) => ({

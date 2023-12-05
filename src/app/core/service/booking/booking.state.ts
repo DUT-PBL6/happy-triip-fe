@@ -4,15 +4,17 @@ import { Booking } from "_api";
 
 import { Observable, tap } from "rxjs";
 import { BookingService } from "./booking.service";
-import { AcceptBooking, DenyBooking, GetBookingMoneyPending } from "./booking.action";
+import { AcceptBooking, DenyBooking, GetBookingMoneyPending, UpdateBookingDate } from "./booking.action";
 
 interface IBookingState {
   bookings: Booking[];
+  bookingDate: string;
 }
 @State<IBookingState>({
   name: "booking",
   defaults: {
     bookings: [],
+    bookingDate: "",
   },
 })
 @Injectable()
@@ -20,6 +22,11 @@ export class BookingState {
   @Selector()
   public static getBookingMoneyPending(state: IBookingState): Booking[] {
     return state.bookings;
+  }
+
+  @Selector()
+  public static getBookingDate(state: IBookingState): string {
+    return state.bookingDate;
   }
 
   constructor(private bookingService: BookingService) {}
@@ -42,6 +49,16 @@ export class BookingState {
     ctx.setState({
       ...state,
       bookings: updatedPendingBooking,
+    });
+  }
+
+  @Action(UpdateBookingDate)
+  public updateBookingDate$(ctx: StateContext<IBookingState>, action: UpdateBookingDate): void {
+    const state = ctx.getState();
+
+    ctx.setState({
+      ...state,
+      bookingDate: action.date,
     });
   }
 }

@@ -4,7 +4,6 @@ import { SearchRouteComponent } from "./pages/search-route/search-route.componen
 import { BookingLayoutComponent } from "./layouts/booking.component";
 import { ProceedComponent } from "./pages/proceed/proceed.component";
 import { ProceedGuard } from "src/app/core/guards/proceed.guard";
-import { CheckoutSuccessComponent } from "./pages/checkout-success/checkout-success.component";
 
 const routes: Routes = [
   {
@@ -19,11 +18,6 @@ const routes: Routes = [
       {
         path: "proceed",
         component: ProceedComponent,
-        canActivate: [ProceedGuard],
-      },
-      {
-        path: "checkout-success",
-        component: CheckoutSuccessComponent,
         canActivate: [ProceedGuard],
       },
     ],
