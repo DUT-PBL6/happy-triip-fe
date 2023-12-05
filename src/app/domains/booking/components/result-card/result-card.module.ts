@@ -6,10 +6,11 @@ import { TabViewModule } from "primeng/tabview";
 import { CarouselModule } from "primeng/carousel";
 import { ImageModule } from "primeng/image";
 import { TranslateModule } from "@ngx-translate/core";
+import { TableModule } from "primeng/table";
 
 @NgModule({
   declarations: [ResultCardComponent],
-  imports: [CommonModule, ButtonModule, TabViewModule, CarouselModule, ImageModule, TranslateModule],
+  imports: [CommonModule, ButtonModule, TabViewModule, CarouselModule, ImageModule, TranslateModule, TableModule],
   exports: [ResultCardComponent],
 })
 export class ResultCardModule {}

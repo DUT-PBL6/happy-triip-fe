@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { formatDate, getHoursDifference, getTime, parseTimeStringToDate } from "src/app/share/helpers/date.helper";
 import { TranslateService } from "@ngx-translate/core";
@@ -7,17 +7,18 @@ import { Route, RouteResponse, TypeVehical, Utility } from "_api";
 import { RouteService } from "src/app/core/service/route/route.service";
 import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
-import { GetRouteByIdAndDate, UpdateBookingDate } from "src/app/core/service/route/route.action";
+import { GetRouteByIdAndDate } from "src/app/core/service/route/route.action";
 import cacheService from "src/lib/cache-service";
 import { ToastService } from "src/app/core/service/toast/toast.service";
 import { DATE_FORMAT } from "src/app/share/constants";
+import { UpdateBookingDate } from "src/app/core/service/booking/booking.action";
 
 @Component({
   selector: "app-result-card",
   templateUrl: "./result-card.component.html",
   styleUrls: ["./result-card.component.scss"],
 })
-export class ResultCardComponent {
+export class ResultCardComponent implements OnInit {
   @Input() route: RouteResponse | Route;
   @Input() date: string;
   public isViewDetails: boolean = false;
@@ -37,12 +38,15 @@ export class ResultCardComponent {
     private toastService: ToastService
   ) {}
 
+  ngOnInit(): void {
+    this.formattedDate = this.formatDate((this.route as RouteResponse).date);
+  }
+
   public handleViewDetails(): void {
     if (this.isFetchDetail) {
       this.isViewDetails = !this.isViewDetails;
       return;
     }
-    this.formattedDate = this.formatDate((this.route as RouteResponse).date);
     this.routeService.getRouteByIdAndDate$(this.route.id, this.formattedDate).subscribe((routeDetails: Route) => {
       this.route = { ...this.route, ...routeDetails };
       this.sanitizedFromAtEmbedMapLink = this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -54,7 +58,7 @@ export class ResultCardComponent {
     });
   }
 
-  public handleBookNow(routeId: number): void {
+  public handleBookNow(): void {
     this.routeService.getRouteByIdAndDate$(this.route.id, this.formattedDate).subscribe((routeDetail) => {
       const user = Object(cacheService.getUserInfo());
       this.store.dispatch(new GetRouteByIdAndDate(routeDetail));

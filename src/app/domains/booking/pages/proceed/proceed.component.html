@@ -1,5 +1,28 @@
-<div class="text-center flex flex-column gap-2 py-2">
-  <h2>Booking Proceed</h2>
-  <h6 class="text-500">Please choose your seat.</h6>
+<div class="content py-4 px-7 gap-4 mb-6">
+  <div class="card card-route">
+    <div class="your-booking-container gap-4">
+      <h4>Your Booking</h4>
+      <div class="name flex gap-3 align-items-center">
+        <i class="pi"></i>
+        <span>{{ route.name }}</span>
+      </div>
+      <div class="date flex gap-3 align-items-center">
+        <i class="pi pi-calendar"></i>
+        <span *ngIf="date$ | async as date">{{ date }}</span>
+      </div>
+      <div class="date flex gap-3 align-items-center">
+        <i class="pi pi-money-bill"></i>
+        <span>{{ route.price }} USD</span>
+      </div>
+      <app-route-overview [route]="this.route"></app-route-overview>
+    </div>
+  </div>
+  <div class="card card-booking">
+    <div class="flex flex-column gap-2 py-2">
+      <h4>Booking Proceed</h4>
+      <h6 class="text-500">Please choose your seat.</h6>
+    </div>
+    <app-seat-chart (checkOutUrl)="onCheckOut($event)"></app-seat-chart>
+  </div>
 </div>
-<app-seat-chart (checkOutUrl)="onCheckOut($event)"></app-seat-chart>
+<app-copyright></app-copyright>
