@@ -1608,6 +1608,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @name AwsControllerUploadFile
+     * @request POST:/api/aws
+     */
+    awsUploadFile: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/aws`,
+        method: 'POST',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name AwsControllerDeleteFile
+     * @request DELETE:/api/aws/{key}
+     */
+    awsDeleteFile: (key: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/aws/${key}`,
+        method: 'DELETE',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags Transport
      * @name TransportControllerCreate
      * @summary Create transport

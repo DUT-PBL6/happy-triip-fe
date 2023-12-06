@@ -32,8 +32,3 @@ export class GetRouteByIdAndDate {
   static readonly type = "[Route] Get route by id and date";
   constructor(public route: Route) {}
 }
-
-export class UpdateBookingDate {
-  static readonly type = "[Route] Update booking date";
-  constructor(public date: string) {}
-}

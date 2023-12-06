@@ -1,0 +1,27 @@
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.card-route {
+  height: fit-content;
+
+  .your-booking-container {
+    display: grid;
+    grid-gap: 1.5rem;
+  }
+
+  i {
+    &.pi-map-marker {
+      color: var(--secondary-color);
+    }
+
+    &.pi-calendar {
+      color: var(--blue-500);
+    }
+
+    &.pi-money-bill {
+      color: var(--primary-color);
+    }
+  }
+}
