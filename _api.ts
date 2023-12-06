@@ -227,6 +227,7 @@ export interface Passenger {
 export interface Booking {
   id: number;
   bookingCode: string;
+  totalAmount: number;
   /** @format date-time */
   soldOn: string;
   passenger: Passenger;
@@ -358,6 +359,16 @@ export interface Audit {
   createdDate: string;
 }
 
+export interface PaymentGatewayResDto {
+  result: string;
+  checksum: string;
+}
+
+export interface PaymentGatewayDto {
+  url: string;
+  invoiceNo: string;
+}
+
 export interface SeatDto {
   col: number;
   row: number;
@@ -368,10 +379,6 @@ export interface SeatDto {
 
 export interface BookingDto {
   seats: SeatDto[];
-}
-
-export interface PaymentGatewayDto {
-  url: string;
 }
 
 export interface BookingPagingResult {
@@ -1089,6 +1096,38 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Booking
+     * @name BookingControllerUpdateStatus
+     * @request POST:/api/booking/update-status
+     */
+    bookingUpdateStatus: (data: PaymentGatewayResDto, params: RequestParams = {}) =>
+      this.request<PaymentGatewayDto, any>({
+        path: `/api/booking/update-status`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetStatus
+     * @request GET:/api/booking/status/{invoiceNo}
+     */
+    bookingGetStatus: (invoiceNo: string, params: RequestParams = {}) =>
+      this.request<PaymentGatewayDto, any>({
+        path: `/api/booking/status/${invoiceNo}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
      * @name BookingControllerBooking
      * @request POST:/api/booking
      */
@@ -1106,13 +1145,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Booking
-     * @name BookingControllerConfirmPayment
-     * @request PUT:/api/booking/confirm-payment/{id}
+     * @name BookingControllerGetAllBookingOfPassenger
+     * @request GET:/api/booking
      */
-    bookingConfirmPayment: (id: number, params: RequestParams = {}) =>
-      this.request<Booking, any>({
-        path: `/api/booking/confirm-payment/${id}`,
-        method: 'PUT',
+    bookingGetAllBookingOfPassenger: (params: RequestParams = {}) =>
+      this.request<Booking[], any>({
+        path: `/api/booking`,
+        method: 'GET',
         format: 'json',
         ...params,
       }),
@@ -1128,6 +1167,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<Booking[], any>({
         path: `/api/booking/money-pending`,
         method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerConfirmPayment
+     * @request PUT:/api/booking/confirm-payment/{id}
+     */
+    bookingConfirmPayment: (id: number, params: RequestParams = {}) =>
+      this.request<Booking, any>({
+        path: `/api/booking/confirm-payment/${id}`,
+        method: 'PUT',
         format: 'json',
         ...params,
       }),
@@ -1166,6 +1220,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Booking
+     * @name BookingControllerGetById
+     * @request GET:/api/booking/{id}
+     */
+    bookingGetById: (id: number, params: RequestParams = {}) =>
+      this.request<Booking, any>({
+        path: `/api/booking/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
      * @name BookingControllerGetAll
      * @request GET:/api/booking/all
      */
@@ -1186,92 +1255,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/api/booking/all`,
         method: 'GET',
         query: query,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Booking
-     * @name BookingControllerGetById
-     * @request GET:/api/booking/{id}
-     */
-    bookingGetById: (id: number, params: RequestParams = {}) =>
-      this.request<Booking, any>({
-        path: `/api/booking/${id}`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @name HealthControllerCheck
-     * @request GET:/api/health
-     */
-    healthCheck: (params: RequestParams = {}) =>
-      this.request<
-        {
-          /** @example "ok" */
-          status?: string;
-          /** @example {"database":{"status":"up"}} */
-          info?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {} */
-          error?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {"database":{"status":"up"}} */
-          details?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-        },
-        {
-          /** @example "error" */
-          status?: string;
-          /** @example {"database":{"status":"up"}} */
-          info?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {"redis":{"status":"down","message":"Could not connect"}} */
-          error?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-          /** @example {"database":{"status":"up"},"redis":{"status":"down","message":"Could not connect"}} */
-          details?: Record<
-            string,
-            {
-              status?: string;
-              [key: string]: any;
-            }
-          >;
-        }
-      >({
-        path: `/api/health`,
-        method: 'GET',
         format: 'json',
         ...params,
       }),
@@ -1435,6 +1418,77 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @name HealthControllerCheck
+     * @request GET:/api/health
+     */
+    healthCheck: (params: RequestParams = {}) =>
+      this.request<
+        {
+          /** @example "ok" */
+          status?: string;
+          /** @example {"database":{"status":"up"}} */
+          info?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {} */
+          error?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"database":{"status":"up"}} */
+          details?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+        },
+        {
+          /** @example "error" */
+          status?: string;
+          /** @example {"database":{"status":"up"}} */
+          info?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"redis":{"status":"down","message":"Could not connect"}} */
+          error?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"database":{"status":"up"},"redis":{"status":"down","message":"Could not connect"}} */
+          details?: Record<
+            string,
+            {
+              status?: string;
+              [key: string]: any;
+            }
+          >;
+        }
+      >({
+        path: `/api/health`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags Station
      * @name StationControllerCreate
      * @summary Create station
@@ -1524,6 +1578,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: 'GET',
         query: query,
         format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name AwsControllerUploadFile
+     * @request POST:/api/aws
+     */
+    awsUploadFile: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/aws`,
+        method: 'POST',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name AwsControllerDeleteFile
+     * @request DELETE:/api/aws/{key}
+     */
+    awsDeleteFile: (key: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/aws/${key}`,
+        method: 'DELETE',
         ...params,
       }),
 

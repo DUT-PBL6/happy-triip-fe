@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Booking } from "_api";
-
 import { Observable, tap } from "rxjs";
 import { BookingService } from "./booking.service";
 import { AcceptBooking, DenyBooking, GetBookingMoneyPending, UpdateBookingDate } from "./booking.action";
