@@ -1,11 +1,11 @@
 <div class="news-management">
   <app-news-listbox
-  (selectedNews)="onSelectedNewsChange($event)"
-  (isUpdateMode)="onUpdateModeChange($event)"
-  (isNewsFormVisible)="onFormVisibleChange($event)"
+    (selectedNews)="onSelectedNewsChange($event)"
+    (isUpdateMode)="onUpdateModeChange($event)"
+    (isNewsFormVisible)="onFormVisibleChange($event)"
   ></app-news-listbox>
   <app-news-form
-  *ngIf="isNewsFormVisible"
+    *ngIf="isNewsFormVisible"
     class="w-full"
     [selectedNews]="currentNews"
     (cancelNewsForm)="cancelNewsForm($event)"

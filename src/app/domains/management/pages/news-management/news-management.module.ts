@@ -8,7 +8,7 @@ import { NewsFormModule } from "../../components/news/news-form/news-form.module
 
 @NgModule({
   declarations: [NewsManagementComponent],
-  imports: [CommonModule, ListboxModule, ButtonModule,NewsFormModule,  NewsListboxModule],
+  imports: [CommonModule, ListboxModule, ButtonModule, NewsFormModule, NewsListboxModule],
   exports: [NewsManagementComponent],
 })
 export class NewsManagementModule {}

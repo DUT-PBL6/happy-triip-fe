@@ -12,7 +12,7 @@ import { InputNumberModule } from "primeng/inputnumber";
 import { UploadImageModule } from "src/app/share/components/upload-image/upload-image.module";
 import { NewsFormComponent } from "./news-form.component";
 import { InputTextareaModule } from "primeng/inputtextarea";
-import { EditorModule } from 'primeng/editor';
+import { EditorModule } from "primeng/editor";
 
 @NgModule({
   declarations: [NewsFormComponent],
@@ -24,13 +24,12 @@ import { EditorModule } from 'primeng/editor';
     DropdownModule,
     InputTextModule,
     PasswordModule,
-    TranslateModule, EditorModule,
+    TranslateModule,
+    EditorModule,
     CheckboxModule,
     InputNumberModule,
     UploadImageModule,
     InputTextareaModule,
-  
-   
   ],
   exports: [NewsFormComponent],
 })

@@ -1,17 +1,16 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
-import { News, Station } from '_api';
-import { Observable } from 'rxjs';
-import { GetAllNewsOfPartner } from 'src/app/core/service/news/news.action';
-import { NewsState } from 'src/app/core/service/news/news.state';
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Select, Store } from "@ngxs/store";
+import { News, Station } from "_api";
+import { Observable } from "rxjs";
+import { GetAllNewsOfPartner } from "src/app/core/service/news/news.action";
+import { NewsState } from "src/app/core/service/news/news.state";
 
 @Component({
-  selector: 'app-news-listbox',
-  templateUrl: './news-listbox.component.html',
-  styleUrls: ['./news-listbox.component.scss']
+  selector: "app-news-listbox",
+  templateUrl: "./news-listbox.component.html",
+  styleUrls: ["./news-listbox.component.scss"],
 })
 export class NewsListboxComponent implements OnInit {
-
   public currentNews: News;
   @Output() selectedNews = new EventEmitter<News | undefined>();
   @Output() isUpdateMode = new EventEmitter<boolean>();
@@ -20,7 +19,8 @@ export class NewsListboxComponent implements OnInit {
 
   constructor(private store: Store) {}
   ngOnInit(): void {
-    if (this.store.selectSnapshot(NewsState.getAllNewsOfPartner).length === 0) this.store.dispatch(new GetAllNewsOfPartner());
+    if (this.store.selectSnapshot(NewsState.getAllNewsOfPartner).length === 0)
+      this.store.dispatch(new GetAllNewsOfPartner());
   }
 
   public handleChangeSelectedNews(): void {
@@ -36,6 +36,3 @@ export class NewsListboxComponent implements OnInit {
     this.currentNews = undefined;
   }
 }
-
-
-

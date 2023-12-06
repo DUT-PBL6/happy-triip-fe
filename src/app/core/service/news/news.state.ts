@@ -23,13 +23,12 @@ export class NewsState {
   }
   constructor(private newsService: NewsService) {}
 
-
   @Action(GetAllNewsOfPartner)
   public getAllNewsOfPartner$(ctx: StateContext<INewsState>): Observable<News[]> {
     ctx.patchState({ news: [] });
     return this.newsService.getAllNewsOfPartner$().pipe(
       tap({
-        next: (news) => ctx.patchState({news}),
+        next: (news) => ctx.patchState({ news }),
       })
     );
   }

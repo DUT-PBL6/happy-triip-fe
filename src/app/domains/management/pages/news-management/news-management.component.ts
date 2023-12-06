@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { News, NewsDto} from "_api";
+import { News, NewsDto } from "_api";
 import { Observable, takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
 import { CreateNews, DeleteNews, UpdateNews } from "src/app/core/service/news/news.action";
@@ -13,7 +13,7 @@ import { ToastService } from "src/app/core/service/toast/toast.service";
   styleUrls: ["./news-management.component.scss"],
 })
 export class NewsManagementComponent extends BaseDestroyable {
-  public currentNews :News
+  public currentNews: News;
   public isNewsFormVisible = false;
   public isUpdateMode = false;
 
@@ -60,7 +60,7 @@ export class NewsManagementComponent extends BaseDestroyable {
   public handleNewsForm(news: NewsDto): void {
     const service$: Observable<News> = this.isUpdateMode
       ? this.newsService.updateNews$(this.currentNews.id, news)
-      : this.newsService.createNews$(news)
+      : this.newsService.createNews$(news);
 
     service$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (response) => {

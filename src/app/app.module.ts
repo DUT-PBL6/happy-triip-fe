@@ -1,4 +1,3 @@
-
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgxsModule } from "@ngxs/store";
@@ -43,7 +42,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       StationState,
       RouteState,
       PartnerState,
-      BookingState,NewsState,
+      BookingState,
+      NewsState,
     ]),
     TranslateModule.forRoot({
       loader: {
@@ -56,4 +56,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [MessageService, ApiService],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

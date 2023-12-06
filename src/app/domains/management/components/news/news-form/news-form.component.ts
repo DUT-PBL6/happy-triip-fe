@@ -41,9 +41,9 @@ export class NewsFormComponent implements OnInit, OnChanges {
   private initNewsForm(): void {
     this.newsForm = this.fb.group({
       title: ["", Validators.required],
-   
+
       description: ["", Validators.required],
-    
+
       images: [
         "",
         // , Validators.required
@@ -52,21 +52,13 @@ export class NewsFormComponent implements OnInit, OnChanges {
     if (this.selectedNews) this.newsForm?.patchValue({ ...this.selectedNews });
   }
 
-  
-
   public get title(): FormControl {
     return this.newsForm.get("title") as FormControl;
   }
 
- 
-
- 
-
   public get description(): FormControl {
     return this.newsForm.get("description") as FormControl;
   }
-
- 
 
   public get images(): FormControl {
     return this.newsForm.get("images") as FormControl;
@@ -87,7 +79,7 @@ export class NewsFormComponent implements OnInit, OnChanges {
       this.newsForm.markAllAsTouched();
       return;
     }
-console.log(this.newsForm);
+    console.log(this.newsForm);
     this.form.emit(this.newsForm.value);
     this.newsForm.reset();
   }
