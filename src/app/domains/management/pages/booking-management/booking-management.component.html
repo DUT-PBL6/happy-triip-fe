@@ -1,1 +1,97 @@
-<p>booking-management works!</p>
+<div class="booking-confirmation">
+  <div class="card surface-0 p-4">
+    <h2 class="text-center mb-4">Booking histories</h2>
+    <p-table
+      #dt2
+      [value]="bookingsResult"
+      dataKey="id"
+      [rows]="5"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[5, 10, 15]"
+      [globalFilterFields]="['soldOn', 'status', 'bookingCode', 'totalAmount']"
+      [paginator]="true"
+      [scrollable]="true"
+      scrollHeight="560px"
+      selectionMode="single"
+      (onRowSelect)="onRowSelect($event)"
+      styleClass="p-datatable-striped"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [tableStyle]="{ 'min-width': '75rem' }"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex">
+          <p-button label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="dt2.clear()"></p-button>
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="Search keyword"
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr class="list-header" style="width: 100%">
+          <th class="item-header">
+            <div class="flex align-items-center">Code</div>
+          </th>
+          <th class="item-header" pSortableColumn="totalAmount">
+            <div class="flex align-items-center">
+              Total
+              <p-sortIcon field="totalAmount"></p-sortIcon>
+            </div>
+          </th>
+          <th class="item-header">
+            <div class="flex align-items-center">
+              Sold On
+              <p-columnFilter type="date" field="soldOn" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th style="min-width: 10rem">
+            <div class="flex align-items-center">
+              Status
+              <p-columnFilter field="status" matchMode="equals" display="menu">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-dropdown
+                    [ngModel]="value"
+                    [options]="statuses"
+                    (onChange)="filter($event.value)"
+                    placeholder="Any"
+                  >
+                    <ng-template let-option pTemplate="item">
+                      <p-tag [value]="option.value" [severity]="getSeverity(option.value)"></p-tag>
+                    </ng-template>
+                  </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-booking>
+        <tr class="text-center" [pSelectableRow]="booking">
+          <td>
+            {{ booking.bookingCode }}
+          </td>
+          <td>
+            <span class="ml-1 vertical-align-middle">${{ booking.totalAmount }}</span>
+          </td>
+          <td>
+            <span class="ml-1 vertical-align-middle">{{ booking.soldOn | date: "dd/MM/yyyy" }}</span>
+          </td>
+          <td>
+            <p-tag [value]="booking.status" [severity]="getSeverity(booking.status)"></p-tag>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5">No booking histories found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

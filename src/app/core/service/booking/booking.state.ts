@@ -3,7 +3,13 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Booking } from "_api";
 import { Observable, tap } from "rxjs";
 import { BookingService } from "./booking.service";
-import { AcceptBooking, DenyBooking, GetBookingMoneyPending, UpdateBookingDate } from "./booking.action";
+import {
+  AcceptBooking,
+  DenyBooking,
+  GetBookingMoneyPending,
+  GetBookingsByPassenger,
+  UpdateBookingDate,
+} from "./booking.action";
 
 interface IBookingState {
   bookings: Booking[];
@@ -24,6 +30,11 @@ export class BookingState {
   }
 
   @Selector()
+  public static getBookingsByPassenger(state: IBookingState): Booking[] {
+    return state.bookings;
+  }
+
+  @Selector()
   public static getBookingDate(state: IBookingState): string {
     return state.bookingDate;
   }
@@ -35,6 +46,17 @@ export class BookingState {
     ctx.patchState({ bookings: [] });
 
     return this.bookingService.getBookingMoneyPending$().pipe(
+      tap({
+        next: (bookings) => ctx.patchState({ bookings }),
+      })
+    );
+  }
+
+  @Action(GetBookingsByPassenger)
+  public getBookingsByPassenger$(ctx: StateContext<IBookingState>): Observable<Booking[]> {
+    ctx.patchState({ bookings: [] });
+
+    return this.bookingService.getBookingsByPassenger$().pipe(
       tap({
         next: (bookings) => ctx.patchState({ bookings }),
       })

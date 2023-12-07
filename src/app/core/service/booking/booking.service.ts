@@ -11,6 +11,10 @@ export class BookingService {
     return this.apiService.api.bookingGetBookingMoneyPending();
   }
 
+  public getBookingsByPassenger$(): Observable<Booking[]> {
+    return this.apiService.api.bookingGetAllBookingOfPassenger();
+  }
+
   public acceptBooking$(id: number): Observable<Booking> {
     return this.apiService.api.bookingAcceptBooking(id);
   }
@@ -25,5 +29,9 @@ export class BookingService {
 
   public updateBookingStatus$(paymentGatewayResDto: PaymentGatewayResDto): Observable<any> {
     return this.apiService.api.bookingUpdateStatus(paymentGatewayResDto);
+  }
+
+  public getBookingDetailByPassenger$(bookingId: number): Observable<Booking> {
+    return this.apiService.api.bookingGetById(bookingId);
   }
 }

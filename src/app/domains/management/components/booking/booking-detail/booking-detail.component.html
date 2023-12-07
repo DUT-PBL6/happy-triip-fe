@@ -1,0 +1,105 @@
+<div class="booking-details-container flex flex-column gap-4">
+  <div class="flex flex-column gap-3">
+    <div class="grid">
+      <div class="col-12 md:col-6 lg:col-3">
+        <div class="text-lg flex align-items-center gap-2">
+          <i class="pi pi-qrcode"></i>
+          <div>Code:</div>
+          <div class="text-base font-normal">
+            {{ bookingDetails.bookingCode }}
+          </div>
+        </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-3">
+        <div class="text-lg flex align-items-center gap-2">
+          <i class="pi pi-money-bill"></i>
+          <div>Total:</div>
+          <div class="text-base font-normal">$ {{ bookingDetails.totalAmount }}</div>
+        </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-3">
+        <div class="text-lg flex align-items-center gap-2">
+          <i class="pi pi-calendar"></i>
+          <div>Sold on:</div>
+          <div class="text-base font-normal">{{ bookingDetails.soldOn | date: "dd/MM/yyyy" }}</div>
+        </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-3">
+        <div class="text-lg flex align-items-center gap-2">
+          <i class="pi pi-ticket"></i>
+          <div>Status:</div>
+          <div class="text-base font-normal">
+            <p-tag [value]="bookingDetails.status" [severity]="getSeverity(bookingDetails.status)"></p-tag>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p-table
+      [value]="bookingDetails.seats"
+      dataKey="id"
+      [rows]="5"
+      [paginator]="true"
+      [scrollable]="true"
+      scrollHeight="560px"
+      styleClass="p-datatable-striped"
+    >
+      <ng-template pTemplate="caption">Seat(s)</ng-template>
+
+      <ng-template pTemplate="header">
+        <tr class="list-header" style="width: 100%">
+          <th class="item-header">
+            <div class="flex align-items-center">Date</div>
+          </th>
+          <th class="item-header">
+            <div class="flex align-items-center">Seat name</div>
+          </th>
+          <th class="item-header">
+            <div class="flex align-items-center">Route</div>
+          </th>
+          <th class="item-header">
+            <div class="flex align-items-center">Price</div>
+          </th>
+          <th class="item-header">
+            <div class="flex align-items-center">Depart at</div>
+          </th>
+          <th class="item-header">
+            <div class="flex align-items-center">Arrive at</div>
+          </th>
+          <th class="item-header">
+            <div class="flex align-items-center">Hour(s) ride</div>
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-seat>
+        <tr class="text-center" [pSelectableRow]="seat">
+          <td>
+            {{ seat.date | date: "dd/MM/yyyy" }}
+          </td>
+          <td>
+            {{ getSeatName(seat.col, seat.row) }}
+          </td>
+          <td>
+            {{ seat.route["name"] }}
+          </td>
+          <td>$ {{ seat.route["price"] }}</td>
+          <td>
+            {{ getTime(parseTimeStringToDateString(seat.route["departAt"])) }}
+          </td>
+          <td>
+            {{ getTime(parseTimeStringToDateString(seat.route["arriveAt"])) }}
+          </td>
+          <td>
+            {{ getHoursDifference(seat.route["departAt"], seat.route["arriveAt"], seat.route["ndays"]) }}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5">No booking histories found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
