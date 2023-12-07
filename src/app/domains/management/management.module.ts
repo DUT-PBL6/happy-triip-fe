@@ -11,6 +11,8 @@ import { RouteManagementModule } from "./pages/route-management/route-management
 import { PoiStationsModule } from "./pages/poi-stations/poi-stations.module";
 import { PartnerModule } from "./pages/partner-management/partner-management.module";
 import { NewsManagementModule } from "./pages/news-management/news-management.module";
+import { BookingManagementModule } from "./pages/booking-management/booking-management.module";
+import { PassengerManagementModule } from "./pages/passenger-management/passenger-management.module";
 
 @NgModule({
   declarations: [ManagementLayoutComponent],
@@ -26,6 +28,8 @@ import { NewsManagementModule } from "./pages/news-management/news-management.mo
     PoiStationsModule,
     PartnerModule,
     NewsManagementModule,
+    BookingManagementModule,
+    PassengerManagementModule,
   ],
   exports: [ManagementLayoutComponent],
 })
