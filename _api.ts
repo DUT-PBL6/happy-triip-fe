@@ -186,6 +186,15 @@ export enum Utility {
   WIFI = 'WIFI',
 }
 
+export interface News {
+  id: number;
+  title: string;
+  description: string;
+  images: string[];
+  slug: string;
+  partner: Partner;
+}
+
 export interface Partner {
   id: number;
   name: string;
@@ -199,6 +208,7 @@ export interface Partner {
   routes: Route[];
   transports: Transport[];
   status: string;
+  news: News[];
 }
 
 export interface Transport {
@@ -474,6 +484,20 @@ export interface TransportDto {
   seatTypes: SeatTypeDto[];
   images: string[];
   utility?: Utility[];
+}
+
+export interface NewsDto {
+  title: string;
+  description: string;
+  slug: string;
+  images: string[];
+}
+
+export interface NewsPagingResult {
+  total: number;
+  skip: number;
+  take: number;
+  data: News[];
 }
 
 import axios, { AxiosInstance, AxiosRequestConfig, HeadersDefaults, ResponseType } from 'axios';
@@ -1670,6 +1694,133 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<Transport, any>({
         path: `/api/transport/${id}`,
         method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerGetAllNews
+     * @summary Get all news
+     * @request GET:/api/news
+     */
+    newsGetAllNews: (params: RequestParams = {}) =>
+      this.request<News[], any>({
+        path: `/api/news`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerCreateNews
+     * @summary Create news
+     * @request POST:/api/news
+     */
+    newsCreateNews: (data: NewsDto, params: RequestParams = {}) =>
+      this.request<News, any>({
+        path: `/api/news`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerGetAllNewsOfPartner
+     * @summary Get all news of partner
+     * @request GET:/api/news/partner
+     */
+    newsGetAllNewsOfPartner: (params: RequestParams = {}) =>
+      this.request<News[], any>({
+        path: `/api/news/partner`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerGetById
+     * @request GET:/api/news/{id}
+     */
+    newsGetById: (id: number, params: RequestParams = {}) =>
+      this.request<News, any>({
+        path: `/api/news/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerUpdateNews
+     * @summary Update news
+     * @request PUT:/api/news/{id}
+     */
+    newsUpdateNews: (id: number, data: NewsDto, params: RequestParams = {}) =>
+      this.request<News, any>({
+        path: `/api/news/${id}`,
+        method: 'PUT',
+        body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerDeleteNews
+     * @summary Delete news
+     * @request DELETE:/api/news/{id}
+     */
+    newsDeleteNews: (id: number, params: RequestParams = {}) =>
+      this.request<News, any>({
+        path: `/api/news/${id}`,
+        method: 'DELETE',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerGetAll
+     * @request GET:/api/news/all
+     */
+    newsGetAll: (
+      query?: {
+        /** Order */
+        order?: any;
+        /** Where filter */
+        where?: any;
+        /** Skip */
+        skip?: number;
+        /** Page size */
+        take?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<NewsPagingResult, any>({
+        path: `/api/news/all`,
+        method: 'GET',
+        query: query,
         format: 'json',
         ...params,
       }),
