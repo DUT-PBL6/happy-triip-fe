@@ -14,8 +14,8 @@ import { ToastService } from "src/app/core/service/toast/toast.service";
   styleUrls: ["./passenger-management.component.scss"],
 })
 export class PassengerManagementComponent extends BaseDestroyable implements OnInit {
-  public currentPassenger: Passenger;
   @Select(PassengerState.getCurrentPassenger) public currentPassenger$: Observable<Passenger>;
+  public currentPassenger: Passenger;
 
   constructor(
     private passengerService: PassengerService,
@@ -29,7 +29,6 @@ export class PassengerManagementComponent extends BaseDestroyable implements OnI
     if (this.store.selectSnapshot(PassengerState.getCurrentPassenger) === undefined)
       this.store.dispatch(new GetCurrentPassenger());
     this.currentPassenger$.pipe(takeUntil(this.destroy$)).subscribe((passenger) => (this.currentPassenger = passenger));
-    // console.log(this.currentPassenger);
   }
 
   public handlePassengerForm(passenger: PassengerDto): void {

@@ -23,9 +23,9 @@ export class PassengerFormComponent implements OnInit {
 
   ngOnInit() {
     this.initPassengerForm();
-    console.log("nhận", this.passenger, this.passengerForm.value);
     if (this.isReadOnly) this.passengerForm?.disable();
   }
+
   private initPassengerForm(): void {
     this.passengerForm = this.fb.group({
       name: ["", Validators.required],
@@ -36,6 +36,7 @@ export class PassengerFormComponent implements OnInit {
     });
     this.passengerForm.patchValue(this.passenger);
   }
+
   public get name(): FormControl {
     return this.passengerForm.get("name") as FormControl;
   }
@@ -51,6 +52,7 @@ export class PassengerFormComponent implements OnInit {
   public get phoneNumber(): FormControl {
     return this.passengerForm.get("phoneNumber") as FormControl;
   }
+
   public get email(): FormControl {
     return this.passengerForm.get("email") as FormControl;
   }
