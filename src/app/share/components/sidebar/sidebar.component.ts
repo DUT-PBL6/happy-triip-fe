@@ -20,6 +20,7 @@ export class SidebarComponent implements OnInit {
     const isEmployee = this.user.userRole === "EMPLOYEE";
     const isAdmin = this.user?.role === "ADMIN";
     const isPartner = this.user.userRole === "PARTNER";
+    const isPassenger = this.user.userRole === "PASSENGER";
 
     this.items = [
       {
@@ -89,6 +90,22 @@ export class SidebarComponent implements OnInit {
 
     if (isPartner) {
       this.items.splice(0, 4);
+      return;
+    }
+
+    if (isPassenger) {
+      this.items = [
+        {
+          label: "Booking Management",
+          icon: "booking",
+          data: "booking-management",
+        },
+        {
+          label: "Passenger Management",
+          icon: "user",
+          data: "passenger",
+        },
+      ];
     }
   }
 
