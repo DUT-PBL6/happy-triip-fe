@@ -12,11 +12,7 @@ import { ConfirmationService } from "primeng/api";
 import { BookingService } from "src/app/core/service/booking/booking.service";
 import { DynamicDialogRef } from "primeng/dynamicdialog";
 import dayjs from "dayjs";
-
-type BookingResult = Omit<Booking, "soldOn"> & {
-  soldOn: Date;
-  totalPrice: number;
-};
+import { BookingResult } from "../../types/booking-result.type";
 
 @Component({
   selector: "app-booking-confirmation",

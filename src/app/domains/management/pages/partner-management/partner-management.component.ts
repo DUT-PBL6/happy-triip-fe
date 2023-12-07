@@ -2,20 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
 import { Partner, PartnerDto } from "_api";
 import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
-import { Observable, map, takeUntil } from "rxjs";
+import { Observable, takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
-import {
-  GetAllPartner,
-  GetAllPendingPartner,
-  GetCurrentPartner,
-  UpdatePartner,
-} from "src/app/core/service/partner/partner.action";
+import { GetAllPartner, GetCurrentPartner, UpdatePartner } from "src/app/core/service/partner/partner.action";
 import { PartnerService } from "src/app/core/service/partner/partner.service";
 import { PartnerState } from "src/app/core/service/partner/partner.state";
 import { ToastService } from "src/app/core/service/toast/toast.service";
 import { PendingPartnerDetailComponent } from "../../components/partner/pending-partner-detail/pending-partner-detail.component";
 import cacheService from "src/lib/cache-service";
-import { Table } from "primeng/table";
 import { TranslateService } from "@ngx-translate/core";
 
 enum PartnerStatus {
@@ -31,14 +25,14 @@ enum PartnerStatus {
   styleUrls: ["./partner-management.component.scss"],
 })
 export class PartnerPageComponent extends BaseDestroyable implements OnInit {
+  @Select(PartnerState.getAllPartner) public partners$: Observable<Partner[]>;
+  @Select(PartnerState.getCurrentPartner) public currentPartner$: Observable<Partner>;
   public currentPartner: Partner;
   public ref: DynamicDialogRef | undefined;
   public isEmployee = false;
   public isPartner = false;
   public statuses!: any[];
   public selectedPartner: Partner;
-  @Select(PartnerState.getAllPartner) public partners$: Observable<Partner[]>;
-  @Select(PartnerState.getCurrentPartner) public currentPartner$: Observable<Partner>;
 
   constructor(
     private partnerService: PartnerService,
@@ -73,12 +67,7 @@ export class PartnerPageComponent extends BaseDestroyable implements OnInit {
   public onRowSelect(event): void {
     this.partnerService
       .getPartnerById$(event.data.id)
-      .pipe(
-        takeUntil(this.destroy$),
-        map((partnerDetail) => ({
-          ...partnerDetail,
-        }))
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((partnerDetails) => {
         this.ref = this.dialogService.open(PendingPartnerDetailComponent, {
           data: { partnerDetails },
@@ -105,13 +94,10 @@ export class PartnerPageComponent extends BaseDestroyable implements OnInit {
     switch (status) {
       case "DENIED":
         return "danger";
-
       case "ACCEPTED":
         return "success";
-
       case "INCOMPLETE_DATA":
         return "info";
-
       case "PENDING":
         return "warning";
     }
