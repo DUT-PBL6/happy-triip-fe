@@ -46,6 +46,17 @@ export interface UserDto {
   phoneNumber: string;
 }
 
+export interface Passenger {
+  id: number;
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  bonusPoint: number;
+  bookings: Booking[];
+}
+
 export interface SubPoint {
   id: number;
   time: string;
@@ -223,39 +234,6 @@ export interface Transport {
   partner: Partner;
 }
 
-export interface Passenger {
-  id: number;
-  name: string;
-  email: string;
-  username: string;
-  password: string;
-  phoneNumber: string;
-  bonusPoint: number;
-  bookings: Booking[];
-}
-
-export interface Booking {
-  id: number;
-  bookingCode: string;
-  totalAmount: number;
-  /** @format date-time */
-  soldOn: string;
-  passenger: Passenger;
-  seats: Seat[];
-  status: 'PENDING' | 'MONEYPENDING' | 'SUCCESS' | 'FAILED';
-}
-
-export interface Seat {
-  id: number;
-  col: number;
-  row: number;
-  floor: number;
-  /** @format date-time */
-  date: string;
-  route: Route;
-  booking: Booking;
-}
-
 export interface Route {
   id: number;
   name: string;
@@ -272,6 +250,28 @@ export interface Route {
   transport: Transport;
   partner: Partner;
   seats: Seat[];
+}
+
+export interface Seat {
+  id: number;
+  col: number;
+  row: number;
+  floor: number;
+  /** @format date-time */
+  date: string;
+  route: Route;
+  booking: Booking;
+}
+
+export interface Booking {
+  id: number;
+  bookingCode: string;
+  totalAmount: number;
+  /** @format date-time */
+  soldOn: string;
+  passenger: Passenger;
+  seats: Seat[];
+  status: 'PENDING' | 'MONEYPENDING' | 'SUCCESS' | 'FAILED';
 }
 
 export interface PassengerDto {
@@ -816,14 +816,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags auth
+     * @name AuthControllerGetDetailPassenger
+     * @summary Get detail of passenger for view profile
+     * @request GET:/api/auth/passenger
+     */
+    authGetDetailPassenger: (params: RequestParams = {}) =>
+      this.request<Passenger, any>({
+        path: `/api/auth/passenger`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
      * @name AuthControllerUpdatePassenger
      * @summary Update passenger
-     * @request GET:/api/auth/passenger
+     * @request PUT:/api/auth/passenger
      */
     authUpdatePassenger: (data: PassengerDto, params: RequestParams = {}) =>
       this.request<Passenger, any>({
         path: `/api/auth/passenger`,
-        method: 'GET',
+        method: 'PUT',
         body: data,
         type: ContentType.Json,
         format: 'json',

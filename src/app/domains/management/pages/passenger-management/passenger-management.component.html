@@ -1,1 +1,7 @@
-<p>passenger-management works!</p>
+<div class="passenger-management">
+  <app-passenger-form
+    *ngIf="currentPassenger !== undefined"
+    [passenger]="currentPassenger"
+    (form)="handlePassengerForm($event)"
+  ></app-passenger-form>
+</div>
