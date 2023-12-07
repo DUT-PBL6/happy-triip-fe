@@ -14,12 +14,14 @@ import {
 interface IBookingState {
   bookings: Booking[];
   bookingDate: string;
+  bookingHistories: Booking[];
 }
 @State<IBookingState>({
   name: "booking",
   defaults: {
     bookings: [],
     bookingDate: "",
+    bookingHistories: [],
   },
 })
 @Injectable()
@@ -31,7 +33,7 @@ export class BookingState {
 
   @Selector()
   public static getBookingsByPassenger(state: IBookingState): Booking[] {
-    return state.bookings;
+    return state.bookingHistories;
   }
 
   @Selector()
@@ -44,7 +46,6 @@ export class BookingState {
   @Action(GetBookingMoneyPending)
   public getBookingMoneyPending$(ctx: StateContext<IBookingState>): Observable<Booking[]> {
     ctx.patchState({ bookings: [] });
-
     return this.bookingService.getBookingMoneyPending$().pipe(
       tap({
         next: (bookings) => ctx.patchState({ bookings }),
@@ -54,11 +55,10 @@ export class BookingState {
 
   @Action(GetBookingsByPassenger)
   public getBookingsByPassenger$(ctx: StateContext<IBookingState>): Observable<Booking[]> {
-    ctx.patchState({ bookings: [] });
-
+    ctx.patchState({ bookingHistories: [] });
     return this.bookingService.getBookingsByPassenger$().pipe(
       tap({
-        next: (bookings) => ctx.patchState({ bookings }),
+        next: (bookingHistories) => ctx.patchState({ bookingHistories }),
       })
     );
   }
@@ -76,7 +76,6 @@ export class BookingState {
   @Action(UpdateBookingDate)
   public updateBookingDate$(ctx: StateContext<IBookingState>, action: UpdateBookingDate): void {
     const state = ctx.getState();
-
     ctx.setState({
       ...state,
       bookingDate: action.date,

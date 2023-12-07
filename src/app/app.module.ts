@@ -20,6 +20,7 @@ import { RouteState } from "./core/service/route/route.state";
 import { PartnerState } from "./core/service/partner/partner.state";
 import { BookingState } from "./core/service/booking/booking.state";
 import { NewsState } from "./core/service/news/news.state";
+import { PassengerState } from "./core/service/passenger/passenger.state";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -44,6 +45,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       PartnerState,
       BookingState,
       NewsState,
+      PassengerState,
     ]),
     TranslateModule.forRoot({
       loader: {
