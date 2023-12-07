@@ -54,6 +54,7 @@ export class NewsState {
       news: updatedNews,
     });
   }
+
   @Action(DeleteNews)
   public deleteStation$(ctx: StateContext<INewsState>, action: DeleteNews): void {
     const state = ctx.getState();

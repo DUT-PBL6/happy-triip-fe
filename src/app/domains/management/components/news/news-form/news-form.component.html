@@ -22,39 +22,14 @@
           </small>
         </div>
       </div>
-
+      <!-- DESCRIPTION -->
       <div class="description col-12 py-2 flex flex-column">
         <label for="description" class="block text-900 text-lg font-medium mb-2">Description</label>
-
         <p-editor formControlName="description" [style]="{ height: '320px' }"></p-editor>
         <small class="p-error" *ngIf="validate(description)">
           <strong>Description is required</strong>
         </small>
       </div>
-
-      <!-- DESCRIPTION -->
-      <!-- <div class="description col-12 py-2 flex flex-column">
-        <label for="description" class="block text-900 text-lg font-medium mb-2">Description</label>
-        <div class="input-container h-9rem">
-          <textarea
-            cols="10"
-            rows="5"
-            pInputText
-            id="description"
-            type="textarea"
-            placeholder="Enter description"
-            class="w-full"
-            formControlName="description"
-            [ngClass]="{
-              'ng-invalid ng-dirty': validate(description)
-            }"
-          ></textarea>
-
-          <small class="p-error" *ngIf="validate(description)">
-            <strong>Description is required</strong>
-          </small>
-        </div>
-      </div>  -->
       <!-- IMAGE -->
       <div class="image col-12 py-2 flex flex-column">
         <label for="image" class="block text-900 text-lg font-medium mb-2">Image</label>
