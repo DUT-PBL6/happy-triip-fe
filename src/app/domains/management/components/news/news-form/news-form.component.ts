@@ -79,7 +79,6 @@ export class NewsFormComponent implements OnInit, OnChanges {
       this.newsForm.markAllAsTouched();
       return;
     }
-    console.log(this.newsForm);
     this.form.emit(this.newsForm.value);
     this.newsForm.reset();
   }

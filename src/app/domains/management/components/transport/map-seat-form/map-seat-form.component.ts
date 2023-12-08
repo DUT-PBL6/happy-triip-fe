@@ -37,7 +37,7 @@ export class MapSeatFormComponent implements OnInit {
     const mapSeatArray = this.transportForm.get("mapSeat").value;
     if (mapSeatArray.length === 0) {
       this.mapSeatForm = this.fb.group({
-        col: [{ value: 1, disabled: this.isConfirmRowCol }, Validators.required],
+        col: [1, Validators.required],
         row: [1, Validators.required],
       });
       return;
@@ -76,6 +76,7 @@ export class MapSeatFormComponent implements OnInit {
 
   public clearColRow(): void {
     this.mapSeatMatrix = [];
+    this.mapSeatForm.reset();
     this.isConfirmRowCol = false;
     this.currentSeatColor = undefined;
   }

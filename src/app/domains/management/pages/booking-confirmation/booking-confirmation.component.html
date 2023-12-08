@@ -14,7 +14,13 @@
         [rows]="10"
         [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[10, 25, 50]"
-        [globalFilterFields]="['soldOn', 'passenger.name', 'passenger.phoneNumber', '']"
+        [globalFilterFields]="[
+          'passenger.name',
+          'passenger.phoneNumber',
+          'passenger.email',
+          'bookingCode',
+          'totalAmount'
+        ]"
         [paginator]="true"
         [scrollable]="true"
         scrollHeight="560px"
@@ -62,10 +68,10 @@
             <th class="item-header" style="width: 20%">
               <div class="flex align-items-center">Route</div>
             </th>
-            <th class="item-header" style="width: 5%" pSortableColumn="totalPrice">
+            <th class="item-header" style="width: 5%" pSortableColumn="totalAmount">
               <div class="flex align-items-center">
-                Price
-                <p-sortIcon field="totalPrice"></p-sortIcon>
+                Total
+                <p-sortIcon field="totalAmount"></p-sortIcon>
               </div>
             </th>
             <th class="item-header" style="width: 20%">
@@ -83,7 +89,7 @@
         <ng-template pTemplate="body" let-booking>
           <tr class="text-center">
             <td>
-              {{ booking.id }}
+              {{ booking.bookingCode }}
             </td>
             <td>
               <span class="ml-1 vertical-align-middle">{{ booking.soldOn | date: "dd/MM/yyyy" }}</span>
@@ -102,7 +108,7 @@
               <span class="ml-1 vertical-align-middle">{{ booking.seats[0].route["name"] }}</span>
             </td>
             <td>
-              <span class="ml-1 vertical-align-middle">${{ booking.totalPrice }}</span>
+              <span class="ml-1 vertical-align-middle">${{ booking.totalAmount }}</span>
             </td>
             <td>
               <span class="upto ml-1 vertical-align-middle">

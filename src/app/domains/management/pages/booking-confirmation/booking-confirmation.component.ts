@@ -46,7 +46,6 @@ export class BookingConfirmationComponent extends BaseDestroyable implements OnI
           return bookings.map((booking) => ({
             ...booking,
             soldOn: new Date(dayjs(booking.soldOn).format("YYYY-MM-DD")),
-            totalPrice: this.totalPrice(booking.seats),
           }));
         })
       )
@@ -56,10 +55,6 @@ export class BookingConfirmationComponent extends BaseDestroyable implements OnI
 
     this.initVehicleType();
     this.initLocationOptions();
-  }
-
-  public totalPrice(seats: any[]): number {
-    return seats.reduce((total, seat) => total + seat.route["price"], 0);
   }
 
   private initVehicleType(): void {

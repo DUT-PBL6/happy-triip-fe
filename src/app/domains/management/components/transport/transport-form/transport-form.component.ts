@@ -57,10 +57,7 @@ export class TransportFormComponent implements OnInit, OnChanges {
       type: ["", Validators.required],
       mapSeat: [[], Validators.required],
       seatTypes: this.seatTypesForm,
-      images: [
-        "",
-        // , Validators.required
-      ],
+      images: [""],
       utility: ["", Validators.required],
     });
     if (this.selectedTransport) this.transportForm?.patchValue({ ...this.selectedTransport });
@@ -83,6 +80,10 @@ export class TransportFormComponent implements OnInit, OnChanges {
       return;
     }
 
+    this.initDefaultSeatTypesForm();
+  }
+
+  private initDefaultSeatTypesForm(): void {
     this.seatTypesForm = this.fb.array(
       [
         this.fb.group({
@@ -164,6 +165,10 @@ export class TransportFormComponent implements OnInit, OnChanges {
     this.transportForm.patchValue({
       ...this.transportForm.value,
       utility: this.selectedUtilities,
+      seatTypes: this.transportForm.get("seatTypes").value.map((seatType) => ({
+        ...seatType,
+        price: Number(seatType.price),
+      })),
     });
 
     if (!this.transportForm.valid || !this.seatTypesForm.valid) {
@@ -178,6 +183,8 @@ export class TransportFormComponent implements OnInit, OnChanges {
 
   private resetForm(): void {
     this.transportForm.reset();
+    this.mapSeat.setValue([]);
+    this.initDefaultSeatTypesForm();
     this.selectedImages = [];
     this.selectedUtilities = [];
   }

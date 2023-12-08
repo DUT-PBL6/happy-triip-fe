@@ -15,7 +15,6 @@ export class BookingDetailComponent {
 
   ngOnInit(): void {
     this.bookingDetails = this.config.data["bookingDetails"];
-    console.log(this.bookingDetails);
   }
 
   public getSeverity(status: string): string {
