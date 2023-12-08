@@ -80,6 +80,7 @@
             [showButtonBar]="true"
             [dateFormat]="datePickerFormat"
             class="full-width-calendar"
+            [minDate]="today"
             [maxDate]="secondDt?.value"
           ></p-calendar>
         </div>
@@ -93,7 +94,7 @@
             [showButtonBar]="true"
             [dateFormat]="datePickerFormat"
             class="full-width-calendar"
-            [minDate]="firstDt?.value"
+            [minDate]="firstDt?.value || today"
           ></p-calendar>
         </div>
       </div>

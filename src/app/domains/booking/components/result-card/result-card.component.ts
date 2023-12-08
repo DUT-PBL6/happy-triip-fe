@@ -40,6 +40,7 @@ export class ResultCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.formattedDate = this.formatDate((this.route as RouteResponse).date);
+    console.log(this.route);
   }
 
   public handleViewDetails(): void {

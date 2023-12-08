@@ -35,7 +35,7 @@ export class SearchRouteComponent extends BaseDestroyable implements OnInit, OnC
         secondDt: queryParamMap.has("secondDt") ? formatDate(queryParamMap.get("secondDt"), DATE_FORMAT) : undefined,
       };
 
-      if (queryParamMap.has("secondDt")) this.isFindingRoundTrip = true;
+      this.isFindingRoundTrip = queryParamMap.has("secondDt");
 
       this.routes$ = this.routeService.searchRoutes$(this.routeInfo).pipe(
         takeUntil(this.destroy$),
