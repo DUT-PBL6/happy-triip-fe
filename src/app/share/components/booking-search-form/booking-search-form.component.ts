@@ -18,6 +18,7 @@ export class BookingSearchFormComponent implements OnInit {
   public selectedBookingOption = BookingOption.OneWay;
   public locations: Option<City>[] = [];
   public readonly datePickerFormat = DATE_PICKER_FORMAT;
+  public readonly today: Date = new Date();
 
   constructor(
     private fb: FormBuilder,
@@ -47,12 +48,10 @@ export class BookingSearchFormComponent implements OnInit {
   }
 
   private initBookingSearchForm(): void {
-    const currentDate = new Date();
-
     this.bookingSearchForm = this.fb.group({
       firstCity: ["", Validators.required],
       secondCity: ["", Validators.required],
-      firstDt: [currentDate, Validators.required],
+      firstDt: [this.today, Validators.required],
     });
   }
 
@@ -76,7 +75,7 @@ export class BookingSearchFormComponent implements OnInit {
       return;
     }
     const tomorrowDate = new Date();
-    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+    tomorrowDate.setDate(this.today.getDate() + 1);
     this.bookingSearchForm.addControl("secondDt", new FormControl(tomorrowDate, Validators.required));
   }
 

@@ -27,7 +27,11 @@ export class BookingService {
     return this.apiService.api.bookingBooking(bookingDto);
   }
 
-  public updateBookingStatus$(paymentGatewayResDto: PaymentGatewayResDto): Observable<any> {
+  public createBookingByCash$(bookingDto: BookingDto): Observable<PaymentGatewayDto> {
+    return this.apiService.api.bookingBookingCash(bookingDto);
+  }
+
+  public updateBookingStatus$(paymentGatewayResDto: PaymentGatewayResDto): Observable<PaymentGatewayDto> {
     return this.apiService.api.bookingUpdateStatus(paymentGatewayResDto);
   }
 

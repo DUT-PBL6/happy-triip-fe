@@ -1,1 +1,21 @@
 <div #container class="flex justify-content-center w-full"></div>
+<p-confirmDialog #cd [style]="{ width: '50vw' }">
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-center gap-3">
+      <p-button
+        type="button"
+        styleClass="p-button-outlined "
+        icon="pi pi-money-bill"
+        label="Cash"
+        (click)="cd.reject()"
+      ></p-button>
+      <p-button
+        type="button"
+        styleClass="p-button-outlined "
+        icon="pi pi-credit-card"
+        label="Credit and debit card"
+        (click)="cd.accept()"
+      ></p-button>
+    </div>
+  </ng-template>
+</p-confirmDialog>

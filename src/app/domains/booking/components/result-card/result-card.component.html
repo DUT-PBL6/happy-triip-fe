@@ -1,10 +1,14 @@
 <div class="card flex flex-column w-full">
   <h4 class="route-title mb-3">{{ route.name }}</h4>
-  <div class="header">
+  <div class="header flex gap-3">
     <div class="vehicle flex align-items-center w-auto">
       <img [src]="'assets/icons/' + (route.transport['type'] | lowercase) + '.svg'" alt="Vehicle type" />
       <span>{{ route.transport["name"] }}</span>
       <span>({{ "share.vehicleType." + getKey(route.transport["type"], vehicleType) | translate }})</span>
+    </div>
+    <div class="seats-available flex align-items-center w-auto">
+      <img [src]="'assets/icons/seat-no-color.svg'" alt="Seat(s) available" />
+      <span>{{ route.transport["capacity"] }} seat(s) available</span>
     </div>
   </div>
   <div class="route-item">
@@ -65,38 +69,42 @@
   </div>
   <div class="tables flex gap-4 pb-5" *ngIf="isViewDetails">
     <div class="flex-1">
-      <p-table [value]="route.pickUpPoints" styleClass="p-datatable-gridlines p-datatable-sm">
-        <ng-template pTemplate="caption">Pick up points</ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="width: 50%">Time</th>
-            <th style="width: 50%">Address</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-point>
-          <tr>
-            <td>{{ getTime(parseTimeStringToDateString(point.time)) }}</td>
-            <td>{{ point.address }}</td>
-          </tr>
-        </ng-template>
-      </p-table>
+      <ng-container *ngIf="route.pickUpPoints.length > 0">
+        <p-table [value]="route.pickUpPoints" styleClass="p-datatable-gridlines p-datatable-sm">
+          <ng-template pTemplate="caption">Pick up points</ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 50%">Time</th>
+              <th style="width: 50%">Address</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-point>
+            <tr>
+              <td>{{ getTime(parseTimeStringToDateString(point.time)) }}</td>
+              <td>{{ point.address }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </ng-container>
     </div>
     <div class="flex-1">
-      <p-table [value]="route.dropOffPoints" styleClass="p-datatable-gridlines p-datatable-sm">
-        <ng-template pTemplate="caption">Drop off points</ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="width: 50%">Time</th>
-            <th style="width: 50%">Address</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-point>
-          <tr>
-            <td>{{ getTime(parseTimeStringToDateString(point.time)) }}</td>
-            <td>{{ point.address }}</td>
-          </tr>
-        </ng-template>
-      </p-table>
+      <ng-container *ngIf="route.dropOffPoints.length > 0">
+        <p-table [value]="route.dropOffPoints" styleClass="p-datatable-gridlines p-datatable-sm">
+          <ng-template pTemplate="caption">Drop off points</ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 50%">Time</th>
+              <th style="width: 50%">Address</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-point>
+            <tr>
+              <td>{{ getTime(parseTimeStringToDateString(point.time)) }}</td>
+              <td>{{ point.address }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </ng-container>
     </div>
   </div>
   <ng-container *ngIf="isViewDetails && sanitizedFromAtEmbedMapLink && sanitizedToAtEmbedMapLink">

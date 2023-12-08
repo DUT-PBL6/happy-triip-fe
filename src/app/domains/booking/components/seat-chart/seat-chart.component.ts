@@ -1,6 +1,8 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
 import { Select } from "@ngxs/store";
 import { BookingDto, PaymentGatewayDto, Route, Seat, SeatDto, SeatTypeDto } from "_api";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { Observable } from "rxjs";
 import Seatchart, {
   CartChangeEvent,
@@ -14,6 +16,7 @@ import Seatchart, {
 import { BookingService } from "src/app/core/service/booking/booking.service";
 import { BookingState } from "src/app/core/service/booking/booking.state";
 import { RouteState } from "src/app/core/service/route/route.state";
+import { ToastService } from "src/app/core/service/toast/toast.service";
 
 @Component({
   selector: "app-seat-chart",
@@ -34,7 +37,10 @@ export class SeatChartComponent implements OnInit {
 
   constructor(
     private renderer: Renderer2,
-    private bookingService: BookingService
+    private bookingService: BookingService,
+    private confirmationService: ConfirmationService,
+    private toastService: ToastService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -115,8 +121,24 @@ export class SeatChartComponent implements OnInit {
       }));
       const bookingDto: BookingDto = { seats };
 
-      this.bookingService.createBooking$(bookingDto).subscribe((paymentGatewayDto: PaymentGatewayDto) => {
-        this.checkOutUrl.emit(paymentGatewayDto);
+      this.confirmationService.confirm({
+        message: "Please choose a payment method",
+        header: "Payment method",
+        icon: "pi pi-info-circle",
+        accept: () => {
+          this.bookingService.createBooking$(bookingDto).subscribe((paymentGatewayDto: PaymentGatewayDto) => {
+            this.checkOutUrl.emit(paymentGatewayDto);
+          });
+        },
+        reject: () => {
+          this.bookingService.createBookingByCash$(bookingDto).subscribe((_) => {
+            this.router.navigate(["/home"]);
+            this.toastService.showSuccess(
+              "Success",
+              "Booking pending successfully! Please come to the agency to complete the payment."
+            );
+          });
+        },
       });
     });
   }
