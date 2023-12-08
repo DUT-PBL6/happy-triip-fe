@@ -2,7 +2,7 @@
   <h4>{{ updateMode ? "News Details" : "Add News" }}</h4>
   <div class="form">
     <form class="grid" [formGroup]="newsForm" (ngSubmit)="submit()">
-      <!-- NAME -->
+        <!-- <div>slug : {{slug}} </div> -->
       <div class="title col-12 py-2 flex flex-column">
         <label for="title" class="block text-900 text-lg font-medium mb-2">Title</label>
         <div class="input-container h-4rem">
@@ -20,6 +20,20 @@
           <small class="p-error" *ngIf="validate(title)">
             <strong>Title is required</strong>
           </small>
+        </div>
+      </div>
+      <!-- slug -->
+      <div class="title col-12 py-2 flex flex-column">
+        <label for="title" class="block text-900 text-lg font-medium mb-2">Slug</label>
+        <div class="input-container h-4rem">
+          <input
+            pInputText
+            id="title"
+            type="text"
+            class="w-full"
+            value = {{slug}}
+            [readOnly]="true"
+          />
         </div>
       </div>
       <!-- DESCRIPTION -->

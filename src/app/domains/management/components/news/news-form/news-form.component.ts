@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { City, News, NewsDto, Station, StationDto } from "_api";
+import {  News, NewsDto } from "_api";
 import { UploadEvent } from "src/app/core/interfaces/upload-event.interface";
-import { Option } from "src/app/core/interfaces/option.interface";
 import { validate } from "src/app/share/helpers/form.helper";
 import { TranslateService } from "@ngx-translate/core";
-
+import { toSlug } from "src/app/share/helpers/slug.helper";
 @Component({
   selector: "app-news-form",
   templateUrl: "./news-form.component.html",
@@ -19,7 +18,7 @@ export class NewsFormComponent implements OnInit, OnChanges {
   @Output() form = new EventEmitter<NewsDto>();
   public newsForm: FormGroup;
   public isSubmit = false;
-  text: string | undefined;
+  slug : string ;
   constructor(
     private fb: FormBuilder,
     private translate: TranslateService
@@ -27,11 +26,13 @@ export class NewsFormComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.initNewsForm();
+    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedNews) {
       if (!this.updateMode) {
+          this.slug = " ";
         this.newsForm?.reset();
         return;
       }
@@ -41,15 +42,17 @@ export class NewsFormComponent implements OnInit, OnChanges {
   private initNewsForm(): void {
     this.newsForm = this.fb.group({
       title: ["", Validators.required],
-
       description: ["", Validators.required],
-
-      images: [
-        "",
-        // , Validators.required
-      ],
+      images: [ "", 
+      // , Validators.required
+ ],
     });
-    if (this.selectedNews) this.newsForm?.patchValue({ ...this.selectedNews });
+    this.newsForm.get("title").valueChanges.subscribe((title) => {
+      this.slug = toSlug(title);
+    });
+
+    if (this.selectedNews)
+     this.newsForm?.patchValue({ ...this.selectedNews });
   }
 
   public get title(): FormControl {
@@ -79,7 +82,7 @@ export class NewsFormComponent implements OnInit, OnChanges {
       this.newsForm.markAllAsTouched();
       return;
     }
-    console.log(this.newsForm);
+    // console.log(this.newsForm);
     this.form.emit(this.newsForm.value);
     this.newsForm.reset();
   }
