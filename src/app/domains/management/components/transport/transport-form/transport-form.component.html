@@ -78,9 +78,7 @@
             (onClick)="handleMapSeat()"
           ></p-button>
         </div>
-        <ng-container *ngIf="mapSeat.value[0]?.length > 0">
-          <app-map-seat-preview [mapSeatMatrix]="mapSeat.value[0]"></app-map-seat-preview>
-        </ng-container>
+        <app-map-seat-preview [mapSeatMatrix]="mapSeat?.value[0]"></app-map-seat-preview>
       </div>
       <!-- IMAGE -->
       <div class="image col-12 py-2 flex flex-column">
@@ -94,9 +92,6 @@
               ></app-upload-image>
             </ng-container>
           </div>
-          <!-- <small class="p-error" *ngIf="isSubmit && images.value.length === 0">
-            <strong>Image is required</strong>
-          </small> -->
         </div>
       </div>
       <!-- UTILITY -->

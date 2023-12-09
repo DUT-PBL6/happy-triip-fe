@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChi
 import { Router } from "@angular/router";
 import { Select } from "@ngxs/store";
 import { BookingDto, PaymentGatewayDto, Route, Seat, SeatDto, SeatTypeDto } from "_api";
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmEventType, ConfirmationService, MessageService } from "primeng/api";
 import { Observable } from "rxjs";
 import Seatchart, {
   CartChangeEvent,
@@ -110,6 +110,8 @@ export class SeatChartComponent implements OnInit {
 
   private submitSeats(): void {
     this.date$.subscribe((date) => {
+      if (this.chosenSeats.length === 0) return;
+
       const seats: SeatDto[] = (this.seatchart as any).store.cart.map((seat) => ({
         col: seat.index["col"],
         row: seat.index["row"],
@@ -130,14 +132,20 @@ export class SeatChartComponent implements OnInit {
             this.checkOutUrl.emit(paymentGatewayDto);
           });
         },
-        reject: () => {
-          this.bookingService.createBookingByCash$(bookingDto).subscribe((_) => {
-            this.router.navigate(["/home"]);
-            this.toastService.showSuccess(
-              "Success",
-              "Booking pending successfully! Please come to the agency to complete the payment."
-            );
-          });
+        reject: (type: ConfirmEventType) => {
+          switch (type) {
+            case ConfirmEventType.REJECT:
+              this.bookingService.createBookingByCash$(bookingDto).subscribe((_) => {
+                this.router.navigate(["/home"]);
+                this.toastService.showSuccess(
+                  "Success",
+                  "Booking pending successfully! Please come to the agency to complete the payment."
+                );
+              });
+              break;
+            case ConfirmEventType.CANCEL:
+              return;
+          }
         },
       });
     });
