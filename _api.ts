@@ -1232,6 +1232,66 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Booking
+<<<<<<< Updated upstream
+=======
+     * @name BookingControllerGetBookingRecentOrders
+     * @request GET:/api/booking/recent-orders
+     */
+    bookingGetBookingRecentOrders: (params: RequestParams = {}) =>
+      this.request<Booking[], any>({
+        path: `/api/booking/recent-orders`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetYearlySalesReport
+     * @request POST:/api/booking/sales-report/year/{year}
+     */
+    bookingGetYearlySalesReport: (year: number, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/booking/sales-report/year/${year}`,
+        method: 'POST',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetMonthlySalesReport
+     * @request POST:/api/booking/sales-report/month/{month}
+     */
+    bookingGetMonthlySalesReport: (month: number, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/booking/sales-report/month/${month}`,
+        method: 'POST',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetDailySalesReport
+     * @request GET:/api/booking/sales-report/day
+     */
+    bookingGetDailySalesReport: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/booking/sales-report/day`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+>>>>>>> Stashed changes
      * @name BookingControllerConfirmPayment
      * @request PUT:/api/booking/confirm-payment/{id}
      */

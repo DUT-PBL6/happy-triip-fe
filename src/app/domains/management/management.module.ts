@@ -13,6 +13,7 @@ import { PartnerModule } from "./pages/partner-management/partner-management.mod
 import { NewsManagementModule } from "./pages/news-management/news-management.module";
 import { BookingManagementModule } from "./pages/booking-management/booking-management.module";
 import { PassengerManagementModule } from "./pages/passenger-management/passenger-management.module";
+import { SalesReportModule } from "./pages/sales-report/sales-report.module";
 
 @NgModule({
   declarations: [ManagementLayoutComponent],
@@ -30,6 +31,8 @@ import { PassengerManagementModule } from "./pages/passenger-management/passenge
     NewsManagementModule,
     BookingManagementModule,
     PassengerManagementModule,
+    SalesReportModule,
+    
   ],
   exports: [ManagementLayoutComponent],
 })

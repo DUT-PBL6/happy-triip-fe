@@ -19,3 +19,7 @@ export class UpdateBookingDate {
   static readonly type = "[Route] Update booking date";
   constructor(public date: string) {}
 }
+
+export class GetBookingRecentOrders {
+  static readonly type = "[Booking] Get bookings recent orders";
+}
