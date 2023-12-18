@@ -2,10 +2,13 @@ import { Injectable } from "@angular/core";
 import { ApiService } from "../base-api/api.service";
 import { Observable } from "rxjs";
 import { Booking, BookingDto, PaymentGatewayDto, PaymentGatewayResDto } from "_api";
-
+import { HttpClient } from "@angular/common/http";
 @Injectable({ providedIn: "root" })
 export class BookingService {
-  constructor(protected apiService: ApiService) {}
+  constructor(
+    protected apiService: ApiService,
+    protected http: HttpClient
+  ) {}
 
   public getBookingMoneyPending$(): Observable<Booking[]> {
     return this.apiService.api.bookingGetBookingMoneyPending();
@@ -37,5 +40,19 @@ export class BookingService {
 
   public getBookingDetailByPassenger$(bookingId: number): Observable<Booking> {
     return this.apiService.api.bookingGetById(bookingId);
+  }
+
+  public getBookingRecentOrders$(): Observable<Booking[]> {
+    return this.apiService.api.bookingGetBookingRecentOrders();
+  }
+
+  public getMonthlySalesReport$(month: any) {
+    return this.apiService.api.bookingGetMonthlySalesReport(month);
+  }
+  public getYearlySalesReport$(year: any) {
+    return this.apiService.api.bookingGetYearlySalesReport(year);
+  }
+  public getDailySalesReport$() {
+    return this.apiService.api.bookingGetDailySalesReport();
   }
 }

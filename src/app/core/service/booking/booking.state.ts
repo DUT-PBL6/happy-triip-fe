@@ -7,6 +7,7 @@ import {
   AcceptBooking,
   DenyBooking,
   GetBookingMoneyPending,
+  GetBookingRecentOrders,
   GetBookingsByPassenger,
   UpdateBookingDate,
 } from "./booking.action";
@@ -15,6 +16,7 @@ interface IBookingState {
   bookings: Booking[];
   bookingDate: string;
   bookingHistories: Booking[];
+  bookingRecentOrders: Booking[];
 }
 @State<IBookingState>({
   name: "booking",
@@ -22,6 +24,7 @@ interface IBookingState {
     bookings: [],
     bookingDate: "",
     bookingHistories: [],
+    bookingRecentOrders: [],
   },
 })
 @Injectable()
@@ -41,6 +44,11 @@ export class BookingState {
     return state.bookingDate;
   }
 
+  @Selector()
+  public static getBookingRecentOrders(state: IBookingState): Booking[] {
+    return state.bookingRecentOrders;
+  }
+
   constructor(private bookingService: BookingService) {}
 
   @Action(GetBookingMoneyPending)
@@ -49,6 +57,15 @@ export class BookingState {
     return this.bookingService.getBookingMoneyPending$().pipe(
       tap({
         next: (bookings) => ctx.patchState({ bookings }),
+      })
+    );
+  }
+  @Action(GetBookingRecentOrders)
+  public getBookingRecentOrders$(ctx: StateContext<IBookingState>): Observable<Booking[]> {
+    ctx.patchState({ bookings: [] });
+    return this.bookingService.getBookingRecentOrders$().pipe(
+      tap({
+        next: (bookingRecentOrders) => ctx.patchState({ bookingRecentOrders }),
       })
     );
   }

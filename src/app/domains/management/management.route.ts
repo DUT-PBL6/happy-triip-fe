@@ -17,6 +17,7 @@ import { PassengerGuard } from "src/app/core/guards/passenger.guard";
 import { EmployeePartnerGuard } from "src/app/core/guards/employee-partner.guard";
 import { BookingManagementComponent } from "./pages/booking-management/booking-management.component";
 import { PassengerManagementComponent } from "./pages/passenger-management/passenger-management.component";
+import { SalesReportComponent } from "./pages/sales-report/sales-report.component";
 
 const routes: Routes = [
   {
@@ -45,6 +46,7 @@ const routes: Routes = [
       { path: "partner", component: PartnerPageComponent, canActivate: [EmployeePartnerGuard] },
       { path: "passenger", component: PassengerManagementComponent, canActivate: [PassengerGuard] },
       { path: "news", component: NewsManagementComponent, canActivate: [PartnerGuard] },
+      { path: "sales-report", component: SalesReportComponent, canActivate: [EmployeeGuard] },
     ],
   },
 ];

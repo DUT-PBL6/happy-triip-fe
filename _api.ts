@@ -214,6 +214,8 @@ export interface Partner {
   password: string;
   phoneNumber: string;
   description: string;
+  taxCode: string;
+  address: string;
   title: string;
   medialLink: string;
   routes: Route[];
@@ -288,6 +290,8 @@ export interface PartnerDto {
   username: string;
   password: string;
   phoneNumber: string;
+  taxCode: string;
+  address: string;
   description: string;
   title: string;
   medialLink: string;
@@ -1225,6 +1229,63 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/api/booking/money-pending`,
         method: 'GET',
         format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetBookingRecentOrders
+     * @request GET:/api/booking/recent-orders
+     */
+    bookingGetBookingRecentOrders: (params: RequestParams = {}) =>
+      this.request<Booking[], any>({
+        path: `/api/booking/recent-orders`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetYearlySalesReport
+     * @request POST:/api/booking/sales-report/year/{year}
+     */
+    bookingGetYearlySalesReport: (year: number, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/booking/sales-report/year/${year}`,
+        method: 'POST',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetMonthlySalesReport
+     * @request POST:/api/booking/sales-report/month/{month}
+     */
+    bookingGetMonthlySalesReport: (month: number, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/booking/sales-report/month/${month}`,
+        method: 'POST',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name BookingControllerGetDailySalesReport
+     * @request GET:/api/booking/sales-report/day
+     */
+    bookingGetDailySalesReport: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/booking/sales-report/day`,
+        method: 'GET',
         ...params,
       }),
 
