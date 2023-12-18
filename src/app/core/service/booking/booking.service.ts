@@ -53,6 +53,6 @@ export class BookingService {
     return this.apiService.api.bookingGetYearlySalesReport(year);
   }
   public getDailySalesReport$() {
-    return this.apiService.api.bookingGetDailySalesReport()
+    return this.apiService.api.bookingGetDailySalesReport();
   }
 }

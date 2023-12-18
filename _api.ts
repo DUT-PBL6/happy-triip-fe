@@ -214,6 +214,8 @@ export interface Partner {
   password: string;
   phoneNumber: string;
   description: string;
+  taxCode: string;
+  address: string;
   title: string;
   medialLink: string;
   routes: Route[];
@@ -288,6 +290,8 @@ export interface PartnerDto {
   username: string;
   password: string;
   phoneNumber: string;
+  taxCode: string;
+  address: string;
   description: string;
   title: string;
   medialLink: string;
@@ -1232,8 +1236,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Booking
-<<<<<<< Updated upstream
-=======
      * @name BookingControllerGetBookingRecentOrders
      * @request GET:/api/booking/recent-orders
      */
@@ -1291,7 +1293,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Booking
->>>>>>> Stashed changes
      * @name BookingControllerConfirmPayment
      * @request PUT:/api/booking/confirm-payment/{id}
      */

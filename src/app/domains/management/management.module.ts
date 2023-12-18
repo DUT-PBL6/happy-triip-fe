@@ -32,7 +32,6 @@ import { SalesReportModule } from "./pages/sales-report/sales-report.module";
     BookingManagementModule,
     PassengerManagementModule,
     SalesReportModule,
-    
   ],
   exports: [ManagementLayoutComponent],
 })

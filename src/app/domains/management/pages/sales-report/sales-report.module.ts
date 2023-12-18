@@ -5,9 +5,22 @@ import { ChartModule } from "primeng/chart";
 import { DropdownModule } from "primeng/dropdown";
 import { TableModule } from "primeng/table";
 import { TagModule } from "primeng/tag";
+import { TabViewModule } from "primeng/tabview";
+import { CalendarModule } from "primeng/calendar";
+import { FormsModule } from "@angular/forms";
+
 @NgModule({
-  imports: [CommonModule, ChartModule, DropdownModule, TableModule, TagModule],
-  exports: [SalesReportComponent],
   declarations: [SalesReportComponent],
+  imports: [
+    CommonModule,
+    ChartModule,
+    DropdownModule,
+    TableModule,
+    TagModule,
+    TabViewModule,
+    CalendarModule,
+    FormsModule,
+  ],
+  exports: [SalesReportComponent],
 })
 export class SalesReportModule {}

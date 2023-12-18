@@ -1,13 +1,27 @@
 <div class="sales-report-container">
   <div class="card surface-0 p-4">
     <h4 class="mb-4">Sales report</h4>
-
-    <div class="flex">
-      <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
-      <!-- <p-chart type="bar" [data]="basicDataY" [options]="basicOptionsY"></p-chart> -->
-    </div>
+    <p-tabView>
+      <p-tabPanel header="Revenue of month">
+        <div class="flex justify-content-end align-items-center gap-3">
+          <span>Selected month:</span>
+          <p-calendar
+            [(ngModel)]="selectedMonth"
+            view="month"
+            dateFormat="mm/yy"
+            [readonlyInput]="true"
+            [monthNavigator]="true"
+            (ngModelChange)="handleSelectedMonthChange($event)"
+            [showIcon]="true"
+          ></p-calendar>
+        </div>
+        <p-chart type="bar" [data]="monthlyChartData" [options]="chartOptions" [height]="'400px'"></p-chart>
+      </p-tabPanel>
+      <p-tabPanel header="Revenue of year">
+        <p-chart type="bar" [data]="yearlyChartData" [options]="chartOptions" [height]="'400px'"></p-chart>
+      </p-tabPanel>
+    </p-tabView>
   </div>
-
   <div class="booking-recent-orders">
     <div class="card surface-0 p-4">
       <h4 class="mb-4">Recent Orders</h4>
@@ -15,13 +29,12 @@
         <p-table [value]="bookingRecent" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }">
           <ng-template pTemplate="header">
             <tr>
-              <th>BookingCode</th>
-              <th>PassengerName</th>
-              <th>PassengerEmail</th>
-
-              <th>BookingStatus</th>
-              <th>TotalAmount</th>
-              <th>OrderDate</th>
+              <th>Booking Code</th>
+              <th>Passenger Name</th>
+              <th>Passenger Email</th>
+              <th>Booking Status</th>
+              <th>Total Amount</th>
+              <th>Order Date</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-booking>
@@ -29,7 +42,6 @@
               <td>{{ booking.bookingCode }}</td>
               <td>{{ booking.passenger.name }}</td>
               <td>{{ booking.passenger.email }}</td>
-
               <td>
                 <p-tag [value]="booking.status" [severity]="getSeverity(booking.status)"></p-tag>
               </td>
