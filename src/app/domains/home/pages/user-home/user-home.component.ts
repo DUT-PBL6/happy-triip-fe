@@ -1,13 +1,30 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { Select, Store } from "@ngxs/store";
+import { News } from "_api";
+import { Observable, map, takeUntil } from "rxjs";
+import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
+import { GetAllNews } from "src/app/core/service/news/news.action";
+import { NewsState } from "src/app/core/service/news/news.state";
 
 @Component({
   selector: "app-user-home",
   templateUrl: "./user-home.component.html",
   styleUrls: ["./user-home.component.scss"],
 })
-export class UserHomeComponent {
-  constructor(private router: Router) {}
+export class UserHomeComponent extends BaseDestroyable {
+  @Select(NewsState.getAllNews) public listNews$: Observable<News[]>;
+  constructor(
+    private router: Router,
+    private store: Store
+  ) {
+    super();
+  }
+  ngOnInit(): void {
+ 
+    if (this.store.selectSnapshot(NewsState.getAllNews).length === 0) this.store.dispatch(new GetAllNews());
+  
+  }
 
   public latestNews = [
     {

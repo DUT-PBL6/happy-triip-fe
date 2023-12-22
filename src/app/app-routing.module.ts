@@ -26,6 +26,10 @@ const routes: Routes = [
     loadChildren: () => import("./domains/contact/contact.module").then((m) => m.ContactModule),
   },
   {
+    path: "news",
+    loadChildren: () => import("./domains/news/news.module").then((m) => m.NewsModule),
+  },
+  {
     path: "**",
     redirectTo: "homepage",
   },

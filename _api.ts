@@ -356,23 +356,6 @@ export interface SystemConfigDto {
   dataType?: SystemConfigType;
 }
 
-export enum EventGroup {
-  ConfigGroup = 'ConfigGroup',
-  Configs = 'Configs',
-  Segment = 'Segment',
-  AbTest = 'AbTest',
-  SchemaGroup = 'SchemaGroup',
-  Schema = 'Schema',
-  SegmentField = 'SegmentField',
-}
-
-export interface Audit {
-  id: number;
-  createdBy: string;
-  /** @format date-time */
-  createdDate: string;
-}
-
 export interface PaymentGatewayResDto {
   result: string;
   checksum: string;
@@ -1114,37 +1097,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags Audit
-     * @name AuditControllerGetListFilteredAudit
-     * @summary get audit by bucketid
-     * @request GET:/api/{bucketId}/audit
-     */
-    auditGetListFilteredAudit: (
-      bucketId: number,
-      query?: {
-        message?: string;
-        reference?: string;
-        eventGroup?: EventGroup[];
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<Audit[], any>({
-        path: `/api/${bucketId}/audit`,
-        method: 'GET',
-        query: query,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
      * @tags Booking
      * @name BookingControllerUpdateStatus
      * @request POST:/api/booking/update-status
      */
     bookingUpdateStatus: (data: PaymentGatewayResDto, params: RequestParams = {}) =>
-      this.request<PaymentGatewayDto, any>({
+      this.request<Booking, any>({
         path: `/api/booking/update-status`,
         method: 'POST',
         body: data,
@@ -1837,6 +1795,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     newsGetAllNewsOfPartner: (params: RequestParams = {}) =>
       this.request<News[], any>({
         path: `/api/news/partner`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags News
+     * @name NewsControllerGetNewsBySlug
+     * @summary Get news by slug
+     * @request GET:/api/news/slug/{slug}
+     */
+    newsGetNewsBySlug: (slug: string, params: RequestParams = {}) =>
+      this.request<News, any>({
+        path: `/api/news/slug/${slug}`,
         method: 'GET',
         format: 'json',
         ...params,

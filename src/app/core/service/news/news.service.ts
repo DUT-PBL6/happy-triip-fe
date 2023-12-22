@@ -21,4 +21,10 @@ export class NewsService {
   public deleteNews$(id: number): Observable<News> {
     return this.apiService.api.newsDeleteNews(id);
   }
+  public getAllNews$(): Observable<News[]> {
+    return this.apiService.api.newsGetAllNews();
+  }
+  public getNewsBySlug$(slug: string): Observable<News> {
+    return this.apiService.api.newsGetNewsBySlug(slug);
+  }
 }

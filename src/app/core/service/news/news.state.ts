@@ -4,15 +4,17 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { News, Station } from "_api";
 import { Observable, tap } from "rxjs";
 import { NewsService } from "./news.service";
-import { CreateNews, DeleteNews, GetAllNewsOfPartner, UpdateNews } from "./news.action";
+import { CreateNews, DeleteNews, GetAllNews, GetAllNewsOfPartner, UpdateNews } from "./news.action";
 
 interface INewsState {
   news: News[];
+  listNews: News[];
 }
 @State<INewsState>({
   name: "news",
   defaults: {
     news: [],
+    listNews: [],
   },
 })
 @Injectable()
@@ -20,6 +22,10 @@ export class NewsState {
   @Selector()
   public static getAllNewsOfPartner(state: INewsState): News[] {
     return state.news;
+  }
+  @Selector()
+  public static getAllNews(state: INewsState): News[] {
+    return state.listNews;
   }
   constructor(private newsService: NewsService) {}
 
@@ -29,6 +35,15 @@ export class NewsState {
     return this.newsService.getAllNewsOfPartner$().pipe(
       tap({
         next: (news) => ctx.patchState({ news }),
+      })
+    );
+  }
+  @Action(GetAllNews)
+  public getAllNews$(ctx: StateContext<INewsState>): Observable<News[]> {
+    ctx.patchState({ news: [] });
+    return this.newsService.getAllNews$().pipe(
+      tap({
+        next: (listNews) => ctx.patchState({ listNews }),
       })
     );
   }
