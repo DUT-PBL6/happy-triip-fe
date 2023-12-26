@@ -203,6 +203,8 @@ export interface News {
   description: string;
   images: string[];
   slug: string;
+  /** @format date-time */
+  date: string;
   partner: Partner;
 }
 
@@ -478,6 +480,7 @@ export interface NewsDto {
   description: string;
   slug: string;
   images: string[];
+  date: string;
 }
 
 export interface NewsPagingResult {

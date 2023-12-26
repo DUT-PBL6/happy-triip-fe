@@ -21,9 +21,7 @@ export class UserHomeComponent extends BaseDestroyable {
     super();
   }
   ngOnInit(): void {
- 
     if (this.store.selectSnapshot(NewsState.getAllNews).length === 0) this.store.dispatch(new GetAllNews());
-  
   }
 
   public latestNews = [

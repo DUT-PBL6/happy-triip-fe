@@ -9,7 +9,7 @@
           </h4>
         </div>
       </div>
-      <div class="content-news w-full text-center mb-3 px-3 py-2 lg:px-5 xl:py-5 container m-auto">
+      <div class="content-news w-full mb-3 px-3 py-2 lg:px-5 xl:py-5 container m-auto">
         <div class="latest-news">
           <div class="main">
             <h2 class="text-center my-0 text-black mb-3">LATEST NEWS</h2>
@@ -23,6 +23,7 @@
                     <img src="{{ news.images ? news.images[0] : '/assets/images/news/news.gif' }}" alt="news-image" />
                     <div class="news-item__content flex flex-column">
                       <h5>{{ news.title }}</h5>
+                      <p class="date">{{ news.date | date: "dd-MM-yyyy" }}</p>
                     </div>
                   </a>
                 </div>
@@ -44,8 +45,12 @@
       <div class="main">
         <div class="content">
           <h2 class="title lg:text-5xl text-3xl">{{ news.title }}</h2>
+          <h5 class="date">{{ news.date }}</h5>
 
-          <div class="mb-8" [innerHTML]="news.description"></div>
+          <div class="table-content mb-5">
+            <h4>TABLE CONTENT</h4>
+            <div class="" [innerHTML]="news.description"></div>
+          </div>
 
           <div class="tags mt-8">
             <p>Tag:</p>

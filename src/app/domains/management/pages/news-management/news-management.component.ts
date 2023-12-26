@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { Store } from "@ngxs/store";
 import { News, NewsDto } from "_api";
+import moment from "moment";
 import { Observable, takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
 import { CreateNews, DeleteNews, UpdateNews } from "src/app/core/service/news/news.action";
@@ -58,6 +59,7 @@ export class NewsManagementComponent extends BaseDestroyable {
   }
 
   public handleNewsForm(news: NewsDto): void {
+    news.date = moment().format("YYYY-MM-DD");
     const service$: Observable<News> = this.isUpdateMode
       ? this.newsService.updateNews$(this.currentNews.id, news)
       : this.newsService.createNews$(news);

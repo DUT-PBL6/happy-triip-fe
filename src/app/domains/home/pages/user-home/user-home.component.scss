@@ -57,7 +57,12 @@
         object-fit: cover;
         border-radius: 0.75rem 0.75rem 0 0;
       }
-
+      .date {
+        color: #767676;
+        font-size: 1.1rem;
+        line-height: 1.625rem;
+        font-weight: 600;
+      }
       .news-item__content {
         display: flex;
         padding: 1.75rem;

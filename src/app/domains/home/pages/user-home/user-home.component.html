@@ -85,6 +85,7 @@
                 <img src="{{ news.images ? news.images[0] : '/assets/images/news/news.gif' }}" alt="news-image" />
                 <div class="news-item__content flex flex-column">
                   <h5>{{ news.title }}</h5>
+                  <p class="date">{{ news.date | date: "dd-MM-yyyy" }}</p>
                 </div>
               </a>
             </div>

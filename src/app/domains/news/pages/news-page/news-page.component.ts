@@ -55,11 +55,12 @@ export class NewsPageComponent extends BaseDestroyable implements OnInit {
       .getNewsBySlug$(this.slug)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (newsDetails) => {   
-            newsDetails.images
-              ? (this.imagesNews = newsDetails.images[0])
-              : (this.imagesNews = "/assets/images/news/news.gif");
-            this.news = newsDetails;
+        (newsDetails) => {
+          console.log(newsDetails.description);
+          newsDetails.images
+            ? (this.imagesNews = newsDetails.images[0])
+            : (this.imagesNews = "/assets/images/news/news.gif");
+          this.news = newsDetails;
         },
         (error) => {
           // console.error("Error :", error);
