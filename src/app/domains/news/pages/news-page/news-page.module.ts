@@ -4,10 +4,11 @@ import { NewsPageComponent } from "./news-page.component";
 import { ButtonModule } from "primeng/button";
 import { CarouselModule } from "primeng/carousel";
 import { NewsRoutesModule } from "../../news.route";
+import { TagModule } from "primeng/tag";
 
 @NgModule({
-  imports: [CommonModule, ButtonModule, CarouselModule, NewsRoutesModule],
   declarations: [NewsPageComponent],
+  imports: [CommonModule, ButtonModule, CarouselModule, NewsRoutesModule, TagModule],
   exports: [NewsPageComponent],
 })
 export class NewsPageModule {}

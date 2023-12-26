@@ -21,6 +21,7 @@ export class UserHomeComponent extends BaseDestroyable {
     super();
   }
   ngOnInit(): void {
+    this.scrollToTop();
     if (this.store.selectSnapshot(NewsState.getAllNews).length === 0) this.store.dispatch(new GetAllNews());
   }
 
@@ -48,6 +49,15 @@ export class UserHomeComponent extends BaseDestroyable {
 
   public onClickMoreAboutUs(): void {
     this.router.navigate(["/about-us"]);
+    this.scrollToTop();
+  }
+
+  public onClickViewAllNews(): void {
+    this.router.navigate(["/news"]);
+    this.scrollToTop();
+  }
+
+  private scrollToTop(): void {
     window.scrollTo({
       top: 0,
       behavior: "smooth",

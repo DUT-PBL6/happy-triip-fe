@@ -45,6 +45,8 @@
   }
 
   .latest-news {
+    display: block;
+
     .news-item {
       margin: 0 0.75rem;
       background: #f7f8fa;
@@ -73,6 +75,12 @@
           margin: 0;
         }
       }
+    }
+
+    .button-container {
+      display: flex;
+      display: -webkit-flex;
+      justify-content: center;
     }
   }
 }

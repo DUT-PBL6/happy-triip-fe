@@ -14,32 +14,10 @@ import { NewsState } from "src/app/core/service/news/news.state";
   styleUrls: ["./news-page.component.scss"],
 })
 export class NewsPageComponent extends BaseDestroyable implements OnInit {
+  @Select(NewsState.getAllNews) public listNews$: Observable<News[]>;
   private slug: string;
   public news: News;
   public imagesNews: string;
-  @Select(NewsState.getAllNews) public listNews$: Observable<News[]>;
-  constructor(
-    private route: ActivatedRoute,
-    private newsService: NewsService,
-    private router: Router,
-    private store: Store
-  ) {
-    super();
-  }
-
-  ngOnInit() {
-    if (this.store.selectSnapshot(NewsState.getAllNews).length === 0) this.store.dispatch(new GetAllNews());
-
-    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params) => {
-      console.log(params.slug);
-      if (params.slug === "" || params.slug === undefined) {
-        this.router.navigate(["/news"]);
-      } else {
-        this.slug = params.slug;
-        this.getNewsBySlug();
-      }
-    });
-  }
   public listTags = [
     { id: "1", name: "airport" },
     { id: "2", name: "tourguide" },
@@ -50,22 +28,49 @@ export class NewsPageComponent extends BaseDestroyable implements OnInit {
     { id: "7", name: "Hue" },
     { id: "8", name: "Vietnam" },
   ];
-  private getNewsBySlug() {
+
+  constructor(
+    private route: ActivatedRoute,
+    private newsService: NewsService,
+    private router: Router,
+    private store: Store
+  ) {
+    super();
+  }
+
+  ngOnInit() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+    if (this.store.selectSnapshot(NewsState.getAllNews).length === 0) this.store.dispatch(new GetAllNews());
+
+    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params) => {
+      if (params.slug === "" || params.slug === undefined) {
+        this.router.navigate(["/news"]);
+        return;
+      }
+      this.slug = params.slug;
+      this.getNewsBySlug();
+    });
+  }
+
+  private getNewsBySlug(): void {
     this.newsService
       .getNewsBySlug$(this.slug)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (newsDetails) => {
-          console.log(newsDetails.description);
-          newsDetails.images
-            ? (this.imagesNews = newsDetails.images[0])
-            : (this.imagesNews = "/assets/images/news/news.gif");
+      .subscribe({
+        next: (newsDetails) => {
           this.news = newsDetails;
+          this.imagesNews =
+            newsDetails.images && newsDetails.images.length > 0
+              ? newsDetails.images[0]
+              : "assets/images/news/default-news-image.jpg";
         },
-        (error) => {
-          // console.error("Error :", error);
+        error: () => {
           this.router.navigate(["/news"]);
-        }
-      );
+        },
+      });
   }
 }

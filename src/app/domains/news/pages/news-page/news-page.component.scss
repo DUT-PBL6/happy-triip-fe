@@ -1,7 +1,4 @@
-// @import "../../layouts/policy/policy.component.scss";
 @mixin base-header {
-  // background-image: url(/assets/images/about-us.png);
-
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left;
@@ -12,18 +9,18 @@
   justify-content: flex-end;
 }
 @mixin base-tag {
-  // margin-top: -2.5rem;
   display: flex;
   gap: 0.5em;
   align-items: center;
   flex-wrap: wrap;
-  // margin-bottom: 0.313em;
+
   p {
     margin: 0;
     font-size: 1.2rem;
     line-height: 1.375rem;
     font-weight: 600;
   }
+
   .tag {
     font-size: 1.125rem;
     line-height: 1.25rem;
@@ -34,10 +31,12 @@
     border-radius: 0.25rem;
     padding: 0.25rem 0.5em;
   }
+
   @media (max-width: 959px) {
     margin-top: -1rem;
   }
 }
+
 @mixin base-main {
   margin-left: calc((100vw - 1312px) / 2);
   margin-right: calc((100vw - 1312px) / 2);
@@ -53,9 +52,11 @@
   .content {
     margin-top: -5rem;
     padding: 2.5rem 5.7rem;
+
     .title {
       font-size: 2.2rem;
     }
+
     .date {
       color: #767676;
       margin-top: -1.375rem;
@@ -63,6 +64,7 @@
       line-height: 1.625rem;
       font-weight: 600;
     }
+
     .table-content {
       display: grid;
       gap: 1em;
@@ -76,14 +78,17 @@
         font-weight: 600;
       }
     }
+
     h3 {
       @media (max-width: 959px) {
         margin: -0.8rem 0;
       }
     }
+
     @media (max-width: 959px) {
       padding: 1rem;
     }
+
     position: relative;
     z-index: 10;
     display: grid;
@@ -96,9 +101,10 @@
   font-size: 1.2rem;
   line-height: 1.375rem;
   color: black;
+
   .header {
     height: 21.5rem;
-    background-image: url(/assets/images/about-us.png);
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(/assets/images/news/news-cover.jpg);
     background-position: center center !important;
 
     @include base-header;
@@ -109,6 +115,7 @@
   .header1 {
     background-position: center center !important;
     height: 33rem;
+
     @include base-header;
     .title {
       margin: 0 -9rem;
@@ -116,6 +123,7 @@
   }
   .content-news {
     background-color: white;
+
     .latest-news {
       display: grid;
       gap: 3.125rem;
@@ -135,12 +143,14 @@
           object-fit: cover;
           border-radius: 0.75rem 0.75rem 0 0;
         }
+
         .date {
           color: #767676;
           font-size: 1.1rem;
           line-height: 1.625rem;
           font-weight: 600;
         }
+
         .news-item__content {
           display: flex;
           padding: 1.75rem;
@@ -154,10 +164,7 @@
       }
     }
   }
-  // .content {
-  //   padding: 2.5rem 0;
-  //   padding-left: calc((100vw - 1312px) / 2);
-  //   padding-right: calc((100vw - 1312px) / 2);
+
   .main {
     @include base-main;
     .content {
@@ -177,4 +184,3 @@
     }
   }
 }
-// }

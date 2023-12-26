@@ -1,12 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
   selector: "app-news",
   templateUrl: "./news.component.html",
   styleUrls: ["./news.component.scss"],
 })
-export class NewsLayoutComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
-}
+export class NewsLayoutComponent {}
