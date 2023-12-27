@@ -1169,7 +1169,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/booking/cash
      */
     bookingBookingCash: (data: BookingDto, params: RequestParams = {}) =>
-      this.request<PaymentGatewayDto, any>({
+      this.request<Booking, any>({
         path: `/api/booking/cash`,
         method: 'POST',
         body: data,
