@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
-import { PaymentGatewayResDto } from "_api";
+import { Booking, PaymentGatewayResDto } from "_api";
+import { Observable, of } from "rxjs";
 import { BookingService } from "src/app/core/service/booking/booking.service";
 
 @Component({
@@ -9,6 +10,8 @@ import { BookingService } from "src/app/core/service/booking/booking.service";
   styleUrls: ["./booking-status.component.scss"],
 })
 export class BookingStatusComponent implements OnInit {
+  public booking$: Observable<Booking>;
+
   constructor(
     private route: ActivatedRoute,
     private bookingService: BookingService,
@@ -17,15 +20,17 @@ export class BookingStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params: ParamMap) => {
-      if (params.get("result") !== null) {
-        const paymentGatewayResDto: PaymentGatewayResDto = {
-          result: params.get("result"),
-          checksum: params.get("checksum") || "",
-        };
-        this.bookingService.updateBookingStatus$(paymentGatewayResDto).subscribe((_) => {
-          this.router.navigate(["/home"]);
-        });
+      if (params.get("result") === null) {
+        this.router.navigate(["/home"]);
+        return;
       }
+      const paymentGatewayResDto: PaymentGatewayResDto = {
+        result: params.get("result"),
+        checksum: params.get("checksum") || "",
+      };
+      this.bookingService.updateBookingStatus$(paymentGatewayResDto).subscribe((booking: Booking) => {
+        this.booking$ = of(booking);
+      });
     });
   }
 }

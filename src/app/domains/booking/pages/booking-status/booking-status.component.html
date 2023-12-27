@@ -1,1 +1,85 @@
-<div class="w-full h-full"></div>
+<ng-container *ngIf="booking$ | async as booking">
+  <div class="container bg-gray mx-auto">
+    <div class="details w-full flex flex-column bg-white">
+      <div class="header relative flex flex-column align-items-center">
+        <h3>Booking {{ booking.status | titlecase }}</h3>
+        <p class="m-0 text-base line-height-2 font-normal text-center">
+          Your seat(s) has been reserved. Our staff will contact you in 24 hours to confirm your ticket. Please pay
+          attention to your phone.
+        </p>
+        <div class="ellipse left"></div>
+        <div class="ticket-code absolute text-base">
+          Ticket code:
+          <span class="font-semibold">{{ booking.bookingCode }}</span>
+        </div>
+        <div class="ellipse right"></div>
+      </div>
+    </div>
+    <div class="content w-fullgrid gap-5 bg-white">
+      <div class="trip-information mb-3">
+        <span>Trip information</span>
+      </div>
+      <app-route-overview [route]="booking.seats[0].route" [date]="booking.seats[0].date"></app-route-overview>
+      <div class="passenger-information mt-3">
+        <div class="title">
+          <span>Passenger information</span>
+        </div>
+
+        <div class="content pt-3">
+          <div class="item">
+            <p>Name</p>
+            <p>{{ booking.passenger.name }}</p>
+          </div>
+          <div class="item">
+            <p>Email</p>
+            <p>{{ booking.passenger.email }}</p>
+          </div>
+          <div class="item">
+            <p>Phone number</p>
+            <p>
+              <i class="pi pi-phone"></i>
+              {{ booking.passenger.phoneNumber }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="payment-information mt-3">
+        <div class="title">
+          <span>Payment information</span>
+        </div>
+
+        <div class="content pt-3">
+          <ng-container *ngIf="booking.status === 'SUCCESS' || booking.status === 'FAILED'; else payByCash">
+            <div class="item">
+              <p>Total</p>
+              <div class="flex align-items-center gap-2">
+                <h3>USD {{ booking.totalAmount }}</h3>
+                <p-tag
+                  [severity]="booking.status === 'SUCCESS' ? 'success' : 'danger'"
+                  [value]="booking.status === 'SUCCESS' ? 'Paid by credit card' : 'Failed'"
+                ></p-tag>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #payByCash>
+            <div class="item">
+              <p>Total</p>
+              <div class="flex align-items-center gap-2">
+                <h3>USD {{ booking.totalAmount }}</h3>
+                <p-tag severity="warning" value="Paid by cash"></p-tag>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="message mt-5 flex flex-column justify-content-center align-items-center">
+        <p>Thank you for choosing Vietnam Happy Triip!</p>
+        <p>
+          <a [routerLink]="['/contact/information']" class="cursor-pointer">Contact us</a>
+          if you have any question.
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<app-copyright></app-copyright>

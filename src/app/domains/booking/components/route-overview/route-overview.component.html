@@ -1,13 +1,24 @@
-<div class="route-overview p-4 g-4">
-  <div class="route-header">
-    <div class="vehicle flex align-items-center w-auto">
-      <img [src]="'assets/icons/' + (route.transport['type'] | lowercase) + '.svg'" alt="Vehicle type" />
-      <span>{{ route.transport["name"] }}</span>
-      <span>({{ "share.vehicleType." + getKey(route.transport["type"], vehicleType) | translate }})</span>
+<div class="route-overview px-4 py-2">
+  <ng-container *ngIf="route.transport">
+    <div class="route-header">
+      <div class="vehicle flex align-items-center w-auto">
+        <img [src]="'assets/icons/' + (route.transport['type'] | lowercase) + '.svg'" alt="Vehicle type" />
+        <span>{{ route.transport["name"] }}</span>
+        <span>({{ "share.vehicleType." + getKey(route.transport["type"], vehicleType) | translate }})</span>
+      </div>
     </div>
-  </div>
+  </ng-container>
   <div class="route-item">
-    <div class="content flex justify-content-between gap-4">
+    <div class="content flex flex-column justify-content-between gap-3">
+      <div class="name flex gap-3 align-items-center">
+        <h5>{{ route.name }}</h5>
+      </div>
+      <ng-container *ngIf="this.date">
+        <div class="date flex gap-3 align-items-center">
+          <i class="pi pi-calendar"></i>
+          <span>{{ this.date }}</span>
+        </div>
+      </ng-container>
       <div class="route-detail">
         <div class="stations flex flex-column">
           <div class="departure flex align-items-center">
@@ -15,32 +26,38 @@
             <div class="departure__time">
               {{ getTime(parseTimeStringToDateString(route.departAt)) }}
             </div>
-            <div class="dot"></div>
-            <div class="departure__name">
-              {{ route.fromAt["name"] }}
-            </div>
-            <div class="departure__link">
-              <a href="{{ route.fromAt['gmapLink'] }}" target="_blank">View on map</a>
-            </div>
+            <ng-container *ngIf="route.fromAt">
+              <div class="dot"></div>
+              <div class="departure__name">
+                {{ route.fromAt["name"] }}
+              </div>
+              <div class="departure__link">
+                <a href="{{ route.fromAt['gmapLink'] }}" target="_blank">View on map</a>
+              </div>
+            </ng-container>
           </div>
           <div class="time-estimate flex gap-3 align-items-center">
             <div class="dashed"></div>
             <span>{{ getHoursDifference(route.departAt, route.arriveAt) }} hour(s) ride</span>
-            <div class="dot"></div>
-            <div class="partner">Operated by {{ route.partner["name"] }}</div>
+            <ng-container *ngIf="route.partner">
+              <div class="dot"></div>
+              <div class="partner">Operated by {{ route.partner["name"] }}</div>
+            </ng-container>
           </div>
           <div class="arrive flex align-items-center">
             <i class="pi pi-map-marker"></i>
             <div class="arrive__time">
               {{ getTime(parseTimeStringToDateString(route.arriveAt)) }}
             </div>
-            <div class="dot"></div>
-            <div class="arrive__name">
-              {{ route.toAt["name"] }}
-            </div>
-            <div class="arrive__link">
-              <a href="{{ route.toAt['gmapLink'] }}" target="_blank">View on map</a>
-            </div>
+            <ng-container *ngIf="route.toAt">
+              <div class="dot"></div>
+              <div class="arrive__name">
+                {{ route.toAt["name"] }}
+              </div>
+              <div class="arrive__link">
+                <a href="{{ route.toAt['gmapLink'] }}" target="_blank">View on map</a>
+              </div>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -48,7 +65,7 @@
   </div>
   <div class="tables flex gap-4">
     <div class="flex-1">
-      <ng-container *ngIf="route.pickUpPoints.length > 0">
+      <ng-container *ngIf="route.pickUpPoints && route.pickUpPoints.length > 0">
         <p-table [value]="route.pickUpPoints" styleClass="p-datatable-gridlines p-datatable-sm">
           <ng-template pTemplate="caption">Pick up points</ng-template>
           <ng-template pTemplate="header">
@@ -67,7 +84,7 @@
       </ng-container>
     </div>
     <div class="flex-1">
-      <ng-container *ngIf="route.dropOffPoints.length > 0">
+      <ng-container *ngIf="route.dropOffPoints && route.dropOffPoints.length > 0">
         <p-table [value]="route.dropOffPoints" styleClass="p-datatable-gridlines p-datatable-sm">
           <ng-template pTemplate="caption">Drop off points</ng-template>
           <ng-template pTemplate="header">
