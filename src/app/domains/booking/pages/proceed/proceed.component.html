@@ -2,10 +2,6 @@
   <div class="card card-route">
     <div class="your-booking-container gap-4">
       <h4>Your Booking</h4>
-      <div class="name flex gap-3 align-items-center">
-        <i class="pi"></i>
-        <span>{{ route.name }}</span>
-      </div>
       <div class="date flex gap-3 align-items-center">
         <i class="pi pi-calendar"></i>
         <span *ngIf="date$ | async as date">{{ date }}</span>

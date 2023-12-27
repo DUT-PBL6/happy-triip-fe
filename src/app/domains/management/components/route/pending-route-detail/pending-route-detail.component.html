@@ -47,7 +47,7 @@
       <div>Route schedules:</div>
       <ng-container *ngFor="let schedule of route.routeSchedules; index as i">
         <div class="text-base font-normal">
-          {{ schedule.date }}
+          {{ schedule.date | date: "dd/MM/yyyy" }}
           <span *ngIf="i !== route.routeSchedules.length - 1" class="mr-1">,</span>
         </div>
       </ng-container>

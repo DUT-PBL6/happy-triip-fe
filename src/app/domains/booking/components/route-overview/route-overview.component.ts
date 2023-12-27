@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Route, TypeVehical } from "_api";
 import { DATE_FORMAT } from "src/app/share/constants";
 import { formatDate, getHoursDifference, getTime, parseTimeStringToDate } from "src/app/share/helpers/date.helper";
@@ -11,6 +11,7 @@ import { getKeyFromEnumValue } from "src/app/share/helpers/enum.helper";
 })
 export class RouteOverviewComponent {
   @Input() public route: Route;
+  @Input() public date: string;
   public readonly vehicleType = TypeVehical;
 
   public getTime(date: string): string {
