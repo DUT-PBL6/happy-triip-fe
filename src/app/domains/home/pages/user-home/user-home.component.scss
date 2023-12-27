@@ -45,6 +45,8 @@
   }
 
   .latest-news {
+    display: block;
+
     .news-item {
       margin: 0 0.75rem;
       background: #f7f8fa;
@@ -57,7 +59,12 @@
         object-fit: cover;
         border-radius: 0.75rem 0.75rem 0 0;
       }
-
+      .date {
+        color: #767676;
+        font-size: 1.1rem;
+        line-height: 1.625rem;
+        font-weight: 600;
+      }
       .news-item__content {
         display: flex;
         padding: 1.75rem;
@@ -68,6 +75,12 @@
           margin: 0;
         }
       }
+    }
+
+    .button-container {
+      display: flex;
+      display: -webkit-flex;
+      justify-content: center;
     }
   }
 }

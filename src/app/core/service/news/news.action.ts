@@ -1,9 +1,11 @@
 import { News } from "_api";
 
 export class GetAllNewsOfPartner {
+  static readonly type = "[News] Get all News of Partner";
+}
+export class GetAllNews {
   static readonly type = "[News] Get all News";
 }
-
 export class UpdateNews {
   static readonly type = "[News] Update News";
   constructor(public news: News) {}

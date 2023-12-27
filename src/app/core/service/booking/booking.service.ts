@@ -34,7 +34,7 @@ export class BookingService {
     return this.apiService.api.bookingBookingCash(bookingDto);
   }
 
-  public updateBookingStatus$(paymentGatewayResDto: PaymentGatewayResDto): Observable<PaymentGatewayDto> {
+  public updateBookingStatus$(paymentGatewayResDto: PaymentGatewayResDto): Observable<Booking> {
     return this.apiService.api.bookingUpdateStatus(paymentGatewayResDto);
   }
 

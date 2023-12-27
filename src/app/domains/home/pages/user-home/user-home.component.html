@@ -73,23 +73,51 @@
     </div>
     <!-- LATEST NEWS -->
     <div class="latest-news">
-      <div class="main">
+      <div class="main mb-6">
         <h2 class="text-center my-0 text-primary">LATEST NEWS</h2>
         <h4 class="text-center my-0 text-color-secondary">Get updated with Vietnam Travel Bus news & promotions</h4>
       </div>
-      <p-carousel [value]="latestNews" [numVisible]="3" styleClass="default-carousel">
-        <ng-template let-news pTemplate="item">
-          <div class="news-item">
-            <img src="/assets/images/news/news-{{ news.id }}.jpg" [alt]="'news-' + news.id" />
-            <div class="news-item__content flex flex-column">
-              <h5>{{ news.title }}</h5>
-              <p>{{ news.date }}</p>
+      <ng-container *ngIf="listNews$ | async as latestNews">
+        <p-carousel
+          [value]="latestNews"
+          [numVisible]="3"
+          [numScroll]="3"
+          [circular]="true"
+          [autoplayInterval]="3000"
+          styleClass="default-carousel"
+        >
+          <ng-template let-news pTemplate="item">
+            <div class="news-item">
+              <a [routerLink]="['/news']" [queryParams]="{ slug: news.slug }">
+                <img
+                  src="{{
+                    news.images && news.images.length > 0
+                      ? news.images[0]
+                      : '/assets/images/news/default-news-image.jpg'
+                  }}"
+                  alt="news-image"
+                />
+                <div class="news-item__content flex flex-column">
+                  <h5>{{ news.title }}</h5>
+                  <!-- <p class="date">{{ news.date | date: "dd-MM-yyyy" }}</p> -->
+                </div>
+              </a>
             </div>
-          </div>
-        </ng-template>
-      </p-carousel>
+          </ng-template>
+        </p-carousel>
+        <div class="button-container">
+          <p-button
+            label="View all"
+            styleClass="p-button-secondary p-button-outlined"
+            icon="pi pi-angle-right"
+            iconPos="right"
+            (onClick)="onClickViewAllNews()"
+          ></p-button>
+        </div>
+      </ng-container>
     </div>
   </div>
+
   <app-footer></app-footer>
   <app-copyright></app-copyright>
 </app-empty-layout>

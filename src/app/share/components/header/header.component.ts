@@ -113,8 +113,8 @@ export class HeaderComponent implements OnInit {
         ],
       },
       {
-        label: "Career",
-        routerLink: "/career",
+        label: "News",
+        routerLink: "/news",
       },
       { separator: true },
       {
