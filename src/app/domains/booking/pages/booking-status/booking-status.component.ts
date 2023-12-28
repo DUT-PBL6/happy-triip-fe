@@ -28,8 +28,10 @@ export class BookingStatusComponent implements OnInit {
         result: params.get("result"),
         checksum: params.get("checksum") || "",
       };
-      this.bookingService.updateBookingStatus$(paymentGatewayResDto).subscribe((booking: Booking) => {
-        this.booking$ = of(booking);
+      this.bookingService.updateBookingStatus$(paymentGatewayResDto).subscribe((data: Booking) => {
+        this.bookingService.getBookingDetailByPassenger$(data.id).subscribe((booking: Booking) => {
+          this.booking$ = of(booking);
+        });
       });
     });
   }

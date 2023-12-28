@@ -3,7 +3,7 @@
     <div class="details w-full flex flex-column bg-white">
       <div class="header relative flex flex-column align-items-center">
         <h3>Booking {{ booking.status | titlecase }}</h3>
-        <p class="m-0 text-base line-height-2 font-normal text-center">
+        <p *ngIf="booking.status === 'SUCCESS'" class="m-0 text-base line-height-2 font-normal text-center">
           Your seat(s) has been reserved. Our staff will contact you in 24 hours to confirm your ticket. Please pay
           attention to your phone.
         </p>

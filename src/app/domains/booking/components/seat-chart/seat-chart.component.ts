@@ -136,7 +136,7 @@ export class SeatChartComponent implements OnInit {
           switch (type) {
             case ConfirmEventType.REJECT:
               this.bookingService.createBookingByCash$(bookingDto).subscribe((_) => {
-                this.router.navigate(["/home"]);
+                this.router.navigate(["/management/booking-management"]);
                 this.toastService.showSuccess(
                   "Success",
                   "Booking pending successfully! Please come to the agency to complete the payment."

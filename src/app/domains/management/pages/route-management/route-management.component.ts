@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
-import { Route, RouteDto, RouteResponse, Station } from "_api";
-import { Observable, combineLatest, map, switchMap, takeUntil, tap } from "rxjs";
+import { Route, RouteDto } from "_api";
+import { Observable, map, takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
 import { CreateRoute, GetAllPendingRoute, UpdateRoute } from "src/app/core/service/route/route.action";
 import { RouteService } from "src/app/core/service/route/route.service";
