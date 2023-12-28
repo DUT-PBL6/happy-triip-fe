@@ -35,6 +35,7 @@ export class BookingConfirmationComponent extends BaseDestroyable implements OnI
   ) {
     super();
   }
+
   ngOnInit(): void {
     if (this.store.selectSnapshot(BookingState.getBookingMoneyPending).length === 0)
       this.store.dispatch(new GetBookingMoneyPending());
