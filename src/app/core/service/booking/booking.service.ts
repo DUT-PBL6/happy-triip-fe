@@ -30,7 +30,7 @@ export class BookingService {
     return this.apiService.api.bookingBooking(bookingDto);
   }
 
-  public createBookingByCash$(bookingDto: BookingDto): Observable<PaymentGatewayDto> {
+  public createBookingByCash$(bookingDto: BookingDto): Observable<Booking> {
     return this.apiService.api.bookingBookingCash(bookingDto);
   }
 

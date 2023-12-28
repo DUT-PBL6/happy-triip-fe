@@ -18,6 +18,7 @@ import { EmployeePartnerGuard } from "src/app/core/guards/employee-partner.guard
 import { BookingManagementComponent } from "./pages/booking-management/booking-management.component";
 import { PassengerManagementComponent } from "./pages/passenger-management/passenger-management.component";
 import { SalesReportComponent } from "./pages/sales-report/sales-report.component";
+import { CalendarComponent } from "./pages/calendar/calendar.component";
 
 const routes: Routes = [
   {
@@ -43,6 +44,7 @@ const routes: Routes = [
       },
       { path: "route", component: RouteManagementComponent, canActivate: [EmployeePartnerGuard] },
       { path: "poi-stations", component: PoiStationsComponent, canActivate: [EmployeeGuard] },
+      { path: "calendar", component: CalendarComponent, canActivate: [EmployeeGuard] },
       { path: "partner", component: PartnerPageComponent, canActivate: [EmployeePartnerGuard] },
       { path: "passenger", component: PassengerManagementComponent, canActivate: [PassengerGuard] },
       { path: "news", component: NewsManagementComponent, canActivate: [PartnerGuard] },
