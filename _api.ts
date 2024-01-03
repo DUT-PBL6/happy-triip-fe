@@ -57,14 +57,6 @@ export interface Passenger {
   bookings: Booking[];
 }
 
-export interface SubPoint {
-  id: number;
-  time: string;
-  address: string;
-  routePickUp: Route;
-  routeDropOff: Route;
-}
-
 export enum City {
   ANGIANG = 'ANGIANG',
   BARIAVUNGTAU = 'BARIAVUNGTAU',
@@ -256,11 +248,21 @@ export interface Route {
   seats: Seat[];
 }
 
+export interface SubPoint {
+  id: number;
+  time: string;
+  address: string;
+  routePickUp: Route;
+  routeDropOff: Route;
+}
+
 export interface Seat {
   id: number;
   col: number;
   row: number;
   floor: number;
+  pickUpPoint: SubPoint;
+  dropOffPoint: SubPoint;
   /** @format date-time */
   date: string;
   route: Route;
@@ -374,6 +376,8 @@ export interface SeatDto {
   floor: number;
   date: string;
   route: Route;
+  pickUpPoint: SubPoint;
+  dropOffPoint: SubPoint;
 }
 
 export interface BookingDto {
@@ -1366,6 +1370,40 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: 'POST',
         body: data,
         type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Route
+     * @name RouteControllerGetRouteFilter
+     * @request GET:/api/route/filter
+     */
+    routeGetRouteFilter: (
+      query: {
+        name: string;
+        departAt: string;
+        id: number;
+        city: City;
+        images: any[];
+        district: string;
+        ward: string;
+        address: string;
+        gmapLink: string;
+        embedGmapLink: string;
+        description: string;
+        status: string;
+        /** @format date-time */
+        date: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<Route[], any>({
+        path: `/api/route/filter`,
+        method: 'GET',
+        query: query,
         format: 'json',
         ...params,
       }),

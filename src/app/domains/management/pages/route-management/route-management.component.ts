@@ -14,6 +14,7 @@ import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
 import { StationState } from "src/app/core/service/station/station.state";
 import { GetAllStation } from "src/app/core/service/station/station.action";
 import { PendingRouteDetailComponent } from "../../components/route/pending-route-detail/pending-route-detail.component";
+import { DATE_PICKER_FORMAT } from "src/app/share/constants";
 
 @Component({
   selector: "app-route-management",
@@ -27,6 +28,12 @@ export class RouteManagementComponent extends BaseDestroyable implements OnInit 
   public isFetchDone = true;
   public isEmployee = false;
   public ref: DynamicDialogRef | undefined;
+  // public readonly datePickerFormat = DATE_PICKER_FORMAT;
+  // public statusOptions : string[] = ['PENDING', 'ACCEPTED', 'DENIED'];
+  // public selectedStatus: string = '';
+  // public pendingRoutes :Route[] = [];
+
+  
   @Select(RouteState.getAllPendingRoute) public pendingRoutes$: Observable<Route[]>;
 
   constructor(
@@ -37,6 +44,7 @@ export class RouteManagementComponent extends BaseDestroyable implements OnInit 
   ) {
     super();
   }
+ 
 
   public onPendingRouteClick(route: Route): void {
     this.routeService
@@ -59,6 +67,22 @@ export class RouteManagementComponent extends BaseDestroyable implements OnInit 
         });
       });
   }
+
+
+  // public onStatusChange():void{
+  //   const query = { status: this.selectedStatus };
+  //   console.log(query);
+  //   console.log(this.selectedStatus);
+  //   this.routeService.getFilterRoutes$(query)
+  //   .pipe(takeUntil(this.destroy$))
+  //   .subscribe({
+  //     next: (response) => {
+  //      console.log(response);
+  //      this.pendingRoutes = response
+  //     },
+  //   });
+
+  // }
 
   ngOnInit(): void {
     this.isEmployee = Object(cacheService.getUserInfo()).userRole === "EMPLOYEE";
