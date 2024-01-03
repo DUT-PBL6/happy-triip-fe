@@ -1,36 +1,35 @@
 <ng-container *ngIf="isEmployee; else notEmployee">
-  <ng-container *ngIf="pendingRoutes$ | async as pendingRoutes">
-   
+  <!-- <ng-container *ngIf="pendingRoutes"> -->
+    <ng-container *ngIf="pendingRoutes$ | async as pendingRoutes">
+
     <div class="card surface-0 p-4">
-      <h2 class="text-center mb-2">Pending route list</h2>
+      <h2 class="text-center mb-2">List Route</h2>
 
-      <!-- <div class="mb-2">
-        <p-dropdown [options]="statusOptions" 
-         optionLabel="" placeholder="Select a status" 
-         [(ngModel)]="selectedStatus"
-         (onChange)="onStatusChange()"       
-         ></p-dropdown>
-    
-
-      </div> -->
+      <div class="mb-2  ">
+        <label class="mx-2">Status :</label>
+        <p-dropdown
+          [options]="statusOptions"
+          optionLabel=""
+          placeholder="Select a status"
+          [(ngModel)]="selectedStatus"
+          (onChange)="onStatusChange()"
+        ></p-dropdown>
+      </div>
 
       <ng-container *ngIf="pendingRoutes.length > 0; else noRoutesAvailable">
         <div class="flex flex-wrap">
           <ng-container *ngFor="let route of pendingRoutes">
             <div class="col-12 lg:col-6 xl:col-4">
-              <app-pending-route [route]="route" (click)="onPendingRouteClick(route)"></app-pending-route>
+              <app-pending-route [route]="route"   (click)="onPendingRouteClick(route)"></app-pending-route>
             </div>
           </ng-container>
         </div>
       </ng-container>
 
-
       <ng-template #noRoutesAvailable>No routes available.</ng-template>
     </div>
   </ng-container>
 </ng-container>
-
-
 
 <ng-template #notEmployee>
   <div class="route-container">

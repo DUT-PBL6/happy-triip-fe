@@ -32,3 +32,7 @@ export class GetRouteByIdAndDate {
   static readonly type = "[Route] Get route by id and date";
   constructor(public route: Route) {}
 }
+export class GetFilterRoute {
+  static readonly type = "[Route] Get route by filter";
+  constructor(public query:any) {}
+}

@@ -28,15 +28,11 @@ export class RouteService {
   }
 
   public getPendingRoutes$(): Observable<Route[]> {
-    // return this.apiService.api.routeGetRoutesPending();
-   const query : any ={
-    status:"PENDING"
-   }
-    return this.apiService.api.routeGetRouteFilter(query)
+    return this.apiService.api.routeGetRoutesPending();
   }
 
-  public getFilterRoutes$(query:any): Observable<Route[]> {
-    return this.apiService.api.routeGetRouteFilter(query)
+  public getFilterRoutes$(query: any): Observable<Route[]> {
+    return this.apiService.api.routeGetRouteFilter(query);
   }
 
   public getRouteById$(id: number): Observable<Route> {

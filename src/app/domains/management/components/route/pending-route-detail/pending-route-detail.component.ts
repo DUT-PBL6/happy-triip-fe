@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Route } from "_api";
 import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 import { getHoursDifference, getTime, parseTimeStringToDate } from "src/app/share/helpers/date.helper";
@@ -9,7 +9,7 @@ import { RouteService } from "src/app/core/service/route/route.service";
 import { takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
 import { Store } from "@ngxs/store";
-import { AcceptRoute, DenyRoute } from "src/app/core/service/route/route.action";
+import { AcceptRoute, DenyRoute, GetFilterRoute } from "src/app/core/service/route/route.action";
 
 @Component({
   selector: "app-pending-route-detail",
@@ -18,7 +18,7 @@ import { AcceptRoute, DenyRoute } from "src/app/core/service/route/route.action"
 })
 export class PendingRouteDetailComponent extends BaseDestroyable implements OnInit {
   public route: Route;
-
+  public isUpdated: boolean;
   constructor(
     private config: DynamicDialogConfig,
     public ref: DynamicDialogRef,
@@ -32,6 +32,8 @@ export class PendingRouteDetailComponent extends BaseDestroyable implements OnIn
 
   ngOnInit(): void {
     this.route = this.config.data["routeDetails"];
+    this.route.status === "PENDING" ? (this.isUpdated = true) : (this.isUpdated = false);
+    
   }
 
   public handleRouteAction(event: Event, isAccept: boolean): void {
@@ -53,6 +55,7 @@ export class PendingRouteDetailComponent extends BaseDestroyable implements OnIn
           next: (response) => {
             this.store.dispatch(isAccept ? new AcceptRoute(response) : new DenyRoute(response));
             this.toastService.showSuccess("Success", successMessage);
+            this.store.dispatch(new GetFilterRoute({status:this.route.status}))
             this.ref.close();
           },
         });

@@ -104,12 +104,15 @@
   <div class="actions flex justify-content-end gap-2">
     <p-confirmPopup></p-confirmPopup>
     <p-button
+      *ngIf="isUpdated"
       icon="pi pi-times"
       label="Deny"
       styleClass="p-button-outlined p-button-danger"
       (onClick)="handleRouteAction($event, false)"
     ></p-button>
+
     <p-button
+      *ngIf="isUpdated"
       icon="pi pi-check"
       label="Accept"
       styleClass="p-button-outlined"

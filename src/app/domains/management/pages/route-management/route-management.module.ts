@@ -23,7 +23,6 @@ import { FormsModule } from "@angular/forms";
     PendingRouteModule,
     DynamicDialogModule,
     PendingRouteDetailModule,
-  
   ],
   exports: [RouteManagementComponent],
   providers: [DialogService],
