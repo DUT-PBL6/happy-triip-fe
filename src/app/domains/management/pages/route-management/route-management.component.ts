@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
 import { Route, RouteDto } from "_api";
 import { Observable, map, takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
-import { CreateRoute, GetAllPendingRoute, UpdateRoute } from "src/app/core/service/route/route.action";
+import { CreateRoute, GetAllPendingRoute, GetFilterRoute, UpdateRoute } from "src/app/core/service/route/route.action";
 import { RouteService } from "src/app/core/service/route/route.service";
 import { ToastService } from "src/app/core/service/toast/toast.service";
 import { parseTimeStringToDate } from "src/app/share/helpers/date.helper";
@@ -28,13 +28,13 @@ export class RouteManagementComponent extends BaseDestroyable implements OnInit 
   public isFetchDone = true;
   public isEmployee = false;
   public ref: DynamicDialogRef | undefined;
-  // public readonly datePickerFormat = DATE_PICKER_FORMAT;
-  // public statusOptions : string[] = ['PENDING', 'ACCEPTED', 'DENIED'];
-  // public selectedStatus: string = '';
-  // public pendingRoutes :Route[] = [];
-
+  public readonly datePickerFormat = DATE_PICKER_FORMAT;
+  public statusOptions: string[] = ["PENDING", "ACCEPTED", "DENIED"];
+  public selectedStatus = undefined;
   
-  @Select(RouteState.getAllPendingRoute) public pendingRoutes$: Observable<Route[]>;
+
+  // @Select(RouteState.getAllPendingRoute) public pendingRoutes$: Observable<Route[]>;
+  @Select(RouteState.getFilterRoute) public pendingRoutes$: Observable<Route[]>;
 
   constructor(
     private routeService: RouteService,
@@ -44,7 +44,6 @@ export class RouteManagementComponent extends BaseDestroyable implements OnInit 
   ) {
     super();
   }
- 
 
   public onPendingRouteClick(route: Route): void {
     this.routeService
@@ -60,35 +59,36 @@ export class RouteManagementComponent extends BaseDestroyable implements OnInit 
       )
       .subscribe((routeDetails) => {
         this.ref = this.dialogService.open(PendingRouteDetailComponent, {
-          data: { routeDetails },
+          data: { routeDetails, selectedStatus: this.selectedStatus },
           header: "Pending route details",
           width: "70%",
           contentStyle: { overflow: "auto" },
-        });
-      });
+        })
+
+      })
+      
   }
 
-
-  // public onStatusChange():void{
-  //   const query = { status: this.selectedStatus };
-  //   console.log(query);
-  //   console.log(this.selectedStatus);
-  //   this.routeService.getFilterRoutes$(query)
-  //   .pipe(takeUntil(this.destroy$))
-  //   .subscribe({
-  //     next: (response) => {
-  //      console.log(response);
-  //      this.pendingRoutes = response
-  //     },
-  //   });
-
-  // }
+  public onStatusChange(): void {
+     console.log(this.selectedStatus);
+    const query = this.selectedStatus ? { status: this.selectedStatus } : {};
+    this.store.dispatch(new GetFilterRoute(query));
+    console.log(query);
+   
+   
+  }
 
   ngOnInit(): void {
     this.isEmployee = Object(cacheService.getUserInfo()).userRole === "EMPLOYEE";
+    
     if (this.isEmployee) {
-      if (this.store.selectSnapshot(RouteState.getAllPendingRoute).length === 0)
-        this.store.dispatch(new GetAllPendingRoute());
+      this.onStatusChange();
+      if (this.store.selectSnapshot(RouteState.getFilterRoute).length === 0)
+        // this.store.dispatch(new GetFilterRoute()); 
+         this.onStatusChange();
+      // if (this.store.selectSnapshot(RouteState.getAllPendingRoute).length === 0)
+      //   this.store.dispatch(new GetAllPendingRoute());
+      
       if (this.store.selectSnapshot(StationState.getAllStation).length === 0) this.store.dispatch(new GetAllStation());
     }
   }
