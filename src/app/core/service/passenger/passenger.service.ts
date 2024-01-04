@@ -11,7 +11,6 @@ export class PassengerService {
   public updatePassenger$(passengerDto: PassengerDto): Observable<Passenger> {
     return this.apiService.api.authUpdatePassenger(passengerDto);
   }
-
   public getCurrentPassenger$(): Observable<Passenger> {
     return this.apiService.api.authGetDetailPassenger();
   }
