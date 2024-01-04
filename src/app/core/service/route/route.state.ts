@@ -72,6 +72,7 @@ export class RouteState {
       })
     );
   }
+
   @Action(GetFilterRoute)
   public getFilterRoutes$(ctx: StateContext<IRouteState>, action: GetFilterRoute): Observable<Route[]> {
     ctx.patchState({ filterRoutes: [] });

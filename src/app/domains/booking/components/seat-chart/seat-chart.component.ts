@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Select } from "@ngxs/store";
-import { BookingDto, PaymentGatewayDto, Route, Seat, SeatDto, SeatTypeDto } from "_api";
+import { Booking, BookingDto, PaymentGatewayDto, Route, Seat, SeatDto, SeatTypeDto } from "_api";
 import { ConfirmEventType, ConfirmationService, MessageService } from "primeng/api";
 import { Observable } from "rxjs";
 import Seatchart, {
@@ -135,8 +135,8 @@ export class SeatChartComponent implements OnInit {
         reject: (type: ConfirmEventType) => {
           switch (type) {
             case ConfirmEventType.REJECT:
-              this.bookingService.createBookingByCash$(bookingDto).subscribe((_) => {
-                this.router.navigate(["/management/booking-management"]);
+              this.bookingService.createBookingByCash$(bookingDto).subscribe((booking: Booking) => {
+                this.router.navigate(["/booking/status"], { queryParams: { result: booking.id, cash: true } });
                 this.toastService.showSuccess(
                   "Success",
                   "Booking pending successfully! Please come to the agency to complete the payment."

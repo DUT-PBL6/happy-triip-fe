@@ -24,15 +24,21 @@ export class BookingStatusComponent implements OnInit {
         this.router.navigate(["/home"]);
         return;
       }
-      const paymentGatewayResDto: PaymentGatewayResDto = {
-        result: params.get("result"),
-        checksum: params.get("checksum") || "",
-      };
-      this.bookingService.updateBookingStatus$(paymentGatewayResDto).subscribe((data: Booking) => {
-        this.bookingService.getBookingDetailByPassenger$(data.id).subscribe((booking: Booking) => {
+      if (params.get("cash") !== null) {
+        this.bookingService.getBookingDetailByPassenger$(+params.get("result")).subscribe((booking: Booking) => {
           this.booking$ = of(booking);
         });
-      });
+      } else {
+        const paymentGatewayResDto: PaymentGatewayResDto = {
+          result: params.get("result"),
+          checksum: params.get("checksum") || "",
+        };
+        this.bookingService.updateBookingStatus$(paymentGatewayResDto).subscribe((data: Booking) => {
+          this.bookingService.getBookingDetailByPassenger$(data.id).subscribe((booking: Booking) => {
+            this.booking$ = of(booking);
+          });
+        });
+      }
     });
   }
 }
