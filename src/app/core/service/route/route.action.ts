@@ -1,4 +1,5 @@
 import { Route } from "_api";
+import { RouteFilter } from "src/app/domains/management/types/route-filter.type";
 
 export class GetAllRoute {
   static readonly type = "[Route] Get all routes";
@@ -31,4 +32,8 @@ export class DenyRoute {
 export class GetRouteByIdAndDate {
   static readonly type = "[Route] Get route by id and date";
   constructor(public route: Route) {}
+}
+export class GetFilterRoute {
+  static readonly type = "[Route] Get route by filter";
+  constructor(public query?: RouteFilter) {}
 }

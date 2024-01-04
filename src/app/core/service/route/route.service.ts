@@ -5,6 +5,8 @@ import { HttpClient } from "@angular/common/http";
 import { PopularRoute } from "src/app/domains/home/types/popular-route.type";
 import { Route } from "_api";
 import { ApiService } from "../base-api/api.service";
+import { RouterLink } from "@angular/router";
+import { RouteFilter } from "src/app/domains/management/types/route-filter.type";
 
 @Injectable({ providedIn: "root" })
 export class RouteService {
@@ -28,6 +30,10 @@ export class RouteService {
 
   public getPendingRoutes$(): Observable<Route[]> {
     return this.apiService.api.routeGetRoutesPending();
+  }
+
+  public getFilterRoutes$(query?: RouteFilter): Observable<Route[]> {
+    return this.apiService.api.routeGetRouteFilter(query);
   }
 
   public getRouteById$(id: number): Observable<Route> {

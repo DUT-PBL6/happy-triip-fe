@@ -9,6 +9,7 @@ import {
   DenyRoute,
   GetAllPendingRoute,
   GetAllRoute,
+  GetFilterRoute,
   GetRouteByIdAndDate,
   UpdateRoute,
 } from "./route.action";
@@ -16,6 +17,7 @@ import {
 interface IRouteState {
   routes: Route[];
   pendingRoutes: Route[];
+  filterRoutes: Route[];
   routeDetail: Route | undefined;
 }
 
@@ -25,6 +27,7 @@ interface IRouteState {
     routes: [],
     pendingRoutes: [],
     routeDetail: undefined,
+    filterRoutes: [],
   },
 })
 @Injectable()
@@ -37,6 +40,10 @@ export class RouteState {
   @Selector()
   public static getAllPendingRoute(state: IRouteState): Route[] {
     return state.pendingRoutes;
+  }
+  @Selector()
+  public static getFilterRoute(state: IRouteState): Route[] {
+    return state.filterRoutes;
   }
 
   @Selector()
@@ -62,6 +69,15 @@ export class RouteState {
     return this.routeService.getPendingRoutes$().pipe(
       tap({
         next: (pendingRoutes) => ctx.patchState({ pendingRoutes }),
+      })
+    );
+  }
+  @Action(GetFilterRoute)
+  public getFilterRoutes$(ctx: StateContext<IRouteState>, action: GetFilterRoute): Observable<Route[]> {
+    ctx.patchState({ filterRoutes: [] });
+    return this.routeService.getFilterRoutes$(action.query).pipe(
+      tap({
+        next: (filterRoutes) => ctx.patchState({ filterRoutes }),
       })
     );
   }

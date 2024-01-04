@@ -1,7 +1,7 @@
 import { TranslateService } from "@ngx-translate/core";
 import { Component } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
-import { Booking } from "_api";
+import { Booking, Route } from "_api";
 import { Observable, map, takeUntil } from "rxjs";
 import { BaseDestroyable } from "src/app/core/directives/base-destroyable/base-destroyable";
 import { GetBookingsByPassenger } from "src/app/core/service/booking/booking.action";
@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import { BookingResult } from "../../types/booking-result.type";
 import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
 import { BookingDetailComponent } from "../../components/booking/booking-detail/booking-detail.component";
+import { getHoursDifference, getTime, parseTimeStringToDate } from "src/app/share/helpers/date.helper";
 
 enum BookingStatus {
   Pending = "PENDING",
@@ -60,6 +61,7 @@ export class BookingManagementComponent extends BaseDestroyable {
       )
       .subscribe((bookings) => {
         this.bookingsResult = bookings;
+        console.log(bookings);
       });
   }
 
@@ -88,5 +90,20 @@ export class BookingManagementComponent extends BaseDestroyable {
           contentStyle: { overflow: "auto" },
         });
       });
+  }
+
+  public getHoursDifference(route: Route, departAt: string, arriveAt: string): string {
+    return (
+      route.ndays * 24 +
+      getHoursDifference(this.parseTimeStringToDateString(departAt), this.parseTimeStringToDateString(arriveAt))
+    ).toFixed(1);
+  }
+
+  public parseTimeStringToDateString(timeString: string): string {
+    return parseTimeStringToDate(timeString).toString();
+  }
+
+  public getTime(date: string): string {
+    return getTime(date);
   }
 }

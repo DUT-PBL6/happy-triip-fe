@@ -1,20 +1,215 @@
 <ng-container *ngIf="isEmployee; else notEmployee">
-  <ng-container *ngIf="pendingRoutes$ | async as pendingRoutes">
-    <div class="card surface-0 p-4">
-      <h2 class="text-center mb-2">Pending route list</h2>
-      <ng-container *ngIf="pendingRoutes.length > 0; else noRoutesAvailable">
-        <div class="flex flex-wrap">
-          <ng-container *ngFor="let route of pendingRoutes">
-            <div class="col-12 lg:col-6 xl:col-4">
-              <app-pending-route [route]="route" (click)="onPendingRouteClick(route)"></app-pending-route>
-            </div>
-          </ng-container>
+  <ng-container *ngIf="routesFilter$ | async as routesFilter">
+    <ng-container *ngIf="stations$ | async as stations">
+      <ng-container *ngIf="routesFilter.length > 0">
+        <div class="booking-confirmation">
+          <div class="card surface-0 p-4">
+            <h2 class="text-center mb-4">Route Management</h2>
+            <p-table
+              #table
+              [value]="routesFilter"
+              dataKey="id"
+              [rows]="5"
+              [showCurrentPageReport]="true"
+              [rowsPerPageOptions]="[5, 10, 15]"
+              [globalFilterFields]="['name', 'fromAt.name', 'toAt.name', 'status', 'partner.name']"
+              [paginator]="true"
+              [scrollable]="true"
+              scrollHeight="560px"
+              selectionMode="single"
+              styleClass="p-datatable-striped"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [tableStyle]="{ 'min-width': '75rem' }"
+              (onRowSelect)="onRowSelect($event)"
+            >
+              <ng-template pTemplate="caption">
+                <div class="flex">
+                  <p-button
+                    label="Clear"
+                    class="p-button-outlined"
+                    icon="pi pi-filter-slash"
+                    (click)="table.clear()"
+                  ></p-button>
+                  <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input
+                      pInputText
+                      type="text"
+                      (input)="table.filterGlobal($any($event.target).value, 'contains')"
+                      placeholder="Search keyword"
+                    />
+                  </span>
+                </div>
+              </ng-template>
+
+              <ng-template pTemplate="header">
+                <tr class="list-header" style="width: 100%">
+                  <th class="item-header" style="width: 15%">
+                    <div class="flex align-items-center">Name</div>
+                  </th>
+                  <th class="item-header" style="width: 10%">
+                    <div class="flex align-items-center">Depart At</div>
+                  </th>
+                  <th class="item-header" style="width: 10%">
+                    <div class="flex align-items-center">Arrive At</div>
+                  </th>
+                  <th class="item-header" style="width: 15%">
+                    <div class="flex align-items-center">
+                      From
+                      <p-columnFilter
+                        field="fromAt"
+                        matchMode="in"
+                        display="menu"
+                        [showMatchModes]="false"
+                        [showOperator]="false"
+                        [showAddButton]="false"
+                      >
+                        <ng-template pTemplate="header">
+                          <div class="px-3 pt-3 pb-0">
+                            <span class="font-bold">From Picker</span>
+                          </div>
+                        </ng-template>
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-multiSelect
+                            [ngModel]="value"
+                            [options]="stations"
+                            placeholder="Any"
+                            (onChange)="filter($event.value)"
+                            optionLabel="name"
+                          >
+                            <ng-template let-option pTemplate="item">
+                              <div class="inline-block vertical-align-middle">
+                                <span class="ml-1 mt-1">{{ option.name }}</span>
+                              </div>
+                            </ng-template>
+                          </p-multiSelect>
+                        </ng-template>
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                  <th class="item-header" style="width: 15%">
+                    <div class="flex align-items-center">
+                      To
+                      <p-columnFilter
+                        field="toAt"
+                        matchMode="in"
+                        display="menu"
+                        [showMatchModes]="false"
+                        [showOperator]="false"
+                        [showAddButton]="false"
+                      >
+                        <ng-template pTemplate="header">
+                          <div class="px-3 pt-3 pb-0">
+                            <span class="font-bold">From Picker</span>
+                          </div>
+                        </ng-template>
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-multiSelect
+                            [ngModel]="value"
+                            [options]="stations"
+                            placeholder="Any"
+                            (onChange)="filter($event.value)"
+                            optionLabel="name"
+                          >
+                            <ng-template let-option pTemplate="item">
+                              <div class="inline-block vertical-align-middle">
+                                <span class="ml-1 mt-1">{{ option.name }}</span>
+                              </div>
+                            </ng-template>
+                          </p-multiSelect>
+                        </ng-template>
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                  <th class="item-header" style="width: 10%">
+                    <div class="flex align-items-center">Hour(s) ride</div>
+                  </th>
+                  <th class="item-header" style="width: 10%">
+                    <div class="flex align-items-center">Partner</div>
+                  </th>
+                  <th class="item-header" style="width: 5%">
+                    <div class="flex align-items-center">
+                      Price
+                      <p-columnFilter type="numeric" field="price" display="menu" currency="USD"></p-columnFilter>
+                    </div>
+                  </th>
+                  <th class="item-header" style="width: 10%">
+                    <div class="flex align-items-center">
+                      Status
+                      <p-columnFilter field="status" matchMode="equals" display="menu">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-dropdown
+                            [ngModel]="value"
+                            [options]="statuses"
+                            (onChange)="filter($event.value)"
+                            placeholder="Any"
+                          >
+                            <ng-template let-option pTemplate="item">
+                              <p-tag [value]="option.value" [severity]="getSeverity(option.value)"></p-tag>
+                            </ng-template>
+                          </p-dropdown>
+                        </ng-template>
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-route>
+                <tr class="text-center" [pSelectableRow]="route">
+                  <td>
+                    {{ route.name }}
+                  </td>
+                  <td>
+                    <span class="ml-1 vertical-align-middle">
+                      {{ getTime(parseTimeStringToDateString(route.departAt)) }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="ml-1 vertical-align-middle">
+                      {{ getTime(parseTimeStringToDateString(route.arriveAt)) }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="ml-1 vertical-align-middle">
+                      {{ route.fromAt["name"] }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="ml-1 vertical-align-middle">{{ route.toAt["name"] }}</span>
+                  </td>
+                  <td>
+                    <span class="ml-1 vertical-align-middle">
+                      {{ getHoursDifference(route, route.departAt, route.arriveAt) }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="ml-1 vertical-align-middle">
+                      {{ route.partner["name"] }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="ml-1 vertical-align-middle">${{ route.price }}</span>
+                  </td>
+                  <td>
+                    <span class="ml-1 vertical-align-middle">
+                      <p-tag [value]="route.status" [severity]="getSeverity(route.status)"></p-tag>
+                    </span>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="5">No routes found.</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
         </div>
       </ng-container>
-      <ng-template #noRoutesAvailable>No routes available.</ng-template>
-    </div>
+    </ng-container>
   </ng-container>
 </ng-container>
+
 <ng-template #notEmployee>
   <div class="route-container">
     <app-route-listbox

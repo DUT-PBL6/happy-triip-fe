@@ -24,22 +24,9 @@ export class SidebarComponent implements OnInit {
 
     this.items = [
       {
-        label: "Booking Management",
-        icon: "booking",
-        data: "booking-management",
-        expanded: true,
-        children: [
-          {
-            label: "Calendar",
-            icon: "calendar",
-            data: "calendar",
-          },
-          {
-            label: "Booking Confirmation",
-            icon: "confirmation",
-            data: "booking-confirmation",
-          },
-        ],
+        label: "Booking Confirmation",
+        icon: "confirmation",
+        data: "booking-confirmation",
       },
       {
         label: "Profile & Settings",
@@ -96,9 +83,9 @@ export class SidebarComponent implements OnInit {
     if (isPassenger) {
       this.items = [
         {
-          label: "Booking Management",
+          label: "Booking History",
           icon: "booking",
-          data: "booking-management",
+          data: "booking-history",
         },
         {
           label: "Passenger Management",

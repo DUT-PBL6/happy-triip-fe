@@ -101,7 +101,6 @@ export class PartnerFormComponent implements OnInit {
   public cancelPartnerForm(): void {
     this.partnerForm.patchValue(this.partner);
     this.isReadOnly = true;
-    this.toastService.showSuccess("Success", "Reset partner successfully!");
   }
 
   public validate(fieldControl: AbstractControl): boolean {

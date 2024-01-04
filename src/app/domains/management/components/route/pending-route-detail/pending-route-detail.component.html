@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-    <div class="route-schedules text-lg flex align-items-center">
+    <div class="route-schedules text-lg flex align-items-center flex-wrap">
       <i class="pi pi-calendar"></i>
       <div>Route schedules:</div>
       <ng-container *ngFor="let schedule of route.routeSchedules; index as i">
@@ -104,12 +104,15 @@
   <div class="actions flex justify-content-end gap-2">
     <p-confirmPopup></p-confirmPopup>
     <p-button
+      *ngIf="isUpdated"
       icon="pi pi-times"
       label="Deny"
       styleClass="p-button-outlined p-button-danger"
       (onClick)="handleRouteAction($event, false)"
     ></p-button>
+
     <p-button
+      *ngIf="isUpdated"
       icon="pi pi-check"
       label="Accept"
       styleClass="p-button-outlined"
