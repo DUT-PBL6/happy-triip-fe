@@ -1,6 +1,6 @@
 <div class="partner-management" *ngIf="isEmployee">
   <div class="card surface-0 p-4">
-    <h2 class="text-center mb-4">Partner list</h2>
+    <h2 class="text-center mb-4">Partner Management</h2>
     <ng-container *ngIf="partners$ | async as partners">
       <p-table
         #dt1
@@ -11,7 +11,7 @@
         [rowsPerPageOptions]="[10, 15, 20]"
         [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [globalFilterFields]="['name', 'username', 'phoneNumber', 'email', 'status']"
+        [globalFilterFields]="['name', 'username', 'phoneNumber', 'email', 'status', 'taxCode', 'address']"
         selectionMode="single"
         [(selection)]="selectedPartner"
         (onRowSelect)="onRowSelect($event)"
@@ -40,34 +40,31 @@
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
-            <th style="min-width: 15rem">
+            <th>
               <div class="flex align-items-center">
                 Name
                 <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
               </div>
             </th>
-            <th style="min-width: 15rem">
+            <th>
               <div class="flex align-items-center">
                 Username
                 <p-columnFilter type="text" field="username" display="menu"></p-columnFilter>
               </div>
             </th>
-            <th style="min-width: 15rem">
-              <div class="flex align-items-center">Password</div>
+            <th>
+              <div class="flex align-items-center">Phone number</div>
             </th>
-            <th style="min-width: 10rem">
-              <div class="flex align-items-center">
-                Phone number
-                <p-columnFilter type="text" field="phoneNumber" display="menu"></p-columnFilter>
-              </div>
+            <th>
+              <div class="flex align-items-center">Email</div>
             </th>
-            <th style="min-width: 10rem">
-              <div class="flex align-items-center">
-                Email
-                <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
-              </div>
+            <th>
+              <div class="flex align-items-center">Tax code</div>
             </th>
-            <th style="min-width: 10rem">
+            <th>
+              <div class="flex align-items-center">Address</div>
+            </th>
+            <th>
               <div class="flex align-items-center">
                 Status
                 <p-columnFilter field="status" matchMode="equals" display="menu">
@@ -97,13 +94,16 @@
               {{ partner.username }}
             </td>
             <td>
-              {{ partner.password }}
-            </td>
-            <td>
               {{ partner.phoneNumber }}
             </td>
             <td>
               {{ partner.email }}
+            </td>
+            <td>
+              {{ partner.taxCode || "N/A" }}
+            </td>
+            <td>
+              {{ partner.address || "N/A" }}
             </td>
             <td>
               <p-tag [value]="partner.status" [severity]="getSeverity(partner.status)"></p-tag>

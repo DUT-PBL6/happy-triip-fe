@@ -14,7 +14,6 @@ import { NewsManagementModule } from "./pages/news-management/news-management.mo
 import { BookingManagementModule } from "./pages/booking-management/booking-management.module";
 import { PassengerManagementModule } from "./pages/passenger-management/passenger-management.module";
 import { SalesReportModule } from "./pages/sales-report/sales-report.module";
-import { CalendarModule } from "./pages/calendar/calendar.module";
 
 @NgModule({
   declarations: [ManagementLayoutComponent],
@@ -33,7 +32,6 @@ import { CalendarModule } from "./pages/calendar/calendar.module";
     BookingManagementModule,
     PassengerManagementModule,
     SalesReportModule,
-    CalendarModule,
   ],
   exports: [ManagementLayoutComponent],
 })

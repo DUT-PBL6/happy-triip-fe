@@ -121,6 +121,11 @@
       "FAILED": "Failed",
       "SUCCESS": "Success",
       "MONEYPENDING": "Money Pending"
+    },
+    "routeStatus": {
+      "DENIED": "Denied",
+      "ACCEPTED": "ACCEPTED",
+      "PENDING": "Pending"
     }
   }
 }

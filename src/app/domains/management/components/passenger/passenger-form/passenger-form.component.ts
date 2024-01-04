@@ -66,10 +66,9 @@ export class PassengerFormComponent implements OnInit {
     this.isReadOnly = true;
   }
 
-  public cancelPartnerForm(): void {
+  public cancelPassengerForm(): void {
     this.passengerForm.patchValue(this.passenger);
     this.isReadOnly = true;
-    this.toastService.showSuccess("Success", "Reset passenger successfully!");
   }
 
   public validate(fieldControl: AbstractControl): boolean {
