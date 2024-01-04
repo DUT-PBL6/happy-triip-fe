@@ -188,12 +188,25 @@
         <label for="image" class="block text-900 text-lg font-medium mb-2">Image</label>
         <div class="input-container h-10rem flex flex-column">
           <div class="flex gap-4 mb-2">
-            <ng-container *ngFor="let _ of [0, 1, 2, 3]; let i = index">
-              <app-upload-image
-                [existedImage]="this.selectedStation?.images[i]"
-                (uploadedPhotoEmitter)="handleUploadedPhoto($event)"
-              ></app-upload-image>
+            <ng-container *ngIf="!selectedStation; else showSelectedImages">
+              <ng-container *ngFor="let _ of [0, 1, 2, 3]; let i = index">
+                <app-upload-image
+                  [existedImage]="selectedStation?.images[i]"
+                  (uploadedPhotoEmitter)="handleUploadedPhoto($event)"
+                ></app-upload-image>
+              </ng-container>
             </ng-container>
+
+            <ng-template #showSelectedImages>
+              <ng-container *ngIf="selectedStation.images.length > 0; else showNothing">
+                <ng-container *ngFor="let img of selectedStation.images">
+                  <img class="w-8rem h-8rem bg-contain mr-3 border-round-lg" src="{{ img }}" alt="news image" />
+                </ng-container>
+              </ng-container>
+              <ng-template #showNothing>
+                <p>You did upload any image!</p>
+              </ng-template>
+            </ng-template>
           </div>
           <small class="p-error" *ngIf="isSubmit && images.value.length === 0">
             <strong>Image is required</strong>

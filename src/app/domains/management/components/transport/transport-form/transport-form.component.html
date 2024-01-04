@@ -67,7 +67,7 @@
       </div>
       <!-- SEAT TYPE -->
       <div class="Seat Type col-12 py-2 flex">
-        <div class="flex flex-column col-6">
+        <div class="flex flex-column col-6 p-0">
           <label for="seat-type" class="block text-900 text-lg font-medium mb-2">Seat Type*</label>
           <p-button
             label="{{ this.selectedTransport ? 'Update Seat Types & Map Seat' : 'Add Seat Types & Map Seat' }}"
@@ -85,12 +85,25 @@
         <label for="image" class="block text-900 text-lg font-medium mb-2">Image</label>
         <div class="input-container h-10rem flex flex-column">
           <div class="flex gap-4 mb-2">
-            <ng-container *ngFor="let _ of [0, 1, 2, 3]; let i = index">
-              <app-upload-image
-                [existedImage]="this.selectedTransport?.images[i]"
-                (uploadedPhotoEmitter)="handleUploadedPhoto($event)"
-              ></app-upload-image>
+            <ng-container *ngIf="!selectedTransport; else showSelectedImages">
+              <ng-container *ngFor="let _ of [0, 1, 2, 3]; let i = index">
+                <app-upload-image
+                  [existedImage]="selectedTransport?.images[i]"
+                  (uploadedPhotoEmitter)="handleUploadedPhoto($event)"
+                ></app-upload-image>
+              </ng-container>
             </ng-container>
+
+            <ng-template #showSelectedImages>
+              <ng-container *ngIf="selectedTransport.images.length > 0; else showNothing">
+                <ng-container *ngFor="let img of selectedTransport.images">
+                  <img class="w-8rem h-8rem bg-contain mr-3 border-round-lg" src="{{ img }}" alt="news image" />
+                </ng-container>
+              </ng-container>
+              <ng-template #showNothing>
+                <p>You did upload any image!</p>
+              </ng-template>
+            </ng-template>
           </div>
         </div>
       </div>

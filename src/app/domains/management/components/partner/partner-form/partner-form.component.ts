@@ -40,6 +40,8 @@ export class PartnerFormComponent implements OnInit {
       title: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
       phoneNumber: ["", Validators.required],
+      taxCode: ["", Validators.required],
+      address: ["", Validators.required],
     });
     this.partnerForm.patchValue(this.partner);
   }
@@ -77,6 +79,14 @@ export class PartnerFormComponent implements OnInit {
 
   public get medialLink(): FormControl {
     return this.partnerForm.get("medialLink") as FormControl;
+  }
+
+  public get taxCode(): FormControl {
+    return this.partnerForm.get("taxCode") as FormControl;
+  }
+
+  public get address(): FormControl {
+    return this.partnerForm.get("address") as FormControl;
   }
 
   public submit(): void {
