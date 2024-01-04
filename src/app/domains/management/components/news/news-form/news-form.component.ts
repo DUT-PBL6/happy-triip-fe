@@ -18,11 +18,9 @@ export class NewsFormComponent implements OnInit, OnChanges {
   @Output() form = new EventEmitter<NewsDto>();
   public newsForm: FormGroup;
   public isSubmit = false;
-  slug: string;
-  constructor(
-    private fb: FormBuilder,
-    private translate: TranslateService
-  ) {}
+  public slug: string;
+
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.initNewsForm();
@@ -42,10 +40,7 @@ export class NewsFormComponent implements OnInit, OnChanges {
     this.newsForm = this.fb.group({
       title: ["", Validators.required],
       description: ["", Validators.required],
-      images: [
-        "",
-        // , Validators.required
-      ],
+      images: [""],
     });
     this.newsForm.get("title").valueChanges.subscribe((title) => {
       this.slug = toSlug(title);

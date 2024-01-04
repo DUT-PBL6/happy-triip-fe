@@ -8,8 +8,7 @@
     </div>
     <div class="form px-6 py-3">
       <form [formGroup]="partnerForm" (ngSubmit)="submit()" class="grid">
-        <!-- NAME -->
-        <div class="name col-12 py-2 flex flex-column">
+        <div class="name col-4 py-2 flex flex-column">
           <label for="name" class="block text-900 text-lg font-medium mb-2">Name</label>
           <div class="input-container h-4rem">
             <input
@@ -28,7 +27,45 @@
             </small>
           </div>
         </div>
-        <div class="username col-6 flex flex-column">
+        <div class="tax-code col-4 py-2 flex flex-column">
+          <label for="taxCode" class="block text-900 text-lg font-medium mb-2">Tax Code</label>
+          <div class="input-container h-4rem">
+            <input
+              pInputText
+              id="taxCode"
+              type="text"
+              placeholder="Enter route tax code"
+              class="w-full"
+              formControlName="taxCode"
+              [ngClass]="{
+                'ng-invalid ng-dirty': validate(taxCode)
+              }"
+            />
+            <small class="p-error" *ngIf="validate(taxCode)">
+              <strong>Tax Code is required</strong>
+            </small>
+          </div>
+        </div>
+        <div class="address col-4 py-2 flex flex-column">
+          <label for="taxCode" class="block text-900 text-lg font-medium mb-2">Address</label>
+          <div class="input-container h-4rem">
+            <input
+              pInputText
+              id="address"
+              type="text"
+              placeholder="Enter route address"
+              class="w-full"
+              formControlName="address"
+              [ngClass]="{
+                'ng-invalid ng-dirty': validate(address)
+              }"
+            />
+            <small class="p-error" *ngIf="validate(address)">
+              <strong>Address is required</strong>
+            </small>
+          </div>
+        </div>
+        <div class="username col-4 flex flex-column">
           <label for="username" class="block text-900 text-lg font-medium mb-2">Username</label>
           <div class="input-container">
             <input
@@ -47,7 +84,7 @@
             </small>
           </div>
         </div>
-        <div class="password col-6 flex flex-column">
+        <div class="password col-4 flex flex-column">
           <label for="password" class="block text-900 text-lg font-medium mb-2">Password</label>
           <div class="input-container">
             <p-password
@@ -66,7 +103,7 @@
             </small>
           </div>
         </div>
-        <div class="email col-6 flex flex-column">
+        <div class="email col-4 flex flex-column">
           <label for="email" class="block text-900 text-lg font-medium mb-2">Email</label>
           <div class="input-container">
             <input
@@ -89,13 +126,13 @@
             </small>
           </div>
         </div>
-        <div class="status col-6 flex flex-column">
+        <div class="status col-4 flex flex-column">
           <label for="status" class="block text-900 text-lg font-medium mb-2">Status</label>
           <div class="input-container">
             <input pInputText id="status" type="text" class="w-full" formControlName="status" [disabled]="true" />
           </div>
         </div>
-        <div class="phone-number col-6 flex flex-column">
+        <div class="phone-number col-4 flex flex-column">
           <label for="phoneNumber" class="block text-900 text-lg font-medium mb-2">Phone number</label>
           <div class="input-container">
             <input
@@ -114,7 +151,7 @@
             </small>
           </div>
         </div>
-        <div class="title col-6 flex flex-column">
+        <div class="title col-4 flex flex-column">
           <label for="title" class="block text-900 text-lg font-medium mb-2">Title</label>
           <div class="input-container">
             <input
@@ -133,8 +170,7 @@
             </small>
           </div>
         </div>
-
-        <div class="medial-link col-6 flex flex-column">
+        <div class="medial-link col-4 flex flex-column">
           <label for="medialLink" class="block text-900 text-lg font-medium mb-2">MedialLink</label>
           <div class="input-container">
             <input
@@ -153,7 +189,7 @@
             </small>
           </div>
         </div>
-        <div class="description col-6 flex flex-column">
+        <div class="description col-4 flex flex-column">
           <label for="description" class="block text-900 text-lg font-medium mb-2">Description</label>
           <div class="input-container">
             <input
