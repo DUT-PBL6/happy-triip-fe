@@ -33,7 +33,6 @@ export class PendingRouteDetailComponent extends BaseDestroyable implements OnIn
   ngOnInit(): void {
     this.route = this.config.data["routeDetails"];
     this.route.status === "PENDING" ? (this.isUpdated = true) : (this.isUpdated = false);
-    
   }
 
   public handleRouteAction(event: Event, isAccept: boolean): void {
@@ -55,7 +54,7 @@ export class PendingRouteDetailComponent extends BaseDestroyable implements OnIn
           next: (response) => {
             this.store.dispatch(isAccept ? new AcceptRoute(response) : new DenyRoute(response));
             this.toastService.showSuccess("Success", successMessage);
-            this.store.dispatch(new GetFilterRoute({status:this.route.status}))
+            this.store.dispatch(new GetFilterRoute());
             this.ref.close();
           },
         });

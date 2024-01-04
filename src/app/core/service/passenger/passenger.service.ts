@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
 import { ApiService } from "../base-api/api.service";
-import { Passenger, PassengerDto } from "_api";
+import { ChangePassDto, Passenger, PassengerDto } from "_api";
 
 @Injectable({ providedIn: "root" })
 export class PassengerService {
@@ -14,5 +14,8 @@ export class PassengerService {
 
   public getCurrentPassenger$(): Observable<Passenger> {
     return this.apiService.api.authGetDetailPassenger();
+  }
+  public changePassPassenger$(data: ChangePassDto) {
+    return this.apiService.api.authPassengerChangePass(data);
   }
 }

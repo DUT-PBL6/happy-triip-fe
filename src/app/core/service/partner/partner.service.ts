@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
 
 import { ApiService } from "../base-api/api.service";
-import { Partner, PartnerDto } from "_api";
+import { ChangePassDto, Partner, PartnerDto } from "_api";
 
 @Injectable({ providedIn: "root" })
 export class PartnerService {
@@ -30,6 +30,10 @@ export class PartnerService {
 
   public updatePartner$(partnerDto: PartnerDto): Observable<Partner> {
     return this.apiService.api.authUpdatePartner(partnerDto);
+  }
+
+  public changePassPartner$(data: ChangePassDto) {
+    return this.apiService.api.authPartnerChangePass(data);
   }
 
   public getCurrentPartner$(): Observable<Partner> {

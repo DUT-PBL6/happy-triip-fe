@@ -126,7 +126,7 @@
             class="col-4 md:col-2 pr-0 full-width-button"
             icon="pi pi-times"
             iconPos="right"
-            (onClick)="cancelPartnerForm()"
+            (onClick)="cancelPassengerForm()"
           ></p-button>
 
           <p-button
@@ -139,6 +139,14 @@
           ></p-button>
         </div>
       </form>
+    </div>
+  </div>
+  <div class="card surface-0 p-4">
+    <div class="">
+      <h5 class="mb-2">Change Password</h5>
+      <div class="actions col-12 py-2 flex justify-content-end gap-2">
+        <p-button (click)="handleChangePasswordAction()" icon="pi pi-check" label="Change"></p-button>
+      </div>
     </div>
   </div>
 </div>

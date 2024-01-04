@@ -46,6 +46,11 @@ export interface UserDto {
   phoneNumber: string;
 }
 
+export interface ChangePassDto {
+  password: string;
+  newPassword: string;
+}
+
 export interface Passenger {
   id: number;
   name: string;
@@ -803,6 +808,40 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         body: data,
         type: ContentType.Json,
         format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerPartnerChangePass
+     * @summary Partner change password
+     * @request POST:/api/auth/partner/change-pass
+     */
+    authPartnerChangePass: (data: ChangePassDto, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/auth/partner/change-pass`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerPassengerChangePass
+     * @summary Partner change password
+     * @request POST:/api/auth/passenger/change-pass
+     */
+    authPassengerChangePass: (data: ChangePassDto, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/auth/passenger/change-pass`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
         ...params,
       }),
 

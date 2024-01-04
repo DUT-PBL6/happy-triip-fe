@@ -27,7 +27,7 @@ interface IRouteState {
     routes: [],
     pendingRoutes: [],
     routeDetail: undefined,
-    filterRoutes:[]
+    filterRoutes: [],
   },
 })
 @Injectable()
@@ -43,7 +43,7 @@ export class RouteState {
   }
   @Selector()
   public static getFilterRoute(state: IRouteState): Route[] {
-    return state.filterRoutes
+    return state.filterRoutes;
   }
 
   @Selector()
