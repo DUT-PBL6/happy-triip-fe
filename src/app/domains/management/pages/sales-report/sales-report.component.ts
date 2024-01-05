@@ -185,7 +185,6 @@ export class SalesReportComponent extends BaseDestroyable implements OnInit {
     this.month = date.month() + 1;
     const firstDate = 1;
     const lastDate = date.endOf("month").date();
-
     this.updateMonthlySalesReport(firstDate, lastDate);
   }
 

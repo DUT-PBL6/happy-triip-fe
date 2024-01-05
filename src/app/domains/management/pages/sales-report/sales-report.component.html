@@ -25,8 +25,10 @@
             [(ngModel)]="selectedYear"
             view="year"
             dateFormat="yy"
-            inputId="yearpicker"
+            [readonlyInput]="true"
+            [monthNavigator]="true"
             (ngModelChange)="handleSelectedYearChange($event)"
+            [showIcon]="true"
           ></p-calendar>
         </div>
         <p-chart type="bar" [data]="yearlyChartData" [options]="chartOptions" [height]="'400px'"></p-chart>
