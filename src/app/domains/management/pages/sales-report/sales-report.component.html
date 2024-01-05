@@ -18,6 +18,18 @@
         <p-chart type="bar" [data]="monthlyChartData" [options]="chartOptions" [height]="'400px'"></p-chart>
       </p-tabPanel>
       <p-tabPanel header="Revenue of year">
+        <div class="flex justify-content-end align-items-center gap-3">
+          <span>Selected year:</span>
+          <p-calendar
+            [(ngModel)]="selectedYear"
+            view="year"
+            dateFormat="yy"
+            [readonlyInput]="true"
+            [monthNavigator]="true"
+            (ngModelChange)="handleSelectedYearChange($event)"
+            [showIcon]="true"
+          ></p-calendar>
+        </div>
         <p-chart type="bar" [data]="yearlyChartData" [options]="chartOptions" [height]="'400px'"></p-chart>
       </p-tabPanel>
     </p-tabView>

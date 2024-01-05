@@ -27,6 +27,7 @@ export class SalesReportComponent extends BaseDestroyable implements OnInit {
   public year = new Date().getFullYear();
   public month = new Date().getMonth() + 1;
   public selectedMonth: Date | undefined = new Date();
+  public selectedYear: Date | undefined = new Date();
   public documentStyle = getComputedStyle(document.documentElement);
   public textColor: string;
   public textColorSecondary: string;
@@ -51,15 +52,17 @@ export class SalesReportComponent extends BaseDestroyable implements OnInit {
     const lastDt = new Date(this.year, this.month, 0).getDate();
     this.updateMonthlySalesReport(1, lastDt);
 
-    this.bookingService
-      .getYearlySalesReport$(this.year)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (response) => {
-          this.yearlySalesData = this.getSalesData(response, 1, lastDt, "year");
-          this.yearlyChartData = this.updateChartData("year");
-        },
-      });
+    this.updateYearlySalesReport(lastDt);
+
+    // this.bookingService
+    //   .getYearlySalesReport$(this.year)
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe({
+    //     next: (response) => {
+    //       this.yearlySalesData = this.getSalesData(response, 1, lastDt, "year");
+    //       this.yearlyChartData = this.updateChartData("year");
+    //     },
+    //   });
   }
 
   private updateMonthlySalesReport(firstDt: number, lastDt: number): void {
@@ -73,6 +76,18 @@ export class SalesReportComponent extends BaseDestroyable implements OnInit {
         },
       });
   }
+  private updateYearlySalesReport( lastDt: number): void {
+    this.bookingService
+      .getYearlySalesReport$(this.year)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.yearlySalesData = this.getSalesData(response, 1, lastDt, "year");
+          this.yearlyChartData = this.updateChartData("year");
+        },
+      });
+  }
+
 
   private initChartOptions(): void {
     this.chartOptions = {
@@ -175,13 +190,18 @@ export class SalesReportComponent extends BaseDestroyable implements OnInit {
 
     return result;
   }
+  public handleSelectedYearChange(_: string): void {
+    const date = dayjs(this.selectedYear);
+    this.year = date.year();
+    const lastDate = date.endOf("month").date();
+    this.updateYearlySalesReport(lastDate);
+  }
 
   public handleSelectedMonthChange(_: string): void {
     const date = dayjs(this.selectedMonth);
     this.month = date.month() + 1;
     const firstDate = 1;
     const lastDate = date.endOf("month").date();
-
     this.updateMonthlySalesReport(firstDate, lastDate);
   }
 
