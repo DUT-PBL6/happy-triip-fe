@@ -46,11 +46,11 @@ export class BookingService {
     return this.apiService.api.bookingGetBookingRecentOrders();
   }
 
-  public getMonthlySalesReport$(month: any): Observable<void> {
+  public getMonthlySalesReport$(month: number): Observable<void> {
     return this.apiService.api.bookingGetMonthlySalesReport(month);
   }
 
-  public getYearlySalesReport$(year: any): Observable<void> {
+  public getYearlySalesReport$(year: number): Observable<void> {
     return this.apiService.api.bookingGetYearlySalesReport(year);
   }
 

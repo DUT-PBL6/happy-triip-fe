@@ -5,7 +5,6 @@
     </div>
     <div class="form px-6 py-3">
       <form [formGroup]="passengerForm" (ngSubmit)="submit()" class="grid">
-        <!-- NAME -->
         <div class="name col-12 py-2 flex flex-column">
           <label for="name" class="block text-900 text-lg font-medium mb-2">Name</label>
           <div class="input-container h-4rem">
@@ -22,44 +21,6 @@
             />
             <small class="p-error" *ngIf="validate(name)">
               <strong>Name is required</strong>
-            </small>
-          </div>
-        </div>
-        <div class="username col-6 flex flex-column">
-          <label for="username" class="block text-900 text-lg font-medium mb-2">Username</label>
-          <div class="input-container">
-            <input
-              pInputText
-              id="username"
-              type="text"
-              placeholder="Enter your username"
-              class="w-full"
-              formControlName="username"
-              [ngClass]="{
-                'ng-invalid ng-dirty': validate(username)
-              }"
-            />
-            <small class="p-error" *ngIf="validate(username)">
-              <strong>Username is required</strong>
-            </small>
-          </div>
-        </div>
-        <div class="password col-6 flex flex-column">
-          <label for="password" class="block text-900 text-lg font-medium mb-2">Password</label>
-          <div class="input-container">
-            <p-password
-              id="password"
-              placeholder="Enter your password"
-              [toggleMask]="true"
-              [feedback]="false"
-              formControlName="password"
-              styleClass="w-full"
-              [ngClass]="{
-                'ng-invalid ng-dirty': validate(password)
-              }"
-            ></p-password>
-            <small class="p-error" *ngIf="validate(password)">
-              <strong>Password is required</strong>
             </small>
           </div>
         </div>
@@ -86,7 +47,6 @@
             </small>
           </div>
         </div>
-
         <div class="phone-number col-6 flex flex-column">
           <label for="phoneNumber" class="block text-900 text-lg font-medium mb-2">Phone number</label>
           <div class="input-container">
@@ -143,9 +103,9 @@
   </div>
   <div class="card surface-0 p-4">
     <div class="">
-      <h5 class="mb-2">Change Password</h5>
+      <h4 class="mb-2">Change Password</h4>
       <div class="actions col-12 py-2 flex justify-content-end gap-2">
-        <p-button (click)="handleChangePasswordAction()" icon="pi pi-check" label="Change"></p-button>
+        <p-button (click)="handleChangePasswordAction()" icon="pi pi-user-edit" label="Change Password"></p-button>
       </div>
     </div>
   </div>

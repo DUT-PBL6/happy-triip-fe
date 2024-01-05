@@ -14,7 +14,7 @@ import { PasswordFormComponent } from "../../password/password-form/password-for
 export class PartnerFormComponent implements OnInit {
   @Input() public partner: Partner;
   @Output() public form = new EventEmitter<PartnerDto>();
-  public isReadOnly = true;
+  public isReadOnly = false;
   public isUpdated = true;
   public partnerForm: FormGroup;
 
