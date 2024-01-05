@@ -66,13 +66,11 @@ export class SidebarComponent implements OnInit {
     ];
 
     if (isEmployee) {
+      this.items = this.items.filter((item) => item.data !== "transport" && item.data !== "news");
+
       if (!isAdmin) {
         this.items.splice(1, 1);
-        return;
       }
-
-      this.items = this.items.filter((item) => item.data !== "transport" && item.data !== "news");
-      return;
     }
 
     if (isPartner) {

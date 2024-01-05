@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Passenger, PassengerDto } from "_api";
+import { DialogService } from "primeng/dynamicdialog";
 import { ToastService } from "src/app/core/service/toast/toast.service";
 import { validate } from "src/app/share/helpers/form.helper";
+import { PasswordFormComponent } from "../../password/password-form/password-form.component";
 
 @Component({
   selector: "app-passenger-form",
@@ -18,6 +20,7 @@ export class PassengerFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private dialogService: DialogService,
     private toastService: ToastService
   ) {}
 
@@ -64,6 +67,13 @@ export class PassengerFormComponent implements OnInit {
     }
     this.form.emit(this.passengerForm.value);
     this.isReadOnly = true;
+  }
+  public handleChangePasswordAction(): void {
+    const ref = this.dialogService.open(PasswordFormComponent, {
+      header: "Change Password",
+      width: "35%",
+      data: { user: this.passenger },
+    });
   }
 
   public cancelPassengerForm(): void {

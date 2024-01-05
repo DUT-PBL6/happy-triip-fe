@@ -13,6 +13,7 @@
             [monthNavigator]="true"
             (ngModelChange)="handleSelectedMonthChange($event)"
             [showIcon]="true"
+            class="calendar-month"
           ></p-calendar>
         </div>
         <p-chart type="bar" [data]="monthlyChartData" [options]="chartOptions" [height]="'400px'"></p-chart>

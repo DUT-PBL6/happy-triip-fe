@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Partner, PartnerDto } from "_api";
+import { DialogService } from "primeng/dynamicdialog";
 import { ToastService } from "src/app/core/service/toast/toast.service";
 import { validate } from "src/app/share/helpers/form.helper";
+import { PasswordFormComponent } from "../../password/password-form/password-form.component";
 
 @Component({
   selector: "app-partner-form",
@@ -12,13 +14,14 @@ import { validate } from "src/app/share/helpers/form.helper";
 export class PartnerFormComponent implements OnInit {
   @Input() public partner: Partner;
   @Output() public form = new EventEmitter<PartnerDto>();
-  public isReadOnly = true;
+  public isReadOnly = false;
   public isUpdated = true;
   public partnerForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
@@ -96,6 +99,14 @@ export class PartnerFormComponent implements OnInit {
     }
     this.form.emit(this.partnerForm.value);
     this.isReadOnly = true;
+  }
+  public handleChangePasswordAction(): void {
+    console.log(this.partner);
+    const ref = this.dialogService.open(PasswordFormComponent, {
+      header: "Change Password",
+      width: "35%",
+      data: { user: this.partner },
+    });
   }
 
   public cancelPartnerForm(): void {

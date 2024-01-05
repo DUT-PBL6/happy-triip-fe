@@ -32,6 +32,7 @@ export class SalesReportComponent extends BaseDestroyable implements OnInit {
   public textColor: string;
   public textColorSecondary: string;
   public surfaceBorder: string;
+  public lastDt = new Date(this.year, this.month, 0).getDate();
 
   constructor(
     private bookingService: BookingService,
@@ -49,20 +50,8 @@ export class SalesReportComponent extends BaseDestroyable implements OnInit {
     this.surfaceBorder = this.documentStyle.getPropertyValue("--surface-border");
     this.initChartOptions();
 
-    const lastDt = new Date(this.year, this.month, 0).getDate();
-    this.updateMonthlySalesReport(1, lastDt);
-
-    this.updateYearlySalesReport(lastDt);
-
-    // this.bookingService
-    //   .getYearlySalesReport$(this.year)
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe({
-    //     next: (response) => {
-    //       this.yearlySalesData = this.getSalesData(response, 1, lastDt, "year");
-    //       this.yearlyChartData = this.updateChartData("year");
-    //     },
-    //   });
+    this.updateMonthlySalesReport(1, this.lastDt);
+    this.updateYearlySalesReport(this.year);
   }
 
   private updateMonthlySalesReport(firstDt: number, lastDt: number): void {
@@ -76,18 +65,18 @@ export class SalesReportComponent extends BaseDestroyable implements OnInit {
         },
       });
   }
-  private updateYearlySalesReport( lastDt: number): void {
+
+  private updateYearlySalesReport(year: number): void {
     this.bookingService
-      .getYearlySalesReport$(this.year)
+      .getYearlySalesReport$(year)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
-          this.yearlySalesData = this.getSalesData(response, 1, lastDt, "year");
+          this.yearlySalesData = this.getSalesData(response, 1, this.lastDt, "year");
           this.yearlyChartData = this.updateChartData("year");
         },
       });
   }
-
 
   private initChartOptions(): void {
     this.chartOptions = {
@@ -190,12 +179,6 @@ export class SalesReportComponent extends BaseDestroyable implements OnInit {
 
     return result;
   }
-  public handleSelectedYearChange(_: string): void {
-    const date = dayjs(this.selectedYear);
-    this.year = date.year();
-    const lastDate = date.endOf("month").date();
-    this.updateYearlySalesReport(lastDate);
-  }
 
   public handleSelectedMonthChange(_: string): void {
     const date = dayjs(this.selectedMonth);
@@ -203,6 +186,11 @@ export class SalesReportComponent extends BaseDestroyable implements OnInit {
     const firstDate = 1;
     const lastDate = date.endOf("month").date();
     this.updateMonthlySalesReport(firstDate, lastDate);
+  }
+
+  public handleSelectedYearChange(_: string): void {
+    const year = dayjs(this.selectedYear).year();
+    this.updateYearlySalesReport(year);
   }
 
   public convertSoldOnDate(date) {
