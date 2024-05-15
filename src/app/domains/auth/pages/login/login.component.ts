@@ -31,9 +31,9 @@ export class LoginComponent extends BaseDestroyable implements OnInit {
   }
   ngOnInit(): void {
     this.initLoginForm();
-    this.userRole = this.url.path().includes("passenger")
+    this.userRole = this.url.path().toLocaleLowerCase().includes("passenger")
       ? "Passenger"
-      : this.url.path().includes("partner")
+      : this.url.path().toLocaleLowerCase().includes("partner")
       ? "Partner"
       : "Employee";
   }

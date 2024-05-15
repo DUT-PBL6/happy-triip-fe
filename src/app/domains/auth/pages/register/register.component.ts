@@ -30,7 +30,7 @@ export class RegisterComponent extends BaseDestroyable implements OnInit {
 
   ngOnInit(): void {
     this.initRegisterForm();
-    this.userRole = this.url.path().includes("partner") ? "Partner" : "Passenger";
+    this.userRole = this.url.path().toLowerCase().includes("partner") ? "Partner" : "Passenger";
   }
 
   private initRegisterForm(): void {
