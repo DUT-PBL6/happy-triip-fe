@@ -9,7 +9,7 @@ export class StationService {
   constructor(protected apiService: ApiService) {}
 
   public getStations$(): Observable<Station[]> {
-    return this.apiService.api.stationGetAll().pipe(map((result: StationPagingResult) => result.data));
+    return this.apiService.api.stationGetAll({ take: 100 }).pipe(map((result: StationPagingResult) => result.data));
   }
   public createStation$(stationDto: StationDto): Observable<Station> {
     return this.apiService.api.stationCreate(stationDto);

@@ -1,12 +1,12 @@
-<div class="card flex flex-column justify-content-center align-items-center h-full gap-4 p-2">
+<div class="card flex flex-column justify-content-center align-items-center h-full gap-4 p-2" style="max-height: 46rem">
   <p-listbox
     [options]="stations$ | async"
     [(ngModel)]="currentStation"
     optionLabel="name"
     [filter]="true"
     [filterPlaceHolder]="'Search POI & Station'"
-    class="listbox-border-none w-full h-full border-none"
-    [listStyle]="{ 'max-height': '450px' }"
+    class="listbox-border-none w-full border-none"
+    [listStyle]="{ 'max-height': '500px' }"
     (onChange)="handleChangeSelectedStation()"
   ></p-listbox>
   <p-button
